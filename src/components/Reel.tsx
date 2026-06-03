@@ -80,6 +80,7 @@ export default function Reel() {
           loop 
           muted 
           playsInline
+          poster="/philosophy_cinematic_visual.png"
           className="reel-video"
         >
           <source src="/video.1.mp4.mp4" type="video/mp4" />
