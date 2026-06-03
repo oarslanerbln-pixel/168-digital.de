@@ -1,6 +1,6 @@
-# 168 Digital (Digitale Academy) — Premium AI Agency Portfolio
+# 168 Digital — Premium AI Agency Portfolio
 
-Bu proje, 168 Digital (Digitale Academy) için geliştirilmiş, ultra-premium standartlarda (Zaha Hadid / Refik Anadol mimarisi) bir dijital ajans portföy sitesidir.
+Bu proje, 168 Digital için geliştirilmiş, ultra-premium standartlarda (Zaha Hadid / Refik Anadol mimarisi) bir dijital ajans portföy sitesidir.
 
 ## 🌟 Öne Çıkan Özellikler (Features)
 - **Parametric Veil 3D Background:** Zaha Hadid tarzı, nefes alan, GPU-based parçacıklarla desteklenmiş okyanus/neon 3D arka plan tasarımı.
