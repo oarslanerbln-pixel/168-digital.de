@@ -1,14 +1,13 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-const GlobeBackground = lazy(() => import('./components/GlobeBackground'));
-import './components/GlobeBackground.css';
+const FluidBackground = lazy(() => import('./components/FluidBackground'));
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
 import Hero from './components/Hero';
-import Reel from './components/Reel';
 import About from './components/About';
 import Services from './components/Services';
 import Works from './components/Works';
+import WebDesignCatalog from './components/WebDesignCatalog';
 import SEOHead from './components/SEOHead';
 import Contact from './components/Contact';
 import CustomCursor from './components/CustomCursor';
@@ -20,11 +19,21 @@ import MarqueeTextBand from './components/MarqueeTextBand';
 import AIChatDrawer from './components/AIChatDrawer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
+import DevConsole from './components/DevConsole';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
+
+  // Check for preloader bypass
+  useEffect(() => {
+    const savedBypass = localStorage.getItem('1618_bypass_preloader') === 'true';
+    if (savedBypass) {
+      setIsLoaded(true);
+    }
+  }, []);
 
   // Prevent scrolling while preloader is active
   useEffect(() => {
@@ -35,17 +44,29 @@ function App() {
     }
   }, [isLoaded]);
 
-  // Listen for global events to open legal modals (e.g. from cookie banner)
+  // Listen for global events to open legal modals (e.g. from cookie banner) and dev console
   useEffect(() => {
     const handleOpenDatenschutz = () => setLegalModalType('datenschutz');
     const handleOpenImpressum = () => setLegalModalType('impressum');
+    
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsConsoleOpen(prev => !prev);
+      }
+    };
+    const handleOpenConsole = () => setIsConsoleOpen(true);
 
     window.addEventListener('openDatenschutz', handleOpenDatenschutz);
     window.addEventListener('openImpressum', handleOpenImpressum);
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-dev-console', handleOpenConsole);
 
     return () => {
       window.removeEventListener('openDatenschutz', handleOpenDatenschutz);
       window.removeEventListener('openImpressum', handleOpenImpressum);
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-dev-console', handleOpenConsole);
     };
   }, []);
 
@@ -56,10 +77,10 @@ function App() {
         {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
       </AnimatePresence>
 
-      {/* 3D Globe — fixed background */}
+      {/* Fluid Smoke — fixed background */}
       {isLoaded && (
         <Suspense fallback={null}>
-          <GlobeBackground />
+          <FluidBackground />
         </Suspense>
       )}
 
@@ -70,6 +91,7 @@ function App() {
         style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}
       >
         <CustomCursor />
+        <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
         <NavigationMenu />
         <LanguageToggle />
         <AIChatDrawer />
@@ -78,9 +100,8 @@ function App() {
         <LegalModal isOpen={!!legalModalType} type={legalModalType} onClose={() => setLegalModalType(null)} />
         <main>
           <Hero />
-          {/* Marquee Band #1 — between Hero and Reel */}
+          {/* Marquee Band #1 — between Hero and Works */}
           <MarqueeTextBand direction="left" />
-          <Reel />
           <div className="section-divider" />
           <Works />
           {/* Marquee Band #2 — between Works and About, reverse direction */}
@@ -88,6 +109,8 @@ function App() {
           <About />
           <div className="section-divider" />
           <Services />
+          <div className="section-divider" />
+          <WebDesignCatalog />
           <div className="section-divider" />
           <Contact />
           <Footer 

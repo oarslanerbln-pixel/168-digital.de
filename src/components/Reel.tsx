@@ -3,11 +3,12 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import './Reel.css';
 
 const words = [
-  "CINEMATICS",
-  "4K 120FPS",
+  "3D MODELS",
+  "HOCHZEITSFILME",
+  "APP BUILDING",
+  "SOFTWARE PRODUCTION",
   "AERIAL DRONE",
-  "COLOR GRADING",
-  "SOUND DESIGN"
+  "CINEMATICS"
 ];
 
 export default function Reel() {
@@ -55,7 +56,7 @@ export default function Reel() {
   };
 
   return (
-    <section id="reel" className="reel-section">
+    <div id="reel-card" className="reel-card-container">
       <motion.div
         ref={cardRef}
         className="glass-panel glow-card reel-glass-panel"
@@ -94,24 +95,6 @@ export default function Reel() {
         <div className="hud-corner hud-corner-bl" />
         <div className="hud-corner hud-corner-br" />
 
-        {/* HUD Data Overlays */}
-        <div className="camera-hud-info hud-top-left" style={{ transform: 'translateZ(20px)' }}>
-          <span className="hud-rec-dot" />
-          <span>REC ● 10-BIT</span>
-        </div>
-        <div className="camera-hud-info hud-top-right" style={{ transform: 'translateZ(20px)' }}>
-          <span>RAW 5.7K 60FPS</span>
-        </div>
-        <div className="camera-hud-info hud-bottom-left" style={{ transform: 'translateZ(20px)' }}>
-          <span>ND 1.2 / f2.8 / ISO 320</span>
-        </div>
-        <div className="camera-hud-info hud-bottom-right" style={{ transform: 'translateZ(20px)' }}>
-          <span>BATT 98% [||||]</span>
-        </div>
-
-        {/* Target Reticles */}
-        <div className="hud-crosshair" style={{ transform: 'translateZ(10px) translate(-50%, -50%)' }} />
-        <div className="hud-focus-ring" style={{ transform: 'translateZ(15px) translate(-50%, -50%)' }} />
 
         {/* Animated Text Overlay */}
         <div className="reel-text-overlay" style={{ transform: 'translateZ(30px) translate(-50%, -50%)' }}>
@@ -129,6 +112,6 @@ export default function Reel() {
           </AnimatePresence>
         </div>
       </motion.div>
-    </section>
+    </div>
   );
 }

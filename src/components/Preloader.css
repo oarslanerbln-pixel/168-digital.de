@@ -1,73 +1,93 @@
-.preloader-overlay {
+/* ─── Ultra Premium Preloader ─── */
+.preloader-overlay-p {
   position: fixed;
   inset: 0;
   z-index: 9999;
+  background: #010101;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.preloader-shutter-top {
+/* Black cinematic shutters (top & bottom) */
+.pl-shutter-top {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 50vh;
-  background-color: #030303;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  z-index: 2;
+  height: 50%;
+  background: #010101;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.preloader-shutter-bottom {
+.pl-shutter-bottom {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 50vh;
-  background-color: #030303;
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
-  z-index: 2;
+  height: 50%;
+  background: #010101;
+  z-index: 3;
+  pointer-events: none;
 }
 
-.preloader-stage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 3;
+/* Central content stage */
+.pl-stage {
+  position: relative;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 24px;
+  justify-content: center;
 }
 
-.preloader-brand {
-  font-size: clamp(0.8rem, 3vw, 1.2rem);
-  font-weight: 300;
-  color: #ffffff;
-  letter-spacing: 16px;
-  text-transform: uppercase;
-  text-align: center;
-  margin-right: -16px; /* offset for letter spacing */
-}
-
-.preloader-track {
-  width: 140px;
+/* Thin horizontal line */
+.pl-line {
   height: 1px;
-  background-color: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
   position: relative;
   overflow: hidden;
+  /* width is animated via framer motion */
 }
 
-.preloader-bar {
+.pl-line-glow {
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0.8);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.9), transparent);
+  box-shadow: 0 0 12px 2px rgba(212, 175, 55, 0.4);
 }
 
-.preloader-counter {
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 4px;
-  font-variant-numeric: tabular-nums;
+/* Overflow hidden wrapper for brand slide-up */
+.pl-brand-wrap {
+  overflow: hidden;
+}
+
+/* Brand name */
+.pl-brand {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: clamp(1.4rem, 5vw, 2.8rem);
+  font-weight: 200;
+  color: #ffffff;
+  text-transform: uppercase;
+  letter-spacing: 0.55em;
+  margin-right: -0.55em; /* offset for letter-spacing */
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Sub-label / tagline */
+.pl-sub {
+  font-family: 'Inter', monospace, sans-serif;
+  font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+  font-weight: 400;
+  color: rgba(212, 175, 55, 0.7);
+  letter-spacing: 0.45em;
+  margin-right: -0.45em;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 18px;
 }

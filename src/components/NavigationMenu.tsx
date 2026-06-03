@@ -64,6 +64,7 @@ export default function NavigationMenu() {
         {/* Morphing SVG Lines */}
         <svg width="22" height="22" viewBox="0 0 22 22" style={{ zIndex: 10 }}>
           <motion.path
+            initial="closed"
             fill="transparent"
             strokeWidth="2"
             stroke="currentColor"
@@ -76,6 +77,7 @@ export default function NavigationMenu() {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           />
           <motion.path
+            initial="closed"
             fill="transparent"
             strokeWidth="2"
             stroke="currentColor"
@@ -89,6 +91,7 @@ export default function NavigationMenu() {
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
           />
           <motion.path
+            initial="closed"
             fill="transparent"
             strokeWidth="2"
             stroke="currentColor"

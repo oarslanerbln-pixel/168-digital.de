@@ -4,6 +4,7 @@ import { playClick, playTick } from '../utils/audio';
 import { useRef, MouseEvent } from 'react';
 import { ArrowRight, MessageCircle, Mail } from 'lucide-react';
 import Hero3DScene from './Hero3DScene';
+import Reel from './Reel';
 import './Hero.css';
 
 function MagneticButton({
@@ -47,96 +48,113 @@ export default function Hero() {
   const { t } = useTranslation();
 
   return (
-    <section id="hero" className="hero-section">
+    <section id="hero" className="hero-section" style={{ minHeight: '100vh', height: 'auto', paddingTop: '120px', paddingBottom: '80px', display: 'flex', flexDirection: 'column' }}>
       <div className="hero-3d-bg" />
 
-      <div className="hero-content-grid">
-        {/* Left column: Text details */}
-        <div className="hero-left">
-          <motion.h1 
-            className="hero-headline"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {t('hero_title')}
-          </motion.h1>
-   
-          <motion.p
-            className="hero-subtitle font-serif"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {t('hero_subtitle')}
-          </motion.p>
-
-          {/* ─── Premium Minimalist Actions ─── */}
-          <motion.div
-            className="hero-actions-v2"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.0, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            {/* Primary CTA — Minimal line-style */}
-            <MagneticButton
-              className="hero-btn-primary-v2"
-              onMouseEnter={playTick}
-              onClick={() => {
-                playClick();
-                document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
-              }}
+      <div className="hero-content-wrapper" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '80px', pointerEvents: 'none' }}>
+        
+        {/* Grid Layout for Above the Fold */}
+        <div className="hero-content-grid">
+          {/* Left: Text details & buttons */}
+          <div className="hero-left">
+            <motion.h1 
+              className="hero-headline"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              <span className="hero-btn-text">{t('hero_button')}</span>
-              <span className="hero-btn-arrow">
-                <ArrowRight size={16} strokeWidth={2} />
-              </span>
-              <span className="hero-btn-line" />
-            </MagneticButton>
+              {t('hero_title')}
+            </motion.h1>
+     
+            <motion.p
+              className="hero-subtitle font-serif"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {t('hero_subtitle')}
+            </motion.p>
 
-            {/* Divider dot */}
-            <span className="hero-actions-dot" />
-
-            {/* Contact Pills — Icon-forward minimal design */}
-            <div className="hero-contact-pills">
+            {/* Premium Minimalist Actions */}
+            <motion.div
+              className="hero-actions-v2"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              style={{ justifyContent: 'flex-start' }}
+            >
               <MagneticButton
-                className="hero-pill"
+                className="hero-btn-primary-v2"
                 onMouseEnter={playTick}
                 onClick={() => {
                   playClick();
-                  window.open('https://wa.me/491787277867', '_blank');
+                  document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
                 }}
-                aria-label="WhatsApp"
               >
-                <MessageCircle size={18} strokeWidth={1.5} />
-                <span className="hero-pill-label">WhatsApp</span>
+                <span className="hero-btn-text">{t('hero_button')}</span>
+                <span className="hero-btn-arrow">
+                  <ArrowRight size={16} strokeWidth={2} />
+                </span>
+                <span className="hero-btn-line" />
               </MagneticButton>
 
-              <MagneticButton
-                className="hero-pill"
-                onMouseEnter={playTick}
-                onClick={() => {
-                  playClick();
-                  window.location.href = 'mailto:contact@digitale.academy';
-                }}
-                aria-label="Email"
-              >
-                <Mail size={18} strokeWidth={1.5} />
-                <span className="hero-pill-label">Email</span>
-              </MagneticButton>
-            </div>
-          </motion.div>
+              <span className="hero-actions-dot" />
+
+              <div className="hero-contact-pills">
+                <MagneticButton
+                  className="hero-pill"
+                  onMouseEnter={playTick}
+                  onClick={() => {
+                    playClick();
+                    window.open('https://wa.me/491787277867', '_blank');
+                  }}
+                  aria-label="WhatsApp"
+                >
+                  <MessageCircle size={18} strokeWidth={1.5} />
+                  <span className="hero-pill-label">WhatsApp</span>
+                </MagneticButton>
+
+                <MagneticButton
+                  className="hero-pill"
+                  onMouseEnter={playTick}
+                  onClick={() => {
+                    playClick();
+                    window.location.href = 'mailto:contact@digitale.academy';
+                  }}
+                  aria-label="Email"
+                >
+                  <Mail size={18} strokeWidth={1.5} />
+                  <span className="hero-pill-label">Email</span>
+                </MagneticButton>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right: 1618 3D Model */}
+          <div className="hero-right">
+            <motion.div 
+              className="hero-3d-scene-container"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{ pointerEvents: 'auto' }}
+            >
+              <Hero3DScene />
+            </motion.div>
+          </div>
         </div>
 
-        {/* Right column: 3D interactive scene */}
+        {/* Large Drone Video Section (Reel) Below the fold */}
         <motion.div 
-          className="hero-right"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="hero-reel-container"
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.2, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          style={{ width: '100%', maxWidth: '1000px', margin: '0 auto', pointerEvents: 'auto' }}
         >
-          <Hero3DScene modelUrl="/luxury_glass_info_counter.glb" />
+          <Reel />
         </motion.div>
+
       </div>
     </section>
   );

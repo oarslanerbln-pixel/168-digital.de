@@ -37,7 +37,7 @@
   margin: 0 auto;
 }
 
-/* ─── ANIMATED BRONZE GRADIENT HEADLINE ─── */
+/* ─── ANIMATED PLATINUM/SILVER GRADIENT HEADLINE ─── */
 .hero-headline {
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 800;
@@ -45,14 +45,14 @@
   margin-bottom: 24px;
   letter-spacing: -0.02em;
   
-  /* Animated slight bronze/platinum gradient */
+  /* Sleek silver/glass gradient */
   background: linear-gradient(
     135deg, 
     #ffffff 0%, 
-    #faf6f0 20%, 
-    #e5c185 50%, 
-    #c5a073 80%,
-    #faf6f0 100%
+    #e0e0e0 30%, 
+    #a8a8a8 50%, 
+    #ffffff 70%,
+    #e0e0e0 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -160,9 +160,9 @@
 }
 
 .hero-btn-primary-v2:hover .hero-btn-arrow {
-  background: rgba(197, 160, 115, 0.15);
-  border-color: rgba(197, 160, 115, 0.4);
-  box-shadow: 0 0 20px rgba(197, 160, 115, 0.15);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
   transform: translateX(4px);
 }
 

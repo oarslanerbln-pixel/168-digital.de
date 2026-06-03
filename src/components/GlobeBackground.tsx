@@ -351,6 +351,7 @@ function ScanningRing() {
 /* ---------- Main export ---------- */
 
 export default function GlobeBackground() {
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   const handleCreated = useCallback((state: any) => {
     state.gl.setClearColor('#000000', 0);
   }, []);
@@ -359,7 +360,7 @@ export default function GlobeBackground() {
     <div className="globe-canvas-wrapper">
       <Canvas
         camera={{ position: [0, 0, 5.5], fov: 45 }}
-        dpr={[1, 1.5]}
+        dpr={isMobile ? [1, 1] : [1, 1.5]}
         gl={{ alpha: true, antialias: true }}
         onCreated={handleCreated}
         style={{ background: 'transparent' }}

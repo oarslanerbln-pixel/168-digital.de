@@ -1,5 +1,5 @@
 {
-  "name": "portfolio-ai-agency",
+  "name": "1618-digital",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -22,9 +22,11 @@
     "three": "^0.165.0"
   },
   "devDependencies": {
+    "@types/node": "^25.9.1",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.165.0",
+    "@vercel/node": "^5.8.4",
     "@vitejs/plugin-react": "^4.3.0",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"

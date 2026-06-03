@@ -1,0 +1,371 @@
+/* 🌌 Developer Console - Neon Glass HUD Styling */
+.dev-console-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(1, 1, 1, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter', monospace, sans-serif;
+  color: #e2e8f0;
+}
+
+/* Key Gate Prompt Screen */
+.key-gate-container {
+  position: relative;
+  width: 480px;
+  padding: 40px;
+  background: rgba(20, 20, 20, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.4s ease;
+}
+
+.key-gate-container.drag-over {
+  border-color: #ffffff;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+  transform: scale(1.02);
+}
+
+.key-gate-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.3);
+  animation: pulse-glow 2s infinite;
+}
+
+.key-gate-title {
+  font-size: 1.25rem;
+  font-weight: 300;
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+
+.key-gate-desc {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.drop-zone {
+  width: 100%;
+  padding: 30px 20px;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.drop-zone:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.key-input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: #fff;
+  font-family: monospace;
+  font-size: 0.75rem;
+  text-align: center;
+  letter-spacing: 0.1em;
+}
+
+.key-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.close-console-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  font-size: 1rem;
+  transition: color 0.2s;
+}
+
+.close-console-btn:hover {
+  color: #fff;
+}
+
+/* Console HUD Main Workspace */
+.console-workspace {
+  position: relative;
+  width: 90vw;
+  height: 85vh;
+  max-width: 1200px;
+  background: rgba(10, 10, 10, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 30px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+  overflow: hidden;
+}
+
+/* Sidebar Navigation */
+.console-sidebar {
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+  padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-title {
+  font-size: 1.1rem;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  margin-bottom: 30px;
+  color: #fff;
+  border-left: 2px solid #ffffff;
+  padding-left: 10px;
+}
+
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.menu-item {
+  width: 100%;
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  text-align: left;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+
+.menu-item.active {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: inset 1px 0 0 #ffffff;
+}
+
+.sidebar-footer {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+}
+
+/* Content Area */
+.console-content {
+  overflow-y: auto;
+  padding-right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.content-section-title {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 10px;
+}
+
+/* Telemetry Dashboard Grid */
+.telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.telemetry-card {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.telemetry-label {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.telemetry-value {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.telemetry-value.pulsing {
+  animation: telemetry-pulse 1s infinite alternate;
+}
+
+/* Controls styling */
+.control-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.control-label {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  letter-spacing: 0.05em;
+}
+
+.control-input-range {
+  width: 100%;
+  accent-color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.color-palette-selector {
+  display: flex;
+  gap: 12px;
+  margin-top: 5px;
+}
+
+.color-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.color-btn:hover {
+  transform: scale(1.1);
+}
+
+.color-btn.active {
+  border-color: #ffffff;
+  transform: scale(1.1);
+}
+
+/* Terminal System logs */
+.console-log-box {
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  height: 250px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 0.7rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.log-entry {
+  margin-bottom: 6px;
+  display: flex;
+  gap: 10px;
+}
+
+.log-timestamp {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.log-success { color: #4ade80; }
+.log-info { color: #60a5fa; }
+.log-warning { color: #fbbf24; }
+
+/* AI settings text area */
+.ai-textarea {
+  width: 100%;
+  height: 280px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 15px;
+  color: #e2e8f0;
+  font-family: monospace;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  resize: none;
+}
+
+.ai-textarea:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.console-btn-primary {
+  padding: 10px 20px;
+  background: #ffffff;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-end;
+}
+
+.console-btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0% { opacity: 0.3; transform: scale(0.98); }
+  50% { opacity: 0.7; transform: scale(1.02); }
+  100% { opacity: 0.3; transform: scale(0.98); }
+}
+
+@keyframes telemetry-pulse {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
+}

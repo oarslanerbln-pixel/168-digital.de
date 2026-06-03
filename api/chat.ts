@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { message, language, history } = req.body;
+    const { message, language, history, customPrompt } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: 'Missing message parameter' });
@@ -34,7 +34,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     const systemPrompt = `You are the official AI Representative for "1618 Digital" (a premium digital agency).
-1618 Digital is a boutique 3D SaaS and AI Agency based in Berlin. The name is inspired by the Golden Ratio (1.618), representing perfect proportions, balanced engineering, and elite digital architecture.
+1618 Digital is a boutique 3D SaaS and Digital Studio based in Berlin. The name is inspired by the Golden Ratio (1.618), representing perfect proportions, balanced engineering, and elite digital architecture.
 Founder & Director: Ömer Arslaner (Digital Architect & Director).
 
 Our Philosophy: Proportion. Ethics. We believe in the Golden Ratio—where perfect proportion meets aesthetic perfection. We build functional aesthetics, robust digital infrastructure, and save client time. We avoid bloated code or empty promises.
@@ -72,7 +72,7 @@ Your behavior:
     const requestBody = {
       contents: formattedHistory,
       systemInstruction: {
-        parts: [{ text: systemPrompt }]
+        parts: [{ text: customPrompt || systemPrompt }]
       },
       generationConfig: {
         temperature: 0.7,
