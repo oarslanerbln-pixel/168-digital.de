@@ -1,11 +1,16 @@
+import React, { Suspense, useRef, MouseEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
-import { useRef, MouseEvent } from 'react';
 import { ArrowRight, MessageCircle, Mail } from 'lucide-react';
-import Hero3DScene from './Hero3DScene';
 import Reel from './Reel';
 import './Hero.css';
+
+// ⚡ Bolt: Performance optimization
+// We extract the heavy 3D scene (Hero3DScene) to load lazily.
+// This splits the react-three-fiber and three.js dependencies into a separate chunk
+// which significantly reduces the initial bundle size and improves Time to Interactive (TTI).
+const Hero3DScene = React.lazy(() => import('./Hero3DScene'));
 
 function MagneticButton({
   children,
@@ -139,7 +144,7 @@ export default function Hero() {
               transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               style={{ pointerEvents: 'auto' }}
             >
-              <Hero3DScene />
+              <Suspense fallback={null}><Hero3DScene /></Suspense>
             </motion.div>
           </div>
         </div>
