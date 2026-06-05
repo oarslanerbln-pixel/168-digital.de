@@ -107,6 +107,7 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
       if (hash === MASTER_HASH) {
         setIsAuthenticated(true);
         sessionStorage.setItem('1618_dev_authenticated', 'true');
+        sessionStorage.setItem('1618_dev_token', cleanToken);
         addLog("DECRYPT SUCCESS: MASTER SIGNATURE DETECTED", "success");
         addLog("DEVELOPER ACCESS GRANTED // WELCOME BACK ÖMER ARSLANER", "success");
         setAuthError(null);

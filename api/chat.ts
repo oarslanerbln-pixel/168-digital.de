@@ -1,4 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import crypto from 'crypto';
+
+const MASTER_HASH = "59b696e669c2ea935466d49d5b8220fa48126af68563ef6ae117e60d13cd752e";
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   // Enable CORS
@@ -23,6 +26,21 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     if (!message) {
       return res.status(400).json({ error: 'Missing message parameter' });
+    }
+
+    if (message.length > 1000) {
+      return res.status(400).json({ error: 'Message length exceeds 1000 characters' });
+    }
+
+    const authHeader = req.headers.authorization;
+    let isAuthorized = false;
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7).trim();
+      const hash = crypto.createHash('sha256').update(token).digest('hex');
+      if (hash === MASTER_HASH) {
+        isAuthorized = true;
+      }
     }
 
     const apiKey = process.env.GEMINI_API_KEY;
@@ -72,7 +90,7 @@ Your behavior:
     const requestBody = {
       contents: formattedHistory,
       systemInstruction: {
-        parts: [{ text: customPrompt || systemPrompt }]
+        parts: [{ text: isAuthorized && customPrompt ? customPrompt : systemPrompt }]
       },
       generationConfig: {
         temperature: 0.7,

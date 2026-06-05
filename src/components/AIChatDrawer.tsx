@@ -81,11 +81,15 @@ export default function AIChatDrawer() {
     try {
       // Read saved custom prompt override from localStorage
       const customPrompt = localStorage.getItem('1618_ai_system_prompt');
+      const devToken = sessionStorage.getItem('1618_dev_token');
 
       // Call Vercel Serverless API
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(devToken ? { 'Authorization': `Bearer ${devToken}` } : {})
+        },
         body: JSON.stringify({
           message: textToSend,
           language: i18n.language,

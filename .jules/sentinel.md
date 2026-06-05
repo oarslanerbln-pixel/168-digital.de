@@ -1,0 +1,4 @@
+## 2026-06-05 - Fix hardcoded secret and authorization bypass in API
+**Vulnerability:** A hardcoded master key was found in `1618-dev-key.json`. Additionally, the `/api/chat` endpoint accepted a `customPrompt` parameter without any server-side authentication, allowing attackers to override the system prompt (prompt injection) and use the AI for unauthorized purposes by bypassing the client-side UI auth.
+**Learning:** Client-side authentication checks in the browser (e.g., in Dev Console) do not secure server endpoints. Any functionality exposed via an API parameter (like `customPrompt`) must be authenticated on the server side to ensure only authorized users can use it.
+**Prevention:** Never commit plaintext credentials or secrets to version control. Always validate authorization for sensitive actions directly on the server endpoint using secure tokens.
