@@ -1,0 +1,3 @@
+## 2024-05-18 - Static String Computation in Render Loop
+**Learning:** Found that `MarqueeTextBand.tsx` recomputes a long repeated string (`buildStrip()`) during every render, which gets triggered by root `App.tsx` state changes (like scrolling/toggling modals). While simple string concatenation is relatively fast, repeating it on a frequently re-rendered component adds up to wasted CPU cycles, especially since it doesn't depend on props or state.
+**Action:** Extract static computations (like building static repeated strings or arrays) outside the component body completely so they only run once on module load. Wrap purely presentational, static components with `React.memo` to shield them from parent re-renders.

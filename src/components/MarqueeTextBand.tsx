@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import './MarqueeTextBand.css';
 
@@ -13,12 +14,15 @@ function buildStrip() {
   return Array.from({ length: repeatCount }, () => words.join(separator)).join(separator) + separator;
 }
 
+// ⚡ Bolt Optimization: Compute the strip once at module level rather than on every render.
+const STRIP_CONTENT = buildStrip();
+
 interface MarqueeTextBandProps {
   direction?: 'left' | 'right';
 }
 
-export default function MarqueeTextBand({ direction = 'left' }: MarqueeTextBandProps) {
-  const strip = buildStrip();
+// ⚡ Bolt Optimization: Added React.memo to prevent unnecessary re-renders when parent App.tsx updates state
+const MarqueeTextBand = React.memo(function MarqueeTextBand({ direction = 'left' }: MarqueeTextBandProps) {
   const dur = 40; // seconds for one full loop
 
   return (
@@ -32,9 +36,11 @@ export default function MarqueeTextBand({ direction = 'left' }: MarqueeTextBandP
         className="marquee-inner"
       >
         <span className="marquee-text">
-          {strip}
+          {STRIP_CONTENT}
         </span>
       </motion.div>
     </div>
   );
-}
+});
+
+export default MarqueeTextBand;
