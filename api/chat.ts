@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { message, language, history, customPrompt } = req.body;
+    const { message, language, history, customPrompt, devToken } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: 'Missing message parameter' });
@@ -55,6 +55,24 @@ Your behavior:
 - Call to Action: Encourage the user to leave their email address in the input bar at the top of the chat drawer or type it here so the team can follow up with them for a tailored briefing.
 - Keep answers relatively short (under 3 paragraphs) to fit the chat drawer layout perfectly.`;
 
+    const MASTER_HASH = "59b696e669c2ea935466d49d5b8220fa48126af68563ef6ae117e60d13cd752e";
+    let finalPrompt = systemPrompt;
+
+    if (customPrompt) {
+      if (devToken) {
+        // Simple hash check server-side
+        const crypto = require('crypto');
+        const hash = crypto.createHash('sha256').update(devToken.trim()).digest('hex');
+        if (hash === MASTER_HASH) {
+          finalPrompt = customPrompt;
+        } else {
+          console.warn("Invalid devToken provided. Ignoring customPrompt.");
+        }
+      } else {
+        console.warn("No devToken provided. Ignoring customPrompt.");
+      }
+    }
+
     // Map history to Google's contents structure
     const formattedHistory = Array.isArray(history)
       ? history.map((item: any) => ({
@@ -72,7 +90,7 @@ Your behavior:
     const requestBody = {
       contents: formattedHistory,
       systemInstruction: {
-        parts: [{ text: customPrompt || systemPrompt }]
+        parts: [{ text: finalPrompt }]
       },
       generationConfig: {
         temperature: 0.7,

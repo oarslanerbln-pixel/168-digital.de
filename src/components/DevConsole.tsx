@@ -107,6 +107,7 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
       if (hash === MASTER_HASH) {
         setIsAuthenticated(true);
         sessionStorage.setItem('1618_dev_authenticated', 'true');
+        sessionStorage.setItem('1618_dev_token', cleanToken);
         addLog("DECRYPT SUCCESS: MASTER SIGNATURE DETECTED", "success");
         addLog("DEVELOPER ACCESS GRANTED // WELCOME BACK ÖMER ARSLANER", "success");
         setAuthError(null);
@@ -154,6 +155,14 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
     } else {
       setAuthError("INVALID FILE TYPE // MUST BE A .json KEY FILE");
     }
+  };
+
+  // Update Config
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    sessionStorage.removeItem('1618_dev_authenticated');
+    sessionStorage.removeItem('1618_dev_token');
+    addLog("SECURITY LOGOUT: SESSION TERMINATED", "info");
   };
 
   // Update Config
@@ -283,7 +292,13 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
               <div className="sidebar-footer">
                 STATUS // SECURE AUTH<br/>
                 DEVELOPER // ÖMER ARSLANER<br/>
-                BUILD // 2026.05.26_GOLDEN
+                BUILD // 2026.05.26_GOLDEN<br/>
+                <button
+                  onClick={handleLogout}
+                  style={{ marginTop: '10px', background: 'none', border: '1px solid var(--accent-cyan)', color: 'var(--accent-cyan)', padding: '5px 10px', cursor: 'pointer', fontSize: '0.65rem' }}
+                >
+                  TERMINATE SESSION
+                </button>
               </div>
             </div>
 
