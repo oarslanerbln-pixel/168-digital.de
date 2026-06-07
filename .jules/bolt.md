@@ -1,0 +1,3 @@
+## 2024-05-24 - React Re-renders from Custom Cursors
+**Learning:** Found a common performance anti-pattern where a custom cursor's mouse position is tracked using React's `useState`. This causes the entire component (and potentially its children) to re-render 60+ times per second on every `mousemove` event, which adds significant overhead to the main thread.
+**Action:** Always use `framer-motion`'s `useMotionValue` and `useSpring` to track mouse position for custom cursors. `useMotionValue` bypasses React's render phase entirely by mutating the DOM node directly when used in `motion` component style props, drastically improving performance and reducing jank.
