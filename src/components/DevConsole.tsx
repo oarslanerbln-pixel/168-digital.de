@@ -9,7 +9,8 @@ interface DevConsoleProps {
   onClose: () => void;
 }
 
-const MASTER_HASH = "59b696e669c2ea935466d49d5b8220fa48126af68563ef6ae117e60d13cd752e";
+// Use environment variable for the hash, default to empty to fail securely if missing
+const MASTER_HASH = import.meta.env.VITE_DEV_CONSOLE_HASH || "";
 
 // Simple SHA-256 implementation using Web Crypto API
 async function sha256(message: string): Promise<string> {
@@ -104,7 +105,7 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
     try {
       const cleanToken = token.trim();
       const hash = await sha256(cleanToken);
-      if (hash === MASTER_HASH) {
+      if (MASTER_HASH && hash === MASTER_HASH) {
         setIsAuthenticated(true);
         sessionStorage.setItem('1618_dev_authenticated', 'true');
         addLog("DECRYPT SUCCESS: MASTER SIGNATURE DETECTED", "success");
