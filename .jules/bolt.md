@@ -1,0 +1,3 @@
+## 2026-06-08 - Use useMotionValue for High-Frequency Event Listeners
+**Learning:** Using React `useState` for tracking high-frequency events like `mousemove` causes immediate and severe layout thrashing by triggering full component re-renders (60+ times a second). Framer Motion provides `useMotionValue` and `useSpring` to entirely bypass the React render cycle, updating the DOM properties directly.
+**Action:** When creating tracking elements (like custom cursors or interactive hover elements), never map raw pointer coordinates to `useState`. Always bind them to a `useMotionValue` and pass it directly to `motion.div` styles to maintain a stable 60fps render cycle and dramatically reduce React CPU overhead.
