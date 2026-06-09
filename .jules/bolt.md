@@ -1,0 +1,3 @@
+## 2024-05-18 - Prevent Layout Thrashing in Custom Cursors
+**Learning:** For high-frequency events like `mousemove` in custom cursors, using React's `useState` causes full component re-renders on every pixel move. This leads to severe layout thrashing and performance degradation, especially in a heavily animated app using Framer Motion and Three.js.
+**Action:** Always use Framer Motion's `useMotionValue` and `useSpring` (or similar animation library primitives) instead of React's `useState` to directly update `motion.div` styles for high-frequency DOM updates. This bypasses React's render cycle completely.
