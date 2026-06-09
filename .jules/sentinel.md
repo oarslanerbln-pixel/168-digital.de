@@ -1,0 +1,4 @@
+## 2026-05-26 - Prompt Injection & Secret Leak
+**Vulnerability:** Found a prompt injection vulnerability in `api/chat.ts` allowing clients to override the system prompt via the `customPrompt` payload variable. Also discovered a leaked hardcoded dev secret key in `1618-dev-key.json`.
+**Learning:** System prompts for LLMs must always be strictly controlled on the server. Never allow clients to arbitrary override the system prompt without strict, validated authentication to prevent resource abuse and data exfiltration. Hardcoded secrets should not exist in plaintext in the repository.
+**Prevention:** Hardcode or safely configure the system prompt on the server-side, completely ignoring any unsanitized user-provided overrides. Secure keys via environment variables or proper secret managers, and include explicit ignore rules in `.gitignore`.
