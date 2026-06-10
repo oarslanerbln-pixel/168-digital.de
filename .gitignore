@@ -24,3 +24,4 @@ dist-ssr
 *.sw?
 
 .vercel
+1618-dev-key.json

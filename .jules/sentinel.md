@@ -1,0 +1,4 @@
+## 2023-10-27 - [CRITICAL] Fix prompt injection and remove leaked dev key
+**Vulnerability:** A master development key was hardcoded in `1618-dev-key.json` and committed to the repository, leaking sensitive credentials. Furthermore, the `api/chat.ts` serverless function suffered from a prompt injection vulnerability because it allowed the user to submit an arbitrary `customPrompt` that overrode the system instructions.
+**Learning:** Hardcoding sensitive files like development keys without ignoring them via `.gitignore` exposes critical backend access points. Passing system instructions dynamically from client input exposes AI systems to severe prompt injection, permitting attackers to alter the agent's behavior.
+**Prevention:** Always add local key files (e.g., `*-dev-key.json`) to `.gitignore`. Never trust client input to define system instructions for AI models; system prompts must be hardcoded or securely fetched on the server side.
