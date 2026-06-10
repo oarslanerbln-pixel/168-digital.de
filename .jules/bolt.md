@@ -1,0 +1,3 @@
+## 2024-05-18 - Replacing React useState with Framer Motion useMotionValue for high-frequency events
+**Learning:** Using React's `useState` to track high-frequency events like `mousemove` causes excessive re-renders (60+ times per second), leading to layout thrashing and poor performance. In `CustomCursor.tsx`, this was updating the entire component repeatedly.
+**Action:** Always use Framer Motion's `useMotionValue` combined with `useSpring` (or similar) when directly driving `motion.div` styles based on continuous input. This updates the DOM directly without triggering the React render cycle, significantly improving UI smoothness.
