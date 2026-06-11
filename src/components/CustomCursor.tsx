@@ -1,13 +1,23 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // ⚡ Bolt Performance Optimization:
+  // Replacing useState with useMotionValue to prevent React re-renders on every mousemove.
+  // This drastically improves performance by avoiding layout thrashing for high-frequency events.
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { stiffness: 800, damping: 30, mass: 0.1 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
+
   const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -42,13 +52,15 @@ export default function CustomCursor() {
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 24 : 8),
-          y: mousePosition.y - (isHovered ? 24 : 8),
           scale: isHovered ? 1.5 : 1,
-          opacity: isHovered ? 1 : 0.8
+          opacity: isHovered ? 1 : 0.8,
+          marginLeft: isHovered ? -24 : -8,
+          marginTop: isHovered ? -24 : -8
         }}
         transition={{ type: 'spring', stiffness: 800, damping: 30, mass: 0.1 }}
         style={{
+          x: smoothX,
+          y: smoothY,
           position: 'fixed',
           top: 0,
           left: 0,
