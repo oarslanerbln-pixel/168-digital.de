@@ -1,0 +1,3 @@
+## 2024-05-18 - Framer Motion High-Frequency Event Optimization
+**Learning:** In a codebase with heavy 3D rendering (React Three Fiber), using React `useState` to track high-frequency events like `mousemove` causes excessive main-thread blocking due to component re-renders (60+ times a second).
+**Action:** When tracking high-frequency values (like scroll or mouse positions) that only affect styles/animations, always use Framer Motion's `useMotionValue` (and `useSpring` if smoothing is needed). Pass these directly into the `style` prop of a `motion.div` to bypass React's render cycle completely.
