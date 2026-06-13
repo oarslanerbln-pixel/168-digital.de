@@ -1,0 +1,4 @@
+## 2026-06-13 - AI Chat Prompt Injection Risk
+**Vulnerability:** The AI chat serverless function (`api/chat.ts`) accepted a `customPrompt` override directly from an unauthenticated client request via the `body`. This allowed any user to completely override the AI's core system prompt, potentially causing it to act maliciously, reveal secrets, or behave unprofessionally.
+**Learning:** System instructions and boundaries for LLMs must be strictly controlled on the server-side. They should never be overridable by dynamic client input, especially from unauthenticated endpoints, as this represents a critical prompt injection vulnerability.
+**Prevention:** Hardcode or securely load system prompts server-side (e.g., via environment variables or a secure database). Never merge or override core system instructions with raw, untrusted input from the frontend.
