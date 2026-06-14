@@ -1,0 +1,3 @@
+## 2024-06-14 - Prevent Layout Thrashing in Framer Motion Event Listeners
+**Learning:** Using React `useState` to track high-frequency events like `mousemove` causes excessive full component re-renders. This is particularly problematic with Framer Motion, leading to severe layout thrashing and high CPU usage.
+**Action:** Always use Framer Motion's `useMotionValue` and `useSpring` to directly update and animate values for high-frequency interactions (like cursors) without triggering React re-renders.
