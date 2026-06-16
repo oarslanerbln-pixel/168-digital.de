@@ -1,13 +1,24 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
+
+  // ⚡ Bolt: Performance optimization
+  // Using useMotionValue instead of useState for high-frequency events like mousemove
+  // This prevents React from re-rendering the component 60+ times a second
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+
+  const springConfig = { stiffness: 800, damping: 30, mass: 0.1 };
+  const springX = useSpring(mouseX, springConfig);
+  const springY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Offset by half of base size (16px / 2 = 8px) to center it
+      mouseX.set(e.clientX - 8);
+      mouseY.set(e.clientY - 8);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -35,25 +46,25 @@ export default function CustomCursor() {
       window.removeEventListener('mouseover', handleMouseOver);
       document.body.style.cursor = 'auto'; // Temizleme
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
   return (
     <>
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 24 : 8),
-          y: mousePosition.y - (isHovered ? 24 : 8),
-          scale: isHovered ? 1.5 : 1,
+          scale: isHovered ? 3 : 1, // Base size is 16px. 16 * 3 = 48px
           opacity: isHovered ? 1 : 0.8
         }}
-        transition={{ type: 'spring', stiffness: 800, damping: 30, mass: 0.1 }}
+        transition={{ scale: { type: 'spring', stiffness: 800, damping: 30, mass: 0.1 } }}
         style={{
+          x: springX,
+          y: springY,
           position: 'fixed',
           top: 0,
           left: 0,
-          width: isHovered ? '48px' : '16px',
-          height: isHovered ? '48px' : '16px',
+          width: '16px',
+          height: '16px',
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
