@@ -1,0 +1,4 @@
+## 2024-10-25 - Prompt Injection Vulnerability in Vercel Serverless Function
+**Vulnerability:** The AI chat handler (`api/chat.ts`) allowed users to supply a `customPrompt` from the client (`req.body`), which was then used to override the server-side system instructions for the Google Gemini API. This is a critical prompt injection vulnerability.
+**Learning:** System instructions and rules for LLMs must be strictly controlled server-side. Allowing unauthenticated client input to dynamically override or alter these instructions completely defeats any guardrails or instructions established by the application, allowing malicious actors to hijack the AI's behavior.
+**Prevention:** Never destructure or accept system-level prompts or behavioral overrides from client payloads (e.g., `req.body.customPrompt`). Always hardcode or securely load system instructions server-side (e.g., from environment variables or internal configuration) and pass them directly to the LLM API.
