@@ -1,0 +1,3 @@
+## 2024-06-25 - Prevent Layout Thrashing & Unnecessary Renders with Framer Motion
+**Learning:** For high-frequency events (like `mousemove` in custom cursors), using React's `useState` causes the component to re-render on every tick. This leads to severe performance degradation. Furthermore, animating layout dimensions (`width` or `height`) causes costly browser layout recalculations (layout thrashing).
+**Action:** Use Framer Motion's `useMotionValue` and `useSpring` to directly update the DOM bypassing React's render cycle completely. For size animations, apply hardware-accelerated CSS transforms (`scale`) on fixed dimension elements rather than dynamically changing the dimension properties.
