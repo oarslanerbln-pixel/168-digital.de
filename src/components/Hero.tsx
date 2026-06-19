@@ -1,10 +1,11 @@
 import { useTranslation } from 'react-i18next';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
-import { useRef, MouseEvent } from 'react';
-import { ArrowRight, MessageCircle, Mail } from 'lucide-react';
+import { useRef, MouseEvent, useState } from 'react';
+import { ArrowRight, MessageCircle, Mail, Mic } from 'lucide-react';
 import Hero3DScene from './Hero3DScene';
 import Reel from './Reel';
+import AIVoiceDemoModal from './AIVoiceDemoModal';
 import './Hero.css';
 
 function MagneticButton({
@@ -46,6 +47,7 @@ function MagneticButton({
 
 export default function Hero() {
   const { t } = useTranslation();
+  const [isAIVoiceOpen, setIsAIVoiceOpen] = useState(false);
 
   return (
     <section id="hero" className="hero-section" style={{ minHeight: '100vh', height: 'auto', paddingTop: '120px', paddingBottom: '80px', display: 'flex', flexDirection: 'column' }}>
@@ -106,6 +108,20 @@ export default function Hero() {
                   onMouseEnter={playTick}
                   onClick={() => {
                     playClick();
+                    setIsAIVoiceOpen(true);
+                  }}
+                  aria-label="Live AI Demo"
+                  style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
+                >
+                  <Mic size={18} strokeWidth={1.5} />
+                  <span className="hero-pill-label">Live AI Demo</span>
+                </MagneticButton>
+
+                <MagneticButton
+                  className="hero-pill"
+                  onMouseEnter={playTick}
+                  onClick={() => {
+                    playClick();
                     window.open('https://wa.me/491787277867', '_blank');
                   }}
                   aria-label="WhatsApp"
@@ -156,6 +172,8 @@ export default function Hero() {
         </motion.div>
 
       </div>
+
+      <AIVoiceDemoModal isOpen={isAIVoiceOpen} onClose={() => setIsAIVoiceOpen(false)} />
     </section>
   );
 }

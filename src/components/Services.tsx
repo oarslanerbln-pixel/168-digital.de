@@ -122,9 +122,9 @@ export default function Services() {
       >
         <span className="services-overline">WHAT WE BUILD</span>
         <h2 className="services-title text-silver">
-          {t('hero_button').includes('Ökosystem') || t('hero_button').includes('Ekosistem')
-            ? 'Unsere Ökosysteme'
-            : 'Our Ecosystems'}
+          {t('hero_button').includes('Kooperation') || t('hero_button').includes('Ökosystem')
+            ? 'Unsere Beispiel-Kooperationen'
+            : 'Our Sample Cooperations'}
         </h2>
       </motion.div>
 

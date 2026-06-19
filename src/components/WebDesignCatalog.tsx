@@ -12,20 +12,21 @@ export default function WebDesignCatalog() {
   return (
     <section className="relative py-24 z-10 web-design-catalog-container">
       <div className="max-w-[1300px] mx-auto px-6 md:px-12">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16">
-          <div>
-            <div className="flex items-center gap-3 mb-4">
-              <div className="h-[1px] w-8 bg-[#c9a96e]"></div>
-              <span className="text-[#c9a96e] font-mono text-[10px] uppercase tracking-[0.2em]">Design Library</span>
-            </div>
-            <h2 className="text-4xl md:text-5xl font-serif text-[#f0ede8]">
-              50 Premium Web <em className="text-transparent" style={{ WebkitTextStroke: '1px #c9a96e' }}>Concepts</em>
-            </h2>
-          </div>
-          <p className="text-[#8a8a94] font-sans text-sm max-w-sm mt-6 md:mt-0 leading-relaxed">
+        <motion.div 
+          className="services-header"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <span className="services-overline">DESIGN LIBRARY</span>
+          <h2 className="services-title text-silver">
+            50 Premium Web <em className="text-transparent" style={{ WebkitTextStroke: '1px #c9a96e' }}>Concepts</em>
+          </h2>
+          <p className="text-silver mt-6" style={{ maxWidth: '500px', margin: '20px auto 0', opacity: 0.7, fontSize: '14px', lineHeight: 1.6 }}>
             A curated collection of highly aesthetic, conversion-optimized design archetypes crafted for forward-thinking brands.
           </p>
-        </div>
+        </motion.div>
 
         <motion.div layout className="wd-grid">
           <AnimatePresence>
@@ -61,13 +62,9 @@ export default function WebDesignCatalog() {
             {/* Premium Button */}
             <button 
               onClick={() => setIsExpanded(true)}
-              className="group relative z-10 px-8 md:px-10 py-4 bg-[#c9a96e] text-[#0a0800] rounded-full font-mono text-[11px] md:text-[12px] font-bold tracking-[0.2em] uppercase transition-all duration-300 flex items-center gap-4 shadow-[0_0_20px_rgba(201,169,110,0.3)] hover:shadow-[0_0_45px_rgba(201,169,110,0.6)] hover:scale-105 hover:bg-[#e8c97a]"
+              className="group relative z-10 px-10 py-4 bg-black/40 border border-[#c9a96e]/30 text-[#c9a96e] rounded-full font-sans text-xs tracking-[0.2em] uppercase transition-all duration-500 hover:border-[#c9a96e] hover:bg-[#c9a96e]/10 hover:shadow-[0_0_30px_rgba(201,169,110,0.15)] flex items-center gap-4 backdrop-blur-md"
             >
-              <span>Explore All 50 Concepts</span>
-              <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0a0800] opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[#0a0800]"></span>
-              </span>
+              <span className="opacity-80 group-hover:opacity-100 transition-opacity">Explore All Concepts</span>
             </button>
           </div>
         )}

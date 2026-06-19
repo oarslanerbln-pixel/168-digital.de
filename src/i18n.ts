@@ -68,9 +68,9 @@ const resources = {
     translation: {
       "meta_title": "1618 Digital | 3D SaaS & Kino-Produktionen",
       "meta_description": "1618 Digital entwickelt perfekt proportionierte 3D-SaaS-Ökosysteme, KI-Sprachagenten und kinoreife Produktionen in Berlin. High-End-Architektur nach dem Goldenen Schnitt.",
-      "hero_title": "Wir kreieren digitale Ökosysteme.",
+      "hero_title": "Digitale Kooperationen & Produktionen.",
       "hero_subtitle": "Mehr als nur einfache Websites. Wir entwickeln 3D SaaS-Produkte, KI-Sprachagenten und High-End-Produktionen für moderne Unternehmen.",
-      "hero_button": "Ökosysteme Erkunden",
+      "hero_button": "Beispiel-Kooperationen",
       "service_saas_title": "SaaS & Custom Workflows",
       "service_saas_desc": "3D-Konfiguratoren, benutzerdefinierte Buchungsmaschinen und unternehmensspezifische Dashboards.",
       "service_ai_title": "KI Sprachagenten",
@@ -125,6 +125,68 @@ const resources = {
       "nav_initiate": "KONTAKT",
       "nav_initiate_sub": "SYS.COMM // PROJEKT INITIIGEREN"
     }
+  },
+  tr: {
+    translation: {
+      "meta_title": "1618 Digital | 3D SaaS & Sinematik Prodüksiyonlar",
+      "meta_description": "1618 Digital, Berlin'de Altın Oran'dan ilham alarak yüksek kaliteli 3D SaaS ekosistemleri, yapay zeka sesli asistanları ve sinematik prodüksiyonlar geliştirir.",
+      "hero_title": "Dijital İşbirlikleri & Prodüksiyonlar.",
+      "hero_subtitle": "Sıradan web sitelerinin ötesinde. Modern işletmeler için 3D SaaS ürünleri, yapay zeka sesli asistanlar ve üst düzey prodüksiyonlar geliştiriyoruz.",
+      "hero_button": "Örnek İşbirlikleri",
+      "service_saas_title": "SaaS & Özel İş Akışları",
+      "service_saas_desc": "3D Konfigüratörler, özel rezervasyon motorları ve şirkete özel paneller.",
+      "service_ai_title": "Yapay Zeka Sesli Asistanlar",
+      "service_ai_desc": "7/24 müşteri yakalayan, insan sesi doğallığında dijital asistanlar.",
+      "service_media_title": "Premium Prodüksiyon",
+      "service_media_desc": "Sinematik drone çekimleri ve DaVinci Resolve renk düzenlemesi.",
+      "service_social_title": "Sosyal Medya Paketleri",
+      "service_social_desc": "Instagram ve TikTok için yüksek etkili kısa videolar ve içerik stratejileri.",
+      "service_event_title": "Etkinlik & Düğün Sinematografisi",
+      "service_event_desc": "Duygusal anların en yüksek çözünürlük ve estetik mükemmellikle kaydedilmesi.",
+      "service_trailer_title": "Sinematik Hikaye Anlatımı",
+      "service_trailer_desc": "Vizyonunuzu büyüleyici bir görsel deneyime dönüştüren üst düzey teaser ve fragmanlar.",
+      "contact_button": "Birlikte İnşa Edelim",
+      "language": "TR",
+      "works_title": "Seçili Projeler & Prodüksiyonlar",
+      "works_donerbros_title": "Döner Bros Berlin",
+      "works_donerbros_desc": "Berlin'in önde gelen sokak lezzeti markası için dijital kimlik ve medya varlığı.",
+      "works_sera_title": "Sera Event",
+      "works_sera_desc": "Özel dijital akışlara sahip premium etkinlik yönetim platformu.",
+      "works_impulse_title": "Impulse Production",
+      "works_impulse_desc": "Yaratıcı bir prodüksiyon stüdyosu için üst düzey sinematik giriş.",
+      "about_title": "Felsefe",
+      "about_subtitle": "Oran. Etik.",
+      "about_text": "Altın Oran'a (1.618) inanıyoruz – oranın estetik mükemmellikle buluştuğu nokta. En yeni yazılım geliştirmelerinden üst düzey fotoğraf ve video prodüksiyonlarına kadar, teknolojik hassasiyeti görsel ustalıkla birleştiriyoruz. Standart çözümler değil, markanızı unutulmaz kılan özel dijital ve görsel deneyimler yaratıyoruz.",
+      "contact_title": "Proje Başlat",
+      "contact_name": "Adınız",
+      "contact_email": "E-posta Adresi",
+      "contact_message": "Proje Detayları...",
+      "contact_send": "Gönder",
+      "contact_success": "Alındı. Sizinle en kısa sürede iletişime geçeceğiz.",
+      "contact_dsgvo_consent": "Verilerimin gizlilik politikasına uygun olarak işlenmesini kabul ediyorum. Verilerim sadece talebimi işlemek için kullanılacak ve üçüncü şahıslarla paylaşılmayacaktır.",
+      "stat_projects": "Projeler",
+      "stat_clients": "Müşteriler",
+      "stat_satisfaction": "Memnuniyet",
+      "stat_uptime": "AI Kesintisiz",
+      "wa_operator_online": "● OPERATÖR ÇEVRİMİÇİ",
+      "wa_quick_connect": "WhatsApp Hızlı İletişim",
+      "wa_tap_to_chat": "SOHBETE BAŞLA",
+      "wa_copied": "KOPYALANDI",
+      "wa_copy": "KOPYALA",
+      "wa_message": "Merhaba, 1618 Digital ile bir projeye başlamakla ilgileniyorum!",
+      "nav_home": "ANA SAYFA",
+      "nav_home_sub": "SYS.BOOT // ANA ARAYÜZ",
+      "nav_cinematics": "SİNEMATOGRAFİ",
+      "nav_cinematics_sub": "SYS.REEL // GÖRSEL İŞİTSEL AĞ",
+      "nav_ecosystems": "PROJELER",
+      "nav_ecosystems_sub": "SYS.WORK // PORTFÖY & PRODÜKSİYON",
+      "nav_philosophy": "FELSEFE",
+      "nav_philosophy_sub": "SYS.MIND // RASYONEL TASARIM",
+      "nav_capabilities": "YETENEKLER",
+      "nav_capabilities_sub": "SYS.SPEC // STACK YETENEKLERİ",
+      "nav_initiate": "İLETİŞİM",
+      "nav_initiate_sub": "SYS.COMM // PROJE BAŞLAT"
+    }
   }
 };
 
@@ -133,7 +195,7 @@ const getUserLanguage = () => {
   if (storedLang) return storedLang;
 
   const browserLang = navigator.language.split('-')[0];
-  const supportedLangs = ['en', 'de'];
+  const supportedLangs = ['en', 'de', 'tr'];
   return supportedLangs.includes(browserLang) ? browserLang : 'en';
 };
 

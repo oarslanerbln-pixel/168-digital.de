@@ -1,6 +1,7 @@
 import { useRef, useMemo, useCallback } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import './GlobeBackground.css';
 
 // =========================================================================
 // PREMIUM 3D WIREFRAME GLOBE

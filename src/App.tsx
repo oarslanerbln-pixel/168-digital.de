@@ -1,6 +1,6 @@
 import { useState, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-const FluidBackground = lazy(() => import('./components/FluidBackground'));
+const GlobeBackground = lazy(() => import('./components/GlobeBackground'));
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
 import Hero from './components/Hero';
@@ -77,10 +77,10 @@ function App() {
         {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
       </AnimatePresence>
 
-      {/* Fluid Smoke — fixed background */}
+      {/* Interactive Globe — fixed background */}
       {isLoaded && (
         <Suspense fallback={null}>
-          <FluidBackground />
+          <GlobeBackground />
         </Suspense>
       )}
 

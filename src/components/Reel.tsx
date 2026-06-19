@@ -83,7 +83,7 @@ export default function Reel() {
           poster="/philosophy_cinematic_visual.png"
           className="reel-video"
         >
-          <source src="/video.1.mp4.mp4" type="video/mp4" />
+          <source src="/1618-intro-opt.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
         
