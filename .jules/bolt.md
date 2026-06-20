@@ -1,0 +1,3 @@
+## 2024-05-24 - Avoid React State for High-Frequency Events and Prevent Layout Thrashing
+**Learning:** Using `useState` for events that fire rapidly (like `mousemove` for custom cursors) causes severe performance issues because it triggers a full React component re-render on every mouse movement. Additionally, animating CSS dimensions like `width` and `height` forces the browser to recalculate layout constantly (layout thrashing), which is very slow.
+**Action:** For high-frequency updates, use Framer Motion's `useMotionValue` combined with `useSpring` to mutate styles directly without triggering React re-renders. Always prefer hardware-accelerated CSS properties like `scale` over `width` and `height` for animations.

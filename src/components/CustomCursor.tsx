@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // Bolt Optimization: Replace useState with useMotionValue to prevent re-renders on mousemove
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+
+  // Spring config for smooth follow
+  const springConfig = { damping: 28, stiffness: 500, mass: 0.1 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,7 +28,9 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Bolt Optimization: Update motion values directly instead of triggering a React state update
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -57,18 +67,23 @@ export default function CustomCursor() {
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
-          width: isHovered ? 32 : 6,
-          height: isHovered ? 32 : 6,
+          // Bolt Optimization: Animate `scale` instead of `width`/`height` to avoid layout thrashing
+          scale: isHovered ? 1 : 0.1875, // 0.1875 is 6 / 32
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
           border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+        transition={{ duration: 0.15 }}
         style={{
           position: 'fixed',
-          top: 0,
-          left: 0,
+          // Center the fixed-size cursor natively
+          top: -16,
+          left: -16,
+          // Fixed size to prevent layout thrashing
+          width: 32,
+          height: 32,
+          // Bolt Optimization: Use hardware-accelerated transforms powered directly by motion values
+          x: cursorXSpring,
+          y: cursorYSpring,
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
