@@ -72,7 +72,8 @@ Your behavior:
     const requestBody = {
       contents: formattedHistory,
       systemInstruction: {
-        parts: [{ text: customPrompt || systemPrompt }]
+        // SECURITY: Enforce system prompt server-side, prevent client override
+        parts: [{ text: systemPrompt }]
       },
       generationConfig: {
         temperature: 0.7,
