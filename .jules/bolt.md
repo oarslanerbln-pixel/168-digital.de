@@ -1,0 +1,3 @@
+## 2025-02-14 - Prevent Layout Thrashing in React UI Animations
+**Learning:** Animating DOM dimensions (`width` and `height`) in a custom cursor tracking a high-frequency `mousemove` event triggers expensive browser layout recalculations (layout thrashing). Using React's `useState` for tracking the mouse position coupled with this dimension animation can lead to very poor framerates and unnecessary re-renders.
+**Action:** Always animate hardware-accelerated CSS properties like `transform: scale` on fixed-dimension DOM nodes instead of structural dimensions (`width`/`height`). Use Framer Motion's `useMotionValue` and `useSpring` to bypass React's standard render cycle during high-frequency events.

@@ -1,8 +1,16 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  // Bolt Optimization: Replace useState with useMotionValue for high-frequency events
+  // This prevents React re-renders on every mouse move, significantly improving performance.
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { stiffness: 500, damping: 28, mass: 0.1 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,7 +28,9 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Offset by 16px to center the 32x32 cursor box
+      cursorX.set(e.clientX - 16);
+      cursorY.set(e.clientY - 16);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -52,15 +62,15 @@ export default function CustomCursor() {
 
   if (isMobile) return null;
 
+  // Bolt Optimization: Animate `scale` instead of `width`/`height`.
+  // Animating dimensions triggers expensive browser layout recalculations (layout thrashing).
+  // Using transform `scale` is hardware-accelerated.
   return (
     <>
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
-          width: isHovered ? 32 : 6,
-          height: isHovered ? 32 : 6,
+          scale: isHovered ? 1 : 0.1875, // 32px (hovered) vs 6px (unhovered) -> 6 / 32 = 0.1875
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
           border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
         }}
@@ -69,10 +79,15 @@ export default function CustomCursor() {
           position: 'fixed',
           top: 0,
           left: 0,
+          width: 32,
+          height: 32,
+          x: cursorXSpring,
+          y: cursorYSpring,
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
-          mixBlendMode: 'difference'
+          mixBlendMode: 'difference',
+          transformOrigin: 'center'
         }}
       />
     </>
