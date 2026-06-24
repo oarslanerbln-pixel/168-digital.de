@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { message, language, history, customPrompt } = req.body;
+    const { message, language, history } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: 'Missing message parameter' });
@@ -72,7 +72,8 @@ Your behavior:
     const requestBody = {
       contents: formattedHistory,
       systemInstruction: {
-        parts: [{ text: customPrompt || systemPrompt }]
+        // SECURITY: Do not allow unauthenticated client to override system prompt (Prompt Injection)
+        parts: [{ text: systemPrompt }]
       },
       generationConfig: {
         temperature: 0.7,
