@@ -1,0 +1,3 @@
+## 2024-05-24 - Prevent React State Trashing on High-Frequency Events
+**Learning:** Using React's `useState` for tracking high-frequency events like `mousemove` causes continuous, expensive component re-renders. Furthermore, animating CSS layout properties like `width` and `height` instead of hardware-accelerated transforms like `scale` causes severe browser layout thrashing.
+**Action:** Always use Framer Motion's `useMotionValue` and `useSpring` to directly map event values to DOM styles for high-frequency updates, bypassing React's render cycle. When resizing elements continuously, apply a CSS `scale` transform to a fixed-size element rather than animating its dimensions.
