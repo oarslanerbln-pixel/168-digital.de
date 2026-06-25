@@ -1,0 +1,4 @@
+## 2024-06-25 - Prevent AI Prompt Injection in Vercel Serverless Function
+**Vulnerability:** The Vercel serverless function (`api/chat.ts`) permitted clients to pass a `customPrompt` field within the request body. This field was used to dynamically override the backend's default AI `systemInstruction` when talking to the Gemini API. A malicious user could exploit this to inject arbitrary instructions and bypass AI boundaries (Prompt Injection).
+**Learning:** System instructions that govern the behavior and safety of the AI must always be strictly defined and enforced server-side. Allowing client-side input to alter or override the core system prompt bypasses authentication and exposes the application to prompt injection attacks.
+**Prevention:** Hardcode system prompts directly into backend logic. Never accept or interpolate unvalidated client-provided strings into the `systemInstruction` block of LLM API requests.
