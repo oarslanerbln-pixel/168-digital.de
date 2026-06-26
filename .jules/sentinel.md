@@ -1,0 +1,4 @@
+## 2024-05-18 - Prompt Injection in Serverless Functions
+**Vulnerability:** The Vercel serverless function (`api/chat.ts`) allowed the client to dynamically override the `systemInstruction` via the `customPrompt` payload property.
+**Learning:** System instructions define the security and behavioral boundaries of AI models. Allowing unauthenticated client input to control these instructions is a critical vulnerability (Prompt Injection), enabling malicious actors to bypass constraints or exploit the model.
+**Prevention:** System prompts must always be strictly defined and controlled server-side. Never accept overrides from client requests unless it's a dedicated developer feature behind strict authentication and authorization checks.
