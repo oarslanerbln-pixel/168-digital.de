@@ -1,0 +1,3 @@
+## 2024-07-25 - CustomCursor Framer Motion Re-renders & Layout Thrashing
+**Learning:** Using React state (`useState`) to track high-frequency events like `mousemove` and pass coordinates to a `motion.div` causes excessive re-renders (60-120 times a second). Furthermore, animating dimensional properties like `width` and `height` instead of hardware-accelerated transforms causes costly browser layout thrashing.
+**Action:** Use Framer Motion's `useMotionValue` and `useSpring` to bypass React's render cycle for mouse coordinates, and use CSS transforms (`scale`) applied to fixed dimensions instead of animating `width`/`height` directly.
