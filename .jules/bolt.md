@@ -1,0 +1,3 @@
+## 2024-05-24 - High-Frequency Event Thrashing in Framer Motion Cursors
+**Learning:** Using React state (`useState`) to store high-frequency events like `mousemove` causes excessive re-renders of the component tree. Furthermore, animating CSS properties like `width` and `height` inside a `motion.div` triggers costly browser layout recalculations (layout thrashing).
+**Action:** When creating custom cursors or handling frequent events in Framer Motion, bind values directly to the DOM using `useMotionValue` and `useSpring` passed to the `style` prop. To resize elements on hover, define static `width`/`height` and animate the `scale` CSS transform instead to leverage hardware acceleration and prevent layout recalculations.
