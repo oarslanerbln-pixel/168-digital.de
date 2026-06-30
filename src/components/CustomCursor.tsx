@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Use useMotionValue instead of state to avoid re-renders on mouse move
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { stiffness: 500, damping: 28, mass: 0.1 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     // Basic mobile/touch check
@@ -20,7 +27,9 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // 16 is half of the 32px base size, keeping the cursor centered
+      cursorX.set(e.clientX - 16);
+      cursorY.set(e.clientY - 16);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -57,15 +66,16 @@ export default function CustomCursor() {
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
-          width: isHovered ? 32 : 6,
-          height: isHovered ? 32 : 6,
+          scale: isHovered ? 1 : 0.1875, // 0.1875 * 32 = 6
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
           border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
         }}
         transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
         style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+          width: 32,
+          height: 32,
           position: 'fixed',
           top: 0,
           left: 0,

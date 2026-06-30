@@ -1,0 +1,3 @@
+## 2024-06-30 - Prevent layout thrashing and excessive re-renders in custom cursor
+**Learning:** For high-frequency events like `mousemove` in a custom cursor, using React's `useState` triggers an excessive number of full component re-renders. Furthermore, animating dimensions like `width` or `height` for hover effects causes costly browser layout recalculations (layout thrashing).
+**Action:** Use Framer Motion's `useMotionValue` and `useSpring` to map mouse coordinates directly to `style={{ x, y }}` to completely bypass the standard React rendering cycle. For visual size transitions, always use hardware-accelerated CSS transforms like `scale` applied to fixed dimensions instead of animating width/height directly.
