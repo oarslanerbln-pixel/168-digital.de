@@ -1,0 +1,3 @@
+## 2024-06-25 - CustomCursor Re-render and Layout Thrashing Optimization
+**Learning:** High-frequency event listeners (like `mousemove`) hooked to React's `useState` caused excessive React component re-renders (specifically in CustomCursor) every time the mouse moved. Additionally, animating `width` and `height` properties in Framer Motion triggers expensive browser layout recalculations (layout thrashing).
+**Action:** For high-frequency events, bypass React's render cycle entirely by directly mutating Framer Motion styles using `useMotionValue` and `useSpring`. To avoid layout thrashing during animations, apply hardware-accelerated CSS transforms like `scale` to fixed dimensions instead of animating actual dimension properties (like `width`/`height`).
