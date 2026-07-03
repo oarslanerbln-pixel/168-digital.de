@@ -1,0 +1,3 @@
+## 2024-11-20 - High-frequency events with Framer Motion
+**Learning:** Using React's `useState` for high-frequency events like `mousemove` causes layout thrashing and excessive re-renders, impacting performance. Additionally, animating dimensions like `width` or `height` also causes costly browser layout recalculations.
+**Action:** Use Framer Motion's `useMotionValue` and `useSpring` instead of `useState` to directly update `motion.div` styles for high-frequency events. Use hardware-accelerated CSS transforms like `scale` applied to fixed dimensions instead of animating `width`/`height`.
