@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Performance Optimization: Use useMotionValue and useSpring instead of useState
+  // for high-frequency events like mousemove. This prevents React from re-rendering
+  // the component on every single mouse movement.
+  const cursorX = useMotionValue(0);
+  const cursorY = useMotionValue(0);
+
+  const springConfig = { stiffness: 500, damping: 28, mass: 0.1 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     // Basic mobile/touch check
@@ -20,7 +29,11 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      // Update motion values directly to skip React re-renders
+      // Base size is 6px (radius 3px). We center the cursor by subtracting 3.
+      // We do not adjust the position for the hover state here; we handle hover visually via scaling.
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -48,7 +61,7 @@ export default function CustomCursor() {
       window.removeEventListener('resize', checkMobile);
       document.body.style.cursor = 'auto';
     };
-  }, []);
+  }, [cursorX, cursorY]);
 
   if (isMobile) return null;
 
@@ -57,18 +70,20 @@ export default function CustomCursor() {
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
           width: isHovered ? 32 : 6,
           height: isHovered ? 32 : 6,
+          left: isHovered ? -16 : -3,
+          top: isHovered ? -16 : -3,
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
           border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
         }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+        transition={{ duration: 0.15, ease: "easeOut" }}
         style={{
+          // Performance Optimization: Assign motion values directly to `x` and `y` in the style object
+          // instead of `translateX` and `translateY` to preserve internal transformation matrix integrity.
+          x: cursorXSpring,
+          y: cursorYSpring,
           position: 'fixed',
-          top: 0,
-          left: 0,
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
