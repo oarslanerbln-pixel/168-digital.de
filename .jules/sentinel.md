@@ -1,0 +1,4 @@
+## 2024-07-05 - Prompt Injection via Client Input
+**Vulnerability:** Found in `api/chat.ts` where unauthenticated client input `customPrompt` can completely override the server-side `systemInstruction` in the API request body.
+**Learning:** System instructions and boundaries must be strictly controlled server-side. Trusting client input to define AI behavior allows attackers to manipulate the AI to bypass restrictions, expose sensitive information, or act maliciously.
+**Prevention:** Never use client-supplied data to define or override core system instructions for AI models. Always hardcode or securely configure system prompts on the server, and only use client input for the user message parts.
