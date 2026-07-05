@@ -1,0 +1,3 @@
+## 2024-06-12 - High-Frequency Event State Thrashing
+**Learning:** Using React `useState` to track high-frequency events like `mousemove` for cursor positioning causes excessive and unnecessary React component re-renders (thrashing the render cycle). Framer Motion's `useMotionValue` allows bypassing the React render cycle entirely by applying changes directly to the DOM when passed into a `motion.div` style prop.
+**Action:** When tracking rapid events (mouse, scroll, resize) for animations or UI updates, default to `useMotionValue` (and `useSpring`/`useTransform`) to directly manipulate styles instead of triggering React state updates.
