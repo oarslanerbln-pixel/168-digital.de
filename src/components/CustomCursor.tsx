@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Use motion values for smooth performance instead of state
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  // Apply spring physics
+  const springX = useSpring(mouseX, { stiffness: 500, damping: 28, mass: 0.1 });
+  const springY = useSpring(mouseY, { stiffness: 500, damping: 28, mass: 0.1 });
 
   useEffect(() => {
     // Basic mobile/touch check
@@ -20,7 +27,8 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -55,26 +63,34 @@ export default function CustomCursor() {
   return (
     <>
       <motion.div
-        className="custom-cursor"
-        animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
-          width: isHovered ? 32 : 6,
-          height: isHovered ? 32 : 6,
-          backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
-          border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
-        }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+        className="custom-cursor-wrapper"
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
-          borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
-          mixBlendMode: 'difference'
+          mixBlendMode: 'difference',
+          x: springX,
+          y: springY,
         }}
-      />
+      >
+        <motion.div
+          className="custom-cursor"
+          animate={{
+            x: isHovered ? -16 : -3,
+            y: isHovered ? -16 : -3,
+            width: isHovered ? 32 : 6,
+            height: isHovered ? 32 : 6,
+            backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
+            border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
+          }}
+          transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+          style={{
+            borderRadius: '50%',
+          }}
+        />
+      </motion.div>
     </>
   );
 }
