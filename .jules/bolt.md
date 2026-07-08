@@ -1,0 +1,3 @@
+## 2024-07-08 - [Optimize Custom Cursor React Renders]
+**Learning:** [Framer Motion's continuous values (like mouse coordinates) updated via `useState` trigger excessive layout thrashing and React re-renders. Decoupling the continuous motion via nested `motion.div` and `useMotionValue` enables hardware acceleration directly via `style` without re-renders, while discrete state changes like hover effects can cleanly animate the inner element.]
+**Action:** [When implementing high-frequency event tracking (like scroll or mouse coordinates) in Framer Motion, exclusively use `useMotionValue` over `useState` to prevent React component re-rendering.]
