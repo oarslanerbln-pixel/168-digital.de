@@ -1,0 +1,3 @@
+## 2024-07-14 - Decouple Continuous and Discrete Framer Motion Animations
+**Learning:** For continuous animations like `mousemove` event tracking, relying on React's `useState` triggers unnecessary component re-renders for every pixel of movement, causing layout thrashing.
+**Action:** Decouple the structure by using a nested `motion.div`. Use `useMotionValue` and `useSpring` passed to the `style` prop for the outer div to handle continuous coordinates without re-renders. Use the inner div's `animate` prop to handle discrete states like hover interactions that require dimension and offset scaling.

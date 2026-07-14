@@ -1,10 +1,17 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Performance optimization: decoupled motion values prevent layout thrashing and excessive re-renders on mousemove
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const springConfig = { stiffness: 500, damping: 28, mass: 0.1 };
+  const smoothX = useSpring(mouseX, springConfig);
+  const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
     // Basic mobile/touch check
@@ -20,7 +27,8 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      mouseX.set(e.clientX);
+      mouseY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -48,17 +56,29 @@ export default function CustomCursor() {
       window.removeEventListener('resize', checkMobile);
       document.body.style.cursor = 'auto';
     };
-  }, []);
+  }, [mouseX, mouseY]);
 
   if (isMobile) return null;
 
   return (
-    <>
+    <motion.div
+      className="custom-cursor-wrapper"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        pointerEvents: 'none',
+        zIndex: 99999,
+        mixBlendMode: 'difference',
+        x: smoothX,
+        y: smoothY
+      }}
+    >
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
+          x: isHovered ? -16 : -3,
+          y: isHovered ? -16 : -3,
           width: isHovered ? 32 : 6,
           height: isHovered ? 32 : 6,
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
@@ -66,15 +86,9 @@ export default function CustomCursor() {
         }}
         transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
         style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
           borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 99999,
-          mixBlendMode: 'difference'
         }}
       />
-    </>
+    </motion.div>
   );
 }
