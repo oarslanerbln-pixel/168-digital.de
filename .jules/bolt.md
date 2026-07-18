@@ -1,0 +1,3 @@
+## 2024-07-18 - High-Frequency State Updates in CustomCursor
+**Learning:** Using React `useState` to track high-frequency events like `mousemove` in the custom cursor causes constant React component re-renders and severe layout thrashing. This is an anti-pattern when combined with Framer Motion, as it forces the entire component tree to reconcile on every mouse pixel movement.
+**Action:** For high-frequency continuous tracking, decouple the motion from React state by using Framer Motion's `useMotionValue` and `useSpring` mapped directly to the `style` prop in an outer `motion.div`. Place discrete, state-dependent animations (like hover expansions) in an inner `motion.div` driven by the `animate` prop.
