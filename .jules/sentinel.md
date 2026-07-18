@@ -1,0 +1,4 @@
+## 2024-05-31 - [System Prompt Injection Vulnerability]
+**Vulnerability:** The Vercel serverless function `api/chat.ts` accepted a `customPrompt` field from the unauthenticated client request body (`req.body`) which overrode the system instruction prompt for the Gemini AI model.
+**Learning:** System instructions define the security and behavior boundaries of AI agents. Allowing clients to supply or override these instructions creates a prompt injection vulnerability, potentially exposing the model to social engineering, inappropriate content generation, or unintended usage at the host's expense.
+**Prevention:** System prompts must always be strictly defined on the server-side and should never incorporate untrusted user input without robust sanitization. In `api/chat.ts`, this was fixed by removing the `customPrompt` parameter entirely.
