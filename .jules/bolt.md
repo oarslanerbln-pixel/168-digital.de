@@ -1,0 +1,3 @@
+## 2024-07-19 - Avoid useState for high-frequency motion tracking
+**Learning:** Using React's `useState` for tracking high-frequency events like `mousemove` causes excessive React component re-renders and layout thrashing, hurting UI performance.
+**Action:** When tracking continuous values like mouse coordinates, always use Framer Motion's `useMotionValue` (optionally with `useSpring`) to update the DOM via the `style` prop directly. To mix this with discrete animations (like hover offsets), use a nested `motion.div` structure where the outer element handles continuous motion and the inner element handles discrete `animate` transitions.
