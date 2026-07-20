@@ -1,8 +1,14 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  const springConfig = { damping: 28, stiffness: 500, mass: 0.1 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -20,7 +26,8 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -53,12 +60,24 @@ export default function CustomCursor() {
   if (isMobile) return null;
 
   return (
-    <>
+    <motion.div
+      className="custom-cursor-container"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        x: cursorXSpring,
+        y: cursorYSpring,
+        pointerEvents: 'none',
+        zIndex: 99999,
+        mixBlendMode: 'difference'
+      }}
+    >
       <motion.div
         className="custom-cursor"
         animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
+          x: isHovered ? -16 : -3,
+          y: isHovered ? -16 : -3,
           width: isHovered ? 32 : 6,
           height: isHovered ? 32 : 6,
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
@@ -66,15 +85,9 @@ export default function CustomCursor() {
         }}
         transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
         style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          borderRadius: '50%',
-          pointerEvents: 'none',
-          zIndex: 99999,
-          mixBlendMode: 'difference'
+          borderRadius: '50%'
         }}
       />
-    </>
+    </motion.div>
   );
 }
