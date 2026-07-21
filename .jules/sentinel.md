@@ -1,0 +1,4 @@
+## 2024-05-24 - AI Prompt Injection in Serverless Functions
+**Vulnerability:** The Vercel serverless function (`api/chat.ts`) accepted a `customPrompt` field from the unauthenticated client request body and directly used it to override the AI's core `systemInstruction`. This allowed any client to perform prompt injection, completely altering the AI's behavior and potentially exposing internal systems or generating malicious content.
+**Learning:** System instructions for LLMs must be strictly controlled server-side. Allowing client input to override these instructions without authentication or strict validation creates a critical vulnerability. The memory also highlighted this specific risk for Vercel serverless functions.
+**Prevention:** Never allow dynamic client input to override system instructions. Always hardcode or securely fetch system prompts server-side, completely decoupling them from the client request payload.
