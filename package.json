@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^9.105.6",
@@ -28,6 +29,7 @@
     "@types/three": "^0.165.0",
     "@vercel/node": "^5.8.4",
     "@vitejs/plugin-react": "^4.3.0",
+    "sharp": "^0.35.3",
     "typescript": "^5.4.5",
     "vite": "^5.2.11"
   }
