@@ -46,9 +46,11 @@ export default function About() {
         {/* Founder Image Profile */}
         <div className="about-image-container">
           <div className="about-glow-orb" />
-          <motion.img 
-            src="/philosophy_cinematic_visual.png" 
+          <motion.img
+            src="/philosophy_cinematic_visual.webp"
             alt="Cinematic Minimalistic Architecture"
+            loading="lazy"
+            decoding="async"
             whileHover={{ scale: 1.02, filter: 'grayscale(0%) contrast(1.1)' }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="about-profile-img"

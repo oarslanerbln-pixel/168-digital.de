@@ -71,14 +71,78 @@
 }
 
 
+/* ─── EYEBROW (category + location) ─── */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 6px 14px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+
 /* ─── SUBTITLE ─── */
 .hero-subtitle {
   font-style: italic;
   letter-spacing: 0.04em;
-  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
+  line-height: 1.5;
   color: var(--accent-silver);
-  margin-bottom: 56px;
+  margin-bottom: 40px;
+  max-width: 620px;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+
+/* ─── SCANNABLE SERVICE STRIP ─── */
+.hero-service-strip {
+  pointer-events: auto;
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.hero-service-chip {
+  padding: 8px 16px;
+  border-radius: 100px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  color: rgba(255, 255, 255, 0.82);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  transition: all 0.35s var(--ease-premium);
+}
+
+.hero-service-chip:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.09);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 992px) {
+  .hero-subtitle { margin-left: auto; margin-right: auto; }
+  .hero-service-strip { justify-content: center; }
 }
 
 

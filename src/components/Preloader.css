@@ -3,35 +3,49 @@
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #010101;
+  background: #040404;
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Black cinematic shutters (top & bottom) */
-.pl-shutter-top {
+/* Warm radial glow behind the spiral */
+.pl-glow-bg {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 50%;
-  background: #010101;
-  z-index: 3;
+  inset: 0;
+  z-index: 1;
+  background: radial-gradient(
+    circle at 50% 46%,
+    rgba(240, 205, 140, 0.16) 0%,
+    rgba(150, 110, 50, 0.06) 32%,
+    transparent 62%
+  );
   pointer-events: none;
 }
 
+/* Cinematic vignette */
+.pl-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: radial-gradient(circle at 50% 50%, transparent 54%, rgba(0, 0, 0, 0.72) 100%);
+  pointer-events: none;
+}
+
+/* Black cinematic shutters (top & bottom) */
+.pl-shutter-top,
 .pl-shutter-bottom {
   position: absolute;
-  bottom: 0;
   left: 0;
   width: 100%;
   height: 50%;
-  background: #010101;
-  z-index: 3;
+  background: #040404;
+  z-index: 4;
   pointer-events: none;
 }
+.pl-shutter-top { top: 0; }
+.pl-shutter-bottom { bottom: 0; }
 
 /* Central content stage */
 .pl-stage {
@@ -41,53 +55,125 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  padding: 0 20px;
 }
 
-/* Thin horizontal line */
-.pl-line {
-  height: 1px;
-  background: rgba(255, 255, 255, 0.06);
+/* ─── Golden spiral drawn by light ─── */
+.pl-spiral-wrap {
   position: relative;
-  overflow: hidden;
-  /* width is animated via framer motion */
+  width: min(440px, 82vw);
+  height: min(440px, 82vw);
 }
 
-.pl-line-glow {
+.pl-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pl-svg-glow {
+  filter: blur(9px);
+  opacity: 0.6;
+}
+
+.pl-svg-core {
+  filter:
+    drop-shadow(0 0 7px rgba(255, 232, 180, 0.95))
+    drop-shadow(0 0 16px rgba(240, 200, 130, 0.6));
+}
+
+/* Luminous drawing head (positioned via CSS offset-path) */
+.pl-head {
   position: absolute;
   top: 0;
   left: 0;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.9), transparent);
-  box-shadow: 0 0 12px 2px rgba(212, 175, 55, 0.4);
+  width: 20px;
+  height: 20px;
+  will-change: offset-distance;
 }
 
-/* Overflow hidden wrapper for brand slide-up */
-.pl-brand-wrap {
-  overflow: hidden;
+.pl-orb {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    #ffffff 0%,
+    #ffeec4 34%,
+    rgba(240, 200, 130, 0.55) 60%,
+    transparent 76%
+  );
+  box-shadow:
+    0 0 18px 7px rgba(255, 238, 196, 0.9),
+    0 0 44px 16px rgba(240, 200, 130, 0.5),
+    0 0 78px 28px rgba(210, 160, 80, 0.28);
 }
 
-/* Brand name */
-.pl-brand {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: clamp(1.4rem, 5vw, 2.8rem);
-  font-weight: 200;
-  color: #ffffff;
+/* Floating gold dust */
+.pl-dust {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(229, 193, 133, 0.85);
+  filter: blur(1px);
+  pointer-events: none;
+}
+
+/* ─── Brand wordmark ─── */
+.pl-brand-block {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pl-brand-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.55em;
-  margin-right: -0.55em; /* offset for letter-spacing */
+  letter-spacing: 0.44em;
+  margin-right: -0.44em;
+  font-size: clamp(1.75rem, 7.4vw, 3.25rem);
   text-align: center;
   white-space: nowrap;
+  background: linear-gradient(135deg, #ffffff 0%, #f0cd8c 50%, #c9a26a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 34px rgba(240, 200, 130, 0.35);
 }
 
-/* Sub-label / tagline */
-.pl-sub {
-  font-family: 'Inter', monospace, sans-serif;
-  font-size: clamp(0.5rem, 1.5vw, 0.65rem);
-  font-weight: 400;
-  color: rgba(212, 175, 55, 0.7);
-  letter-spacing: 0.45em;
-  margin-right: -0.45em;
+.pl-brand-line {
+  width: 210px;
+  height: 1px;
+  margin-top: 18px;
+  transform-origin: center;
+  background: linear-gradient(90deg, transparent, rgba(240, 200, 130, 0.95), transparent);
+}
+
+.pl-brand-sub {
+  margin-top: 13px;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.56rem, 1.6vw, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.52em;
+  margin-right: -0.52em;
   text-transform: uppercase;
-  text-align: center;
-  margin-bottom: 18px;
+  color: rgba(240, 205, 140, 0.72);
+}
+
+@media (max-width: 480px) {
+  .pl-spiral-wrap {
+    transform: scale(0.78);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-head { display: none; }
 }

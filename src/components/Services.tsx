@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Box, Mic, Video, Smartphone, Camera, Film } from 'lucide-react';
+import { Globe, Box, Mic, Video, Smartphone, Camera, Film } from 'lucide-react';
 import { playTick } from '../utils/audio';
 import { useRef } from 'react';
 
@@ -9,6 +9,13 @@ import { useRef } from 'react';
    ════════════════════════════════════════════════════════════════ */
 
 const cards = [
+  {
+    icon: Globe,
+    titleKey: 'service_web_title',
+    descKey: 'service_web_desc',
+    glowColor: '#38bdf8',
+    tags: ['Websites', 'Landing Pages', 'Web Apps'],
+  },
   {
     icon: Box,
     titleKey: 'service_saas_title',
@@ -120,12 +127,11 @@ export default function Services() {
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span className="services-overline">WHAT WE BUILD</span>
+        <span className="services-overline">{t('services_overline')}</span>
         <h2 className="services-title text-silver">
-          {t('hero_button').includes('Kooperation') || t('hero_button').includes('Ökosystem')
-            ? 'Unsere Beispiel-Kooperationen'
-            : 'Our Sample Cooperations'}
+          {t('services_title')}
         </h2>
+        <p className="services-subtitle">{t('services_subtitle')}</p>
       </motion.div>
 
       <div className="works-grid">
