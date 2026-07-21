@@ -41,6 +41,105 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  padding: 0 20px;
+}
+
+/* ─── Pen-drawn golden spiral ─── */
+.pl-spiral-wrap {
+  position: relative;
+  width: 260px;
+  height: 260px;
+}
+
+.pl-spiral-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 6px rgba(229, 193, 133, 0.35));
+}
+
+/* Pen nib riding the tip of the stroke (positioned via CSS offset-path) */
+.pl-pen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  will-change: offset-distance, transform;
+  filter: drop-shadow(0 0 6px rgba(229, 193, 133, 0.55));
+}
+
+.pl-pen-icon {
+  display: block;
+  color: #f0d9a8;
+}
+
+/* Bright ink point exactly where the nib meets the line */
+.pl-pen-tip {
+  position: absolute;
+  left: 14%;
+  top: 86%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: #fff6df;
+  box-shadow:
+    0 0 10px 3px rgba(255, 240, 200, 0.9),
+    0 0 22px 7px rgba(229, 193, 133, 0.45);
+}
+
+/* φ caption */
+.pl-phi {
+  margin-top: 26px;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 2.4vw, 1.05rem);
+  letter-spacing: 0.42em;
+  margin-right: -0.42em;
+  color: rgba(229, 193, 133, 0.8);
+}
+
+/* Brand wordmark block */
+.pl-brand-block {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pl-brand-name {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4em;
+  margin-right: -0.4em;
+  font-size: clamp(1.5rem, 7vw, 3rem);
+  text-align: center;
+  background: linear-gradient(135deg, #ffffff 0%, #e5c185 50%, #c5a073 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(229, 193, 133, 0.3);
+}
+
+.pl-brand-line {
+  width: 100%;
+  height: 1px;
+  margin-top: 20px;
+  transform-origin: center;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.85), transparent);
+}
+
+@media (max-width: 480px) {
+  .pl-spiral-wrap {
+    transform: scale(0.82);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-pen { display: none; }
 }
 
 /* Thin horizontal line */
