@@ -1,48 +1,69 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { PenTool } from 'lucide-react';
 import './Preloader.css';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-/* ── Golden ratio (φ = 1.618) logarithmic spiral, drawn by the pen ──
-   Built in a 1-unit-per-pixel coordinate space (SIZE×SIZE) so the SVG
-   stroke and the CSS offset-path pen share the exact same geometry. */
-const SIZE = 260;
-const CENTER = SIZE / 2;
+/* ── Golden ratio (φ = 1.618) logarithmic spiral, drawn by a light head ──
+   Built in a 1-unit-per-pixel space (SIZE×SIZE) and centered on its own
+   bounding box, so the SVG stroke and the CSS offset-path head share the
+   exact same geometry. */
+const SIZE = 360;
+const C = SIZE / 2;
 
 function buildGoldenSpiral(): string {
   const PHI = 1.618;
   const b = Math.log(PHI) / (Math.PI / 2); // radius ×φ every quarter turn
-  const thetaEnd = 3.5 * Math.PI;
-  const maxR = 116;
+  const thetaEnd = 3.75 * Math.PI;
+  const maxR = 150;
   const r0 = maxR / Math.exp(b * thetaEnd);
-  const steps = 240;
-  let d = '';
+  const steps = 260;
+
+  const pts: [number, number][] = [];
   for (let i = 0; i <= steps; i++) {
-    const theta = (i / steps) * thetaEnd;
-    const r = r0 * Math.exp(b * theta);
-    const a = theta - Math.PI / 2; // rotate opening upward
-    const x = CENTER + r * Math.cos(a);
-    const y = CENTER + r * Math.sin(a);
-    d += i === 0 ? `M ${x.toFixed(2)} ${y.toFixed(2)}` : ` L ${x.toFixed(2)} ${y.toFixed(2)}`;
+    const t = (i / steps) * thetaEnd;
+    const r = r0 * Math.exp(b * t);
+    const a = t - Math.PI / 2;
+    pts.push([C + r * Math.cos(a), C + r * Math.sin(a)]);
   }
+  // Center on bounding box
+  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+  for (const [x, y] of pts) {
+    minX = Math.min(minX, x); minY = Math.min(minY, y);
+    maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
+  }
+  const dx = C - (minX + maxX) / 2;
+  const dy = C - (minY + maxY) / 2;
+
+  let d = '';
+  pts.forEach(([x, y], i) => {
+    const X = (x + dx).toFixed(2);
+    const Y = (y + dy).toFixed(2);
+    d += i === 0 ? `M ${X} ${Y}` : ` L ${X} ${Y}`;
+  });
   return d;
 }
 
 const SPIRAL = buildGoldenSpiral();
-const DRAW_DURATION = 2.2;
-const DRAW_EASE = [0.6, 0, 0.35, 1] as const;
+const DRAW_DURATION = 2.6;
+const DRAW_EASE = [0.5, 0, 0.3, 1] as const;
+const DUST = [
+  { x: '16%', y: '24%', s: 4, d: 0 },
+  { x: '80%', y: '30%', s: 3, d: 1.1 },
+  { x: '72%', y: '76%', s: 5, d: 0.6 },
+  { x: '24%', y: '70%', s: 2, d: 1.6 },
+  { x: '60%', y: '14%', s: 3, d: 0.3 },
+];
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 2500); // reveal wordmark
-    const t2 = setTimeout(() => setPhase(2), 4200); // open shutters
-    const t3 = setTimeout(() => onComplete(), 5400); // unmount
+    const t1 = setTimeout(() => setPhase(1), 2900); // reveal wordmark
+    const t2 = setTimeout(() => setPhase(2), 4600); // open shutters
+    const t3 = setTimeout(() => onComplete(), 5800); // unmount
 
     return () => {
       clearTimeout(t1);
@@ -61,22 +82,26 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.8, ease: 'easeInOut' }}
-      style={{ pointerEvents: isLoaded ? 'none' : 'all', background: '#050505' }}
+      style={{ pointerEvents: isLoaded ? 'none' : 'all' }}
       className="preloader-overlay-p"
     >
+      {/* Warm radial glow + vignette */}
+      <div className="pl-glow-bg" />
+      <div className="pl-vignette" />
+
       {/* ── Cinematic black shutters ── */}
       <motion.div
         className="pl-shutter-top"
         initial={{ scaleY: 1 }}
         animate={{ scaleY: isLoaded ? 0 : 1 }}
-        style={{ transformOrigin: 'top', background: '#050505' }}
+        style={{ transformOrigin: 'top' }}
         transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
       />
       <motion.div
         className="pl-shutter-bottom"
         initial={{ scaleY: 1 }}
         animate={{ scaleY: isLoaded ? 0 : 1 }}
-        style={{ transformOrigin: 'bottom', background: '#050505' }}
+        style={{ transformOrigin: 'bottom' }}
         transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
       />
 
@@ -85,7 +110,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         className="pl-stage"
         animate={{
           opacity: isLoaded ? 0 : 1,
-          scale: isLoaded ? 1.05 : 1,
+          scale: isLoaded ? 1.06 : 1,
           filter: isLoaded ? 'blur(10px)' : 'blur(0px)',
         }}
         transition={{ duration: 0.8, ease: 'easeIn' }}
@@ -93,74 +118,87 @@ export default function Preloader({ onComplete }: PreloaderProps) {
         {/* Pen-drawn golden spiral */}
         <motion.div
           className="pl-spiral-wrap"
-          animate={{ opacity: showSpiral ? (showBrand ? 0.28 : 1) : 0 }}
-          transition={{ duration: 0.8, ease: 'easeInOut' }}
+          animate={{
+            opacity: showSpiral ? 1 : 0,
+            scale: showBrand ? 1.08 : 1,
+            rotate: showBrand ? 6 : 0,
+            filter: showBrand ? 'blur(2px)' : 'blur(0px)',
+          }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          style={{ opacity: showBrand ? 0.25 : 1 }}
         >
-          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-spiral-svg" aria-hidden="true">
+          {/* Blurred glow underlay */}
+          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-svg pl-svg-glow" aria-hidden="true">
+            <motion.path
+              d={SPIRAL}
+              fill="none"
+              stroke="rgba(229,193,133,0.9)"
+              strokeWidth={6}
+              strokeLinecap="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
+              transition={{ duration: DRAW_DURATION, ease: DRAW_EASE }}
+            />
+          </svg>
+
+          {/* Crisp gold core */}
+          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-svg pl-svg-core" aria-hidden="true">
             <defs>
               <linearGradient id="pl-gold" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="#fff4d6" />
-                <stop offset="45%" stopColor="#e5c185" />
-                <stop offset="100%" stopColor="#c5a073" />
+                <stop offset="50%" stopColor="#e5c185" />
+                <stop offset="100%" stopColor="#b98f52" />
               </linearGradient>
             </defs>
             <motion.path
               d={SPIRAL}
               fill="none"
               stroke="url(#pl-gold)"
-              strokeWidth={1.6}
+              strokeWidth={2.2}
               strokeLinecap="round"
-              strokeLinejoin="round"
-              initial={{ pathLength: 0, opacity: 0.9 }}
-              animate={{ pathLength: 1, opacity: 1 }}
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: 1 }}
               transition={{ duration: DRAW_DURATION, ease: DRAW_EASE }}
             />
           </svg>
 
-          {/* Pen nib that rides the tip of the stroke */}
+          {/* Luminous head that draws the line */}
           {phase === 0 && (
             <motion.div
-              className="pl-pen"
-              style={{
-                offsetPath: `path('${SPIRAL}')`,
-                offsetRotate: 'auto',
-                offsetAnchor: '14% 86%',
+              className="pl-head"
+              style={{ offsetPath: `path('${SPIRAL}')`, offsetAnchor: '50% 50%' }}
+              initial={{ offsetDistance: '0%', opacity: 0 }}
+              animate={{ offsetDistance: '100%', opacity: 1 }}
+              transition={{
+                offsetDistance: { duration: DRAW_DURATION, ease: DRAW_EASE },
+                opacity: { duration: 0.4 },
               }}
-              initial={{ offsetDistance: '0%' }}
-              animate={{ offsetDistance: '100%' }}
-              transition={{ duration: DRAW_DURATION, ease: DRAW_EASE }}
             >
-              <span className="pl-pen-tip" />
-              <PenTool size={26} strokeWidth={1.4} className="pl-pen-icon" />
+              <span className="pl-orb" />
             </motion.div>
           )}
+
+          {/* Gold dust */}
+          {DUST.map((p, i) => (
+            <motion.span
+              key={i}
+              className="pl-dust"
+              style={{ left: p.x, top: p.y, width: p.s, height: p.s }}
+              animate={{ opacity: [0.15, 0.7, 0.15], y: [0, -8, 0] }}
+              transition={{ duration: 4, delay: p.d, repeat: Infinity, ease: 'easeInOut' }}
+            />
+          ))}
         </motion.div>
 
-        {/* Caption fades in as the spiral completes */}
+        {/* Brand wordmark (centered over the fading spiral) */}
         <AnimatePresence>
-          {phase === 0 && (
-            <motion.div
-              key="phi"
-              className="pl-phi"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              transition={{ delay: DRAW_DURATION * 0.72, duration: 0.7 }}
-            >
-              φ · 1.618
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Brand wordmark */}
-        <AnimatePresence mode="wait">
           {showBrand && (
             <motion.div
               key="brand"
               className="pl-brand-block"
-              initial={{ scale: 0.86, opacity: 0, filter: 'blur(18px)' }}
+              initial={{ scale: 0.9, opacity: 0, filter: 'blur(16px)' }}
               animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 1.15, filter: 'blur(10px)' }}
+              exit={{ opacity: 0, scale: 1.12, filter: 'blur(10px)' }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             >
               <div className="pl-brand-name">1618 DIGITAL</div>
@@ -170,6 +208,14 @@ export default function Preloader({ onComplete }: PreloaderProps) {
                 animate={{ scaleX: 1, opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               />
+              <motion.div
+                className="pl-brand-sub"
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7, duration: 0.7 }}
+              >
+                DIGITAL STUDIO · BERLIN
+              </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
