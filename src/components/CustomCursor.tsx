@@ -1,10 +1,19 @@
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Performance optimization: use motion values for continuous tracking
+  // to bypass React state and avoid re-renders on every mousemove event.
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+
+  // Add a spring to match the original feel, driven directly by motion values
+  const springConfig = { stiffness: 500, damping: 28, mass: 0.1 };
+  const smoothX = useSpring(cursorX, springConfig);
+  const smoothY = useSpring(cursorY, springConfig);
 
   useEffect(() => {
     // Basic mobile/touch check
@@ -20,7 +29,8 @@ export default function CustomCursor() {
     }
 
     const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
     };
 
     const handleMouseOver = (e: MouseEvent) => {
@@ -55,26 +65,33 @@ export default function CustomCursor() {
   return (
     <>
       <motion.div
-        className="custom-cursor"
-        animate={{
-          x: mousePosition.x - (isHovered ? 16 : 3),
-          y: mousePosition.y - (isHovered ? 16 : 3),
-          width: isHovered ? 32 : 6,
-          height: isHovered ? 32 : 6,
-          backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
-          border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
-        }}
-        transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+        className="custom-cursor-container"
         style={{
           position: 'fixed',
           top: 0,
           left: 0,
-          borderRadius: '50%',
+          x: smoothX,
+          y: smoothY,
           pointerEvents: 'none',
           zIndex: 99999,
           mixBlendMode: 'difference'
         }}
-      />
+      >
+        <motion.div
+          animate={{
+            x: isHovered ? -16 : -3,
+            y: isHovered ? -16 : -3,
+            width: isHovered ? 32 : 6,
+            height: isHovered ? 32 : 6,
+            backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
+            border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
+          }}
+          transition={{ type: 'spring', stiffness: 500, damping: 28, mass: 0.1 }}
+          style={{
+            borderRadius: '50%',
+          }}
+        />
+      </motion.div>
     </>
   );
 }

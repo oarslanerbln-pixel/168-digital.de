@@ -1,0 +1,3 @@
+## 2024-06-25 - Decoupling Framer Motion Animations for High-Frequency Events
+**Learning:** Updating React state (e.g., `useState`) on high-frequency events like `mousemove` causes excessive re-renders and degrades performance, resulting in layout thrashing and choppy animations.
+**Action:** For performance-critical animations tied to high-frequency events, bypass React's render cycle using Framer Motion's `useMotionValue` and `useSpring`. Bind these values directly to the `style` prop of a `motion.div`. To handle both continuous tracking and discrete state changes (like hover offsets), use a nested `motion.div` structure: the outer div handles continuous values via `style`, and the inner div handles discrete state via `animate`.
