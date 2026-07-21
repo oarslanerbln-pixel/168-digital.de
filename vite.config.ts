@@ -93,9 +93,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         // Split heavy vendors into their own long-cacheable chunks so the
-        // main bundle stays small and 3D libs only load when needed.
+        // main bundle stays small.
         manualChunks: {
-          three: ['three', '@react-three/fiber', '@react-three/drei'],
           motion: ['framer-motion'],
         },
       },

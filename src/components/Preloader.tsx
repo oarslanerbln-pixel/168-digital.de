@@ -1,52 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { buildGoldenSpiral } from '../utils/goldenSpiral';
 import './Preloader.css';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-/* ── Golden ratio (φ = 1.618) logarithmic spiral, drawn by a light head ──
-   Built in a 1-unit-per-pixel space (SIZE×SIZE) and centered on its own
-   bounding box, so the SVG stroke and the CSS offset-path head share the
-   exact same geometry. */
 const SIZE = 360;
-const C = SIZE / 2;
-
-function buildGoldenSpiral(): string {
-  const PHI = 1.618;
-  const b = Math.log(PHI) / (Math.PI / 2); // radius ×φ every quarter turn
-  const thetaEnd = 3.75 * Math.PI;
-  const maxR = 150;
-  const r0 = maxR / Math.exp(b * thetaEnd);
-  const steps = 260;
-
-  const pts: [number, number][] = [];
-  for (let i = 0; i <= steps; i++) {
-    const t = (i / steps) * thetaEnd;
-    const r = r0 * Math.exp(b * t);
-    const a = t - Math.PI / 2;
-    pts.push([C + r * Math.cos(a), C + r * Math.sin(a)]);
-  }
-  // Center on bounding box
-  let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
-  for (const [x, y] of pts) {
-    minX = Math.min(minX, x); minY = Math.min(minY, y);
-    maxX = Math.max(maxX, x); maxY = Math.max(maxY, y);
-  }
-  const dx = C - (minX + maxX) / 2;
-  const dy = C - (minY + maxY) / 2;
-
-  let d = '';
-  pts.forEach(([x, y], i) => {
-    const X = (x + dx).toFixed(2);
-    const Y = (y + dy).toFixed(2);
-    d += i === 0 ? `M ${X} ${Y}` : ` L ${X} ${Y}`;
-  });
-  return d;
-}
-
-const SPIRAL = buildGoldenSpiral();
+const SPIRAL = buildGoldenSpiral(SIZE, 150, 3.75);
 const DRAW_DURATION = 2.6;
 const DRAW_EASE = [0.5, 0, 0.3, 1] as const;
 const DUST = [

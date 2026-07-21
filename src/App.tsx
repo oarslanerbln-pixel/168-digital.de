@@ -1,6 +1,6 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-const GlobeBackground = lazy(() => import('./components/GlobeBackground'));
+import AmbientBackground from './components/AmbientBackground';
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
 import Hero from './components/Hero';
@@ -77,12 +77,8 @@ function App() {
         {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
       </AnimatePresence>
 
-      {/* Interactive Globe — fixed background */}
-      {isLoaded && (
-        <Suspense fallback={null}>
-          <GlobeBackground />
-        </Suspense>
-      )}
+      {/* Ambient particle backdrop — fixed background */}
+      {isLoaded && <AmbientBackground />}
 
       <motion.div
         initial={{ opacity: 0 }}

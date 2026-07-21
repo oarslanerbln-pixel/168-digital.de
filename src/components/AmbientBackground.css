@@ -1,0 +1,56 @@
+/* ─── Ambient Background — lightweight fixed backdrop ─── */
+.ambient-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+  background: #050505;
+  animation: ambient-fadein 2.5s ease-out both;
+}
+
+@keyframes ambient-fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Slow-drifting warm aurora gradients */
+.ambient-aurora {
+  position: absolute;
+  inset: -20%;
+  background:
+    radial-gradient(38% 42% at 22% 28%, rgba(229, 193, 133, 0.10), transparent 70%),
+    radial-gradient(42% 46% at 80% 34%, rgba(120, 90, 40, 0.10), transparent 72%),
+    radial-gradient(46% 50% at 55% 82%, rgba(180, 140, 70, 0.08), transparent 74%);
+  filter: blur(20px);
+  animation: ambient-drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes ambient-drift {
+  0%   { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(2%, -2%, 0) scale(1.08); }
+}
+
+.ambient-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+}
+
+/* Depth vignette */
+.ambient-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 32%, rgba(5, 5, 5, 0.55) 72%, rgba(5, 5, 5, 0.92) 100%);
+}
+
+@media (max-width: 768px) {
+  .ambient-aurora { opacity: 0.7; }
+  .ambient-canvas { opacity: 0.5; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ambient-aurora { animation: none; }
+}

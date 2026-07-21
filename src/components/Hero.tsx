@@ -3,7 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
 import { useRef, MouseEvent, useState } from 'react';
 import { ArrowRight, MessageCircle, Mail, Mic } from 'lucide-react';
-import Hero3DScene from './Hero3DScene';
+import HeroEmblem from './HeroEmblem';
 import Reel from './Reel';
 import AIVoiceDemoModal from './AIVoiceDemoModal';
 import './Hero.css';
@@ -170,16 +170,16 @@ export default function Hero() {
             </motion.ul>
           </div>
 
-          {/* Right: 1618 3D Model */}
+          {/* Right: 1618 golden emblem */}
           <div className="hero-right">
-            <motion.div 
+            <motion.div
               className="hero-3d-scene-container"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
               style={{ pointerEvents: 'auto' }}
             >
-              <Hero3DScene />
+              <HeroEmblem />
             </motion.div>
           </div>
         </div>
