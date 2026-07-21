@@ -24,3 +24,11 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Local dev secret key (do not commit)
+1618-dev-key.json
+
+# Env
+.env
+.env.*
+!.env.example
