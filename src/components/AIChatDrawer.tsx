@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, X, Send, User, Sparkles, Check, Mail } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
+import { sendLead } from '../utils/leads';
 import './AIChatDrawer.css';
 
 interface Message {
@@ -72,10 +73,11 @@ export default function AIChatDrawer() {
     const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
     const extractedEmails = textToSend.match(emailRegex);
     if (extractedEmails && extractedEmails.length > 0) {
-      // Save email to localStorage/state
+      // Save email to localStorage/state and deliver the lead to inbox
       setEmailInput(extractedEmails[0]);
       setIsEmailSubmitted(true);
       localStorage.setItem('lead_email', extractedEmails[0]);
+      sendLead({ email: extractedEmails[0], message: textToSend, source: 'AI Chat' });
     }
 
     try {
@@ -133,7 +135,8 @@ export default function AIChatDrawer() {
     playClick();
     setIsEmailSubmitted(true);
     localStorage.setItem('lead_email', emailInput);
-    
+    sendLead({ email: emailInput, source: 'AI Chat — Lead Bar' });
+
     // Add success message in chat from agent
     const emailSuccessMsg = i18n.language === 'de'
       ? `Hervorragend! Ich habe Ihre E-Mail-Adresse (${emailInput}) registriert. Wir werden uns in Kürze bezüglich Ihres Projekts melden.`

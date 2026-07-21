@@ -1,18 +1,35 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Send, CheckSquare, Square, Sparkles } from 'lucide-react';
+import { Send, CheckSquare, Square, Sparkles, Loader2 } from 'lucide-react';
+import { sendLead } from '../utils/leads';
 
 export default function Contact() {
   const { t } = useTranslation();
-  const [status, setStatus] = useState<'idle' | 'success'>('idle');
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [dsgvoConsent, setDsgvoConsent] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!dsgvoConsent) return;
-    setStatus('success');
-    setTimeout(() => setStatus('idle'), 5000);
+    if (!dsgvoConsent || status === 'sending') return;
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    const name = String(data.get('name') || '').trim();
+    const email = String(data.get('email') || '').trim();
+    const message = String(data.get('message') || '').trim();
+
+    setStatus('sending');
+    const delivered = await sendLead({ name, email, message, source: 'Contact Form' });
+
+    if (delivered) {
+      setStatus('success');
+      form.reset();
+      setDsgvoConsent(false);
+      setTimeout(() => setStatus('idle'), 6000);
+    } else {
+      setStatus('error');
+    }
   };
 
   return (
@@ -50,9 +67,10 @@ export default function Contact() {
             {/* Input Group */}
             <div className="input-group">
               <div className="input-field-wrapper">
-                <input 
-                  required 
-                  type="text" 
+                <input
+                  required
+                  type="text"
+                  name="name"
                   placeholder=" "
                   id="contact-name"
                   className="premium-input"
@@ -62,9 +80,10 @@ export default function Contact() {
               </div>
 
               <div className="input-field-wrapper">
-                <input 
-                  required 
-                  type="email" 
+                <input
+                  required
+                  type="email"
+                  name="email"
                   placeholder=" "
                   id="contact-email"
                   className="premium-input"
@@ -76,9 +95,10 @@ export default function Contact() {
 
             {/* Textarea */}
             <div className="input-field-wrapper">
-              <textarea 
-                required 
+              <textarea
+                required
                 rows={5}
+                name="message"
                 placeholder=" "
                 id="contact-message"
                 className="premium-input premium-textarea"
@@ -106,16 +126,26 @@ export default function Contact() {
 
             {/* Submit Button */}
             <motion.button
-              whileHover={{ scale: dsgvoConsent ? 1.02 : 1 }}
-              whileTap={{ scale: dsgvoConsent ? 0.98 : 1 }}
+              whileHover={{ scale: dsgvoConsent && status !== 'sending' ? 1.02 : 1 }}
+              whileTap={{ scale: dsgvoConsent && status !== 'sending' ? 0.98 : 1 }}
               type="submit"
-              disabled={!dsgvoConsent}
+              disabled={!dsgvoConsent || status === 'sending'}
               className={`submit-button ${dsgvoConsent ? 'active' : ''}`}
             >
-              {dsgvoConsent && <div className="submit-shimmer" />}
-              <span className="submit-text">{t('contact_send')}</span>
-              <Send size={20} className="submit-icon" />
+              {dsgvoConsent && status !== 'sending' && <div className="submit-shimmer" />}
+              <span className="submit-text">
+                {status === 'sending' ? t('contact_sending') : t('contact_send')}
+              </span>
+              {status === 'sending' ? (
+                <Loader2 size={20} className="submit-icon spin" />
+              ) : (
+                <Send size={20} className="submit-icon" />
+              )}
             </motion.button>
+
+            {status === 'error' && (
+              <p className="contact-error">{t('contact_error')}</p>
+            )}
           </form>
         )}
       </motion.div>
