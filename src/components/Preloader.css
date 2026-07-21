@@ -17,8 +17,8 @@
   z-index: 1;
   background: radial-gradient(
     circle at 50% 46%,
-    rgba(229, 193, 133, 0.11) 0%,
-    rgba(120, 90, 40, 0.045) 30%,
+    rgba(240, 205, 140, 0.16) 0%,
+    rgba(150, 110, 50, 0.06) 32%,
     transparent 62%
   );
   pointer-events: none;
@@ -62,8 +62,8 @@
 /* ─── Golden spiral drawn by light ─── */
 .pl-spiral-wrap {
   position: relative;
-  width: 360px;
-  height: 360px;
+  width: min(440px, 82vw);
+  height: min(440px, 82vw);
 }
 
 .pl-svg {
@@ -75,14 +75,14 @@
 }
 
 .pl-svg-glow {
-  filter: blur(6px);
-  opacity: 0.55;
+  filter: blur(9px);
+  opacity: 0.6;
 }
 
 .pl-svg-core {
   filter:
-    drop-shadow(0 0 5px rgba(255, 225, 165, 0.85))
-    drop-shadow(0 0 12px rgba(229, 193, 133, 0.5));
+    drop-shadow(0 0 7px rgba(255, 232, 180, 0.95))
+    drop-shadow(0 0 16px rgba(240, 200, 130, 0.6));
 }
 
 /* Luminous drawing head (positioned via CSS offset-path) */
@@ -90,8 +90,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 16px;
-  height: 16px;
+  width: 20px;
+  height: 20px;
   will-change: offset-distance;
 }
 
@@ -99,21 +99,21 @@
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 14px;
-  height: 14px;
-  margin: -7px 0 0 -7px;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
   border-radius: 50%;
   background: radial-gradient(
     circle,
     #ffffff 0%,
-    #ffe9bf 35%,
-    rgba(229, 193, 133, 0.5) 60%,
-    transparent 75%
+    #ffeec4 34%,
+    rgba(240, 200, 130, 0.55) 60%,
+    transparent 76%
   );
   box-shadow:
-    0 0 14px 5px rgba(255, 235, 190, 0.85),
-    0 0 34px 12px rgba(229, 193, 133, 0.45),
-    0 0 60px 22px rgba(200, 150, 70, 0.25);
+    0 0 18px 7px rgba(255, 238, 196, 0.9),
+    0 0 44px 16px rgba(240, 200, 130, 0.5),
+    0 0 78px 28px rgba(210, 160, 80, 0.28);
 }
 
 /* Floating gold dust */
@@ -137,35 +137,35 @@
   font-family: 'Outfit', sans-serif;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.4em;
-  margin-right: -0.4em;
-  font-size: clamp(1.6rem, 7vw, 3rem);
+  letter-spacing: 0.44em;
+  margin-right: -0.44em;
+  font-size: clamp(1.75rem, 7.4vw, 3.25rem);
   text-align: center;
   white-space: nowrap;
-  background: linear-gradient(135deg, #ffffff 0%, #e5c185 50%, #c5a073 100%);
+  background: linear-gradient(135deg, #ffffff 0%, #f0cd8c 50%, #c9a26a 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(229, 193, 133, 0.3);
+  text-shadow: 0 0 34px rgba(240, 200, 130, 0.35);
 }
 
 .pl-brand-line {
-  width: 190px;
+  width: 210px;
   height: 1px;
   margin-top: 18px;
   transform-origin: center;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.9), transparent);
+  background: linear-gradient(90deg, transparent, rgba(240, 200, 130, 0.95), transparent);
 }
 
 .pl-brand-sub {
-  margin-top: 14px;
+  margin-top: 13px;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.55rem, 1.6vw, 0.68rem);
-  font-weight: 400;
-  letter-spacing: 0.5em;
-  margin-right: -0.5em;
+  font-size: clamp(0.56rem, 1.6vw, 0.7rem);
+  font-weight: 500;
+  letter-spacing: 0.52em;
+  margin-right: -0.52em;
   text-transform: uppercase;
-  color: rgba(229, 193, 133, 0.7);
+  color: rgba(240, 205, 140, 0.72);
 }
 
 @media (max-width: 480px) {

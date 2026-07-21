@@ -7,9 +7,9 @@ interface PreloaderProps {
   onComplete: () => void;
 }
 
-const SIZE = 360;
-const SPIRAL = buildGoldenSpiral(SIZE, 150, 3.75);
-const DRAW_DURATION = 2.6;
+const SIZE = 440;
+const SPIRAL = buildGoldenSpiral(SIZE, 195, 3.75, 280);
+const DRAW_DURATION = 1.8;
 const DRAW_EASE = [0.5, 0, 0.3, 1] as const;
 const DUST = [
   { x: '16%', y: '24%', s: 4, d: 0 },
@@ -23,9 +23,9 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 2900); // reveal wordmark
-    const t2 = setTimeout(() => setPhase(2), 4600); // open shutters
-    const t3 = setTimeout(() => onComplete(), 5800); // unmount
+    const t1 = setTimeout(() => setPhase(1), 2050); // reveal wordmark
+    const t2 = setTimeout(() => setPhase(2), 3350); // open shutters
+    const t3 = setTimeout(() => onComplete(), 4250); // unmount
 
     return () => {
       clearTimeout(t1);
@@ -94,8 +94,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
             <motion.path
               d={SPIRAL}
               fill="none"
-              stroke="rgba(229,193,133,0.9)"
-              strokeWidth={6}
+              stroke="rgba(240,205,140,0.95)"
+              strokeWidth={8}
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
@@ -107,16 +107,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-svg pl-svg-core" aria-hidden="true">
             <defs>
               <linearGradient id="pl-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fff4d6" />
-                <stop offset="50%" stopColor="#e5c185" />
-                <stop offset="100%" stopColor="#b98f52" />
+                <stop offset="0%" stopColor="#fff7e2" />
+                <stop offset="50%" stopColor="#f0cd8c" />
+                <stop offset="100%" stopColor="#c39a5e" />
               </linearGradient>
             </defs>
             <motion.path
               d={SPIRAL}
               fill="none"
               stroke="url(#pl-gold)"
-              strokeWidth={2.2}
+              strokeWidth={2.8}
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
