@@ -696,6 +696,14 @@ body {
   line-height: 1.1;
 }
 
+.services-subtitle {
+  max-width: 640px;
+  margin: 18px auto 0;
+  font-size: clamp(0.98rem, 2vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--text-muted, rgba(255, 255, 255, 0.6));
+}
+
 /* Cards Grid */
 .services-grid {
   display: grid;

@@ -59,7 +59,16 @@ export default function Hero() {
         <div className="hero-content-grid">
           {/* Left: Text details & buttons */}
           <div className="hero-left">
-            <motion.h1 
+            <motion.span
+              className="hero-eyebrow"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            >
+              {t('hero_eyebrow')}
+            </motion.span>
+
+            <motion.h1
               className="hero-headline"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -144,6 +153,21 @@ export default function Hero() {
                 </MagneticButton>
               </div>
             </motion.div>
+
+            {/* Scannable service strip — instant clarity for search visitors */}
+            <motion.ul
+              className="hero-service-strip"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.75, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              aria-label={t('services_title')}
+            >
+              <li className="hero-service-chip">{t('chip_web')}</li>
+              <li className="hero-service-chip">{t('chip_ai')}</li>
+              <li className="hero-service-chip">{t('chip_video')}</li>
+              <li className="hero-service-chip">{t('chip_event')}</li>
+              <li className="hero-service-chip">{t('chip_social')}</li>
+            </motion.ul>
           </div>
 
           {/* Right: 1618 3D Model */}
