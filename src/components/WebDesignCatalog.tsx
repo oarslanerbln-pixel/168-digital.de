@@ -88,16 +88,16 @@ export default function WebDesignCatalog() {
         </motion.div>
 
         {!isExpanded && (
-          <div className="mt-4 flex justify-center relative pt-24 pb-12">
+          <div className="wd-explore-wrap">
             {/* Smooth gradient mask to fade out the grid gracefully */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent -top-32 pointer-events-none" />
+            <div className="wd-fade-mask" />
             
             {/* Premium Button */}
-            <button 
+            <button
               onClick={() => setIsExpanded(true)}
-              className="group relative z-10 px-10 py-4 bg-black/40 border border-[#c9a96e]/30 text-[#c9a96e] rounded-full font-sans text-xs tracking-[0.2em] uppercase transition-all duration-500 hover:border-[#c9a96e] hover:bg-[#c9a96e]/10 hover:shadow-[0_0_30px_rgba(201,169,110,0.15)] flex items-center gap-4 backdrop-blur-md"
+              className="wd-explore-btn"
             >
-              <span className="opacity-80 group-hover:opacity-100 transition-opacity">Explore All Concepts</span>
+              <span>Explore All Concepts</span>
             </button>
           </div>
         )}
