@@ -120,7 +120,6 @@ export default function Hero() {
                     setIsAIVoiceOpen(true);
                   }}
                   aria-label="Live AI Demo"
-                  style={{ borderColor: 'var(--accent-cyan)', color: 'var(--accent-cyan)' }}
                 >
                   <Mic size={18} strokeWidth={1.5} />
                   <span className="hero-pill-label">Live AI Demo</span>
