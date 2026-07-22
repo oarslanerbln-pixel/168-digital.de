@@ -229,13 +229,20 @@ const resources = {
   }
 };
 
+const SUPPORTED_LANGS = ['en', 'de', 'tr'];
+
 const getUserLanguage = () => {
+  // The ?lang= param is what our hreflang tags and sitemap.xml advertise to
+  // search engines as distinct language URLs — it must take priority so those
+  // URLs actually render the language they claim to.
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  if (urlLang && SUPPORTED_LANGS.includes(urlLang)) return urlLang;
+
   const storedLang = localStorage.getItem('i18nextLng');
   if (storedLang) return storedLang;
 
   const browserLang = navigator.language.split('-')[0];
-  const supportedLangs = ['en', 'de', 'tr'];
-  return supportedLangs.includes(browserLang) ? browserLang : 'en';
+  return SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'en';
 };
 
 i18n
@@ -249,10 +256,20 @@ i18n
     }
   });
 
-// Update language in localStorage and document lang attribute when it changes
+// Update language in localStorage, document lang attribute, and the URL's
+// ?lang= param when it changes, so the address bar always matches what's
+// displayed — keeping it shareable and consistent with our hreflang tags.
 i18n.on('languageChanged', (lng) => {
   localStorage.setItem('i18nextLng', lng);
   document.documentElement.lang = lng;
+
+  const url = new URL(window.location.href);
+  if (lng === 'en') {
+    url.searchParams.delete('lang');
+  } else {
+    url.searchParams.set('lang', lng);
+  }
+  window.history.replaceState({}, '', url.toString());
 });
 
 // Set initial html lang attribute

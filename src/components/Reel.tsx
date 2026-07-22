@@ -13,6 +13,7 @@ const words = [
 
 export default function Reel() {
   const [index, setIndex] = useState(0);
+  const [inView, setInView] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -31,13 +32,18 @@ export default function Reel() {
     return () => clearInterval(interval);
   }, []);
 
+  // Defer fetching the multi-megabyte video source until this section is
+  // actually about to scroll into view, instead of downloading it eagerly
+  // on page load — it sits below the fold and shouldn't compete with the
+  // hero's initial paint for bandwidth.
   useEffect(() => {
-    if (videoRef.current) {
+    if (inView && videoRef.current) {
+      videoRef.current.load();
       videoRef.current.play().catch(error => {
         console.error("Video autoplay prevented:", error);
       });
     }
-  }, []);
+  }, [inView]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -69,21 +75,22 @@ export default function Reel() {
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "0px" }}
+        onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* The Looping Aerial Drone Video */}
-        <video 
+        {/* The Looping Aerial Drone Video — source is only attached once in view, see effect above */}
+        <video
           ref={videoRef}
-          autoPlay 
-          loop 
-          muted 
+          loop
+          muted
           playsInline
+          preload="none"
           poster="/philosophy_cinematic_visual.webp"
           className="reel-video"
         >
-          <source src="/1618-intro-opt.mp4" type="video/mp4" />
+          {inView && <source src="/1618-intro-opt.mp4" type="video/mp4" />}
           Your browser does not support the video tag.
         </video>
         
