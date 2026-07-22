@@ -45,14 +45,14 @@
   margin-bottom: 24px;
   letter-spacing: -0.02em;
   
-  /* Sleek silver/glass gradient */
+  /* Warm platinum/champagne gradient — tied to brand's bronze-gold identity */
   background: linear-gradient(
-    135deg, 
-    #ffffff 0%, 
-    #e0e0e0 30%, 
-    #a8a8a8 50%, 
-    #ffffff 70%,
-    #e0e0e0 100%
+    135deg,
+    var(--accent-platinum) 0%,
+    var(--accent-silver) 30%,
+    #b8a48a 50%,
+    var(--accent-platinum) 70%,
+    var(--accent-silver) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -200,8 +200,9 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(197, 160, 115, 0.35);
+  background: rgba(197, 160, 115, 0.1);
+  color: var(--accent-cyan);
   transition: all 0.5s var(--ease-premium);
   flex-shrink: 0;
 }
@@ -224,9 +225,9 @@
 }
 
 .hero-btn-primary-v2:hover .hero-btn-arrow {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+  background: rgba(197, 160, 115, 0.22);
+  border-color: rgba(197, 160, 115, 0.6);
+  box-shadow: 0 0 20px rgba(197, 160, 115, 0.25);
   transform: translateX(4px);
 }
 
@@ -334,6 +335,7 @@
 }
 
 .hero-left {
+  min-width: 0;
   text-align: left;
   display: flex;
   flex-direction: column;
