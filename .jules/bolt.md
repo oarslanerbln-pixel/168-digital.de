@@ -1,0 +1,3 @@
+## 2024-05-18 - Prevent CustomCursor re-renders with useMotionValue
+**Learning:** Using React's `useState` for high-frequency events like `mousemove` causes the component to re-render on every frame. When combined with Framer Motion, this is an anti-pattern as it defeats the purpose of hardware-accelerated animations.
+**Action:** Always use `useMotionValue` combined with `useSpring` (if damping/stiffness is needed) for continuous values like mouse coordinates. Pass these directly to the `style` prop of a `motion.div` to bypass React's render phase entirely. For discrete state changes (like hovering), use a nested `motion.div` so the outer div handles continuous hardware-accelerated translation, and the inner div handles discrete state changes via the `animate` prop.
