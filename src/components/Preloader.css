@@ -168,9 +168,41 @@
   color: rgba(240, 205, 140, 0.72);
 }
 
+/* Skip affordance — small, discoverable, doesn't compete with the wordmark */
+.pl-skip-btn {
+  position: absolute;
+  bottom: 28px;
+  right: 28px;
+  z-index: 6;
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid rgba(240, 205, 140, 0.35);
+  border-radius: 999px;
+  color: rgba(240, 205, 140, 0.75);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.pl-skip-btn:hover,
+.pl-skip-btn:focus-visible {
+  border-color: rgba(240, 205, 140, 0.7);
+  color: #f0cd8c;
+  background: rgba(240, 205, 140, 0.08);
+}
+
 @media (max-width: 480px) {
   .pl-spiral-wrap {
     transform: scale(0.78);
+  }
+
+  .pl-skip-btn {
+    bottom: 20px;
+    right: 20px;
   }
 }
 

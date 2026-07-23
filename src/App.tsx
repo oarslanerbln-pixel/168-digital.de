@@ -1,6 +1,6 @@
 import { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 import AmbientBackground from './components/AmbientBackground';
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
@@ -21,19 +21,37 @@ const ServicePage = lazy(() => import('./components/ServicePage'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 
+const INTRO_SEEN_KEY = '1618_intro_seen_at';
+const INTRO_TTL_MS = 24 * 60 * 60 * 1000; // show the intro at most once per 24h
+
+// Computed synchronously (not in an effect) so the very first render already
+// reflects whether the intro should play — no post-mount flash for admins,
+// returning visitors, or people who've asked for reduced motion.
+function getInitialLoadedState(): boolean {
+  if (typeof window === 'undefined') return false;
+
+  const adminBypass = localStorage.getItem('1618_bypass_preloader') === 'true';
+  if (adminBypass) return true;
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReducedMotion) return true;
+
+  const seenAt = Number(localStorage.getItem(INTRO_SEEN_KEY));
+  if (seenAt && Date.now() - seenAt < INTRO_TTL_MS) return true;
+
+  return false;
+}
+
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
 
-  // Check for preloader bypass
-  useEffect(() => {
-    const savedBypass = localStorage.getItem('1618_bypass_preloader') === 'true';
-    if (savedBypass) {
-      setIsLoaded(true);
-    }
-  }, []);
+  const handlePreloaderComplete = () => {
+    localStorage.setItem(INTRO_SEEN_KEY, String(Date.now()));
+    setIsLoaded(true);
+  };
 
   // Prevent scrolling while preloader is active
   useEffect(() => {
@@ -81,18 +99,20 @@ function App() {
   return (
     <ReactLenis root>
       <AnimatePresence>
-        {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
+        {!isLoaded && <Preloader onComplete={handlePreloaderComplete} />}
       </AnimatePresence>
 
       {/* Ambient particle backdrop — fixed background */}
       {isLoaded && <AmbientBackground />}
 
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: isLoaded ? 1 : 0 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}
-      >
+      {/*
+        No opacity gating here: the Preloader's own overlay is fully opaque
+        and sits on top for the entire intro, so real content underneath can
+        paint immediately (this is what makes it LCP-eligible) without any
+        visible difference — pointer-events is the only thing this wrapper
+        still needs to gate.
+      */}
+      <div style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}>
         <CustomCursor />
         <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
         <NavigationMenu />
@@ -115,7 +135,7 @@ function App() {
             onOpenCookies={() => setForceShowCookies(true)}
           />
         </main>
-      </motion.div>
+      </div>
     </ReactLenis>
   );
 }

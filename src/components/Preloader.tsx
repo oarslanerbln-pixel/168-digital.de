@@ -34,6 +34,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     };
   }, [onComplete]);
 
+  // Let visitors skip the intro instead of being captive for its full
+  // duration — click/tap anywhere, press Escape, or use the explicit button.
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onComplete();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [onComplete]);
+
   const isLoaded = phase >= 2;
   const showSpiral = phase <= 1;
   const showBrand = phase === 1;
@@ -46,7 +56,16 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       transition={{ duration: 0.8, ease: 'easeInOut' }}
       style={{ pointerEvents: isLoaded ? 'none' : 'all' }}
       className="preloader-overlay-p"
+      onClick={onComplete}
     >
+      <button
+        type="button"
+        className="pl-skip-btn"
+        aria-label="Skip intro"
+        onClick={(e) => { e.stopPropagation(); onComplete(); }}
+      >
+        Skip
+      </button>
       {/* Warm radial glow + vignette */}
       <div className="pl-glow-bg" />
       <div className="pl-vignette" />
