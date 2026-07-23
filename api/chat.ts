@@ -40,7 +40,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   try {
-    const { message, language, history, customPrompt } = req.body;
+    const { message, language, history } = req.body;
 
     if (!message || typeof message !== 'string') {
       return res.status(400).json({ error: 'Missing message parameter' });
@@ -67,7 +67,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const requestBody = {
       contents: formattedHistory,
       systemInstruction: {
-        parts: [{ text: customPrompt || buildSystemPrompt(language || 'en') }],
+        parts: [{ text: buildSystemPrompt(language || 'en') }],
       },
       generationConfig: {
         temperature: 0.7,
