@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense, lazy } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import AmbientBackground from './components/AmbientBackground';
@@ -13,8 +13,13 @@ import AIChatDrawer from './components/AIChatDrawer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
 import DevConsole from './components/DevConsole';
-import Home from './pages/Home';
-import ServicePage from './components/ServicePage';
+
+// Route-level code splitting: each page ships its own chunk, so a visitor
+// landing directly on a service or legal page never downloads the Home
+// page's heavy hero/catalog code, and vice versa.
+const Home = lazy(() => import('./pages/Home'));
+const ServicePage = lazy(() => import('./components/ServicePage'));
+const LegalPage = lazy(() => import('./pages/LegalPage'));
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -97,13 +102,16 @@ function App() {
         <CookieConsent forceShow={forceShowCookies} onCloseForceShow={() => setForceShowCookies(false)} />
         <LegalModal isOpen={!!legalModalType} type={legalModalType} onClose={() => setLegalModalType(null)} />
         <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/:slug" element={<ServicePage />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
+          <Suspense fallback={null}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/impressum" element={<LegalPage />} />
+              <Route path="/datenschutz" element={<LegalPage />} />
+              <Route path="/:slug" element={<ServicePage />} />
+              <Route path="*" element={<Home />} />
+            </Routes>
+          </Suspense>
           <Footer
-            onOpenLegal={(type) => setLegalModalType(type)}
             onOpenCookies={() => setForceShowCookies(true)}
           />
         </main>
