@@ -13,6 +13,9 @@ export default function Footer({ onOpenCookies }: FooterProps) {
       </div>
 
       <div className="footer-links">
+        <Link to="/contact" className="footer-link">
+          Contact
+        </Link>
         <Link to="/impressum" className="footer-link">
           Impressum
         </Link>

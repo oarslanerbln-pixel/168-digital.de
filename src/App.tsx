@@ -20,6 +20,7 @@ import DevConsole from './components/DevConsole';
 const Home = lazy(() => import('./pages/Home'));
 const ServicePage = lazy(() => import('./components/ServicePage'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
+const ContactPage = lazy(() => import('./pages/ContactPage'));
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -107,6 +108,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/impressum" element={<LegalPage />} />
               <Route path="/datenschutz" element={<LegalPage />} />
+              <Route path="/contact" element={<ContactPage />} />
               <Route path="/:slug" element={<ServicePage />} />
               <Route path="*" element={<Home />} />
             </Routes>
