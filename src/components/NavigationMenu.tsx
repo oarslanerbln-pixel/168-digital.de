@@ -5,6 +5,7 @@ import { MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { playWhoosh, playTick, playClose } from '../utils/audio';
 import { services } from '../data/services';
+import { useEscapeToClose } from '../hooks/useEscapeToClose';
 import './NavigationMenu.css';
 
 export default function NavigationMenu() {
@@ -12,6 +13,13 @@ export default function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const closeMenu = () => {
+    playClose();
+    setIsOpen(false);
+  };
+
+  useEscapeToClose(isOpen, closeMenu);
 
   const toggleMenu = () => {
     if (!isOpen) {
@@ -123,6 +131,9 @@ export default function NavigationMenu() {
             exit={{ clipPath: 'circle(0% at calc(100% - 60px) 60px)' }}
             transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
             className="nav-overlay hud-scanline-container"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
           >
             {/* Tech grid backdrop */}
             <div className="nav-grid-overlay" />

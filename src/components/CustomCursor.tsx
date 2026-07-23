@@ -8,6 +8,7 @@ export default function CustomCursor() {
   const springY = useSpring(mouseY, { stiffness: 500, damping: 28, mass: 0.1 });
   const [isHovered, setIsHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
     // Basic mobile/touch check
@@ -17,7 +18,13 @@ export default function CustomCursor() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
-    if (window.innerWidth <= 768 || 'ontouchstart' in window) {
+    // Respect prefers-reduced-motion: hijacking the OS cursor with no way
+    // to opt out is a real accessibility problem for people who rely on
+    // their system's cursor size/contrast settings.
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    setPrefersReducedMotion(reduced);
+
+    if (window.innerWidth <= 768 || 'ontouchstart' in window || reduced) {
       document.body.style.cursor = 'auto';
       return () => { window.removeEventListener('resize', checkMobile); };
     }
@@ -57,7 +64,7 @@ export default function CustomCursor() {
     };
   }, []);
 
-  if (isMobile) return null;
+  if (isMobile || prefersReducedMotion) return null;
 
   return (
     <>

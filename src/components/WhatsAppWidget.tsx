@@ -68,6 +68,7 @@ export default function WhatsAppWidget() {
       {/* Floating Action Button */}
       <motion.button
         className="wa-floating-btn"
+        aria-label="Chat on WhatsApp"
         onClick={handleWidgetClick}
         onMouseEnter={() => {
           // Hover only on desktop

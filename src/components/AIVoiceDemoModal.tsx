@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, X, Activity } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { playClick, playTick } from '../utils/audio';
+import { useEscapeToClose } from '../hooks/useEscapeToClose';
 import './AIVoiceDemoModal.css';
 
 interface AIVoiceDemoModalProps {
@@ -32,6 +33,8 @@ export default function AIVoiceDemoModal({ isOpen, onClose }: AIVoiceDemoModalPr
     onClose();
   };
 
+  useEscapeToClose(isOpen, handleClose);
+
   const connectingText = i18n.language === 'de' ? 'Verbindung zum KI-Kern...' : (i18n.language === 'tr' ? 'Yapay Zeka Core Bağlanıyor...' : 'Connecting to AI Core...');
   const listeningText = i18n.language === 'de' ? 'Ich höre zu...' : (i18n.language === 'tr' ? 'Dinliyorum...' : 'I am listening...');
   const speakText = i18n.language === 'de' ? 'Sprechen Sie jetzt' : (i18n.language === 'tr' ? 'Şimdi Konuşun' : 'Speak to AI Agent');
@@ -57,6 +60,9 @@ export default function AIVoiceDemoModal({ isOpen, onClose }: AIVoiceDemoModalPr
             animate={{ scale: 1, opacity: 1, y: 0 }}
             exit={{ scale: 0.9, opacity: 0, y: 20 }}
             className="ai-voice-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="ai-voice-modal-title"
           >
             <div className="ai-voice-ambient-glow" />
 
@@ -64,6 +70,7 @@ export default function AIVoiceDemoModal({ isOpen, onClose }: AIVoiceDemoModalPr
               onClick={handleClose}
               onMouseEnter={playTick}
               className="ai-voice-close"
+              aria-label="Close voice demo"
             >
               <X size={24} strokeWidth={1.5} />
             </button>
@@ -102,7 +109,7 @@ export default function AIVoiceDemoModal({ isOpen, onClose }: AIVoiceDemoModalPr
 
             {/* Status Text */}
             <div className="ai-voice-status-text">
-              <h3 className="ai-voice-title">
+              <h3 id="ai-voice-modal-title" className="ai-voice-title">
                 {status === 'connecting' && connectingText}
                 {status === 'listening' && listeningText}
               </h3>

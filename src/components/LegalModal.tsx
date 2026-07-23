@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { playClick } from '../utils/audio';
 import { legalContent } from '../data/legalContent';
+import { useEscapeToClose } from '../hooks/useEscapeToClose';
 import './LegalModal.css';
 
 interface LegalModalProps {
@@ -11,6 +12,8 @@ interface LegalModalProps {
 }
 
 export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
+  useEscapeToClose(isOpen, onClose);
+
   if (!isOpen || !type) return null;
 
   const activeContent = legalContent[type];
@@ -34,6 +37,9 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
           className="legal-modal-container"
           onClick={(e) => e.stopPropagation()}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="legal-modal-title"
         >
           {/* Close Button */}
           <button
@@ -47,7 +53,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
             <X size={20} />
           </button>
 
-          <h2 className="legal-modal-title">
+          <h2 id="legal-modal-title" className="legal-modal-title">
             {activeContent.title}
           </h2>
 
