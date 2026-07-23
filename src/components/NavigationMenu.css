@@ -286,6 +286,25 @@
   transform: translateX(-50%) scaleX(1);
 }
 
+.nav-services-list {
+  margin-top: 8px;
+  gap: 4px;
+}
+
+.nav-service-link {
+  text-decoration: none;
+  flex-direction: row;
+  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
+  letter-spacing: 1.5px;
+  gap: 10px;
+  padding: 6px 20px;
+}
+
+.nav-service-link .nav-link-num {
+  font-size: 0.85rem;
+  opacity: 0.6;
+}
+
 /* Bottom Links */
 .nav-bottom-links {
   margin-top: 50px;

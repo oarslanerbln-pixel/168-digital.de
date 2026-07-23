@@ -4,33 +4,7 @@ import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
 import ProjectModal from './ProjectModal';
-
-const projects = [
-  {
-    id: 'donerbros',
-    url: 'https://www.donerbros.berlin/',
-    titleKey: 'works_donerbros_title',
-    descKey: 'works_donerbros_desc',
-    tags: ['Next.js', 'Firebase', 'UX/UI'],
-    color: '#00ff87',
-  },
-  {
-    id: 'sera',
-    url: 'https://sera-event-6f2a1.web.app/',
-    titleKey: 'works_sera_title',
-    descKey: 'works_sera_desc',
-    tags: ['React', '3D', 'Event-Tech'],
-    color: '#8b5cf6',
-  },
-  {
-    id: 'impulse',
-    url: 'https://impulseproductionstudio.vercel.app/',
-    titleKey: 'works_impulse_title',
-    descKey: 'works_impulse_desc',
-    tags: ['Vercel', 'Video', 'Branding'],
-    color: '#f59e0b',
-  }
-];
+import { projects } from '../data/works';
 
 export default function Works() {
   const { t } = useTranslation();

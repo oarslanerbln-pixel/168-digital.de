@@ -1,5 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { playClick, playTick } from '../utils/audio';
 import { useRef, MouseEvent, useState } from 'react';
 import { ArrowRight, MessageCircle, Mail, Mic } from 'lucide-react';
@@ -161,11 +162,11 @@ export default function Hero() {
               transition={{ delay: 0.75, duration: 1, ease: [0.16, 1, 0.3, 1] }}
               aria-label={t('services_title')}
             >
-              <li className="hero-service-chip">{t('chip_web')}</li>
-              <li className="hero-service-chip">{t('chip_ai')}</li>
-              <li className="hero-service-chip">{t('chip_video')}</li>
-              <li className="hero-service-chip">{t('chip_event')}</li>
-              <li className="hero-service-chip">{t('chip_social')}</li>
+              <li><Link to="/web-saas-development" className="hero-service-chip">{t('chip_web')}</Link></li>
+              <li><Link to="/ai-voice-agents" className="hero-service-chip">{t('chip_ai')}</Link></li>
+              <li><Link to="/video-drone-production" className="hero-service-chip">{t('chip_video')}</Link></li>
+              <li><Link to="/wedding-event-films" className="hero-service-chip">{t('chip_event')}</Link></li>
+              <li><Link to="/social-media-marketing" className="hero-service-chip">{t('chip_social')}</Link></li>
             </motion.ul>
           </div>
 

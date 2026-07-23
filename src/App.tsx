@@ -1,25 +1,20 @@
 import { useState, useEffect } from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import AmbientBackground from './components/AmbientBackground';
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
-import Hero from './components/Hero';
-import About from './components/About';
-import Services from './components/Services';
-import Works from './components/Works';
-import WebDesignCatalog from './components/WebDesignCatalog';
-import SEOHead from './components/SEOHead';
-import Contact from './components/Contact';
 import CustomCursor from './components/CustomCursor';
 import NavigationMenu from './components/NavigationMenu';
 import Footer from './components/Footer';
 import LegalModal from './components/LegalModal';
 import CookieConsent from './components/CookieConsent';
-import MarqueeTextBand from './components/MarqueeTextBand';
 import AIChatDrawer from './components/AIChatDrawer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
 import DevConsole from './components/DevConsole';
+import Home from './pages/Home';
+import ServicePage from './components/ServicePage';
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -70,9 +65,16 @@ function App() {
     };
   }, []);
 
+  const location = useLocation();
+
+  // Scroll to top on every route change (client-side navigation doesn't
+  // reset scroll position the way a full page load does).
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <ReactLenis root>
-      <SEOHead />
       <AnimatePresence>
         {!isLoaded && <Preloader onComplete={() => setIsLoaded(true)} />}
       </AnimatePresence>
@@ -95,23 +97,14 @@ function App() {
         <CookieConsent forceShow={forceShowCookies} onCloseForceShow={() => setForceShowCookies(false)} />
         <LegalModal isOpen={!!legalModalType} type={legalModalType} onClose={() => setLegalModalType(null)} />
         <main>
-          <Hero />
-          {/* Marquee Band #1 — between Hero and Works */}
-          <MarqueeTextBand direction="left" />
-          <div className="section-divider" />
-          <Works />
-          {/* Marquee Band #2 — between Works and About, reverse direction */}
-          <MarqueeTextBand direction="right" />
-          <About />
-          <div className="section-divider" />
-          <Services />
-          <div className="section-divider" />
-          <WebDesignCatalog />
-          <div className="section-divider" />
-          <Contact />
-          <Footer 
-            onOpenLegal={(type) => setLegalModalType(type)} 
-            onOpenCookies={() => setForceShowCookies(true)} 
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/:slug" element={<ServicePage />} />
+            <Route path="*" element={<Home />} />
+          </Routes>
+          <Footer
+            onOpenLegal={(type) => setLegalModalType(type)}
+            onOpenCookies={() => setForceShowCookies(true)}
           />
         </main>
       </motion.div>
