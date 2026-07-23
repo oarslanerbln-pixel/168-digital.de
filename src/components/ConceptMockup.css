@@ -309,41 +309,55 @@
   transform: rotate(-4deg);
 }
 
-/* ── 47 Casino Gold ────────────────────────────────────────────── */
-.cm-c47 {
-  background: #0a0800;
+/* ── 29 Memphis Revival ────────────────────────────────────────── */
+.cm-c29 {
+  background: #fffef0;
   padding: 16px 18px;
-  align-items: center;
-  text-align: center;
 }
-.cm-c47 .cm-frame {
+.cm-c29 .cm-tri {
   position: absolute;
-  inset: 8px;
-  border: 1px solid rgba(212, 175, 55, 0.4);
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 56px 56px 0;
+  border-color: transparent #ff4db8 transparent transparent;
 }
-.cm-c47::before {
-  content: '';
+.cm-c29 .cm-ring {
   position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.18), transparent 65%);
+  bottom: 10px;
+  right: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid #1a1a00;
 }
-.cm-c47 .cm-headline {
-  font-family: 'Cinzel', serif;
-  font-weight: 700;
-  font-size: 1.4rem;
-  letter-spacing: 0.12em;
-  color: #f0d870;
-  text-shadow: 0 0 18px rgba(212, 175, 55, 0.5);
+.cm-c29 .cm-stripes {
+  position: absolute;
+  bottom: 18px;
+  left: 18px;
+  width: 44px;
+  height: 10px;
+  background: repeating-linear-gradient(135deg, #e8d840 0 5px, transparent 5px 10px);
+}
+.cm-c29 .cm-headline {
+  font-family: 'Righteous', sans-serif;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  color: #1a1a00;
   position: relative;
   z-index: 1;
 }
-.cm-c47 .cm-star {
+.cm-c29 .cm-dot {
   position: absolute;
-  top: 14px;
-  right: 20px;
-  color: #d4af37;
-  font-size: 14px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }
+.cm-c29 .cm-dot-a { top: 16px; left: 96px; background: #ff4db8; }
+.cm-c29 .cm-dot-b { top: 34px; left: 114px; background: #1a1a00; }
+.cm-c29 .cm-dot-c { top: 10px; left: 118px; background: #e8d840; border: 1px solid #1a1a00; }
 
 /* ── 50 Streaming Dark ─────────────────────────────────────────── */
 .cm-c50 {

@@ -7,7 +7,7 @@ import './WebDesignCatalog.css';
 // A curated subset of the 50 concepts gets a real hand-built mini mockup
 // (distinct layout, not just a typography swatch) instead of plain text —
 // see ConceptMockup.tsx for the compositions.
-const MOCKUP_THEMES = new Set(['c01', 'c02', 'c09', 'c13', 'c17', 'c30', 'c38', 'c43', 'c47', 'c50']);
+const MOCKUP_THEMES = new Set(['c01', 'c02', 'c09', 'c13', 'c17', 'c29', 'c30', 'c38', 'c43', 'c50']);
 
 /* The catalog demos 37 decorative typefaces. Rather than block first paint by
    loading them in <head> for every visitor, we inject the Google Fonts stylesheet

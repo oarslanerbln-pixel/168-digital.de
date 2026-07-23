@@ -165,7 +165,7 @@ export const webDesignConcepts = [
     "category": "21",
     "title": "Memphis Revival",
     "description": "80'ler geometrik şekilleri, parlak renkler, playful. Retro pop art.",
-    "tags": []
+    "tags": ["Memphis", "Playful", "Geometric"]
   },
   {
     "id": 22,

@@ -88,12 +88,16 @@ export default function ConceptMockup({ theme }: { theme: string }) {
         </div>
       );
 
-    case 'c47': // Casino Gold — Vegas gold-foil marquee
+    case 'c29': // Memphis Revival — playful 80s geometric pop
       return (
-        <div className="cm cm-c47">
-          <span className="cm-frame" />
-          <span className="cm-headline">JACKPOT</span>
-          <span className="cm-star">✦</span>
+        <div className="cm cm-c29">
+          <span className="cm-tri" />
+          <span className="cm-ring" />
+          <span className="cm-stripes" />
+          <span className="cm-headline">Shapes<br />&amp; Joy</span>
+          <span className="cm-dot cm-dot-a" />
+          <span className="cm-dot cm-dot-b" />
+          <span className="cm-dot cm-dot-c" />
         </div>
       );
 
