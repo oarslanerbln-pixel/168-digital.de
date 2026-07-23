@@ -19,6 +19,15 @@
   padding: 0;
 }
 
+/* Visible keyboard focus indicator — site-wide. Only shows for keyboard/AT
+   navigation (:focus-visible), not on mouse click, so it doesn't fight the
+   existing :focus rules on inputs. */
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
 body {
   font-family: 'Outfit', sans-serif;
   margin: 0;

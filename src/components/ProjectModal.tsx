@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { X, ExternalLink, Activity, Users, TrendingUp } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
+import { useEscapeToClose } from '../hooks/useEscapeToClose';
 
 interface Project {
   id: string;
@@ -18,6 +19,7 @@ interface ProjectModalProps {
 
 export default function ProjectModal({ isOpen, onClose, project }: ProjectModalProps) {
   const { t } = useTranslation();
+  useEscapeToClose(isOpen && !!project, onClose);
 
   if (!project) return null;
 
@@ -39,6 +41,9 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="modal-content"
             onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-modal-title"
           >
             <button
               onClick={() => { playClick(); onClose(); }}
@@ -49,7 +54,7 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               <X size={24} />
             </button>
 
-            <h2 className="display-h modal-title">
+            <h2 id="project-modal-title" className="display-h modal-title">
               <span className="text-silver modal-title-text">
                 {t(project.titleKey)}
               </span>
