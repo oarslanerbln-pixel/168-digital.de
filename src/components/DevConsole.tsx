@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Cpu, RefreshCw, Sliders, MessageSquare, Terminal, X, AlertTriangle } from 'lucide-react';
+import { Shield, Cpu, RefreshCw, Sliders, Terminal, X, AlertTriangle } from 'lucide-react';
 import { playClick } from '../utils/audio';
 import './DevConsole.css';
 
@@ -25,7 +25,7 @@ export default function DevConsole({ isOpen, onClose }: DevConsoleProps) {
   const [authError, setAuthError] = useState<string | null>(null);
   const [manualKey, setManualKey] = useState("");
   
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'typography' | 'ai' | 'logs'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'typography' | 'logs'>('dashboard');
   const [logs, setLogs] = useState<{ time: string; text: string; type: 'info' | 'success' | 'warning' }[]>([]);
   
   // HUD 3D Config state
@@ -36,9 +36,6 @@ export default function DevConsole({ isOpen, onClose }: DevConsoleProps) {
     transmission: 1.0,
     distortion: 0.2
   });
-
-  // HUD AI state
-  const [aiPrompt, setAiPrompt] = useState("");
 
   // HUD Telemetry State
   const [fps, setFps] = useState(60);
@@ -58,22 +55,6 @@ export default function DevConsole({ isOpen, onClose }: DevConsoleProps) {
     if (savedConfig) {
       setConfig3D(JSON.parse(savedConfig));
     }
-
-    // Load AI Prompt
-    const savedPrompt = localStorage.getItem('1618_ai_system_prompt');
-    const defaultPrompt = `You are the official AI Representative for "1618 Digital" (a premium digital studio).
-1618 Digital is a boutique 3D SaaS and Digital Studio based in Berlin. The name is inspired by the Golden Ratio (1.618), representing perfect proportions, balanced engineering, and elite digital architecture.
-Founder & Director: Ömer Arslaner (Digital Architect & Director).
-
-Our Philosophy: Proportion. Ethics. We believe in the Golden Ratio—where perfect proportion meets aesthetic perfection. We build functional aesthetics, robust digital infrastructure, and save client time. We avoid bloated code or empty promises.
-
-Core services:
-1. 3D Web & Interactive Systems (using WebGL, React Three Fiber)
-2. Cinematic Video & Commercial Production
-3. Intelligent Voice & Chatbot Ecosystems
-
-Be extremely professional, direct, elite, yet helpful. Never state you are an AI assistant from OpenAI or Gemini; you are 1618 Digital's bespoke cognitive node. Keep responses concise, aligned with our high-end aesthetic.`;
-    setAiPrompt(savedPrompt || defaultPrompt);
 
     // Load bypass preloader
     const savedBypass = localStorage.getItem('1618_bypass_preloader') === 'true';
@@ -166,15 +147,6 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
     addLog(`MODULE UPDATE: 3D_${key.toUpperCase()} -> ${val}`, "info");
   };
 
-  // Save AI System Prompt
-  const handleSaveAiPrompt = () => {
-    localStorage.setItem('1618_ai_system_prompt', aiPrompt);
-    // Dispatch global event for AIChatDrawer to intercept
-    window.dispatchEvent(new CustomEvent('1618-prompt-update', { detail: aiPrompt }));
-    addLog("MODULE UPDATE: COGNITIVE SYSTEM PROMPT SAVED", "success");
-    playClick();
-  };
-
   // Bypass Preloader Toggle
   const handleToggleBypass = (val: boolean) => {
     setBypassPreloader(val);
@@ -265,13 +237,7 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
                   >
                     <Sliders size={14} /> 3D SCENE CONTROLS
                   </button>
-                  <button 
-                    className={`menu-item ${activeTab === 'ai' ? 'active' : ''}`}
-                    onClick={() => { setActiveTab('ai'); playClick(); }}
-                  >
-                    <MessageSquare size={14} /> COGNITIVE SYSTEM
-                  </button>
-                  <button 
+                  <button
                     className={`menu-item ${activeTab === 'logs' ? 'active' : ''}`}
                     onClick={() => { setActiveTab('logs'); playClick(); }}
                   >
@@ -402,25 +368,6 @@ Be extremely professional, direct, elite, yet helpful. Never state you are an AI
                       onChange={(e) => update3DConfig('transmission', parseFloat(e.target.value))}
                     />
                   </div>
-                </>
-              )}
-
-              {activeTab === 'ai' && (
-                <>
-                  <div className="content-section-title">
-                    <span>COGNITIVE SYSTEM SETTINGS</span>
-                  </div>
-                  <div className="control-row">
-                    <span className="control-label" style={{ marginBottom: '8px' }}>SYSTEM DIRECTIVE (SYSTEM PROMPT)</span>
-                    <textarea 
-                      className="ai-textarea"
-                      value={aiPrompt}
-                      onChange={(e) => setAiPrompt(e.target.value)}
-                    />
-                  </div>
-                  <button className="console-btn-primary" onClick={handleSaveAiPrompt}>
-                    UPDATE DIRECTIVE
-                  </button>
                 </>
               )}
 

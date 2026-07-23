@@ -9,7 +9,6 @@ import NavigationMenu from './components/NavigationMenu';
 import Footer from './components/Footer';
 import LegalModal from './components/LegalModal';
 import CookieConsent from './components/CookieConsent';
-import AIChatDrawer from './components/AIChatDrawer';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
 import DevConsole from './components/DevConsole';
@@ -98,7 +97,6 @@ function App() {
         <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
         <NavigationMenu />
         <LanguageToggle />
-        <AIChatDrawer />
         <WhatsAppWidget />
         <CookieConsent forceShow={forceShowCookies} onCloseForceShow={() => setForceShowCookies(false)} />
         <LegalModal isOpen={!!legalModalType} type={legalModalType} onClose={() => setLegalModalType(null)} />
