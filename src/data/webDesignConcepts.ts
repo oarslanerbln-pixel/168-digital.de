@@ -5,7 +5,7 @@ export const webDesignConcepts = [
     "category": "01",
     "title": "Obsidian Editorial",
     "description": "Siyah zemin, büyük serif tipografi, tek renk aksan. Lüks dergi estetiği.",
-    "tags": []
+    "tags": ["Editorial", "Luxury", "Serif"]
   },
   {
     "id": 2,
@@ -13,7 +13,7 @@ export const webDesignConcepts = [
     "category": "02",
     "title": "Neon Noir",
     "description": "Neon renk sızdırmaları, glassmorphism paneller. Gece şehri hissi.",
-    "tags": []
+    "tags": ["Cyberpunk", "Glassmorphism", "Neon"]
   },
   {
     "id": 3,
@@ -133,7 +133,7 @@ export const webDesignConcepts = [
     "category": "17",
     "title": "Brutalist Punch",
     "description": "Kalın siyah borderlar, sıfır radius, yüksek kontrast. Anti-estetik estetik.",
-    "tags": []
+    "tags": ["Brutalism", "High-Contrast", "Bold"]
   },
   {
     "id": 18,
@@ -165,7 +165,7 @@ export const webDesignConcepts = [
     "category": "21",
     "title": "Memphis Revival",
     "description": "80'ler geometrik şekilleri, parlak renkler, playful. Retro pop art.",
-    "tags": []
+    "tags": ["Memphis", "Playful", "Geometric"]
   },
   {
     "id": 22,
@@ -173,7 +173,7 @@ export const webDesignConcepts = [
     "category": "22",
     "title": "Risograph Print",
     "description": "Sınırlı renk paleti, grain doku, indie zine estetiği. Elle basılmış his.",
-    "tags": []
+    "tags": ["Print", "Duotone", "Indie"]
   },
   {
     "id": 23,
@@ -197,7 +197,7 @@ export const webDesignConcepts = [
     "category": "25",
     "title": "Terra Organica",
     "description": "Toprak tonları, organik şekiller. Doğal malzeme hissi.",
-    "tags": []
+    "tags": ["Organic", "Earthy", "Natural"]
   },
   {
     "id": 26,
@@ -261,7 +261,7 @@ export const webDesignConcepts = [
     "category": "33",
     "title": "HUD Interface",
     "description": "Heads-up display estetiği. Scanline overlay, koordinatlar, kokpit dili.",
-    "tags": []
+    "tags": ["Sci-Fi", "HUD", "Tech"]
   },
   {
     "id": 34,
@@ -301,7 +301,7 @@ export const webDesignConcepts = [
     "category": "38",
     "title": "Holographic Foil",
     "description": "İridescent renk geçişleri, folyo efekti. Ultra premium, fiziksel lüks.",
-    "tags": []
+    "tags": ["Holographic", "Premium", "Iridescent"]
   },
   {
     "id": 39,
@@ -341,7 +341,7 @@ export const webDesignConcepts = [
     "category": "43",
     "title": "Zine Culture",
     "description": "DIY punk, fotokopi estetiği, dashed borderlar. El yapımı dijital yayın.",
-    "tags": []
+    "tags": ["Punk", "DIY", "Collage"]
   },
   {
     "id": 44,
@@ -373,7 +373,7 @@ export const webDesignConcepts = [
     "category": "47",
     "title": "Casino Gold",
     "description": "Las Vegas ihtişamı. Siyah zemin, altın neon, gösterişli serif.",
-    "tags": []
+    "tags": ["Luxury", "Gold", "Glamour"]
   },
   {
     "id": 48,
@@ -397,6 +397,6 @@ export const webDesignConcepts = [
     "category": "50",
     "title": "Streaming Dark",
     "description": "Netflix/prime estetiği. İçerik-first, koyu zemin, kırmızı aksan.",
-    "tags": []
+    "tags": ["Media", "Dark UI", "Content-First"]
   }
 ];
