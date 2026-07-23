@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
@@ -32,9 +32,85 @@ const projects = [
   }
 ];
 
+type ProjectType = typeof projects[0];
+
+// ⚡ Bolt Optimization: Extract ProjectCard and wrap in React.memo()
+// This prevents all cards from re-rendering when the parent `Works` component updates
+// its state (e.g., when a user clicks a card to set `selectedProject` and open the modal).
+const ProjectCard = memo(({ project, index, onSelect }: { project: ProjectType, index: number, onSelect: (project: ProjectType) => void }) => {
+  const { t } = useTranslation();
+  return (
+    <motion.div
+      onClick={() => onSelect(project)}
+      onMouseEnter={playTick}
+      className="glass-panel-silver glow-card project-card"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
+      whileHover={{ y: -12, scale: 1.01 }}
+      style={{
+        ['--card-glow' as string]: project.color,
+      }}
+    >
+      {/* Project Number Header */}
+      <div className="project-card-header">
+        <span className="project-card-number">
+          {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+        </span>
+        <motion.div
+          whileHover={{ rotate: 45, scale: 1.2 }}
+          transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <ArrowUpRight size={24} color="var(--accent-silver)" />
+        </motion.div>
+      </div>
+
+      {/* Accent top line */}
+      <div className="project-card-divider" />
+
+      {/* Content */}
+      <div className="project-card-content">
+        <h3 className="text-silver project-card-title">
+          {t(project.titleKey)}
+        </h3>
+        <p className="project-card-desc">
+          {t(project.descKey)}
+        </p>
+      </div>
+
+      {/* Tags */}
+      <div className="project-card-tags">
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="project-tag"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+});
+
+ProjectCard.displayName = 'ProjectCard';
+
 export default function Works() {
   const { t } = useTranslation();
-  const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectType | null>(null);
+
+  // ⚡ Bolt Optimization: Use useCallback to maintain stable function references.
+  // This ensures the memoized ProjectCard components don't receive new prop references
+  // on every render, which would break the memoization.
+  const handleSelectProject = useCallback((project: ProjectType) => {
+    playClick();
+    setSelectedProject(project);
+  }, []);
+
+  const handleCloseProject = useCallback(() => {
+    setSelectedProject(null);
+  }, []);
 
   return (
     <>
@@ -45,65 +121,19 @@ export default function Works() {
 
         <div className="works-grid">
           {projects.map((project, index) => (
-            <motion.div 
+            <ProjectCard
               key={project.id}
-              onClick={() => { playClick(); setSelectedProject(project); }}
-              onMouseEnter={playTick}
-              className="glass-panel-silver glow-card project-card"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -12, scale: 1.01 }}
-              style={{ 
-                ['--card-glow' as string]: project.color,
-              }}
-            >
-              {/* Project Number Header */}
-              <div className="project-card-header">
-                <span className="project-card-number">
-                  {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-                </span>
-                <motion.div
-                  whileHover={{ rotate: 45, scale: 1.2 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <ArrowUpRight size={24} color="var(--accent-silver)" />
-                </motion.div>
-              </div>
-
-              {/* Accent top line */}
-              <div className="project-card-divider" />
-
-              {/* Content */}
-              <div className="project-card-content">
-                <h3 className="text-silver project-card-title">
-                  {t(project.titleKey)}
-                </h3>
-                <p className="project-card-desc">
-                  {t(project.descKey)}
-                </p>
-              </div>
-
-              {/* Tags */}
-              <div className="project-card-tags">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="project-tag"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+              project={project}
+              index={index}
+              onSelect={handleSelectProject}
+            />
           ))}
         </div>
       </section>
 
       <ProjectModal 
         isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)} 
+        onClose={handleCloseProject}
         project={selectedProject} 
       />
     </>
