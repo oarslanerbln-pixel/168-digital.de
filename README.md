@@ -1,6 +1,6 @@
-# 168 Digital — Premium AI Agency Portfolio
+# 1618 Digital — Premium AI Agency Portfolio
 
-Bu proje, 168 Digital için geliştirilmiş, ultra-premium standartlarda (Zaha Hadid / Refik Anadol mimarisi) bir dijital ajans portföy sitesidir.
+Bu proje, 1618 Digital için geliştirilmiş, ultra-premium standartlarda (Zaha Hadid / Refik Anadol mimarisi) bir dijital ajans portföy sitesidir.
 
 ## 🌟 Öne Çıkan Özellikler (Features)
 - **Parametric Veil 3D Background:** Zaha Hadid tarzı, nefes alan, GPU-based parçacıklarla desteklenmiş okyanus/neon 3D arka plan tasarımı.
@@ -33,5 +33,5 @@ npm run build
 
 ## 🌐 Canlıya Alma (Deployment)
 Bu repo, Vercel üzerinden otomatik CI/CD yapılandırmasına sahiptir. `main` branch'ine yapılan her `git push` komutu doğrudan production ortamında güncellenir.
-- **Canlı Site:** https://168-digital.de (Eğer alan adı yönlendirmesi tamamlandıysa)
+- **Canlı Site:** https://1618-digital.de (Eğer alan adı yönlendirmesi tamamlandıysa)
 - **Vercel Yedek Link:** Vercel projenizin sağladığı `.vercel.app` adresi üzerinden de erişilebilir.

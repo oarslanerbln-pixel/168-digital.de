@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { playWhoosh, playTick, playClose } from '../utils/audio';
+import { services } from '../data/services';
 import './NavigationMenu.css';
 
 export default function NavigationMenu() {
   const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => {
     if (!isOpen) {
@@ -21,12 +25,16 @@ export default function NavigationMenu() {
   const scrollTo = (id: string) => {
     playClose();
     setIsOpen(false);
-    setTimeout(() => {
+    const scroll = () => {
       const el = document.getElementById(id);
-      if (el) {
-        el.scrollIntoView({ behavior: 'smooth' });
-      }
-    }, 400);
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    };
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(scroll, 500);
+    } else {
+      setTimeout(scroll, 400);
+    }
   };
 
   // Prevent background scrolling when menu is open
@@ -152,6 +160,37 @@ export default function NavigationMenu() {
                         <span className="nav-link-text">{item.label}</span>
                         <span className="nav-link-sub">{item.sub}</span>
                       </button>
+                    </motion.div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Direct links to every dedicated service page — real <a> hrefs
+                  so search engines can crawl the full service directory from
+                  any page on the site. */}
+              <div className="nav-links-container nav-services-list">
+                {services.map((service, index) => (
+                  <div key={service.slug} className="nav-link-wrapper">
+                    <motion.div
+                      initial={{ y: '100%', opacity: 0 }}
+                      animate={{ y: '0%', opacity: 1 }}
+                      exit={{ y: '-100%', opacity: 0 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: 0.15 + ((navItems.length + index) * 0.05)
+                      }}
+                      style={{ width: '100%' }}
+                    >
+                      <Link
+                        to={`/${service.slug}`}
+                        onClick={() => { playClose(); setIsOpen(false); }}
+                        onMouseEnter={() => playTick()}
+                        className="nav-link-btn nav-service-link"
+                      >
+                        <span className="nav-link-num">→</span>
+                        <span className="nav-link-text">{t(service.titleKey)}</span>
+                      </Link>
                     </motion.div>
                   </div>
                 ))}

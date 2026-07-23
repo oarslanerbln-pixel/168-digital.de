@@ -2,6 +2,8 @@ import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { buildSystemPrompt, getLocalFallback, isRateLimited } from './chatConfig';
 
 const ALLOWED_ORIGINS = [
+  'https://168-digital.de',
+  'https://www.168-digital.de',
   'https://1618-digital.de',
   'https://www.1618-digital.de',
   'http://localhost:5174',
