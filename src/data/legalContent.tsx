@@ -25,6 +25,9 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
           <strong>Contact:</strong><br />
           E-Mail: info@1618-digital.de
         </p>
+        <p>
+          Gemäß § 19 UStG wird als Kleinunternehmer keine Umsatzsteuer berechnet und ausgewiesen.
+        </p>
         <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</strong></p>
         <p>
           Ömer Faruk Arslaner<br />
