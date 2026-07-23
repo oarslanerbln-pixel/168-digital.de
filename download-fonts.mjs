@@ -14,6 +14,11 @@ const fonts = [
   { name: 'playfair', weight: 400, url: 'https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKdFvUDQ.ttf' },
   { name: 'playfair', weight: 700, url: 'https://fonts.gstatic.com/s/playfairdisplay/v40/nuFvD-vYSZviVYUb_rj3ij__anPXJzDwcbmjWBN2PKeiukDQ.ttf' },
   { name: 'playfair', weight: 400, style: 'italic', url: 'https://fonts.gstatic.com/s/playfairdisplay/v40/nuFRD-vYSZviVYUb_rj3ij__anPXDTnCjmHKM4nYO7KN_qiTbtY.ttf' },
+  // Plus Jakarta Sans — light-themed Services section only (self-hosted for DSGVO)
+  { name: 'jakarta', weight: 500, url: 'https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_m079TR_V.woff2' },
+  { name: 'jakarta', weight: 600, url: 'https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_d0n9TR_V.woff2' },
+  { name: 'jakarta', weight: 700, url: 'https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_Tkn9TR_V.woff2' },
+  { name: 'jakarta', weight: 800, url: 'https://fonts.gstatic.com/s/plusjakartasans/v12/LDIbaomQNQcsA88c7O9yZ4KMCoOg4IA6-91aHEjcWuA_KUn9TR_V.woff2' },
 ];
 
 const fontsDir = path.join('public', 'fonts');
@@ -39,7 +44,8 @@ function download(url, dest) {
 (async () => {
   for (const font of fonts) {
     const suffix = font.style === 'italic' ? `${font.weight}-italic` : `${font.weight}`;
-    const dest = path.join(fontsDir, `${font.name}-${suffix}.ttf`);
+    const ext = font.url.endsWith('.woff2') ? 'woff2' : 'ttf';
+    const dest = path.join(fontsDir, `${font.name}-${suffix}.${ext}`);
     console.log(`Downloading ${font.name} ${suffix}...`);
     await download(font.url, dest);
     console.log(`  ✓ Saved: ${dest}`);

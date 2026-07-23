@@ -12,15 +12,15 @@ export default function Home() {
     <>
       <SEOHead path="/" />
       <Hero />
-      {/* Marquee Band #1 — between Hero and Works */}
+      {/* Marquee Band #1 — between Hero and Services */}
       <MarqueeTextBand direction="left" />
       <div className="section-divider" />
-      <Works />
-      {/* Marquee Band #2 — between Works and About, reverse direction */}
+      <Services />
+      {/* Marquee Band #2 — between Services and About, reverse direction */}
       <MarqueeTextBand direction="right" />
       <About />
       <div className="section-divider" />
-      <Services />
+      <Works />
       <div className="section-divider" />
       <WebDesignCatalog />
       <div className="section-divider" />
