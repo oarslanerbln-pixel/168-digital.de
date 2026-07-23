@@ -89,10 +89,33 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
         </ul>
 
         <p><strong>5. Kontaktformular</strong></p>
-        <p>Wenn Sie uns per Kontaktformular Anfragen zukommen lassen, werden Ihre Angaben aus dem Anfrageformular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen bei uns gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter.</p>
-        <p>Die von Ihnen im Kontaktformular eingegebenen Daten verbleiben bei uns, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt. Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
+        <p>Wenn Sie uns per Kontaktformular oder über den KI-Chat-Assistenten Anfragen zukommen lassen, werden Ihre Angaben aus dem Formular inklusive der von Ihnen dort angegebenen Kontaktdaten zwecks Bearbeitung der Anfrage und für den Fall von Anschlussfragen verarbeitet. Diese Daten geben wir nicht ohne Ihre Einwilligung an Dritte weiter, mit Ausnahme des in Abschnitt 6 genannten technischen Dienstleisters, der die Zustellung der Anfrage an uns übernimmt.</p>
+        <p>Die von Ihnen eingegebenen Daten verbleiben gespeichert, bis Sie uns zur Löschung auffordern, Ihre Einwilligung zur Speicherung widerrufen oder der Zweck für die Datenspeicherung entfällt. Zwingende gesetzliche Bestimmungen – insbesondere Aufbewahrungsfristen – bleiben unberührt.</p>
 
-        <p><strong>6. Hosting und Content Delivery Networks (CDN)</strong></p>
+        <p><strong>6. Formular- und Chat-Zustellung über Web3Forms</strong></p>
+        <p>Zur Zustellung von Kontaktformular- und Chat-Anfragen per E-Mail nutzen wir den Dienst Web3Forms (Web3Forms, USA). Dabei werden die von Ihnen eingegebenen Daten (Name, E-Mail-Adresse, Nachrichtentext) an Web3Forms übermittelt und von dort per E-Mail an uns weitergeleitet. Web3Forms verarbeitet diese Daten in unserem Auftrag und ausschließlich zum Zweck der Zustellung; eine darüberhinausgehende Nutzung findet nach Angaben des Anbieters nicht statt. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a bzw. lit. f DSGVO.</p>
+        <p>Weitere Informationen entnehmen Sie der Datenschutzerklärung von Web3Forms:{' '}
+          <a href="https://web3forms.com/privacy" target="_blank" rel="noopener noreferrer">
+            https://web3forms.com/privacy
+          </a>
+        </p>
+
+        <p><strong>7. KI-Chat-Assistent (Google Gemini API)</strong></p>
+        <p>Unser KI-Chat-Assistent nutzt zur Beantwortung Ihrer Nachrichten die Google Gemini API (Google Ireland Limited bzw. Google LLC, USA). Ihre Chat-Nachricht wird nur dann an Google übermittelt, wenn Sie aktiv eine Nachricht im Chat senden – die Begrüßungsnachricht beim Öffnen des Chats erfolgt lokal ohne Datenübertragung. Für die Übermittlung in die USA stützen wir uns auf die EU-Standardvertragsklauseln von Google. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Ihre aktive Nutzung des Chats).</p>
+        <p>Weitere Informationen entnehmen Sie der Datenschutzerklärung von Google:{' '}
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+            https://policies.google.com/privacy
+          </a>
+        </p>
+
+        <p><strong>8. WhatsApp-Kontakt</strong></p>
+        <p>Wir bieten die Möglichkeit, uns über einen WhatsApp-Button zu kontaktieren. Bei Klick werden Sie zur WhatsApp-Anwendung bzw. zu wa.me weitergeleitet, ein Betreiber der Meta Platforms Ireland Limited. Es gilt die Datenschutzerklärung von WhatsApp/Meta:{' '}
+          <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
+            https://www.whatsapp.com/legal/privacy-policy
+          </a>. Diese Weiterleitung erfolgt nur, wenn Sie den Button aktiv anklicken.
+        </p>
+
+        <p><strong>9. Hosting und Content Delivery Networks (CDN)</strong></p>
         <p>Wir hosten die Inhalte unserer Website bei Vercel Inc. (340 S Lemon Ave #4133, Walnut, CA 91789, USA). Die personenbezogenen Daten, die auf dieser Website erfasst werden, werden auf den Servern des Hosters gespeichert. Hierbei kann es sich v.a. um IP-Adressen, Kontaktanfragen und Meta- und Kommunikationsdaten handeln.</p>
         <p>Weitere Informationen entnehmen Sie der Datenschutzerklärung von Vercel:{' '}
           <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">
@@ -100,13 +123,13 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
           </a>
         </p>
 
-        <p><strong>7. Vercel Analytics</strong></p>
+        <p><strong>10. Vercel Analytics</strong></p>
         <p>Wir verwenden Vercel Analytics, um anonymisierte Statistiken zur Website-Nutzung zu erfassen und die Performance zu verbessern. Vercel Analytics verwendet keine Cookies und erfasst keine personenbezogenen Daten. IP-Adressen werden nicht gespeichert. Die Nutzung erfolgt nur nach Ihrer Einwilligung über den Cookie-Consent-Banner.</p>
 
-        <p><strong>8. SSL/TLS-Verschlüsselung</strong></p>
+        <p><strong>11. SSL/TLS-Verschlüsselung</strong></p>
         <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
 
-        <p><strong>9. Ihre Betroffenenrechte</strong></p>
+        <p><strong>12. Ihre Betroffenenrechte</strong></p>
         <p>Sie haben folgende Rechte hinsichtlich Ihrer personenbezogenen Daten:</p>
         <ul>
           <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
@@ -120,10 +143,10 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
         </ul>
         <p>Die zuständige Aufsichtsbehörde ist: Berliner Beauftragte für Datenschutz und Informationsfreiheit, Friedrichstr. 219, 10969 Berlin.</p>
 
-        <p><strong>10. Aufbewahrungsdauer</strong></p>
+        <p><strong>13. Aufbewahrungsdauer</strong></p>
         <p>Sofern innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
 
-        <p><strong>11. Schriftarten (Self-Hosted)</strong></p>
+        <p><strong>14. Schriftarten (Self-Hosted)</strong></p>
         <p>Diese Website verwendet die Schriftart „Outfit". Die Schriftarten sind lokal auf unserem Server gehostet. Es werden keine Verbindungen zu externen Servern (z.B. Google) hergestellt. Somit werden keine personenbezogenen Daten (z.B. Ihre IP-Adresse) an Dritte übertragen.</p>
       </>
     ),
