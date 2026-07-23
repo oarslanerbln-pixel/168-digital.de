@@ -1,0 +1,380 @@
+/* ════════════════════════════════════════════════════════════════
+   CONCEPT MOCKUPS — real mini website previews for 10 of the 50
+   design-library concepts. Bleeds to the card's top edge.
+   ════════════════════════════════════════════════════════════════ */
+
+.cm {
+  position: relative;
+  height: 112px;
+  margin: -1.6rem -1.6rem 1.15rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* ── 01 Obsidian Editorial ─────────────────────────────────────── */
+.cm-c01 {
+  background: #050505;
+  padding: 16px 20px;
+}
+.cm-c01 .cm-rule {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(90deg, #e8c97a, transparent 80%);
+}
+.cm-c01 .cm-headline {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1.5rem;
+  line-height: 1.05;
+  color: #f0ede8;
+  margin-top: 10px;
+}
+.cm-c01 .cm-tag {
+  position: absolute;
+  bottom: 12px;
+  right: 20px;
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  color: #e8c97a;
+}
+
+/* ── 02 Neon Noir ───────────────────────────────────────────────── */
+.cm-c02 {
+  background: #07070c;
+  padding: 16px 18px;
+}
+.cm-c02 .cm-glow {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 243, 255, 0.28), transparent 70%);
+}
+.cm-c02 .cm-headline {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  line-height: 1.1;
+  color: #fff;
+  text-shadow: 0 0 16px rgba(0, 243, 255, 0.5);
+}
+.cm-c02 .cm-glass {
+  position: absolute;
+  bottom: 12px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(0, 243, 255, 0.25);
+  backdrop-filter: blur(6px);
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 0.08em;
+  color: #00f3ff;
+}
+.cm-c02 .cm-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #00f3ff;
+  box-shadow: 0 0 6px #00f3ff;
+}
+
+/* ── 09 Brutalist Punch ────────────────────────────────────────── */
+.cm-c09 {
+  background: #fff;
+  padding: 14px 18px;
+  border-bottom: 3px solid #000;
+}
+.cm-c09 .cm-headline {
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  line-height: 0.95;
+  color: #000;
+}
+.cm-c09 .cm-block {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  background: #ff3300;
+}
+.cm-c09 .cm-tag {
+  position: absolute;
+  bottom: 10px;
+  right: 18px;
+  font-family: 'Courier Prime', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  color: #000;
+}
+
+/* ── 30 Risograph Print ────────────────────────────────────────── */
+.cm-c30 {
+  background: #f8f0e8;
+  padding: 16px 18px;
+}
+.cm-c30 .cm-circle {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  mix-blend-mode: multiply;
+  opacity: 0.75;
+}
+.cm-c30 .cm-circle-a {
+  background: #e8825a;
+  top: 10px;
+  right: 30px;
+}
+.cm-c30 .cm-circle-b {
+  background: #4a9b98;
+  top: 26px;
+  right: 14px;
+}
+.cm-c30 .cm-headline {
+  font-family: 'Abril Fatface', cursive;
+  font-size: 1.35rem;
+  line-height: 1.05;
+  color: #2a1a10;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── 13 Terra Organica ─────────────────────────────────────────── */
+.cm-c13 {
+  background: #f5ede0;
+  padding: 16px 18px;
+}
+.cm-c13 .cm-blob {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 100px;
+  height: 100px;
+  background: #7c9a6e;
+  opacity: 0.5;
+  border-radius: 62% 38% 55% 45% / 45% 55% 45% 55%;
+}
+.cm-c13 .cm-headline {
+  font-family: 'Fraunces', serif;
+  font-size: 1.35rem;
+  line-height: 1.1;
+  color: #3d2e1e;
+}
+.cm-c13 .cm-tag {
+  position: absolute;
+  bottom: 12px;
+  right: 18px;
+  font-family: 'Jost', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: #4a7c59;
+}
+
+/* ── 17 HUD Interface ──────────────────────────────────────────── */
+.cm-c17 {
+  background: #020b18;
+  padding: 16px 18px;
+}
+.cm-c17 .cm-corner {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid #00d4ff;
+  opacity: 0.7;
+}
+.cm-c17 .cm-corner-tl { top: 8px; left: 8px; border-right: none; border-bottom: none; }
+.cm-c17 .cm-corner-tr { top: 8px; right: 8px; border-left: none; border-bottom: none; }
+.cm-c17 .cm-corner-bl { bottom: 8px; left: 8px; border-right: none; border-top: none; }
+.cm-c17 .cm-corner-br { bottom: 8px; right: 8px; border-left: none; border-top: none; }
+.cm-c17 .cm-headline {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: #00d4ff;
+  text-shadow: 0 0 12px rgba(0, 212, 255, 0.6);
+  text-align: center;
+}
+.cm-c17 .cm-bars {
+  position: absolute;
+  bottom: 16px;
+  left: 20px;
+  right: 20px;
+  display: flex;
+  gap: 4px;
+  height: 10px;
+  align-items: flex-end;
+}
+.cm-c17 .cm-bars i {
+  flex: 1;
+  background: rgba(0, 212, 255, 0.5);
+  border-radius: 1px;
+}
+.cm-c17 .cm-bars i:nth-child(1) { height: 40%; }
+.cm-c17 .cm-bars i:nth-child(2) { height: 80%; }
+.cm-c17 .cm-bars i:nth-child(3) { height: 55%; }
+.cm-c17 .cm-bars i:nth-child(4) { height: 95%; }
+.cm-c17 .cm-bars i:nth-child(5) { height: 65%; }
+
+/* ── 38 Holographic Foil ───────────────────────────────────────── */
+.cm-c38 {
+  background: #0a0810;
+  padding: 16px 18px;
+}
+.cm-c38 .cm-foil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255, 128, 192, 0.22), rgba(128, 192, 255, 0.22) 30%, rgba(192, 255, 128, 0.22) 55%, rgba(255, 128, 128, 0.22) 80%);
+}
+.cm-c38 .cm-headline-foil {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, #ff80c0, #80c0ff, #c0ff80, #ff8080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  z-index: 1;
+}
+.cm-c38 .cm-card {
+  position: absolute;
+  bottom: 12px;
+  right: 16px;
+  width: 44px;
+  height: 30px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(4px);
+}
+
+/* ── 43 Zine Culture ───────────────────────────────────────────── */
+.cm-c43 {
+  background: #f0f0e0;
+  padding: 16px 18px;
+  border-bottom: 2px dashed #222;
+}
+.cm-c43 .cm-scrap {
+  position: absolute;
+  width: 40px;
+  height: 24px;
+  background: #ff3300;
+}
+.cm-c43 .cm-scrap-a {
+  top: 10px;
+  right: 40px;
+  transform: rotate(-8deg);
+}
+.cm-c43 .cm-scrap-b {
+  top: 20px;
+  right: 16px;
+  background: #111;
+  transform: rotate(6deg);
+}
+.cm-c43 .cm-headline {
+  font-family: 'Anton', sans-serif;
+  text-transform: uppercase;
+  font-size: 1.35rem;
+  line-height: 0.95;
+  color: #111;
+  transform: rotate(-2deg);
+}
+.cm-c43 .cm-stamp {
+  position: absolute;
+  bottom: 10px;
+  right: 18px;
+  font-family: 'Courier Prime', monospace;
+  font-weight: 700;
+  font-size: 9px;
+  color: #ff3300;
+  border: 1.5px solid #ff3300;
+  padding: 2px 5px;
+  transform: rotate(-4deg);
+}
+
+/* ── 47 Casino Gold ────────────────────────────────────────────── */
+.cm-c47 {
+  background: #0a0800;
+  padding: 16px 18px;
+  align-items: center;
+  text-align: center;
+}
+.cm-c47 .cm-frame {
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+}
+.cm-c47::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 50%, rgba(212, 175, 55, 0.18), transparent 65%);
+}
+.cm-c47 .cm-headline {
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1.4rem;
+  letter-spacing: 0.12em;
+  color: #f0d870;
+  text-shadow: 0 0 18px rgba(212, 175, 55, 0.5);
+  position: relative;
+  z-index: 1;
+}
+.cm-c47 .cm-star {
+  position: absolute;
+  top: 14px;
+  right: 20px;
+  color: #d4af37;
+  font-size: 14px;
+}
+
+/* ── 50 Streaming Dark ─────────────────────────────────────────── */
+.cm-c50 {
+  background: #141414;
+  padding: 18px 18px 14px;
+  justify-content: flex-start;
+}
+.cm-c50 .cm-topbar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #e50914;
+}
+.cm-c50 .cm-headline {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #fff;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+.cm-c50 .cm-row {
+  display: flex;
+  gap: 6px;
+}
+.cm-c50 .cm-row i {
+  flex: 1;
+  height: 40px;
+  border-radius: 4px;
+  background: linear-gradient(160deg, #2a2a2a, #1a1a1a);
+  border-top: 2px solid rgba(229, 9, 20, 0.5);
+}
