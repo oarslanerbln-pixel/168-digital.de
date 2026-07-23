@@ -29,9 +29,9 @@ export default function AIChatDrawer() {
       const getWelcomeMessage = () => {
         const lang = i18n.language;
         if (lang === 'de') {
-          return "Hallo! Benötigen Sie Hilfe bei einem 3D SaaS- oder Kinoprojekt? Ich bin der 168 Digital KI-Assistent. Wie kann ich Sie heute unterstützen? Sie können mir auch gerne Ihre E-Mail-Adresse hinterlassen.";
+          return "Hallo! Benötigen Sie Hilfe bei einem 3D SaaS- oder Kinoprojekt? Ich bin der 1618 Digital KI-Assistent. Wie kann ich Sie heute unterstützen? Sie können mir auch gerne Ihre E-Mail-Adresse hinterlassen.";
         }
-        return "Hello! Need help with a 3D SaaS or cinematic production project? I am the 168 Digital AI Representative. How can I help you today? Feel free to leave your email for a follow-up.";
+        return "Hello! Need help with a 3D SaaS or cinematic production project? I am the 1618 Digital AI Representative. How can I help you today? Feel free to leave your email for a follow-up.";
       };
 
       setMessages([
@@ -111,8 +111,8 @@ export default function AIChatDrawer() {
       // Fallback response if API fails
       const getFallbackReply = () => {
         const lang = i18n.language;
-        if (lang === 'de') return "Entschuldigung, meine Verbindung ist gerade unterbrochen. Bitte senden Sie uns eine E-Mail an contact@168-digital.de.";
-        return "I apologize, my systems are currently experiencing latency. Please reach out directly to contact@168-digital.de.";
+        if (lang === 'de') return "Entschuldigung, meine Verbindung ist gerade unterbrochen. Bitte senden Sie uns eine E-Mail an contact@1618-digital.de.";
+        return "I apologize, my systems are currently experiencing latency. Please reach out directly to contact@1618-digital.de.";
       };
       
       setMessages((prev) => [

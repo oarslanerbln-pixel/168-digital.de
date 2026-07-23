@@ -163,7 +163,7 @@ export default function Preloader({ onComplete }: PreloaderProps) {
               exit={{ opacity: 0, scale: 1.12, filter: 'blur(10px)' }}
               transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <div className="pl-brand-name">168 DIGITAL</div>
+              <div className="pl-brand-name">1618 DIGITAL</div>
               <motion.div
                 className="pl-brand-line"
                 initial={{ scaleX: 0, opacity: 0 }}

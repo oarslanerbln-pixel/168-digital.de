@@ -51,8 +51,8 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
       },
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
-        subject: `New lead — 168 Digital (${payload.source || 'Website'})`,
-        from_name: '168 Digital Website',
+        subject: `New lead — 1618 Digital (${payload.source || 'Website'})`,
+        from_name: '1618 Digital Website',
         name: payload.name || 'Website Visitor',
         email: payload.email,
         message: payload.message || '(no message provided)',

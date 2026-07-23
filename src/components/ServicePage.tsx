@@ -9,7 +9,7 @@ import { serviceContent, type Lang } from '../data/serviceContent';
 import { getProjectById } from '../data/works';
 import './ServicePage.css';
 
-const SITE_URL = 'https://168-digital.de';
+const SITE_URL = 'https://1618-digital.de';
 
 export default function ServicePage() {
   const { slug } = useParams<{ slug: string }>();

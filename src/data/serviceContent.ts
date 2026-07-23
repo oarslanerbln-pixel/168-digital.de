@@ -23,7 +23,7 @@ export interface ServicePageContent {
 export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = {
   'web-saas-development': {
     en: {
-      metaTitle: '168 Digital | Web Design & SaaS Development Berlin',
+      metaTitle: '1618 Digital | Web Design & SaaS Development Berlin',
       metaDescription:
         'Custom websites, web apps, 3D configurators and SaaS platforms built in Berlin. Fast, high-converting, and engineered to grow your business.',
       overline: 'WEB & SOFTWARE',
@@ -55,7 +55,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: ['donerbros', 'sera'],
     },
     de: {
-      metaTitle: '168 Digital | Webdesign & SaaS-Entwicklung Berlin',
+      metaTitle: '1618 Digital | Webdesign & SaaS-Entwicklung Berlin',
       metaDescription:
         'Individuelle Websites, Web-Apps, 3D-Konfiguratoren und SaaS-Plattformen aus Berlin. Schnell, conversion-stark und auf Wachstum ausgelegt.',
       overline: 'WEB & SOFTWARE',
@@ -87,7 +87,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: ['donerbros', 'sera'],
     },
     tr: {
-      metaTitle: '168 Digital | Web Tasarım & SaaS Geliştirme Berlin',
+      metaTitle: '1618 Digital | Web Tasarım & SaaS Geliştirme Berlin',
       metaDescription:
         'Berlin merkezli özel web siteleri, web uygulamaları, 3D konfigüratörler ve SaaS platformları. Hızlı, dönüşüm odaklı ve büyümeye göre kurgulanmış.',
       overline: 'WEB & YAZILIM',
@@ -122,7 +122,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
 
   'ai-voice-agents': {
     en: {
-      metaTitle: '168 Digital | AI Voice Agents & Chatbots Berlin',
+      metaTitle: '1618 Digital | AI Voice Agents & Chatbots Berlin',
       metaDescription:
         '24/7 human-like AI voice receptionists and chatbots that answer calls, capture leads and book appointments — built and tuned in Berlin.',
       overline: 'AI VOICE & AUTOMATION',
@@ -154,7 +154,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     de: {
-      metaTitle: '168 Digital | KI-Sprachassistenten & Chatbots Berlin',
+      metaTitle: '1618 Digital | KI-Sprachassistenten & Chatbots Berlin',
       metaDescription:
         'Rund um die Uhr erreichbare, menschlich klingende KI-Telefonassistenten und Chatbots, die Anrufe entgegennehmen, Leads erfassen und Termine buchen — aus Berlin.',
       overline: 'KI-SPRACHE & AUTOMATION',
@@ -186,7 +186,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     tr: {
-      metaTitle: '168 Digital | Yapay Zeka Sesli Asistan & Chatbot Berlin',
+      metaTitle: '1618 Digital | Yapay Zeka Sesli Asistan & Chatbot Berlin',
       metaDescription:
         'Aramaları yanıtlayan, lead toplayan ve randevu ayarlayan, 7/24 insan sesi doğallığında yapay zeka sesli asistanlar ve chatbotlar — Berlin\'den.',
       overline: 'YAPAY ZEKA SES & OTOMASYON',
@@ -221,7 +221,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
 
   'video-drone-production': {
     en: {
-      metaTitle: '168 Digital | Cinematic & Drone Video Production Berlin',
+      metaTitle: '1618 Digital | Cinematic & Drone Video Production Berlin',
       metaDescription:
         'Cinematic video production, aerial drone footage and DaVinci Resolve color grading for brands and businesses in Berlin — trailers, ads and storytelling.',
       overline: 'PRODUCTION',
@@ -253,7 +253,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: ['impulse'],
     },
     de: {
-      metaTitle: '168 Digital | Kino-Video- & Drohnenproduktion Berlin',
+      metaTitle: '1618 Digital | Kino-Video- & Drohnenproduktion Berlin',
       metaDescription:
         'Kinoreife Videoproduktion, Drohnenaufnahmen und DaVinci Resolve Color Grading für Marken und Unternehmen in Berlin — Trailer, Werbespots und Storytelling.',
       overline: 'PRODUKTION',
@@ -285,7 +285,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: ['impulse'],
     },
     tr: {
-      metaTitle: '168 Digital | Sinematik & Drone Video Prodüksiyon Berlin',
+      metaTitle: '1618 Digital | Sinematik & Drone Video Prodüksiyon Berlin',
       metaDescription:
         'Berlin\'de markalar ve işletmeler için sinematik video prodüksiyon, drone çekimi ve DaVinci Resolve renk düzenleme — fragman, reklam ve hikaye anlatımı.',
       overline: 'PRODÜKSİYON',
@@ -320,7 +320,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
 
   'wedding-event-films': {
     en: {
-      metaTitle: '168 Digital | Wedding & Event Cinematography Berlin',
+      metaTitle: '1618 Digital | Wedding & Event Cinematography Berlin',
       metaDescription:
         'Emotional, cinematic wedding and event films in Berlin. Full-day coverage, drone shots and film-quality editing that captures every moment.',
       overline: 'WEDDINGS & EVENTS',
@@ -352,7 +352,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     de: {
-      metaTitle: '168 Digital | Hochzeits- & Event-Kinematografie Berlin',
+      metaTitle: '1618 Digital | Hochzeits- & Event-Kinematografie Berlin',
       metaDescription:
         'Emotionale, kinoreife Hochzeits- und Eventfilme in Berlin. Ganztägige Begleitung, Drohnenaufnahmen und Schnitt in Filmqualität, der jeden Moment einfängt.',
       overline: 'HOCHZEITEN & EVENTS',
@@ -384,7 +384,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     tr: {
-      metaTitle: '168 Digital | Düğün & Etkinlik Sinematografisi Berlin',
+      metaTitle: '1618 Digital | Düğün & Etkinlik Sinematografisi Berlin',
       metaDescription:
         'Berlin\'de duygusal, sinematik düğün ve etkinlik filmleri. Tüm gün çekim, drone görüntüleri ve her anı yakalayan film kalitesinde kurgu.',
       overline: 'DÜĞÜN & ETKİNLİK',
@@ -419,9 +419,9 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
 
   'social-media-marketing': {
     en: {
-      metaTitle: '168 Digital | Social Media Marketing & Content Berlin',
+      metaTitle: '1618 Digital | Social Media Marketing & Content Berlin',
       metaDescription:
-        'Social media content strategy, short-form video and growth packages for Instagram and TikTok — planned and produced by 168 Digital in Berlin.',
+        'Social media content strategy, short-form video and growth packages for Instagram and TikTok — planned and produced by 1618 Digital in Berlin.',
       overline: 'SOCIAL & CONTENT',
       h1: 'Social Media Marketing & Content Production',
       intro: [
@@ -451,9 +451,9 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     de: {
-      metaTitle: '168 Digital | Social-Media-Marketing & Content Berlin',
+      metaTitle: '1618 Digital | Social-Media-Marketing & Content Berlin',
       metaDescription:
-        'Social-Media-Content-Strategie, Kurzvideos und Wachstumspakete für Instagram und TikTok — geplant und produziert von 168 Digital in Berlin.',
+        'Social-Media-Content-Strategie, Kurzvideos und Wachstumspakete für Instagram und TikTok — geplant und produziert von 1618 Digital in Berlin.',
       overline: 'SOCIAL & CONTENT',
       h1: 'Social-Media-Marketing & Content-Produktion',
       intro: [
@@ -483,9 +483,9 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     tr: {
-      metaTitle: '168 Digital | Sosyal Medya Pazarlama & İçerik Berlin',
+      metaTitle: '1618 Digital | Sosyal Medya Pazarlama & İçerik Berlin',
       metaDescription:
-        'Instagram ve TikTok için sosyal medya içerik stratejisi, kısa video ve büyüme paketleri — Berlin\'de 168 Digital tarafından planlanır ve üretilir.',
+        'Instagram ve TikTok için sosyal medya içerik stratejisi, kısa video ve büyüme paketleri — Berlin\'de 1618 Digital tarafından planlanır ve üretilir.',
       overline: 'SOSYAL & İÇERİK',
       h1: 'Sosyal Medya Pazarlama & İçerik Prodüksiyonu',
       intro: [

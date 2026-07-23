@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
-const CANONICAL_BASE = 'https://168-digital.de/';
+const CANONICAL_BASE = 'https://1618-digital.de/';
 const OG_LOCALES: Record<string, string> = { en: 'en_US', de: 'de_DE', tr: 'tr_TR' };
 
 interface SEOHeadProps {

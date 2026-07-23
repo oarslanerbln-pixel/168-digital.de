@@ -26,7 +26,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
             Germany<br /><br />
             
             <strong>Contact:</strong><br />
-            E-Mail: info@168-digital.de
+            E-Mail: info@1618-digital.de
           </p>
           <p><strong>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</strong></p>
           <p>
@@ -75,7 +75,7 @@ export default function LegalModal({ isOpen, onClose, type }: LegalModalProps) {
             1618 Digital<br/>
             Ömer Arslaner<br/>
             Wirmerzeile 4, 13627 Berlin<br/>
-            E-Mail: info@168-digital.de<br/>
+            E-Mail: info@1618-digital.de<br/>
             Telefon: +49 178 7277867
           </p>
 
