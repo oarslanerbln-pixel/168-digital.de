@@ -81,26 +81,30 @@ function ServiceCard({ card }: { card: any }) {
         onMouseEnter={playTick}
         className="service-card-light"
       >
-        <div className="service-icon-wrapper-light">
-          <Icon size={24} strokeWidth={1.6} />
+        <span className="service-card-waterfall" aria-hidden="true" />
+
+        <div className="service-card-body-light">
+          <div className="service-icon-wrapper-light">
+            <Icon size={24} strokeWidth={1.6} />
+          </div>
+
+          <h3 className="service-card-title-light">
+            {t(card.titleKey)}
+          </h3>
+          <p className="service-card-desc-light">
+            {t(card.descKey)}
+          </p>
+
+          <div className="service-card-tags-light">
+            {card.tags.map((tag: string) => (
+              <span key={tag} className="service-tag-light">{tag}</span>
+            ))}
+          </div>
+
+          <span className="service-card-cta-light">
+            {t('svc_view_details')} <ArrowUpRight size={14} />
+          </span>
         </div>
-
-        <h3 className="service-card-title-light">
-          {t(card.titleKey)}
-        </h3>
-        <p className="service-card-desc-light">
-          {t(card.descKey)}
-        </p>
-
-        <div className="service-card-tags-light">
-          {card.tags.map((tag: string) => (
-            <span key={tag} className="service-tag-light">{tag}</span>
-          ))}
-        </div>
-
-        <span className="service-card-cta-light">
-          {t('svc_view_details')} <ArrowUpRight size={14} />
-        </span>
       </Link>
     </motion.div>
   );

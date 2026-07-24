@@ -726,6 +726,39 @@ body {
   z-index: -1;
 }
 
+/* Base header rules — shared with WebDesignCatalog's section header.
+   (Restored: these were accidentally dropped when the light theme was
+   introduced, leaving no margin between the header and the card grid.) */
+.services-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+
+.services-overline {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 16px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.services-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.services-subtitle {
+  max-width: 640px;
+  margin: 18px auto 0;
+  font-size: clamp(0.98rem, 2vw, 1.15rem);
+  line-height: 1.6;
+  color: var(--text-muted, rgba(255, 255, 255, 0.6));
+}
+
 .services-light .services-overline {
   color: var(--accent-purple);
   opacity: 1;
@@ -781,6 +814,58 @@ body {
   box-shadow:
     0 24px 48px rgba(33, 28, 21, 0.08),
     0 0 0 1px color-mix(in srgb, var(--accent-purple) 10%, transparent);
+}
+
+/* Real card content sits above the waterfall overlay and fills the card
+   (so the flex-grown description still pushes tags/CTA to the bottom). */
+.service-card-body-light {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* ─── Hover "waterfall" — a visible blue stream flowing down into the card ─── */
+.service-card-waterfall {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(186, 230, 253, 0.7) 22%,
+    rgba(56, 189, 248, 0.55) 42%,
+    rgba(14, 165, 233, 0.28) 60%,
+    transparent 85%
+  );
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.service-card-light:hover .service-card-waterfall {
+  animation: services-waterfall 1.2s var(--ease-premium) forwards;
+}
+
+@keyframes services-waterfall {
+  0% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card-light:hover .service-card-waterfall {
+    animation: none;
+  }
 }
 
 /* ─── Icon Wrapper — one restrained brand tone across every card ─── */
