@@ -56,7 +56,7 @@
 .service-intro p {
   font-size: clamp(1rem, 1.4vw, 1.15rem);
   line-height: 1.7;
-  color: var(--text-secondary, #b9b3ad);
+  color: var(--text-secondary, var(--text-muted));
   margin-bottom: 1.25rem;
   max-width: 700px;
 }
@@ -131,12 +131,12 @@
 }
 
 .service-faq-item {
-  border-top: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-top: 1px solid var(--border-subtle, rgba(33, 28, 21, 0.1));
   padding: 1.5rem 0;
 }
 
 .service-faq-item:last-child {
-  border-bottom: 1px solid var(--border-subtle, rgba(255,255,255,0.08));
+  border-bottom: 1px solid var(--border-subtle, rgba(33, 28, 21, 0.1));
 }
 
 .service-faq-q {
@@ -166,8 +166,8 @@
   gap: 0.4rem;
   padding: 0.6rem 1.1rem;
   border-radius: 999px;
-  border: 1px solid var(--border-subtle, rgba(255,255,255,0.12));
-  color: var(--text-secondary, #b9b3ad);
+  border: 1px solid var(--border-subtle, rgba(33, 28, 21, 0.14));
+  color: var(--text-secondary, var(--text-muted));
   text-decoration: none;
   font-size: 0.85rem;
   transition: all 0.3s ease;

@@ -1,0 +1,130 @@
+/* ═══════════════════════════════════════════════════════════════
+   ANGEBOT (QUOTE REQUEST) — corner FAB + form modal
+   ═══════════════════════════════════════════════════════════════ */
+
+.angebot-fab {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 22px;
+  border-radius: 100px;
+  border: 1px solid rgba(197, 160, 115, 0.3);
+  background: rgba(10, 9, 8, 0.85);
+  color: #f0e4d0;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(33, 28, 21, 0.25), 0 0 15px rgba(197, 160, 115, 0.08);
+  transition: border-color 0.35s var(--ease-premium), box-shadow 0.35s var(--ease-premium);
+}
+
+.angebot-fab:hover {
+  border-color: rgba(197, 160, 115, 0.6);
+  box-shadow: 0 15px 35px rgba(33, 28, 21, 0.3), 0 0 25px rgba(197, 160, 115, 0.18);
+  color: #ffffff;
+}
+
+.angebot-fab-label {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .angebot-fab {
+    bottom: 24px;
+    right: 24px;
+    padding: 14px;
+    gap: 0;
+  }
+  .angebot-fab-label {
+    display: none;
+  }
+}
+
+/* ─── Modal content ─── */
+.angebot-modal-content {
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fdfbf8;
+  border: 1px solid rgba(33, 28, 21, 0.1);
+  border-radius: 28px;
+  padding: 48px 40px;
+  position: relative;
+  box-shadow: 0 40px 100px rgba(33, 28, 21, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.angebot-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.angebot-modal-title {
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: 10px;
+  padding-right: 40px;
+}
+
+.angebot-modal-subtitle {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  margin-bottom: 32px;
+  max-width: 440px;
+}
+
+.angebot-modal-content .contact-form {
+  gap: 26px;
+}
+
+/* ─── Service select — static label, not the floating-label pattern
+   (which relies on :placeholder-shown, unsupported on <select>) ─── */
+.angebot-select-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.angebot-select-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.angebot-select {
+  width: 100%;
+  background: rgba(33, 28, 21, 0.03);
+  border: 1px solid rgba(33, 28, 21, 0.12);
+  border-radius: 12px;
+  padding: 16px 20px;
+  color: var(--text-main);
+  font-size: 1.05rem;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.angebot-select:focus {
+  background: rgba(33, 28, 21, 0.05);
+  border-color: rgba(33, 28, 21, 0.25);
+}
+
+@media (max-width: 640px) {
+  .angebot-modal-content {
+    padding: 40px 24px;
+  }
+}

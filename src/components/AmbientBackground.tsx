@@ -3,8 +3,8 @@ import './AmbientBackground.css';
 
 /**
  * AmbientBackground — lightweight fixed backdrop replacing the three.js globe.
- * A slow drifting gold/white particle field on a 2D canvas over CSS aurora
- * gradients. No WebGL, no external assets.
+ * A slow drifting bronze-gold particle field on a 2D canvas over CSS aurora
+ * gradients, on a light parchment backdrop. No WebGL, no external assets.
  */
 export default function AmbientBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -50,7 +50,7 @@ export default function AmbientBackground() {
         if (p.y < -5) p.y = h + 5; else if (p.y > h + 5) p.y = -5;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r * (0.6 + p.z), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(229, 193, 133, ${p.a * (0.5 + p.z * 0.5)})`;
+        ctx.fillStyle = `rgba(163, 118, 60, ${p.a * (0.6 + p.z * 0.5)})`;
         ctx.fill();
       }
     };

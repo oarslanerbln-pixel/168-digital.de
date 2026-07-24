@@ -45,14 +45,14 @@
   margin-bottom: 24px;
   letter-spacing: -0.02em;
   
-  /* Warm platinum/champagne gradient — tied to brand's bronze-gold identity */
+  /* Deep ink/bronze shimmer — tied to brand's bronze-gold identity */
   background: linear-gradient(
     135deg,
-    var(--accent-platinum) 0%,
-    var(--accent-silver) 30%,
-    #b8a48a 50%,
-    var(--accent-platinum) 70%,
-    var(--accent-silver) 100%
+    var(--text-main) 0%,
+    var(--accent-purple) 30%,
+    #8a6a3f 50%,
+    var(--text-main) 70%,
+    var(--accent-purple) 100%
   );
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -98,10 +98,9 @@
   letter-spacing: 0.04em;
   font-size: clamp(1.05rem, 2.4vw, 1.45rem);
   line-height: 1.5;
-  color: var(--accent-silver);
+  color: var(--text-muted);
   margin-bottom: 40px;
   max-width: 620px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
 }
 
 
@@ -121,11 +120,11 @@
   display: inline-block;
   padding: 8px 16px;
   border-radius: 100px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(33, 28, 21, 0.12);
+  background: rgba(33, 28, 21, 0.04);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
-  color: rgba(255, 255, 255, 0.82);
+  color: rgba(33, 28, 21, 0.75);
   font-family: 'Outfit', sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
@@ -136,9 +135,9 @@
 }
 
 .hero-service-chip:hover {
-  border-color: rgba(255, 255, 255, 0.28);
-  background: rgba(255, 255, 255, 0.09);
-  color: #ffffff;
+  border-color: rgba(33, 28, 21, 0.3);
+  background: rgba(33, 28, 21, 0.08);
+  color: var(--text-main);
   transform: translateY(-2px);
 }
 
@@ -166,7 +165,7 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(33, 28, 21, 0.25);
   flex-shrink: 0;
 }
 
@@ -180,7 +179,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: var(--accent-platinum);
+  color: var(--text-main);
   font-family: 'Outfit', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
@@ -234,7 +233,7 @@
 }
 
 .hero-btn-primary-v2:hover .hero-btn-text {
-  color: #ffffff;
+  color: var(--accent-purple);
 }
 
 
@@ -250,9 +249,9 @@
   gap: 8px;
   padding: 10px 20px;
   border-radius: 100px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgba(33, 28, 21, 0.03);
+  border: 1px solid rgba(33, 28, 21, 0.1);
+  color: var(--text-muted);
   cursor: pointer;
   font-family: 'Outfit', sans-serif;
   font-size: 0.78rem;
@@ -279,11 +278,11 @@
 }
 
 .hero-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.9);
+  background: rgba(33, 28, 21, 0.07);
+  border-color: rgba(33, 28, 21, 0.2);
+  color: var(--text-main);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 24px rgba(33, 28, 21, 0.12);
 }
 
 
