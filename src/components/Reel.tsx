@@ -3,7 +3,7 @@ import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from
 import './Reel.css';
 
 const words = [
-  "3D MODELS",
+  "AI VOICE AGENTS",
   "HOCHZEITSFILME",
   "APP BUILDING",
   "SOFTWARE PRODUCTION",

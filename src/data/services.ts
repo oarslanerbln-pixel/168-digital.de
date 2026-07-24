@@ -20,7 +20,7 @@ export const services: ServiceMeta[] = [
     slug: 'web-saas-development',
     icon: Globe,
     glowColor: '#38bdf8',
-    tags: ['Websites', 'SaaS', '3D Configurators'],
+    tags: ['Websites', 'SaaS', 'Automation'],
     titleKey: 'service_web_title',
   },
   {

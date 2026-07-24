@@ -25,12 +25,12 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
     en: {
       metaTitle: '1618 Digital | Web Design & SaaS Development Berlin',
       metaDescription:
-        'Custom websites, web apps, 3D configurators and SaaS platforms built in Berlin. Fast, high-converting, and engineered to grow your business.',
+        'Custom websites, web apps and SaaS platforms built in Berlin. Fast, high-converting, and engineered to grow your business.',
       overline: 'WEB & SOFTWARE',
       h1: 'Web Design & SaaS Development in Berlin',
       intro: [
         'We design and build websites and web applications that are fast, easy to manage, and built to convert visitors into customers — from single-page landing sites to multi-page business platforms with booking, payments, and custom dashboards.',
-        'For brands that need more than a website, we build bespoke SaaS products: 3D configurators, booking engines, internal tools and customer portals — engineered with the same precision as our visual work, backed by the Golden Ratio philosophy that defines everything we make.',
+        'For brands that need more than a website, we build bespoke SaaS products: booking engines, internal tools, customer portals and interactive product configurators — engineered with the same precision as our visual work, backed by the Golden Ratio philosophy that defines everything we make.',
       ],
       features: [
         { title: 'Custom Websites & Landing Pages', desc: 'Hand-built with React, optimized for speed, accessibility and search engines — no bloated page builders.' },
@@ -57,12 +57,12 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
     de: {
       metaTitle: '1618 Digital | Webdesign & SaaS-Entwicklung Berlin',
       metaDescription:
-        'Individuelle Websites, Web-Apps, 3D-Konfiguratoren und SaaS-Plattformen aus Berlin. Schnell, conversion-stark und auf Wachstum ausgelegt.',
+        'Individuelle Websites, Web-Apps und SaaS-Plattformen aus Berlin. Schnell, conversion-stark und auf Wachstum ausgelegt.',
       overline: 'WEB & SOFTWARE',
       h1: 'Webdesign & SaaS-Entwicklung in Berlin',
       intro: [
         'Wir entwerfen und entwickeln Websites und Web-Anwendungen, die schnell laden, einfach zu pflegen sind und Besucher zu Kunden machen — von der Landingpage bis zur mehrseitigen Business-Plattform mit Buchung, Zahlung und individuellem Dashboard.',
-        'Für Marken, die mehr als eine Website brauchen, entwickeln wir maßgeschneiderte SaaS-Produkte: 3D-Konfiguratoren, Buchungssysteme, interne Tools und Kundenportale — mit derselben Präzision wie unsere visuelle Arbeit, geprägt von der Goldenen-Schnitt-Philosophie, die alles bei uns bestimmt.',
+        'Für Marken, die mehr als eine Website brauchen, entwickeln wir maßgeschneiderte SaaS-Produkte: Buchungssysteme, interne Tools, Kundenportale und interaktive Produktkonfiguratoren — mit derselben Präzision wie unsere visuelle Arbeit, geprägt von der Goldenen-Schnitt-Philosophie, die alles bei uns bestimmt.',
       ],
       features: [
         { title: 'Individuelle Websites & Landingpages', desc: 'Handgebaut mit React, optimiert für Geschwindigkeit, Barrierefreiheit und Suchmaschinen — keine überladenen Baukästen.' },
@@ -89,12 +89,12 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
     tr: {
       metaTitle: '1618 Digital | Web Tasarım & SaaS Geliştirme Berlin',
       metaDescription:
-        'Berlin merkezli özel web siteleri, web uygulamaları, 3D konfigüratörler ve SaaS platformları. Hızlı, dönüşüm odaklı ve büyümeye göre kurgulanmış.',
+        'Berlin merkezli özel web siteleri, web uygulamaları ve SaaS platformları. Hızlı, dönüşüm odaklı ve büyümeye göre kurgulanmış.',
       overline: 'WEB & YAZILIM',
       h1: 'Berlin\'de Web Tasarım & SaaS Geliştirme',
       intro: [
         'Hızlı yüklenen, yönetimi kolay ve ziyaretçileri müşteriye dönüştüren web siteleri ve web uygulamaları tasarlıyor ve geliştiriyoruz — tek sayfalık açılış sayfalarından, rezervasyon ve ödeme entegrasyonlu çok sayfalı işletme platformlarına kadar.',
-        'Bir web sitesinden fazlasına ihtiyaç duyan markalar için özel SaaS ürünleri geliştiriyoruz: 3D konfigüratörler, rezervasyon motorları, iç araçlar ve müşteri portalları — görsel işlerimizdeki aynı hassasiyetle, her işimizi şekillendiren Altın Oran felsefesine dayanarak.',
+        'Bir web sitesinden fazlasına ihtiyaç duyan markalar için özel SaaS ürünleri geliştiriyoruz: rezervasyon motorları, iç araçlar, müşteri portalları ve interaktif ürün konfigüratörleri — görsel işlerimizdeki aynı hassasiyetle, her işimizi şekillendiren Altın Oran felsefesine dayanarak.',
       ],
       features: [
         { title: 'Özel Web Siteleri & Açılış Sayfaları', desc: 'React ile elle kodlanmış, hız, erişilebilirlik ve arama motorları için optimize edilmiş — şişkin site oluşturuculara gerek yok.' },
