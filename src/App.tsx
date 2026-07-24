@@ -11,6 +11,7 @@ import Footer from './components/Footer';
 import LegalModal from './components/LegalModal';
 import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
+import AngebotWidget from './components/AngebotWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
 import DevConsole from './components/DevConsole';
 
@@ -120,6 +121,7 @@ function App() {
         <LanguageToggle />
         <HomeLogo />
         <WhatsAppWidget />
+        <AngebotWidget />
         <CookieConsent forceShow={forceShowCookies} onCloseForceShow={() => setForceShowCookies(false)} />
         <LegalModal isOpen={!!legalModalType} type={legalModalType} onClose={() => setLegalModalType(null)} />
         <main>

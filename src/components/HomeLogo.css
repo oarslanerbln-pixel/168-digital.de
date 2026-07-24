@@ -33,7 +33,7 @@
   font-weight: 800;
   font-size: 1.05rem;
   letter-spacing: 0.5px;
-  color: var(--accent-platinum);
+  color: #faf8f6;
 }
 
 .home-logo-label {
@@ -41,7 +41,7 @@
   font-weight: 600;
   font-size: 0.6rem;
   letter-spacing: 2px;
-  color: var(--text-muted);
+  color: rgba(166, 159, 153, 0.9);
 }
 
 @media (max-width: 640px) {

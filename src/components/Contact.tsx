@@ -116,7 +116,7 @@ export default function Contact() {
                 {dsgvoConsent ? (
                   <CheckSquare size={22} color="var(--accent-cyan)" />
                 ) : (
-                  <Square size={22} color="rgba(255,255,255,0.3)" />
+                  <Square size={22} color="rgba(33,28,21,0.35)" />
                 )}
               </div>
               <p className="dsgvo-text">

@@ -71,9 +71,9 @@ export default function HeroEmblem() {
         >
           <defs>
             <linearGradient id="he-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#fff4d6" />
-              <stop offset="50%" stopColor="#e5c185" />
-              <stop offset="100%" stopColor="#b98f52" />
+              <stop offset="0%" stopColor="#e8c078" />
+              <stop offset="50%" stopColor="#c9973f" />
+              <stop offset="100%" stopColor="#8a6a3f" />
             </linearGradient>
           </defs>
           <circle cx={SIZE / 2} cy={SIZE / 2} r={SIZE / 2 - 14} className="he-ring" />
