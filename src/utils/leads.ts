@@ -13,7 +13,7 @@
 
 export const WEB3FORMS_ACCESS_KEY =
   (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) ||
-  'd10c80c0-53bb-42bc-8c88-13b634b41996';
+  '';
 
 export function isLeadDeliveryConfigured(): boolean {
   return (
