@@ -690,46 +690,55 @@ body {
 }
 
 /* =========================================================================
-   SERVICES SECTION — PREMIUM HUD CARDS
+   SERVICES SECTION — LIGHT, MODERN COUNTERPOINT TO THE CINEMATIC DARK THEME
+   Deliberately distinct: light warm background, Plus Jakarta Sans typeface,
+   higher-contrast readable body text. Everything is scoped under
+   .services-light so it never leaks into the dark theme elsewhere.
    ========================================================================= */
 
-.services-section {
-  padding: 100px 24px;
+.services-light {
+  --services-bg-1: #faf7f2;
+  --services-bg-2: #f1ece3;
+  --services-ink: #211c15;
+  --services-ink-muted: #6b6155;
+  --services-card-bg: #ffffff;
+  --services-card-border: rgba(33, 28, 21, 0.08);
+
   position: relative;
   z-index: 10;
+  padding: 120px 24px;
   max-width: 1200px;
   margin: 0 auto;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--services-ink);
 }
 
-/* Section Header */
-.services-header {
-  text-align: center;
-  margin-bottom: 64px;
+/* Full-bleed light band behind the centered content */
+.services-light::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  background: linear-gradient(180deg, var(--services-bg-1) 0%, var(--services-bg-2) 100%);
+  z-index: -1;
 }
 
-.services-overline {
-  display: block;
-  font-size: 0.75rem;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--accent-cyan);
-  margin-bottom: 16px;
-  font-weight: 600;
-  opacity: 0.8;
+.services-light .services-overline {
+  color: var(--accent-purple);
+  opacity: 1;
 }
 
-.services-title {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  line-height: 1.1;
+.services-light .services-title {
+  color: var(--services-ink);
+  font-weight: 700;
+  letter-spacing: -0.01em;
 }
 
-.services-subtitle {
-  max-width: 640px;
-  margin: 18px auto 0;
-  font-size: clamp(0.98rem, 2vw, 1.15rem);
-  line-height: 1.6;
-  color: var(--text-muted, rgba(255, 255, 255, 0.6));
+.services-light .services-subtitle {
+  color: var(--services-ink-muted);
 }
 
 /* Cards Grid */
@@ -741,188 +750,103 @@ body {
 }
 
 /* ─── Individual Card ─── */
-.service-card {
+.service-card-light {
   position: relative;
   overflow: hidden;
   border-radius: 24px;
-  padding: 44px 40px;
+  padding: 40px 36px;
   display: flex;
   flex-direction: column;
   min-height: 300px;
-  cursor: default;
-  transition: border-color 0.5s var(--ease-premium), box-shadow 0.5s var(--ease-premium);
-
-  /* Premium glass background — layered for depth */
-  background:
-    linear-gradient(
-      165deg,
-      rgba(255, 255, 255, 0.04) 0%,
-      rgba(255, 255, 255, 0.01) 40%,
-      rgba(0, 0, 0, 0.2) 100%
-    );
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  text-decoration: none;
+  color: inherit;
+  background: var(--services-card-bg);
+  border: 1px solid var(--services-card-border);
+  box-shadow: 0 2px 8px rgba(33, 28, 21, 0.04);
+  transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium);
 }
 
-.service-card:hover {
-  border-color: color-mix(in srgb, var(--card-glow) 30%, transparent);
+.service-card-light:hover {
+  transform: translateY(-8px);
+  border-color: color-mix(in srgb, var(--card-glow) 35%, transparent);
   box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 0 40px color-mix(in srgb, var(--card-glow) 8%, transparent);
+    0 24px 48px rgba(33, 28, 21, 0.1),
+    0 0 0 1px color-mix(in srgb, var(--card-glow) 12%, transparent);
 }
 
-.service-card-wide {
-  grid-column: 1 / -1;
-  min-height: 280px;
-  flex-direction: row;
-  align-items: center;
-  gap: 48px;
-}
-
-/* ─── Card Top-Corner Ambient Glow ─── */
-.service-card-glow {
-  position: absolute;
-  top: -60%;
-  right: -30%;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--card-glow) 8%, transparent) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
-  transition: opacity 0.5s;
-  opacity: 0.5;
-}
-
-.service-card:hover .service-card-glow {
-  opacity: 1;
-}
-
-/* ─── Subtle Grid Pattern Inside Card ─── */
-.service-card-grid-pattern {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.03;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
-  background-size: 40px 40px;
-  transition: opacity 0.5s;
-}
-
-.service-card:hover .service-card-grid-pattern {
-  opacity: 0.06;
-}
-
-/* ─── Icon Wrapper with Ring ─── */
-.service-icon-wrapper {
-  position: relative;
-  z-index: 1;
-  width: 64px;
-  height: 64px;
+/* ─── Icon Wrapper ─── */
+.service-icon-wrapper-light {
+  width: 56px;
+  height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 28px;
-  color: var(--card-glow);
-  filter: drop-shadow(0 0 12px color-mix(in srgb, var(--card-glow) 40%, transparent));
-  flex-shrink: 0;
-}
-
-.service-card-wide .service-icon-wrapper {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 0;
-}
-
-.service-icon-ring {
-  position: absolute;
-  inset: 0;
   border-radius: 16px;
-  border: 1px solid color-mix(in srgb, var(--card-glow) 20%, transparent);
-  background: color-mix(in srgb, var(--card-glow) 5%, transparent);
-  transition: border-color 0.4s, background 0.4s;
+  margin-bottom: 24px;
+  color: var(--card-glow);
+  background: color-mix(in srgb, var(--card-glow) 12%, transparent);
+  flex-shrink: 0;
+  transition: background 0.4s var(--ease-premium);
 }
 
-.service-card:hover .service-icon-ring {
-  border-color: color-mix(in srgb, var(--card-glow) 35%, transparent);
-  background: color-mix(in srgb, var(--card-glow) 10%, transparent);
+.service-card-light:hover .service-icon-wrapper-light {
+  background: color-mix(in srgb, var(--card-glow) 20%, transparent);
 }
 
 /* ─── Card Content ─── */
-.service-card-content {
-  position: relative;
-  z-index: 1;
+.service-card-title-light {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  line-height: 1.25;
+  color: var(--services-ink);
+  letter-spacing: -0.01em;
+}
+
+.service-card-desc-light {
+  color: var(--services-ink-muted);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.65;
   flex: 1;
 }
 
-.service-card-title {
-  font-size: 1.6rem;
+.service-card-tags-light {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.service-tag-light {
+  padding: 5px 14px;
+  font-size: 0.68rem;
   font-weight: 700;
-  margin-bottom: 12px;
-  line-height: 1.2;
-  color: var(--text-main);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border-radius: 30px;
+  color: var(--services-ink-muted);
+  background: color-mix(in srgb, var(--services-ink) 5%, transparent);
 }
 
-.service-card-wide .service-card-title {
-  font-size: 2.2rem;
-}
-
-.service-card-desc {
-  color: var(--text-muted);
-  font-size: 1.05rem;
-  line-height: 1.7;
-  max-width: 550px;
-}
-
-.service-card-wide .service-card-desc {
-  font-size: 1.15rem;
-}
-
-/* ─── Bottom Accent Line ─── */
-.service-card-accent-line {
-  position: absolute;
-  bottom: 0;
-  left: 10%;
-  right: 10%;
-  height: 1px;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    color-mix(in srgb, var(--card-glow) 25%, transparent) 50%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.5s;
-}
-
-.service-card:hover .service-card-accent-line {
-  opacity: 1;
+.service-card-cta-light {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 24px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--card-glow);
 }
 
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
-  .services-section {
+  .services-light {
     padding: 80px 20px;
   }
-  .service-card {
-    padding: 36px 28px;
+  .service-card-light {
+    padding: 32px 28px;
     min-height: auto;
-  }
-  .service-card-wide {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 24px;
-  }
-  .service-card-wide .service-icon-wrapper {
-    width: 64px;
-    height: 64px;
-  }
-  .service-card-wide .service-card-title {
-    font-size: 1.6rem;
   }
 }
 

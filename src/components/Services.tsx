@@ -6,7 +6,7 @@ import { playTick } from '../utils/audio';
 import { useRef } from 'react';
 
 /* ════════════════════════════════════════════════════════════════
-   SERVICES — Premium Project-Card Style (matches Works)
+   SERVICES — light, modern counterpoint section directly under Hero.
    Each card links to its dedicated, SEO-optimized service page.
    ════════════════════════════════════════════════════════════════ */
 
@@ -69,7 +69,7 @@ const cards = [
   },
 ];
 
-function ServiceCard({ card, index }: { card: any, index: number }) {
+function ServiceCard({ card }: { card: any }) {
   const { t } = useTranslation();
   const Icon = card.icon;
   const ref = useRef(null);
@@ -92,34 +92,27 @@ function ServiceCard({ card, index }: { card: any, index: number }) {
       <Link
         to={`/${card.slug}`}
         onMouseEnter={playTick}
-        className="glass-panel-silver glow-card project-card service-card-link"
+        className="service-card-light"
         style={{ ['--card-glow' as string]: card.glowColor }}
       >
-        <div className="project-card-header">
-          <span className="project-card-number">
-            {String(index + 1).padStart(2, '0')} / {String(cards.length).padStart(2, '0')}
-          </span>
-          <Icon size={24} color="var(--accent-silver)" strokeWidth={1.5} />
+        <div className="service-icon-wrapper-light">
+          <Icon size={26} strokeWidth={1.75} />
         </div>
 
-        <div className="project-card-divider" />
+        <h3 className="service-card-title-light">
+          {t(card.titleKey)}
+        </h3>
+        <p className="service-card-desc-light">
+          {t(card.descKey)}
+        </p>
 
-        <div className="project-card-content">
-          <h3 className="text-silver project-card-title">
-            {t(card.titleKey)}
-          </h3>
-          <p className="project-card-desc">
-            {t(card.descKey)}
-          </p>
-        </div>
-
-        <div className="project-card-tags">
+        <div className="service-card-tags-light">
           {card.tags.map((tag: string) => (
-            <span key={tag} className="project-tag">{tag}</span>
+            <span key={tag} className="service-tag-light">{tag}</span>
           ))}
         </div>
 
-        <span className="service-card-cta">
+        <span className="service-card-cta-light">
           {t('svc_view_details')} <ArrowUpRight size={14} />
         </span>
       </Link>
@@ -132,7 +125,7 @@ export default function Services() {
   const containerRef = useRef(null);
 
   return (
-    <section id="services" className="services-section" ref={containerRef}>
+    <section id="services" className="services-section services-light" ref={containerRef}>
       <motion.div
         className="services-header"
         initial={{ opacity: 0, y: 30 }}
@@ -141,15 +134,15 @@ export default function Services() {
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         <span className="services-overline">{t('services_overline')}</span>
-        <h2 className="services-title text-silver">
+        <h2 className="services-title">
           {t('services_title')}
         </h2>
         <p className="services-subtitle">{t('services_subtitle')}</p>
       </motion.div>
 
-      <div className="works-grid">
-        {cards.map((card, index) => (
-          <ServiceCard key={card.titleKey} card={card} index={index} />
+      <div className="services-grid">
+        {cards.map((card) => (
+          <ServiceCard key={card.titleKey} card={card} />
         ))}
       </div>
     </section>
