@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Globe, Box, Mic, Video, Smartphone, Camera, Film, ArrowUpRight } from 'lucide-react';
+import { Globe, Box, Mic, Video, Smartphone, Camera, ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
 import { useRef } from 'react';
 
@@ -15,7 +15,6 @@ const cards = [
     icon: Globe,
     titleKey: 'service_web_title',
     descKey: 'service_web_desc',
-    glowColor: '#38bdf8',
     tags: ['Websites', 'Landing Pages', 'Web Apps'],
     slug: 'web-saas-development',
   },
@@ -23,7 +22,6 @@ const cards = [
     icon: Box,
     titleKey: 'service_saas_title',
     descKey: 'service_saas_desc',
-    glowColor: '#00ff87',
     tags: ['SaaS', 'React', 'Firebase'],
     slug: 'web-saas-development',
   },
@@ -31,7 +29,6 @@ const cards = [
     icon: Mic,
     titleKey: 'service_ai_title',
     descKey: 'service_ai_desc',
-    glowColor: '#8b5cf6',
     tags: ['GPT', 'Automation', 'NLP'],
     slug: 'ai-voice-agents',
   },
@@ -39,15 +36,13 @@ const cards = [
     icon: Video,
     titleKey: 'service_media_title',
     descKey: 'service_media_desc',
-    glowColor: '#f59e0b',
-    tags: ['Videography', '3D', 'Motion'],
+    tags: ['Drone', 'Color Grading', 'Trailers'],
     slug: 'video-drone-production',
   },
   {
     icon: Smartphone,
     titleKey: 'service_social_title',
     descKey: 'service_social_desc',
-    glowColor: '#06b6d4',
     tags: ['Strategy', 'Content', 'Growth'],
     slug: 'social-media-marketing',
   },
@@ -55,17 +50,8 @@ const cards = [
     icon: Camera,
     titleKey: 'service_event_title',
     descKey: 'service_event_desc',
-    glowColor: '#f43f5e',
     tags: ['Events', 'Weddings', 'Cinematic'],
     slug: 'wedding-event-films',
-  },
-  {
-    icon: Film,
-    titleKey: 'service_trailer_title',
-    descKey: 'service_trailer_desc',
-    glowColor: '#ec4899',
-    tags: ['Trailers', 'Ads', 'Storytelling'],
-    slug: 'video-drone-production',
   },
 ];
 
@@ -87,16 +73,16 @@ function ServiceCard({ card }: { card: any }) {
   return (
     <motion.div
       ref={ref}
+      className="service-card-cell"
       style={{ y, opacity, scale }}
     >
       <Link
         to={`/${card.slug}`}
         onMouseEnter={playTick}
         className="service-card-light"
-        style={{ ['--card-glow' as string]: card.glowColor }}
       >
         <div className="service-icon-wrapper-light">
-          <Icon size={26} strokeWidth={1.75} />
+          <Icon size={24} strokeWidth={1.6} />
         </div>
 
         <h3 className="service-card-title-light">
