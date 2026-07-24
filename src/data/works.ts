@@ -21,7 +21,7 @@ export const projects: WorkProject[] = [
     url: 'https://sera-event-6f2a1.web.app/',
     titleKey: 'works_sera_title',
     descKey: 'works_sera_desc',
-    tags: ['React', '3D', 'Event-Tech'],
+    tags: ['React', 'Automation', 'Event-Tech'],
     color: '#8b5cf6',
   },
   {
