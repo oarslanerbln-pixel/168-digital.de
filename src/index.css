@@ -826,45 +826,45 @@ body {
   flex: 1;
 }
 
-/* ─── Hover "waterfall" — a visible blue stream flowing down into the card ─── */
+/* ─── Ambient flow — a continuous, very slow blue/lilac current always
+   drifting through the card, independent of hover. Built as a seamlessly
+   repeating gradient tile so the loop has no visible reset. ─── */
 .service-card-waterfall {
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background: linear-gradient(
+  background-image: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(186, 230, 253, 0.7) 22%,
-    rgba(56, 189, 248, 0.55) 42%,
-    rgba(14, 165, 233, 0.28) 60%,
-    transparent 85%
+    rgba(56, 189, 248, 0.16) 22%,
+    transparent 42%,
+    rgba(196, 165, 255, 0.18) 68%,
+    transparent 92%,
+    transparent 100%
   );
-  transform: translateY(-100%);
-  opacity: 0;
+  background-size: 100% 220%;
+  background-repeat: repeat-y;
+  animation: services-flow 18s linear infinite;
+}
+
+@keyframes services-flow {
+  from {
+    background-position-y: 0%;
+  }
+  to {
+    background-position-y: -220%;
+  }
 }
 
 .service-card-light:hover .service-card-waterfall {
-  animation: services-waterfall 1.2s var(--ease-premium) forwards;
-}
-
-@keyframes services-waterfall {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(100%);
-    opacity: 0;
-  }
+  animation-duration: 9s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-card-light:hover .service-card-waterfall {
+  .service-card-waterfall {
     animation: none;
+    background-position-y: 0%;
   }
 }
 

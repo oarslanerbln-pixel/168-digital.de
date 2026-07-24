@@ -4,6 +4,7 @@ import { AnimatePresence } from 'framer-motion';
 import AmbientBackground from './components/AmbientBackground';
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
+import HomeLogo from './components/HomeLogo';
 import CustomCursor from './components/CustomCursor';
 import NavigationMenu from './components/NavigationMenu';
 import Footer from './components/Footer';
@@ -117,6 +118,7 @@ function App() {
         <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
         <NavigationMenu />
         <LanguageToggle />
+        <HomeLogo />
         <WhatsAppWidget />
         <CookieConsent forceShow={forceShowCookies} onCloseForceShow={() => setForceShowCookies(false)} />
         <LegalModal isOpen={!!legalModalType} type={legalModalType} onClose={() => setLegalModalType(null)} />
