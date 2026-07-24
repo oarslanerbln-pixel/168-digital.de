@@ -56,10 +56,19 @@ export default function Hero() {
 
       <div className="hero-content-wrapper" style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '80px', pointerEvents: 'none' }}>
         
-        {/* Grid Layout for Above the Fold */}
+        {/* Centered, symmetric hero column */}
         <div className="hero-content-grid">
-          {/* Left: Text details & buttons */}
           <div className="hero-left">
+            <motion.div
+              className="hero-emblem-mark"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              style={{ pointerEvents: 'auto' }}
+            >
+              <HeroEmblem />
+            </motion.div>
+
             <motion.span
               className="hero-eyebrow"
               initial={{ opacity: 0, y: 20 }}
@@ -77,9 +86,9 @@ export default function Hero() {
             >
               {t('hero_title')}
             </motion.h1>
-     
+
             <motion.p
-              className="hero-subtitle font-serif"
+              className="hero-subtitle"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.4, duration: 1, ease: [0.16, 1, 0.3, 1] }}
@@ -93,7 +102,6 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-              style={{ justifyContent: 'flex-start' }}
             >
               <MagneticButton
                 className="hero-btn-primary-v2"
@@ -168,19 +176,6 @@ export default function Hero() {
               <li><Link to="/wedding-event-films" className="hero-service-chip">{t('chip_event')}</Link></li>
               <li><Link to="/social-media-marketing" className="hero-service-chip">{t('chip_social')}</Link></li>
             </motion.ul>
-          </div>
-
-          {/* Right: 1618 golden emblem */}
-          <div className="hero-right">
-            <motion.div
-              className="hero-3d-scene-container"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.8, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              style={{ pointerEvents: 'auto' }}
-            >
-              <HeroEmblem />
-            </motion.div>
           </div>
         </div>
 

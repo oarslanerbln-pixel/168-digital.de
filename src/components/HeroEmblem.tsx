@@ -1,5 +1,5 @@
-import { useRef, MouseEvent } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { buildGoldenSpiral } from '../utils/goldenSpiral';
 import './HeroEmblem.css';
 
@@ -17,27 +17,12 @@ const DUST = [
 
 /**
  * HeroEmblem — lightweight 2D replacement for the former 3D glass "1618".
- * Golden-ratio spiral + shining "1618" numerals, mouse-parallax, gold dust.
- * No three.js / no external assets.
+ * Golden-ratio spiral + shining "1618" numerals + gold dust, all on their
+ * own independent animations (no mouse-tracking). No three.js / no
+ * external assets.
  */
 export default function HeroEmblem() {
-  const ref = useRef<HTMLDivElement>(null);
   const clicks = useRef(0);
-
-  // Pointer parallax
-  const px = useMotionValue(0);
-  const py = useMotionValue(0);
-  const rotateY = useSpring(useTransform(px, [-0.5, 0.5], [12, -12]), { stiffness: 120, damping: 20 });
-  const rotateX = useSpring(useTransform(py, [-0.5, 0.5], [-12, 12]), { stiffness: 120, damping: 20 });
-
-  const handleMove = (e: MouseEvent) => {
-    if (!ref.current) return;
-    const r = ref.current.getBoundingClientRect();
-    px.set((e.clientX - (r.left + r.width / 2)) / r.width);
-    py.set((e.clientY - (r.top + r.height / 2)) / r.height);
-  };
-
-  const reset = () => { px.set(0); py.set(0); };
 
   // Triple-click opens the hidden dev console (parity with old 3D scene)
   const handleClick = () => {
@@ -50,17 +35,8 @@ export default function HeroEmblem() {
   };
 
   return (
-    <div
-      ref={ref}
-      className="hero-emblem"
-      onMouseMove={handleMove}
-      onMouseLeave={reset}
-      onClick={handleClick}
-    >
-      <motion.div
-        className="hero-emblem-inner"
-        style={{ rotateX, rotateY }}
-      >
+    <div className="hero-emblem" onClick={handleClick}>
+      <motion.div className="hero-emblem-inner">
         {/* Rotating golden spiral + rings */}
         <motion.svg
           viewBox={`0 0 ${SIZE} ${SIZE}`}

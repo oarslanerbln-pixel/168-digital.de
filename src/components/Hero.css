@@ -37,69 +37,45 @@
   margin: 0 auto;
 }
 
-/* ─── ANIMATED PLATINUM/SILVER GRADIENT HEADLINE ─── */
+/* ─── HEADLINE — plain, bold, no gradient/shimmer ─── */
 .hero-headline {
+  font-family: 'Outfit', sans-serif;
   font-size: clamp(3rem, 7vw, 5.5rem);
   font-weight: 800;
   line-height: 1.1;
   margin-bottom: 24px;
   letter-spacing: -0.02em;
-  
-  /* Deep ink/bronze shimmer — tied to brand's bronze-gold identity */
-  background: linear-gradient(
-    135deg,
-    var(--text-main) 0%,
-    var(--accent-purple) 30%,
-    #8a6a3f 50%,
-    var(--text-main) 70%,
-    var(--accent-purple) 100%
-  );
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: text-gradient-move 6s ease-in-out infinite alternate;
-  
+  color: var(--text-main);
+
   /* Word wrap for long translations */
   overflow-wrap: break-word;
   word-break: break-word;
 }
 
-@keyframes text-gradient-move {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
 
-
-/* ─── EYEBROW (category + location) ─── */
+/* ─── EYEBROW (category + location) — plain text, no pill/box ─── */
 .hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  border: 1px solid rgba(197, 160, 115, 0.25);
-  background: rgba(0, 0, 0, 0.45);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  display: block;
+  margin-bottom: 16px;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 2px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 3px;
   text-transform: uppercase;
-  color: var(--accent-cyan);
+  color: var(--accent-purple);
 }
 
 
-/* ─── SUBTITLE ─── */
+/* ─── SUBTITLE — minimalist sans, distinct from the bold headline ─── */
 .hero-subtitle {
-  font-style: italic;
-  letter-spacing: 0.04em;
-  font-size: clamp(1.05rem, 2.4vw, 1.45rem);
-  line-height: 1.5;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+  letter-spacing: 0.01em;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+  line-height: 1.6;
   color: var(--text-muted);
-  margin-bottom: 40px;
+  margin: 0 auto 40px;
   max-width: 620px;
 }
 
@@ -113,7 +89,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .hero-service-chip {
@@ -139,11 +115,6 @@
   background: rgba(33, 28, 21, 0.08);
   color: var(--text-main);
   transform: translateY(-2px);
-}
-
-@media (max-width: 992px) {
-  .hero-subtitle { margin-left: auto; margin-right: auto; }
-  .hero-service-strip { justify-content: center; }
 }
 
 
@@ -321,14 +292,13 @@
   }
 }
 
-/* ─── 3D HERO CANVAS & GRID LAYOUT ─── */
+/* ─── CENTERED, SYMMETRIC HERO LAYOUT ─── */
 .hero-content-grid {
-  display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 60px;
+  display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 780px;
   margin: 0 auto;
   position: relative;
   z-index: 2;
@@ -337,28 +307,30 @@
 
 .hero-left {
   min-width: 0;
-  text-align: left;
+  width: 100%;
+  text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  pointer-events: auto;
-}
-
-.hero-right {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  position: relative;
-  width: 100%;
-  height: 480px;
+  justify-content: center;
   pointer-events: auto;
 }
 
-.hero-3d-scene-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
+/* Small centered brand mark above the eyebrow — the 400px SVG emblem is
+   scaled down uniformly to fit a compact, symmetric slot. */
+.hero-emblem-mark {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+}
+
+.hero-emblem-mark .hero-emblem {
+  min-height: 0;
+  transform: scale(0.45);
 }
 
 /* HUD Loader overlay styling */
@@ -382,25 +354,12 @@
   to { transform: rotate(360deg); }
 }
 
-@media (max-width: 992px) {
-  .hero-content-grid {
-    grid-template-columns: 1fr;
-    gap: 40px;
-    text-align: center;
+@media (max-width: 480px) {
+  .hero-emblem-mark {
+    width: 140px;
+    height: 140px;
   }
-  
-  .hero-left {
-    align-items: center;
-    text-align: center;
-  }
-  
-  .hero-right {
-    height: 380px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-right {
-    height: 300px;
+  .hero-emblem-mark .hero-emblem {
+    transform: scale(0.35);
   }
 }
