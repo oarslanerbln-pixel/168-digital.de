@@ -12,7 +12,7 @@ describe('App routing', () => {
     '/datenschutz',
     '/does-not-exist',
   ])('renders the footer for %s without crashing', async (path) => {
-    const { container } = render(
+    const { container, unmount } = render(
       <MemoryRouter initialEntries={[path]}>
         <App />
       </MemoryRouter>
@@ -25,5 +25,8 @@ describe('App routing', () => {
       () => expect(container.querySelector('.footer-wrapper')).toBeInTheDocument(),
       { timeout: 5000 }
     );
+
+    // Unmount to prevent state updates after test finishes due to lazy loaded routes
+    unmount();
   });
 });
