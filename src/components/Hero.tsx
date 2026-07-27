@@ -139,7 +139,8 @@ export default function Hero() {
                   onMouseEnter={playTick}
                   onClick={() => {
                     playClick();
-                    window.open('https://wa.me/491787277867', '_blank');
+                    // SECURITY: Prevent reverse tabnabbing vulnerabilities by explicitly setting 'noopener,noreferrer'
+                    window.open('https://wa.me/491787277867', '_blank', 'noopener,noreferrer');
                   }}
                   aria-label="WhatsApp"
                 >
