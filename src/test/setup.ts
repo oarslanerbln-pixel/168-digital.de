@@ -41,3 +41,9 @@ class MockResizeObserver {
   disconnect = vi.fn();
 }
 window.ResizeObserver = MockResizeObserver;
+
+// JSDOM has no support for HTMLCanvasElement.getContext()
+HTMLCanvasElement.prototype.getContext = () => null;
+
+// JSDOM has no support for window.scrollTo()
+window.scrollTo = vi.fn();
