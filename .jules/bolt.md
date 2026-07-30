@@ -1,0 +1,3 @@
+## 2024-06-25 - Prevent eager lazy component chunks fetching
+**Learning:** When using `React.lazy()` for modal overlays or large developer utilities (like `DevConsole`) that are hidden initially, Vite/Rollup might still eagerly fetch the chunk on page load if the `<Suspense>` is rendered immediately, even if the internal component logic returns `null`.
+**Action:** Combine `React.lazy()` with a `hasMounted` state flag to conditionally render the component's `<Suspense>` boundary only after the active user interaction triggers it. This delays chunk downloading until the component is truly needed, improving initial page load performance.
