@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ChevronRight, Mail, Phone, MapPin, MessageCircle } from 'lucide-react';
+import { ChevronRight, Mail, Phone, MapPin, MessageCircle, Instagram } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import Contact from '../components/Contact';
 import '../components/ServicePage.css';
@@ -78,6 +78,16 @@ export default function ContactPage() {
             <h3 className="text-silver service-feature-title">Berlin</h3>
             <p className="service-feature-desc">Wirmerzeile 4, 13627 Berlin</p>
           </div>
+          <a
+            href="https://www.instagram.com/1618cinema/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-panel-silver glow-card service-feature-card service-card-link"
+          >
+            <Instagram size={20} color="var(--accent-silver)" strokeWidth={1.5} />
+            <h3 className="text-silver service-feature-title">@1618cinema</h3>
+            <p className="service-feature-desc">Instagram</p>
+          </a>
         </div>
       </section>
 
