@@ -13,7 +13,8 @@ import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import AngebotWidget from './components/AngebotWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
-import DevConsole from './components/DevConsole';
+// ⚡ Bolt: Lazily load the heavy DevConsole component so its chunk is not included in the initial bundle
+const DevConsole = lazy(() => import('./components/DevConsole'));
 
 // Route-level code splitting: each page ships its own chunk, so a visitor
 // landing directly on a service or legal page never downloads the Home
@@ -47,6 +48,8 @@ function getInitialLoadedState(): boolean {
 function App() {
   const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  // ⚡ Bolt: Only render the Suspense boundary after user interaction (shortcut) to prevent the bundler from eagerly downloading the lazy chunk
+  const [hasMountedDevConsole, setHasMountedDevConsole] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
 
@@ -72,10 +75,14 @@ function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        setHasMountedDevConsole(true);
         setIsConsoleOpen(prev => !prev);
       }
     };
-    const handleOpenConsole = () => setIsConsoleOpen(true);
+    const handleOpenConsole = () => {
+      setHasMountedDevConsole(true);
+      setIsConsoleOpen(true);
+    };
 
     window.addEventListener('openDatenschutz', handleOpenDatenschutz);
     window.addEventListener('openImpressum', handleOpenImpressum);
@@ -116,7 +123,11 @@ function App() {
       */}
       <div style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}>
         <CustomCursor />
-        <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+        {hasMountedDevConsole && (
+          <Suspense fallback={null}>
+            <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+          </Suspense>
+        )}
         <NavigationMenu />
         <LanguageToggle />
         <HomeLogo />
