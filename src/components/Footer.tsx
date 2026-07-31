@@ -16,6 +16,14 @@ export default function Footer({ onOpenCookies }: FooterProps) {
         <Link to="/contact" className="footer-link">
           Contact
         </Link>
+        <a
+          href="https://www.instagram.com/1618cinema/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="footer-link"
+        >
+          Instagram
+        </a>
         <Link to="/impressum" className="footer-link">
           Impressum
         </Link>
