@@ -44,6 +44,7 @@ export default function Contact() {
         {/* Holographic Header */}
         <div className="contact-header">
           <h2 className="contact-title">{t('contact_title')}</h2>
+          <p className="contact-subtitle">{t('contact_page_intro')}</p>
           <div className="contact-decorative-line" />
         </div>
 

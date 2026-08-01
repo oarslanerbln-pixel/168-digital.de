@@ -13,9 +13,12 @@ export default function Works() {
   return (
     <>
       <section id="works" className="section-container">
-        <h2 className="works-headline">
-          <span className="text-silver">{t('works_title')}</span>
-        </h2>
+        <div className="works-header">
+          <span className="services-overline">{t('works_overline')}</span>
+          <h2 className="works-headline">
+            <span className="text-silver">{t('works_title')}</span>
+          </h2>
+        </div>
 
         <div className="works-grid">
           {projects.map((project, index) => (

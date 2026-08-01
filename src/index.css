@@ -393,12 +393,14 @@ body {
 }
 
 .about-overline {
-  font-size: 0.9rem;
+  display: block;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 4px;
-  color: var(--accent-silver);
+  letter-spacing: 5px;
+  color: var(--accent-cyan);
   margin-bottom: 16px;
   font-weight: 600;
+  opacity: 0.8;
 }
 
 .about-headline {
@@ -499,6 +501,10 @@ body {
 /* =========================================================================
    WORKS SECTION
    ========================================================================= */
+
+.works-header {
+  text-align: center;
+}
 
 .works-headline {
   font-size: clamp(2.5rem, 6vw, 4rem);
@@ -1199,6 +1205,14 @@ body {
   font-weight: 800;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
+}
+
+.contact-subtitle {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 460px;
+  margin: 0 auto 24px;
 }
 
 .contact-decorative-line {
