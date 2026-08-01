@@ -16,11 +16,11 @@ export default function Home() {
       <MarqueeTextBand direction="left" />
       <div className="section-divider" />
       <Services />
-      {/* Marquee Band #2 — between Services and About, reverse direction */}
+      {/* Marquee Band #2 — between Services and Works, reverse direction */}
       <MarqueeTextBand direction="right" />
-      <About />
-      <div className="section-divider" />
       <Works />
+      <div className="section-divider" />
+      <About />
       <div className="section-divider" />
       <WebDesignCatalog />
       <div className="section-divider" />
