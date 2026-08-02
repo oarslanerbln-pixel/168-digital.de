@@ -13,7 +13,10 @@ import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import AngebotWidget from './components/AngebotWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
-import DevConsole from './components/DevConsole';
+
+// ⚡ Bolt: Lazily load the heavy DevConsole utility to reduce the initial main bundle size.
+// It will only be fetched when explicitly summoned via keyboard shortcut or event.
+const DevConsole = lazy(() => import('./components/DevConsole'));
 
 // Route-level code splitting: each page ships its own chunk, so a visitor
 // landing directly on a service or legal page never downloads the Home
@@ -47,6 +50,7 @@ function getInitialLoadedState(): boolean {
 function App() {
   const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  const [hasConsoleMounted, setHasConsoleMounted] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
 
@@ -72,10 +76,14 @@ function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        setHasConsoleMounted(true);
         setIsConsoleOpen(prev => !prev);
       }
     };
-    const handleOpenConsole = () => setIsConsoleOpen(true);
+    const handleOpenConsole = () => {
+      setHasConsoleMounted(true);
+      setIsConsoleOpen(true);
+    };
 
     window.addEventListener('openDatenschutz', handleOpenDatenschutz);
     window.addEventListener('openImpressum', handleOpenImpressum);
@@ -116,7 +124,12 @@ function App() {
       */}
       <div style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}>
         <CustomCursor />
-        <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+        {/* ⚡ Bolt: Only render the Suspense boundary after active user interaction to prevent eager fetching. */}
+        {hasConsoleMounted && (
+          <Suspense fallback={null}>
+            <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+          </Suspense>
+        )}
         <NavigationMenu />
         <LanguageToggle />
         <HomeLogo />
