@@ -13,12 +13,13 @@ import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import AngebotWidget from './components/AngebotWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
-import DevConsole from './components/DevConsole';
 
 // Route-level code splitting: each page ships its own chunk, so a visitor
 // landing directly on a service or legal page never downloads the Home
 // page's heavy hero/catalog code, and vice versa.
 const Home = lazy(() => import('./pages/Home'));
+// ⚡ Bolt: Lazy load the DevConsole to prevent it from bloating the initial bundle size.
+const DevConsole = lazy(() => import('./components/DevConsole'));
 const ServicePage = lazy(() => import('./components/ServicePage'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
@@ -47,6 +48,9 @@ function getInitialLoadedState(): boolean {
 function App() {
   const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  // ⚡ Bolt: Track if DevConsole has been invoked at least once to conditionally render
+  // its Suspense boundary, preventing eager fetching on page load.
+  const [hasMountedConsole, setHasMountedConsole] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
 
@@ -72,10 +76,14 @@ function App() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
+        setHasMountedConsole(true);
         setIsConsoleOpen(prev => !prev);
       }
     };
-    const handleOpenConsole = () => setIsConsoleOpen(true);
+    const handleOpenConsole = () => {
+      setHasMountedConsole(true);
+      setIsConsoleOpen(true);
+    };
 
     window.addEventListener('openDatenschutz', handleOpenDatenschutz);
     window.addEventListener('openImpressum', handleOpenImpressum);
@@ -116,7 +124,11 @@ function App() {
       */}
       <div style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}>
         <CustomCursor />
-        <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+        {hasMountedConsole && (
+          <Suspense fallback={null}>
+            <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+          </Suspense>
+        )}
         <NavigationMenu />
         <LanguageToggle />
         <HomeLogo />

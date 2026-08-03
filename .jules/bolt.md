@@ -1,0 +1,3 @@
+## 2024-05-27 - Lazy loading Modal/Overlay components with conditional mounting
+**Learning:** Eagerly parsing heavy developer utilities (like `DevConsole`) adds unnecessary overhead to the initial application bundle size. Even if a component uses an internal condition to render `null`, the JS still gets fetched if it's synchronously imported in the app entry file.
+**Action:** When lazy loading large developer utilities or modal overlays using `React.lazy()`, combine it with a `hasMounted` state flag to conditionally render the component's `<Suspense>` boundary only after active user interaction. This prevents the bundler from eagerly fetching the component's chunk on initial page load.
