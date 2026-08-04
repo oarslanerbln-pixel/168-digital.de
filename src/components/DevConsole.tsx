@@ -9,7 +9,7 @@ interface DevConsoleProps {
   onClose: () => void;
 }
 
-const MASTER_HASH = "59b696e669c2ea935466d49d5b8220fa48126af68563ef6ae117e60d13cd752e";
+const MASTER_HASH = "be5e6f0743c61876367f8984076f802893601f640019ecc32177e33c6ccf161f";
 
 // Simple SHA-256 implementation using Web Crypto API
 async function sha256(message: string): Promise<string> {
