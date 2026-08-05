@@ -1,0 +1,3 @@
+## 2024-08-05 - Lazy Load Hidden Developer Overlays
+**Learning:** The `DevConsole` component (`src/components/DevConsole.tsx`) was being eagerly imported and included in the main application bundle, despite only being accessible via a specific keyboard shortcut (`Ctrl+Shift+K`). The component itself internally returned `null` if not open, but the bundler still pulled the code in.
+**Action:** Always lazily load (`React.lazy`) complex hidden overlays or modal components (like developer tools) and combine it with a `hasMounted` state to conditionally render the `<Suspense>` boundary only *after* the user triggers them. This prevents downloading unnecessary chunks on the initial page load.
