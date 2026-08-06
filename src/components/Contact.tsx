@@ -108,9 +108,18 @@ export default function Contact() {
             </div>
 
             {/* DSGVO Consent */}
-            <div 
+            <div
               className={`dsgvo-checkbox-wrapper ${dsgvoConsent ? 'active' : ''}`}
               onClick={() => setDsgvoConsent(!dsgvoConsent)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setDsgvoConsent(!dsgvoConsent);
+                }
+              }}
+              role="checkbox"
+              aria-checked={dsgvoConsent}
+              tabIndex={0}
             >
               <div className="dsgvo-icon">
                 {dsgvoConsent ? (
