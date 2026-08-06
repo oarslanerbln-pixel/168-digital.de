@@ -49,7 +49,7 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
               onClick={() => { playClick(); onClose(); }}
               onMouseEnter={playTick}
               className="glass-panel modal-close-btn"
-              aria-label="Close modal"
+              aria-label={t('works_close_modal')}
             >
               <X size={24} />
             </button>
@@ -73,15 +73,15 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
                 onClick={playClick}
                 className="premium-button premium-button-silver"
               >
-                Visit Live Platform <ExternalLink size={20} />
+                {t('works_visit_platform')} <ExternalLink size={20} />
               </a>
-              
+
               <button
                 onClick={() => { playClick(); onClose(); }}
                 onMouseEnter={playTick}
                 className="premium-button premium-button-glass"
               >
-                Return to Gallery
+                {t('works_return_gallery')}
               </button>
             </div>
           </motion.div>

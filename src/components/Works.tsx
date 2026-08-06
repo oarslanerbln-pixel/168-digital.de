@@ -32,17 +32,27 @@ export default function Works() {
 
         <div className="works-grid">
           {projects.map((project, index) => (
-            <motion.div 
+            <motion.div
               key={project.id}
               onClick={() => { playClick(); setSelectedProject(project); }}
               onMouseEnter={playTick}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  playClick();
+                  setSelectedProject(project);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={t(project.titleKey)}
               className="glass-panel-silver glow-card project-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
               whileHover={{ y: -12, scale: 1.01 }}
-              style={{ 
+              style={{
                 ['--card-glow' as string]: project.color,
               }}
             >
