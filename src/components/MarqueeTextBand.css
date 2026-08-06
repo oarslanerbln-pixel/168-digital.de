@@ -28,42 +28,6 @@
   text-transform: uppercase;
   font-family: 'Outfit', sans-serif;
 
-  /* Fallback fill for browsers without background-clip:text support */
-  color: rgba(196, 165, 255, 0.3);
-
-  /* Neon lilac glow halo behind the glyphs */
-  text-shadow:
-    0 0 14px rgba(168, 130, 255, 0.4),
-    0 0 32px rgba(168, 130, 255, 0.2);
-
-  /* A soft, bright highlight sweeps continuously through the letters */
-  background: linear-gradient(
-    100deg,
-    rgba(196, 165, 255, 0.3) 0%,
-    rgba(196, 165, 255, 0.3) 42%,
-    rgba(238, 225, 255, 0.95) 50%,
-    rgba(196, 165, 255, 0.3) 58%,
-    rgba(196, 165, 255, 0.3) 100%
-  );
-  background-size: 260% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: marquee-shimmer 7s linear infinite;
-}
-
-@keyframes marquee-shimmer {
-  0% {
-    background-position: 130% 0;
-  }
-  100% {
-    background-position: -130% 0;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .marquee-text {
-    animation: none;
-    background-position: 0 0;
-  }
+  /* Plain solid black — no glow/shimmer effect */
+  color: #000;
 }
