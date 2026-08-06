@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { playClick } from '../utils/audio';
 import './CookieConsent.css';
@@ -14,6 +15,7 @@ export function isAnalyticsAllowed(): boolean {
 }
 
 export default function CookieConsent({ forceShow, onCloseForceShow }: CookieConsentProps) {
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -45,12 +47,12 @@ export default function CookieConsent({ forceShow, onCloseForceShow }: CookieCon
         >
           <div className="cookie-consent-header">
             <span className="cookie-consent-icon">🍪</span>
-            <h3 className="cookie-consent-title">Cookie Settings</h3>
+            <h3 className="cookie-consent-title">{t('cookie_title')}</h3>
           </div>
-          
+
           <p className="cookie-consent-text">
-            Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten und Analysedaten (Vercel Analytics) zu erfassen. Weitere Informationen finden Sie in unserer{' '}
-            <button 
+            {t('cookie_text_before')}
+            <button
               onClick={(e) => {
                 e.stopPropagation();
                 // Scroll-free way to signal parent to open datenschutz modal
@@ -59,8 +61,9 @@ export default function CookieConsent({ forceShow, onCloseForceShow }: CookieCon
               }}
               className="cookie-consent-link"
             >
-              Datenschutzerklärung
-            </button>.
+              {t('cookie_privacy_link')}
+            </button>
+            {t('cookie_text_after')}
           </p>
 
           <div className="cookie-consent-actions">
@@ -68,13 +71,13 @@ export default function CookieConsent({ forceShow, onCloseForceShow }: CookieCon
               onClick={() => handleAccept('all')}
               className="cookie-consent-btn primary"
             >
-              Alle Akzeptieren
+              {t('cookie_accept_all')}
             </button>
             <button
               onClick={() => handleAccept('essential')}
               className="cookie-consent-btn secondary"
             >
-              Nur Notwendige
+              {t('cookie_essential_only')}
             </button>
           </div>
         </motion.div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './Footer.css';
 
 interface FooterProps {
@@ -6,15 +7,17 @@ interface FooterProps {
 }
 
 export default function Footer({ onOpenCookies }: FooterProps) {
+  const { t } = useTranslation();
+
   return (
     <footer className="footer-wrapper">
       <div className="footer-copyright">
-        © {new Date().getFullYear()} 1618 Digital. Represented by Ömer Arslaner.
+        {t('footer_copyright', { year: new Date().getFullYear() })}
       </div>
 
       <div className="footer-links">
         <Link to="/contact" className="footer-link">
-          Contact
+          {t('footer_contact')}
         </Link>
         <a
           href="https://www.instagram.com/1618cinema/"
@@ -25,16 +28,16 @@ export default function Footer({ onOpenCookies }: FooterProps) {
           Instagram
         </a>
         <Link to="/impressum" className="footer-link">
-          Impressum
+          {t('footer_impressum')}
         </Link>
         <Link to="/datenschutz" className="footer-link">
-          Datenschutz
+          {t('footer_datenschutz')}
         </Link>
         <button
           onClick={onOpenCookies}
           className="footer-link"
         >
-          Cookie Settings
+          {t('footer_cookie_settings')}
         </button>
       </div>
     </footer>
