@@ -9,23 +9,16 @@ interface PreloaderProps {
 
 const SIZE = 440;
 const SPIRAL = buildGoldenSpiral(SIZE, 195, 3.75, 280);
-const DRAW_DURATION = 1.8;
+const DRAW_DURATION = 1.3;
 const DRAW_EASE = [0.5, 0, 0.3, 1] as const;
-const DUST = [
-  { x: '16%', y: '24%', s: 4, d: 0 },
-  { x: '80%', y: '30%', s: 3, d: 1.1 },
-  { x: '72%', y: '76%', s: 5, d: 0.6 },
-  { x: '24%', y: '70%', s: 2, d: 1.6 },
-  { x: '60%', y: '14%', s: 3, d: 0.3 },
-];
 
 export default function Preloader({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState(0);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 2050); // reveal wordmark
-    const t2 = setTimeout(() => setPhase(2), 3350); // open shutters
-    const t3 = setTimeout(() => onComplete(), 4250); // unmount
+    const t1 = setTimeout(() => setPhase(1), 1450); // reveal wordmark
+    const t2 = setTimeout(() => setPhase(2), 2350); // open shutters
+    const t3 = setTimeout(() => onComplete(), 2950); // unmount
 
     return () => {
       clearTimeout(t1);
@@ -66,11 +59,8 @@ export default function Preloader({ onComplete }: PreloaderProps) {
       >
         Skip
       </button>
-      {/* Warm radial glow + vignette */}
-      <div className="pl-glow-bg" />
-      <div className="pl-vignette" />
 
-      {/* ── Cinematic black shutters ── */}
+      {/* ── Cinematic shutters ── */}
       <motion.div
         className="pl-shutter-top"
         initial={{ scaleY: 1 }}
@@ -108,67 +98,19 @@ export default function Preloader({ onComplete }: PreloaderProps) {
           transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
           style={{ opacity: showBrand ? 0.25 : 1 }}
         >
-          {/* Blurred glow underlay */}
-          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-svg pl-svg-glow" aria-hidden="true">
-            <motion.path
-              d={SPIRAL}
-              fill="none"
-              stroke="rgba(240,205,140,0.95)"
-              strokeWidth={8}
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: DRAW_DURATION, ease: DRAW_EASE }}
-            />
-          </svg>
-
-          {/* Crisp gold core */}
+          {/* Pen-drawn spiral, single clean stroke */}
           <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-svg pl-svg-core" aria-hidden="true">
-            <defs>
-              <linearGradient id="pl-gold" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="#fff7e2" />
-                <stop offset="50%" stopColor="#f0cd8c" />
-                <stop offset="100%" stopColor="#c39a5e" />
-              </linearGradient>
-            </defs>
             <motion.path
               d={SPIRAL}
               fill="none"
-              stroke="url(#pl-gold)"
-              strokeWidth={2.8}
+              stroke="var(--accent-cyan)"
+              strokeWidth={2.5}
               strokeLinecap="round"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: 1 }}
               transition={{ duration: DRAW_DURATION, ease: DRAW_EASE }}
             />
           </svg>
-
-          {/* Luminous head that draws the line */}
-          {phase === 0 && (
-            <motion.div
-              className="pl-head"
-              style={{ offsetPath: `path('${SPIRAL}')`, offsetAnchor: '50% 50%' }}
-              initial={{ offsetDistance: '0%', opacity: 0 }}
-              animate={{ offsetDistance: '100%', opacity: 1 }}
-              transition={{
-                offsetDistance: { duration: DRAW_DURATION, ease: DRAW_EASE },
-                opacity: { duration: 0.4 },
-              }}
-            >
-              <span className="pl-orb" />
-            </motion.div>
-          )}
-
-          {/* Gold dust */}
-          {DUST.map((p, i) => (
-            <motion.span
-              key={i}
-              className="pl-dust"
-              style={{ left: p.x, top: p.y, width: p.s, height: p.s }}
-              animate={{ opacity: [0.15, 0.7, 0.15], y: [0, -8, 0] }}
-              transition={{ duration: 4, delay: p.d, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          ))}
         </motion.div>
 
         {/* Brand wordmark (centered over the fading spiral) */}

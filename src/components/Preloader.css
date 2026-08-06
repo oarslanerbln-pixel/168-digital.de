@@ -1,46 +1,24 @@
-/* ─── Ultra Premium Preloader ─── */
+/* ─── Preloader — calm, minimal, matches the site's light palette ─── */
 .preloader-overlay-p {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background: #040404;
+  background: var(--bg-dark);
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
 }
 
-/* Warm radial glow behind the spiral */
-.pl-glow-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: radial-gradient(
-    circle at 50% 46%,
-    rgba(240, 205, 140, 0.16) 0%,
-    rgba(150, 110, 50, 0.06) 32%,
-    transparent 62%
-  );
-  pointer-events: none;
-}
-
-/* Cinematic vignette */
-.pl-vignette {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background: radial-gradient(circle at 50% 50%, transparent 54%, rgba(0, 0, 0, 0.72) 100%);
-  pointer-events: none;
-}
-
-/* Black cinematic shutters (top & bottom) */
+/* Cinematic shutters (top & bottom) — same tone as the overlay so the
+   reveal reads as a curtain opening, not a light flash. */
 .pl-shutter-top,
 .pl-shutter-bottom {
   position: absolute;
   left: 0;
   width: 100%;
   height: 50%;
-  background: #040404;
+  background: var(--bg-dark);
   z-index: 4;
   pointer-events: none;
 }
@@ -59,7 +37,7 @@
   padding: 0 20px;
 }
 
-/* ─── Golden spiral drawn by light ─── */
+/* ─── Golden spiral, single clean stroke ─── */
 .pl-spiral-wrap {
   position: relative;
   width: min(440px, 82vw);
@@ -72,57 +50,6 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-}
-
-.pl-svg-glow {
-  filter: blur(9px);
-  opacity: 0.6;
-}
-
-.pl-svg-core {
-  filter:
-    drop-shadow(0 0 7px rgba(255, 232, 180, 0.95))
-    drop-shadow(0 0 16px rgba(240, 200, 130, 0.6));
-}
-
-/* Luminous drawing head (positioned via CSS offset-path) */
-.pl-head {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 20px;
-  height: 20px;
-  will-change: offset-distance;
-}
-
-.pl-orb {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 20px;
-  height: 20px;
-  margin: -10px 0 0 -10px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle,
-    #ffffff 0%,
-    #ffeec4 34%,
-    rgba(240, 200, 130, 0.55) 60%,
-    transparent 76%
-  );
-  box-shadow:
-    0 0 18px 7px rgba(255, 238, 196, 0.9),
-    0 0 44px 16px rgba(240, 200, 130, 0.5),
-    0 0 78px 28px rgba(210, 160, 80, 0.28);
-}
-
-/* Floating gold dust */
-.pl-dust {
-  position: absolute;
-  border-radius: 50%;
-  background: rgba(229, 193, 133, 0.85);
-  filter: blur(1px);
-  pointer-events: none;
 }
 
 /* ─── Brand wordmark ─── */
@@ -142,11 +69,7 @@
   font-size: clamp(1.75rem, 7.4vw, 3.25rem);
   text-align: center;
   white-space: nowrap;
-  background: linear-gradient(135deg, #ffffff 0%, #f0cd8c 50%, #c9a26a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 34px rgba(240, 200, 130, 0.35);
+  color: var(--text-main);
 }
 
 .pl-brand-line {
@@ -154,7 +77,7 @@
   height: 1px;
   margin-top: 18px;
   transform-origin: center;
-  background: linear-gradient(90deg, transparent, rgba(240, 200, 130, 0.95), transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
 }
 
 .pl-brand-sub {
@@ -165,7 +88,7 @@
   letter-spacing: 0.52em;
   margin-right: -0.52em;
   text-transform: uppercase;
-  color: rgba(240, 205, 140, 0.72);
+  color: var(--text-muted);
 }
 
 /* Skip affordance — small, discoverable, doesn't compete with the wordmark */
@@ -176,9 +99,9 @@
   z-index: 6;
   padding: 8px 18px;
   background: transparent;
-  border: 1px solid rgba(240, 205, 140, 0.35);
+  border: 1px solid var(--glass-border);
   border-radius: 999px;
-  color: rgba(240, 205, 140, 0.75);
+  color: var(--text-muted);
   font-family: 'Outfit', sans-serif;
   font-size: 0.7rem;
   font-weight: 500;
@@ -190,9 +113,9 @@
 
 .pl-skip-btn:hover,
 .pl-skip-btn:focus-visible {
-  border-color: rgba(240, 205, 140, 0.7);
-  color: #f0cd8c;
-  background: rgba(240, 205, 140, 0.08);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  background: rgba(163, 118, 60, 0.08);
 }
 
 @media (max-width: 480px) {
@@ -204,8 +127,4 @@
     bottom: 20px;
     right: 20px;
   }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pl-head { display: none; }
 }
