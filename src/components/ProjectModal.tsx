@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
-import { X, ExternalLink, Activity, Users, TrendingUp } from 'lucide-react';
+import { X, ExternalLink } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
 import { useEscapeToClose } from '../hooks/useEscapeToClose';
 
@@ -63,33 +63,6 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
             <p className="modal-description">
               {t(project.descKey)}
             </p>
-
-            {/* Metrics Area */}
-            <div className="modal-metrics-grid">
-              <div className="glass-panel modal-metric-card">
-                <TrendingUp size={28} color="var(--accent-silver)" />
-                <div>
-                  <div className="text-silver modal-metric-value">+45%</div>
-                  <div className="modal-metric-label">Conversion Rate</div>
-                </div>
-              </div>
-              
-              <div className="glass-panel modal-metric-card">
-                <Activity size={28} color="var(--accent-silver)" />
-                <div>
-                  <div className="text-silver modal-metric-value">24/7</div>
-                  <div className="modal-metric-label">AI Agent Uptime</div>
-                </div>
-              </div>
-
-              <div className="glass-panel modal-metric-card">
-                <Users size={28} color="var(--accent-silver)" />
-                <div>
-                  <div className="text-silver modal-metric-value">10k+</div>
-                  <div className="modal-metric-label">Monthly Users</div>
-                </div>
-              </div>
-            </div>
 
             <div className="modal-actions">
               <a
