@@ -126,7 +126,7 @@ export default function WhatsAppWidget() {
 
             {/* Content box */}
             <div className="wa-tooltip-body" onClick={handleConnectWhatsApp}>
-              <h4 className="wa-title">DIGITALE ACADEMY</h4>
+              <h4 className="wa-title">1618 DIGITAL</h4>
               <p className="wa-subtitle">{t('wa_quick_connect')}</p>
               
               <div className="wa-link-preview">
