@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import './MarqueeTextBand.css';
 
 const words = [
-  'AI VOICE AGENTS', 'CINEMATIC VIDEOGRAPHY', 'DRONE PRODUCTION', 'AI SYSTEMS', 'DIGITAL ECOSYSTEMS',
+  'CINEMATIC VIDEOGRAPHY', 'DRONE PRODUCTION', 'DIGITAL ECOSYSTEMS',
   'SaaS', 'INNOVATION', 'BRANDING', 'STRATEGY', 'DEVELOPMENT'
 ];
 

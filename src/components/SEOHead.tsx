@@ -5,7 +5,7 @@ const CANONICAL_BASE = 'https://1618-digital.de/';
 const OG_LOCALES: Record<string, string> = { en: 'en_US', de: 'de_DE', tr: 'tr_TR' };
 
 interface SEOHeadProps {
-  /** Page path with leading slash, e.g. "/ai-voice-agents". Defaults to the homepage. */
+  /** Page path with leading slash, e.g. "/video-drone-production". Defaults to the homepage. */
   path?: string;
   /** Pre-localized title/description overrides for a specific page (skips the meta_title/meta_description i18n keys). */
   title?: string;

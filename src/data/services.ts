@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Globe, Mic, Video, Camera, Smartphone } from 'lucide-react';
+import { Globe, Video, Camera, Smartphone } from 'lucide-react';
 
 export interface ServiceMeta {
   slug: string;
@@ -11,7 +11,7 @@ export interface ServiceMeta {
 }
 
 /**
- * Single source of truth for the 5 dedicated service landing pages.
+ * Single source of truth for the 4 dedicated service landing pages.
  * Order here drives both the homepage grid and the nav "Leistungen" list.
  * Long-form copy for each slug lives in src/data/serviceContent.ts.
  */
@@ -22,13 +22,6 @@ export const services: ServiceMeta[] = [
     glowColor: '#38bdf8',
     tags: ['Websites', 'SaaS', 'Automation'],
     titleKey: 'service_web_title',
-  },
-  {
-    slug: 'ai-voice-agents',
-    icon: Mic,
-    glowColor: '#8b5cf6',
-    tags: ['AI Voice', 'Chatbots', 'Automation'],
-    titleKey: 'service_ai_title',
   },
   {
     slug: 'video-drone-production',

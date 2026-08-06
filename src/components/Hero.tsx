@@ -2,11 +2,10 @@ import { useTranslation } from 'react-i18next';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { playClick, playTick } from '../utils/audio';
-import { useRef, MouseEvent, useState } from 'react';
-import { ArrowRight, MessageCircle, Mail, Mic } from 'lucide-react';
+import { useRef, MouseEvent } from 'react';
+import { ArrowRight, MessageCircle, Mail } from 'lucide-react';
 import HeroEmblem from './HeroEmblem';
 import Reel from './Reel';
-import AIVoiceDemoModal from './AIVoiceDemoModal';
 import './Hero.css';
 
 function MagneticButton({
@@ -48,7 +47,6 @@ function MagneticButton({
 
 export default function Hero() {
   const { t } = useTranslation();
-  const [isAIVoiceOpen, setIsAIVoiceOpen] = useState(false);
 
   return (
     <section id="hero" className="hero-section" style={{ minHeight: '100vh', height: 'auto', paddingTop: '120px', paddingBottom: '80px', display: 'flex', flexDirection: 'column' }}>
@@ -126,19 +124,6 @@ export default function Hero() {
                   onMouseEnter={playTick}
                   onClick={() => {
                     playClick();
-                    setIsAIVoiceOpen(true);
-                  }}
-                  aria-label="Live AI Demo"
-                >
-                  <Mic size={18} strokeWidth={1.5} />
-                  <span className="hero-pill-label">Live AI Demo</span>
-                </MagneticButton>
-
-                <MagneticButton
-                  className="hero-pill"
-                  onMouseEnter={playTick}
-                  onClick={() => {
-                    playClick();
                     window.open('https://wa.me/491787277867', '_blank');
                   }}
                   aria-label="WhatsApp"
@@ -152,7 +137,7 @@ export default function Hero() {
                   onMouseEnter={playTick}
                   onClick={() => {
                     playClick();
-                    window.location.href = 'mailto:contact@digitale.academy';
+                    window.location.href = 'mailto:info@1618-digital.de';
                   }}
                   aria-label="Email"
                 >
@@ -171,7 +156,6 @@ export default function Hero() {
               aria-label={t('services_title')}
             >
               <li><Link to="/web-saas-development" className="hero-service-chip">{t('chip_web')}</Link></li>
-              <li><Link to="/ai-voice-agents" className="hero-service-chip">{t('chip_ai')}</Link></li>
               <li><Link to="/video-drone-production" className="hero-service-chip">{t('chip_video')}</Link></li>
               <li><Link to="/wedding-event-films" className="hero-service-chip">{t('chip_event')}</Link></li>
               <li><Link to="/social-media-marketing" className="hero-service-chip">{t('chip_social')}</Link></li>
@@ -191,8 +175,6 @@ export default function Hero() {
         </motion.div>
 
       </div>
-
-      <AIVoiceDemoModal isOpen={isAIVoiceOpen} onClose={() => setIsAIVoiceOpen(false)} />
     </section>
   );
 }

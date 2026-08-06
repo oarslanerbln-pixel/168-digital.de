@@ -1,14 +1,18 @@
 /* ════════════════════════════════════════════════════════════════
    LEADS — Delivers contact form & chat leads to email via Web3Forms
    ----------------------------------------------------------------
-   Leads are delivered to the inbox that registered the access key
-   (arslaner1993@gmail.com). No server or SMTP password required.
+   Leads are delivered to whichever inbox registered the access key
+   currently set in the VITE_WEB3FORMS_KEY env var. No server or SMTP
+   password required — Web3Forms has no per-request "to" override, so
+   the only way to change the destination inbox is to register a new
+   key under that inbox and swap the env var value.
 
-   Get your free access key in 30 seconds:
+   To point delivery at impulseprod1@gmail.com:
      1. Go to https://web3forms.com
-     2. Enter arslaner1993@gmail.com  ->  a key is emailed to you
-     3. Paste it below as WEB3FORMS_ACCESS_KEY, OR set the environment
-        variable VITE_WEB3FORMS_KEY (recommended, e.g. in Vercel).
+     2. Enter impulseprod1@gmail.com  ->  a new key is emailed to you
+     3. In Vercel, update the VITE_WEB3FORMS_KEY env var (Project ->
+        Settings -> Environment Variables) to that new key, then
+        redeploy. Do NOT commit the key itself to this file.
    ════════════════════════════════════════════════════════════════ */
 
 export const WEB3FORMS_ACCESS_KEY =

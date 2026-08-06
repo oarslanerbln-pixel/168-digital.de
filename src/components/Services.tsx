@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Globe, Box, Mic, Video, Smartphone, Camera, ArrowUpRight } from 'lucide-react';
+import { Globe, Box, Video, Smartphone, Camera, ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
 import { useRef } from 'react';
 
@@ -24,13 +24,6 @@ const cards = [
     descKey: 'service_saas_desc',
     tags: ['SaaS', 'React', 'Firebase'],
     slug: 'web-saas-development',
-  },
-  {
-    icon: Mic,
-    titleKey: 'service_ai_title',
-    descKey: 'service_ai_desc',
-    tags: ['GPT', 'Automation', 'NLP'],
-    slug: 'ai-voice-agents',
   },
   {
     icon: Video,
