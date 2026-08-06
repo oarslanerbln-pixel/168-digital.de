@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, PlayCircle } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
 import ProjectModal from './ProjectModal';
 import { projects } from '../data/works';
@@ -16,6 +16,19 @@ export default function Works() {
         <h2 className="works-headline">
           <span className="text-silver">{t('works_title')}</span>
         </h2>
+        <p className="works-subtitle">{t('works_subtitle')}</p>
+        <button
+          type="button"
+          className="works-reel-link"
+          onMouseEnter={playTick}
+          onClick={() => {
+            playClick();
+            document.getElementById('reel-card')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }}
+        >
+          <PlayCircle size={16} strokeWidth={1.75} />
+          {t('works_reel_cta')}
+        </button>
 
         <div className="works-grid">
           {projects.map((project, index) => (

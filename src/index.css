@@ -502,9 +502,43 @@ body {
 
 .works-headline {
   font-size: clamp(2.5rem, 6vw, 4rem);
-  margin-bottom: 80px;
+  margin-bottom: 0;
   text-align: center;
   font-weight: 800;
+}
+
+.works-subtitle {
+  max-width: 560px;
+  margin: 18px auto 0;
+  font-size: clamp(0.98rem, 2vw, 1.1rem);
+  line-height: 1.6;
+  text-align: center;
+  color: var(--text-muted);
+}
+
+.works-reel-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 22px auto 64px;
+  padding: 10px 22px;
+  border-radius: 100px;
+  border: 1px solid rgba(33, 28, 21, 0.14);
+  background: rgba(33, 28, 21, 0.03);
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  transition: all 0.35s var(--ease-premium);
+}
+
+.works-reel-link:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(33, 28, 21, 0.07);
+  color: var(--accent-cyan);
+  transform: translateY(-2px);
 }
 
 .works-grid {
