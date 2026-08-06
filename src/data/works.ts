@@ -9,12 +9,12 @@ export interface WorkProject {
 
 export const projects: WorkProject[] = [
   {
-    id: 'donerbros',
-    url: 'https://www.donerbros.berlin/',
-    titleKey: 'works_donerbros_title',
-    descKey: 'works_donerbros_desc',
-    tags: ['Next.js', 'Firebase', 'UX/UI'],
-    color: '#00ff87',
+    id: 'taka',
+    url: 'https://taka-fishhouse.de/',
+    titleKey: 'works_taka_title',
+    descKey: 'works_taka_desc',
+    tags: ['HTML/CSS/JS', 'QR Menu', 'UI/UX'],
+    color: '#0ea5e9',
   },
   {
     id: 'sera',
@@ -23,6 +23,22 @@ export const projects: WorkProject[] = [
     descKey: 'works_sera_desc',
     tags: ['React', 'Automation', 'Event-Tech'],
     color: '#8b5cf6',
+  },
+  {
+    id: 'boxx36',
+    url: 'https://box-x36.de/',
+    titleKey: 'works_boxx36_title',
+    descKey: 'works_boxx36_desc',
+    tags: ['3D WebGL', 'React Three Fiber', 'E-Commerce'],
+    color: '#ef4444',
+  },
+  {
+    id: 'donerbros',
+    url: 'https://www.donerbros.berlin/',
+    titleKey: 'works_donerbros_title',
+    descKey: 'works_donerbros_desc',
+    tags: ['Next.js', 'Firebase', 'UX/UI'],
+    color: '#00ff87',
   },
   {
     id: 'impulse',

@@ -59,6 +59,7 @@
    no glow/shadow — restrained, not neon. ─── */
 .hero-title-word {
   display: inline-block;
+  white-space: nowrap;
   background-repeat: no-repeat;
   background-size: 250% 100%;
   -webkit-background-clip: text;
