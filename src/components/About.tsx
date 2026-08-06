@@ -40,26 +40,9 @@ export default function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.8, ease: 'easeOut' }}
-        className="about-layout"
+        className="about-layout about-layout-text-only"
       >
-        
-        {/* Founder Image Profile */}
-        <div className="about-image-container">
-          <div className="about-glow-orb" />
-          <motion.img
-            src="/philosophy_cinematic_visual.webp"
-            alt="Cinematic Minimalistic Architecture"
-            loading="lazy"
-            decoding="async"
-            whileHover={{ scale: 1.02, filter: 'grayscale(0%) contrast(1.1)' }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="about-profile-img"
-            style={{ WebkitMaskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)', maskImage: 'linear-gradient(to bottom, black 80%, transparent 100%)' }}
-          />
-          <div className="about-image-vignette" />
-        </div>
-
-        {/* Text Details */}
+        {/* Text Details — no visual, text-only per feedback */}
         <div className="about-text-container">
           <h2 className="about-overline">
             {t('about_title')}

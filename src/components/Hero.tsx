@@ -82,7 +82,11 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
-              {t('hero_title')}
+              {t('hero_title_pre')}
+              <span className="hero-title-word hero-title-word-blue">{t('hero_title_word1')}</span>
+              {t('hero_title_mid')}
+              <span className="hero-title-word hero-title-word-gold">{t('hero_title_word2')}</span>
+              {t('hero_title_post')}
             </motion.h1>
 
             <motion.p

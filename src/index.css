@@ -351,40 +351,19 @@ body {
   justify-content: center;
 }
 
-.about-image-container {
-  flex: 1 1 350px;
-  max-width: 400px;
-  position: relative;
+/* No visual anymore — centered single-column text block. */
+.about-layout-text-only {
+  justify-content: center;
 }
 
-.about-glow-orb {
-  position: absolute;
-  inset: -40px;
-  background: radial-gradient(circle, rgba(197, 160, 115, 0.25) 0%, transparent 70%);
-  z-index: 0;
-  border-radius: 50%;
+.about-layout-text-only .about-text-container {
+  flex: 1 1 auto;
+  max-width: 680px;
+  text-align: center;
 }
 
-.about-profile-img {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  object-fit: cover;
-  border-radius: 32px;
-  position: relative;
-  z-index: 1;
-  filter: grayscale(15%) contrast(1.1) brightness(1.05);
-  border: 1px solid rgba(33, 28, 21, 0.1);
-  box-shadow: 0 40px 80px rgba(33, 28, 21, 0.18);
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.about-image-vignette {
-  position: absolute;
-  inset: 0;
-  border-radius: 32px;
-  pointer-events: none;
-  box-shadow: inset 0 -60px 80px -20px var(--bg-dark), inset 0 0 30px rgba(0,0,0,0.4);
-  z-index: 2;
+.about-layout-text-only .about-signature {
+  justify-content: center;
 }
 
 .about-text-container {
@@ -734,9 +713,9 @@ body {
   --services-ink-muted: #6b6155;
   --services-card-bg: #ffffff;
   --services-card-border: rgba(33, 28, 21, 0.08);
-  --services-accent-1: #ff9142;
-  --services-accent-2: #ff4d1c;
-  --services-accent-text: #e0530f;
+  --services-accent-1: #c97b3d;
+  --services-accent-2: #8f4a1f;
+  --services-accent-text: #7a3d18;
 
   position: relative;
   z-index: 10;
@@ -825,7 +804,9 @@ body {
   height: 100%;
 }
 
-/* ─── Individual Card — angular, no rounded corners ─── */
+/* ─── Individual Card — angular, no rounded corners.
+   Interior is a slow, continuous grey / silver / orange gradient loop
+   instead of flat white, per feedback. ─── */
 .service-card-light {
   position: relative;
   overflow: hidden;
@@ -836,10 +817,31 @@ body {
   flex-direction: column;
   text-decoration: none;
   color: inherit;
-  background: var(--services-card-bg);
+  background: linear-gradient(
+    120deg,
+    #f6f6f5 0%,
+    #e3e1dd 22%,
+    color-mix(in srgb, var(--services-accent-1) 24%, #f6f6f5) 50%,
+    #e3e1dd 78%,
+    #f6f6f5 100%
+  );
+  background-size: 300% 100%;
+  animation: services-card-flow 14s linear infinite;
   border: 1px solid var(--services-card-border);
   box-shadow: 0 2px 8px rgba(33, 28, 21, 0.04);
   transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium);
+}
+
+@keyframes services-card-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card-light {
+    animation: none;
+    background-position: 0% 50%;
+  }
 }
 
 .service-card-light:hover {
@@ -850,56 +852,15 @@ body {
     0 0 0 1px color-mix(in srgb, var(--services-accent-2) 12%, transparent);
 }
 
-/* Real card content sits above the waterfall overlay and fills the card
-   (so the flex-grown description still pushes tags/CTA to the bottom). */
+/* Real card content sits above the card's own animated background and
+   fills the card (so the flex-grown description still pushes tags/CTA
+   to the bottom). */
 .service-card-body-light {
   position: relative;
   z-index: 1;
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-
-/* ─── Ambient flow — a continuous, very slow blue/lilac current always
-   drifting through the card, independent of hover. Built as a seamlessly
-   repeating gradient tile so the loop has no visible reset. ─── */
-.service-card-waterfall {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image: linear-gradient(
-    180deg,
-    transparent 0%,
-    rgba(255, 145, 66, 0.14) 22%,
-    transparent 42%,
-    rgba(255, 77, 28, 0.14) 68%,
-    transparent 92%,
-    transparent 100%
-  );
-  background-size: 100% 220%;
-  background-repeat: repeat-y;
-  animation: services-flow 18s linear infinite;
-}
-
-@keyframes services-flow {
-  from {
-    background-position-y: 0%;
-  }
-  to {
-    background-position-y: -220%;
-  }
-}
-
-.service-card-light:hover .service-card-waterfall {
-  animation-duration: 9s;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .service-card-waterfall {
-    animation: none;
-    background-position-y: 0%;
-  }
 }
 
 /* ─── Icon Wrapper — angular outline, no filled "app icon" badge.

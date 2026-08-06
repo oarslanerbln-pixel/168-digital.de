@@ -53,6 +53,41 @@
 }
 
 
+/* ─── Headline word accents — a slow, continuous shimmer sweeps through
+   "Bild"/"image"/"Görüntü" (blue) and "Code"/"code"/"kodun" (gold),
+   like sunlight passing across the letters. Pure background-clip:text,
+   no glow/shadow — restrained, not neon. ─── */
+.hero-title-word {
+  display: inline-block;
+  background-repeat: no-repeat;
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-word-sweep 7s ease-in-out infinite;
+}
+
+.hero-title-word-blue {
+  background-image: linear-gradient(100deg, #2b4f9c 0%, #2b4f9c 38%, #a9c8ff 50%, #2b4f9c 62%, #2b4f9c 100%);
+}
+
+.hero-title-word-gold {
+  background-image: linear-gradient(100deg, #8a6a3f 0%, #8a6a3f 38%, #f5d999 50%, #8a6a3f 62%, #8a6a3f 100%);
+  animation-delay: 1.4s;
+}
+
+@keyframes hero-word-sweep {
+  0% { background-position: 140% 0; }
+  100% { background-position: -40% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-title-word {
+    animation: none;
+    background-position: 50% 0;
+  }
+}
+
 /* ─── EYEBROW (category + location) — plain text, no pill/box ─── */
 .hero-eyebrow {
   display: block;
@@ -95,7 +130,7 @@
 .hero-service-chip {
   display: inline-block;
   padding: 8px 16px;
-  border-radius: 100px;
+  border-radius: 0;
   border: 1px solid rgba(33, 28, 21, 0.12);
   background: rgba(33, 28, 21, 0.04);
   -webkit-backdrop-filter: blur(20px);
@@ -219,18 +254,38 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 100px;
-  background: rgba(33, 28, 21, 0.03);
-  border: 1px solid rgba(33, 28, 21, 0.1);
-  color: var(--text-muted);
+  border-radius: 0;
+  background: linear-gradient(
+    120deg,
+    color-mix(in srgb, #c97b3d 16%, transparent) 0%,
+    color-mix(in srgb, var(--accent-cyan) 16%, transparent) 33%,
+    color-mix(in srgb, var(--accent-purple) 16%, transparent) 66%,
+    color-mix(in srgb, #c97b3d 16%, transparent) 100%
+  );
+  background-size: 300% 100%;
+  animation: hero-pill-flow 9s linear infinite;
+  border: 1px solid rgba(33, 28, 21, 0.12);
+  color: var(--text-main);
   cursor: pointer;
   font-family: 'Outfit', sans-serif;
   font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.8px;
-  transition: all 0.4s var(--ease-premium);
+  transition: border-color 0.4s var(--ease-premium), transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
+}
+
+@keyframes hero-pill-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pill {
+    animation: none;
+    background-position: 0% 50%;
+  }
 }
 
 .hero-pill-label {
@@ -249,11 +304,9 @@
 }
 
 .hero-pill:hover {
-  background: rgba(33, 28, 21, 0.07);
-  border-color: rgba(33, 28, 21, 0.2);
-  color: var(--text-main);
+  border-color: rgba(33, 28, 21, 0.3);
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(33, 28, 21, 0.12);
+  box-shadow: 0 8px 24px rgba(33, 28, 21, 0.1);
 }
 
 

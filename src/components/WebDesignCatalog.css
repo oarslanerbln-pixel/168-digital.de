@@ -1224,11 +1224,19 @@ textarea.qb-input{ resize:none;min-height:90px}
   position:absolute;
   inset:0;
   top:-8rem;
-  background:linear-gradient(to top, #000 0%, rgba(0,0,0,.8) 40%, transparent 100%);
+  background:linear-gradient(to top, var(--bg-dark) 0%, rgba(250,247,242,.85) 40%, transparent 100%);
   pointer-events:none;
 }
 
-/* ── EXPLORE ALL CONCEPTS BUTTON ── */
+/* ── EXPLORE ALL CONCEPTS BUTTON — angular, transparent, animated
+   bronze/gold border cycle (its own timing, independent of other
+   sections' animated accents) ── */
+@keyframes wd-btn-border-cycle {
+  0%   { border-color: #c9973f; }
+  33%  { border-color: #e8c078; }
+  66%  { border-color: #8a6a3f; }
+  100% { border-color: #c9973f; }
+}
 .wd-explore-btn{
   position:relative;
   z-index:10;
@@ -1236,10 +1244,11 @@ textarea.qb-input{ resize:none;min-height:90px}
   align-items:center;
   gap:1rem;
   padding:1rem 2.5rem;
-  background:rgba(0,0,0,.4);
-  border:1px solid rgba(201,169,110,.3);
-  border-radius:999px;
-  color:#c9a96e;
+  background:transparent;
+  border:1.5px solid #c9973f;
+  border-radius:0;
+  animation: wd-btn-border-cycle 10s ease-in-out infinite;
+  color:var(--text-main, #211c15);
   font-family:'Outfit',sans-serif;
   font-size:.72rem;
   letter-spacing:.2em;

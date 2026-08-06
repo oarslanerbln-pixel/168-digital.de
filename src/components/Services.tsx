@@ -74,8 +74,6 @@ function ServiceCard({ card }: { card: any }) {
         onMouseEnter={playTick}
         className="service-card-light"
       >
-        <span className="service-card-waterfall" aria-hidden="true" />
-
         <div className="service-card-body-light">
           <div className="service-icon-wrapper-light">
             <Icon size={24} strokeWidth={1.6} />
