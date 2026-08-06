@@ -825,12 +825,12 @@ body {
   height: 100%;
 }
 
-/* ─── Individual Card ─── */
+/* ─── Individual Card — angular, no rounded corners ─── */
 .service-card-light {
   position: relative;
   overflow: hidden;
   width: 100%;
-  border-radius: 20px;
+  border-radius: 0;
   padding: 40px 36px;
   display: flex;
   flex-direction: column;
@@ -902,25 +902,26 @@ body {
   }
 }
 
-/* ─── Icon Wrapper — bold orange gradient across every card ─── */
+/* ─── Icon Wrapper — angular outline, no filled "app icon" badge.
+   Icon itself carries the orange gradient via SVG, not a solid tile. ─── */
 .service-icon-wrapper-light {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: 0;
   margin-bottom: 32px;
-  color: #fff;
-  background: linear-gradient(135deg, var(--services-accent-1) 0%, var(--services-accent-2) 100%);
-  box-shadow: 0 6px 16px color-mix(in srgb, var(--services-accent-2) 30%, transparent);
+  border: 1.5px solid color-mix(in srgb, var(--services-accent-2) 45%, transparent);
+  color: var(--services-accent-text);
+  background: transparent;
   flex-shrink: 0;
-  transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
+  transition: border-color 0.4s var(--ease-premium), background 0.4s var(--ease-premium);
 }
 
 .service-card-light:hover .service-icon-wrapper-light {
-  transform: scale(1.06);
-  box-shadow: 0 10px 22px color-mix(in srgb, var(--services-accent-2) 40%, transparent);
+  border-color: var(--services-accent-2);
+  background: color-mix(in srgb, var(--services-accent-1) 8%, transparent);
 }
 
 /* ─── Card Content ─── */
