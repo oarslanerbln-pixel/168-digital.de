@@ -65,7 +65,8 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: hero-word-sweep 7s ease-in-out infinite;
+  /* alternate = smooth back-and-forth, never jumps/resets mid-word */
+  animation: hero-word-sweep 4s ease-in-out infinite alternate;
 }
 
 .hero-title-word-blue {
@@ -78,8 +79,8 @@
 }
 
 @keyframes hero-word-sweep {
-  0% { background-position: 140% 0; }
-  100% { background-position: -40% 0; }
+  0% { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -105,14 +106,14 @@
 /* ─── SUBTITLE — minimalist sans, distinct from the bold headline ─── */
 .hero-subtitle {
   font-family: 'Outfit', sans-serif;
-  font-weight: 300;
+  font-weight: 500;
   font-style: normal;
-  letter-spacing: 0.01em;
-  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
-  line-height: 1.6;
-  color: var(--text-muted);
+  letter-spacing: 0.005em;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  line-height: 1.55;
+  color: var(--text-main);
   margin: 0 auto 40px;
-  max-width: 620px;
+  max-width: 640px;
 }
 
 
