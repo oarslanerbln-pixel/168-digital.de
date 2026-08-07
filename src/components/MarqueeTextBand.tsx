@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import './MarqueeTextBand.css';
 
-const words = [
+const defaultWords = [
   'CINEMATIC VIDEOGRAPHY', 'DRONE PRODUCTION', 'DIGITAL ECOSYSTEMS',
   'SaaS', 'INNOVATION', 'BRANDING', 'STRATEGY', 'DEVELOPMENT'
 ];
@@ -9,16 +9,17 @@ const words = [
 const separator = ' — ';
 const repeatCount = 4; // repeat the list enough so it wraps seamlessly
 
-function buildStrip() {
+function buildStrip(words: string[]) {
   return Array.from({ length: repeatCount }, () => words.join(separator)).join(separator) + separator;
 }
 
 interface MarqueeTextBandProps {
   direction?: 'left' | 'right';
+  words?: string[];
 }
 
-export default function MarqueeTextBand({ direction = 'left' }: MarqueeTextBandProps) {
-  const strip = buildStrip();
+export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
+  const strip = buildStrip(words);
   const dur = 40; // seconds for one full loop
 
   return (
