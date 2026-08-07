@@ -1,0 +1,3 @@
+## 2024-05-24 - Lazy loading modal overlays
+**Learning:** Large modal overlays like `DevConsole` were eagerly fetched on initial page load, adding to the bundle size because they were imported synchronously in `App.tsx`. Simply putting `<DevConsole>` in the render tree means it is bundled in the main chunk.
+**Action:** When lazy loading large developer utilities or modal overlays using `React.lazy()`, combine it with a `hasMounted` state flag to conditionally render the component's `<Suspense>` boundary only after active user interaction. This prevents the bundler from eagerly fetching the component's chunk on initial page load, which would otherwise occur if relying solely on the component's internal conditional rendering props returning `null`.
