@@ -117,21 +117,31 @@
 }
 
 
-/* ─── SCANNABLE SERVICE STRIP ─── */
+/* ─── SCANNABLE SERVICE STRIP — equal-width cells regardless of label
+   length, so short and long labels read as one symmetric row ─── */
 .hero-service-strip {
   pointer-events: auto;
   list-style: none;
   margin: 36px 0 0;
   padding: 0;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 10px;
-  justify-content: center;
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-service-strip li {
+  display: flex;
 }
 
 .hero-service-chip {
-  display: inline-block;
-  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 10px 14px;
   border-radius: 0;
   border: 1px solid rgba(33, 28, 21, 0.12);
   background: rgba(33, 28, 21, 0.04);
@@ -139,10 +149,11 @@
   backdrop-filter: blur(20px);
   color: rgba(33, 28, 21, 0.75);
   font-family: 'Outfit', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  letter-spacing: 0.4px;
-  white-space: nowrap;
+  letter-spacing: 0.3px;
+  text-align: center;
+  white-space: normal;
   text-decoration: none;
   transition: all 0.35s var(--ease-premium);
 }
@@ -177,29 +188,51 @@
   flex-shrink: 0;
 }
 
-/* ── PRIMARY CTA — Underline-Reveal Style ── */
+/* ── PRIMARY CTA — bolder, filled/bordered for more presence ── */
 .hero-btn-primary-v2 {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 0;
-  background: none;
-  border: none;
+  gap: 14px;
+  padding: 16px 30px;
+  background: rgba(33, 28, 21, 0.04);
+  border: 1.5px solid var(--services-accent-2, #8f4a1f);
+  border-radius: 0;
   cursor: pointer;
   color: var(--text-main);
   font-family: 'Outfit', sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 700;
   letter-spacing: 2.5px;
   text-transform: uppercase;
   overflow: hidden;
+  transition: background 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
 }
 
+.hero-btn-primary-v2:hover {
+  background: rgba(33, 28, 21, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Same gold sweep as the "Code"/"Bild" headline words */
 .hero-btn-text {
   position: relative;
   z-index: 1;
-  transition: color 0.4s var(--ease-premium);
+  display: inline-block;
+  background-image: linear-gradient(100deg, #8a6a3f 0%, #8a6a3f 38%, #f5d999 50%, #8a6a3f 62%, #8a6a3f 100%);
+  background-repeat: no-repeat;
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: hero-word-sweep 4s ease-in-out infinite alternate;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-btn-text {
+    animation: none;
+    background-position: 50% 0;
+  }
 }
 
 .hero-btn-arrow {
