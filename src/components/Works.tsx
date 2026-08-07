@@ -65,7 +65,7 @@ export default function Works() {
                   whileHover={{ rotate: 45, scale: 1.2 }}
                   transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <ArrowUpRight size={24} color="var(--accent-silver)" />
+                  <ArrowUpRight size={24} color="var(--card-glow)" />
                 </motion.div>
               </div>
 

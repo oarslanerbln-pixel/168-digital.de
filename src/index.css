@@ -381,16 +381,17 @@ body {
 }
 
 .about-headline {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
   margin-bottom: 32px;
   font-weight: 800;
   line-height: 1.1;
 }
 
 .about-description {
-  font-size: 1.2rem;
-  line-height: 1.8;
-  color: var(--text-muted);
+  font-size: clamp(1.2rem, 2.2vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1.7;
+  color: var(--text-main);
   margin-bottom: 48px;
 }
 
@@ -526,14 +527,18 @@ body {
   gap: 32px;
 }
 
+/* Angular, dark cards — each tinted by its own --card-glow (set inline
+   per project in Works.tsx), with light text for contrast. Needs
+   !important to beat .glow-card's own !important background rule. */
 .project-card {
   padding: 0;
   cursor: pointer;
   color: inherit;
   display: flex;
   flex-direction: column;
-  border-radius: 32px;
+  border-radius: 0;
   overflow: hidden;
+  background: linear-gradient(145deg, color-mix(in srgb, var(--card-glow) 38%, #17140f) 0%, #0d0c0a 100%) !important;
 }
 
 .service-card-link {
@@ -567,15 +572,15 @@ body {
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 3px;
-  color: var(--accent-silver);
-  opacity: 0.7;
+  color: color-mix(in srgb, var(--card-glow) 70%, #fff);
+  opacity: 0.9;
 }
 
 .project-card-divider {
   height: 1px;
   margin: 0 40px;
-  background: linear-gradient(90deg, var(--accent-silver) 40%, transparent);
-  opacity: 0.3;
+  background: linear-gradient(90deg, var(--card-glow) 40%, transparent);
+  opacity: 0.5;
 }
 
 .project-card-content {
@@ -588,10 +593,11 @@ body {
   font-weight: 800;
   margin-bottom: 16px;
   line-height: 1.1;
+  color: #fdfbf8;
 }
 
 .project-card-desc {
-  color: var(--text-muted);
+  color: rgba(253, 251, 248, 0.72);
   line-height: 1.8;
   font-size: 1.1rem;
 }
@@ -610,9 +616,9 @@ body {
   letter-spacing: 1.5px;
   text-transform: uppercase;
   border-radius: 30px;
-  border: 1px solid rgba(33, 28, 21, 0.1);
-  color: var(--text-muted);
-  background: rgba(33, 28, 21, 0.03);
+  border: 1px solid color-mix(in srgb, var(--card-glow) 40%, transparent);
+  color: color-mix(in srgb, var(--card-glow) 65%, #fff);
+  background: color-mix(in srgb, var(--card-glow) 12%, transparent);
   transition: all 0.3s var(--ease-premium);
 }
 
