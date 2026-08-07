@@ -15,6 +15,31 @@
   gap: 20px;
 }
 
+/* ── Mobile: swipeable, touch-draggable carousel instead of a stack ──
+   Native scroll-snap gives real finger-drag momentum + a smooth
+   snap-into-place animation, without any custom JS drag handling. */
+@media (max-width: 768px) {
+  .wd-grid {
+    display: flex;
+    grid-template-columns: unset;
+    overflow-x: auto;
+    overflow-y: visible;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 16px;
+    padding: 8px 24px 20px;
+    margin: 0 -24px;
+    scrollbar-width: none;
+  }
+  .wd-grid::-webkit-scrollbar {
+    display: none;
+  }
+  .wd-grid .card {
+    flex: 0 0 82%;
+    scroll-snap-align: center;
+  }
+}
+
 
 /* ── MAIN CONTENT ── */
 .content{position:relative;z-index:2;padding:0 3rem 10rem;max-width:1300px;margin:0 auto}
