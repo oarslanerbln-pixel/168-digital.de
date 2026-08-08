@@ -39,7 +39,11 @@ export default function WhatsAppWidget() {
   const handleConnectWhatsApp = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     playClick();
-    window.open(getWhatsAppLink(), '_blank', 'noopener,noreferrer');
+    window.open(
+      getWhatsAppLink(),
+      '_blank',
+      'noopener,noreferrer'
+    );
   };
 
   const handleCopyNumber = (e: React.MouseEvent) => {
