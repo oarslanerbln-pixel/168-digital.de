@@ -39,7 +39,8 @@ export default function WhatsAppWidget() {
   const handleConnectWhatsApp = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     playClick();
-    window.open(getWhatsAppLink(), '_blank');
+    // SECURITY: Explicitly specify noopener,noreferrer for programmatic window.open to prevent reverse tabnabbing
+    window.open(getWhatsAppLink(), '_blank', 'noopener,noreferrer');
   };
 
   const handleCopyNumber = (e: React.MouseEvent) => {
