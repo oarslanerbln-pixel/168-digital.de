@@ -13,7 +13,6 @@ import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import AngebotWidget from './components/AngebotWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
-import DevConsole from './components/DevConsole';
 
 // Route-level code splitting: each page ships its own chunk, so a visitor
 // landing directly on a service or legal page never downloads the Home
@@ -22,6 +21,7 @@ const Home = lazy(() => import('./pages/Home'));
 const ServicePage = lazy(() => import('./components/ServicePage'));
 const LegalPage = lazy(() => import('./pages/LegalPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
+const DevConsole = lazy(() => import('./components/DevConsole'));
 
 const INTRO_SEEN_KEY = '1618_intro_seen_at';
 const INTRO_TTL_MS = 24 * 60 * 60 * 1000; // show the intro at most once per 24h
@@ -47,6 +47,7 @@ function getInitialLoadedState(): boolean {
 function App() {
   const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
   const [isConsoleOpen, setIsConsoleOpen] = useState(false);
+  const [hasDevConsoleMounted, setHasDevConsoleMounted] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
 
@@ -73,9 +74,13 @@ function App() {
       if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
         e.preventDefault();
         setIsConsoleOpen(prev => !prev);
+        setHasDevConsoleMounted(true);
       }
     };
-    const handleOpenConsole = () => setIsConsoleOpen(true);
+    const handleOpenConsole = () => {
+      setIsConsoleOpen(true);
+      setHasDevConsoleMounted(true);
+    };
 
     window.addEventListener('openDatenschutz', handleOpenDatenschutz);
     window.addEventListener('openImpressum', handleOpenImpressum);
@@ -116,7 +121,11 @@ function App() {
       */}
       <div style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}>
         <CustomCursor />
-        <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+        {hasDevConsoleMounted && (
+          <Suspense fallback={null}>
+            <DevConsole isOpen={isConsoleOpen} onClose={() => setIsConsoleOpen(false)} />
+          </Suspense>
+        )}
         <NavigationMenu />
         <LanguageToggle />
         <HomeLogo />
