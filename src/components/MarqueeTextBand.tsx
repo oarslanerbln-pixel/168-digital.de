@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { motion } from 'framer-motion';
 import './MarqueeTextBand.css';
 
@@ -18,7 +19,7 @@ interface MarqueeTextBandProps {
   words?: string[];
 }
 
-export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
+function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
   const strip = buildStrip(words);
   const dur = 40; // seconds for one full loop
 
@@ -39,3 +40,8 @@ export default function MarqueeTextBand({ direction = 'left', words = defaultWor
     </div>
   );
 }
+
+// ⚡ Bolt: Wrapped component in React.memo() to prevent unnecessary re-renders when parent
+// components (like Home.tsx) re-render. This is especially useful here because MarqueeTextBand
+// receives relatively static props but performs its own internal animation.
+export default memo(MarqueeTextBand);
