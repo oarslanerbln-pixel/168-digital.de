@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import './MarqueeTextBand.css';
 
@@ -19,7 +20,9 @@ interface MarqueeTextBandProps {
 }
 
 export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
-  const strip = buildStrip(words);
+  // ⚡ Bolt Optimization: Memoize the strip string calculation.
+  // Prevents re-building the repeated string array structure on every render
+  const strip = useMemo(() => buildStrip(words), [words]);
   const dur = 40; // seconds for one full loop
 
   return (
