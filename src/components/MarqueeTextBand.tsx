@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import React from 'react';
 import './MarqueeTextBand.css';
 
 const defaultWords = [
@@ -27,15 +27,17 @@ export default function MarqueeTextBand({ direction = 'left', words = defaultWor
       {/* fade masks left & right */}
       <div className="marquee-mask" />
 
-      <motion.div
-        animate={{ x: direction === 'left' ? [0, -2400] : [-2400, 0] }}
-        transition={{ duration: dur, ease: 'linear', repeat: Infinity }}
-        className="marquee-inner"
+      <div
+        className={`marquee-inner marquee-${direction}`}
+        style={{ '--marquee-duration': `${dur}s` } as React.CSSProperties}
       >
         <span className="marquee-text">
           {strip}
         </span>
-      </motion.div>
+        <span className="marquee-text">
+          {strip}
+        </span>
+      </div>
     </div>
   );
 }
