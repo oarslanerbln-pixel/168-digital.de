@@ -6,13 +6,20 @@ import './index.css'
 import './i18n'
 import { Analytics } from '@vercel/analytics/react'
 import { isAnalyticsAllowed } from './components/CookieConsent'
+import { initThirdPartyAnalytics } from './utils/thirdPartyAnalytics'
+
+// DSGVO: Only load analytics if user explicitly consented via Cookie Banner.
+// (CookieConsent reloads the page on every consent change, so this always
+// reflects the current choice — no separate re-init path is needed.)
+if (isAnalyticsAllowed()) {
+  initThirdPartyAnalytics()
+}
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-    {/* DSGVO: Only load analytics if user explicitly consented via Cookie Banner */}
     {isAnalyticsAllowed() && <Analytics />}
   </React.StrictMode>,
 )

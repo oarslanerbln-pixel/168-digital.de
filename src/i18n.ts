@@ -46,7 +46,7 @@ const resources = {
       "footer_cookie_settings": "Cookie Settings",
       "footer_copyright": "© {{year}} 1618 Digital. Represented by Ömer Arslaner.",
       "cookie_title": "Cookie Settings",
-      "cookie_text_before": "We use cookies to give you the best possible experience on our website and to collect analytics data (Vercel Analytics). For more information, see our ",
+      "cookie_text_before": "We use cookies to give you the best possible experience on our website and to collect analytics and marketing data (e.g. Google Analytics, Meta Pixel, Vercel Analytics). For more information, see our ",
       "cookie_text_after": ".",
       "cookie_privacy_link": "Privacy Policy",
       "cookie_accept_all": "Accept All",
@@ -117,7 +117,17 @@ const resources = {
       "svc_not_found_text": "We couldn't find that service page.",
       "svc_not_found_cta": "Back to Home",
       "svc_all_services_heading": "All Services",
-      "svc_view_details": "View Details"
+      "svc_view_details": "View Details",
+      "blog_meta_title": "Blog | 1618 Digital — Web, Video & Drone Insights from Berlin",
+      "blog_meta_description": "Practical guides on wedding videography, drone footage and web development in Berlin — pricing, legal basics, and what to look for, from 1618 Digital.",
+      "blog_overline": "INSIGHTS",
+      "blog_title": "Blog",
+      "blog_subtitle": "Practical guides on pricing, legal basics, and what to look for — from our work in Berlin.",
+      "blog_read_more": "Read Article",
+      "blog_back_to_blog": "Back to Blog",
+      "nav_blog": "BLOG",
+      "nav_blog_sub": "SYS.LOG // FIELD NOTES",
+      "footer_blog": "Blog"
     }
   },
   de: {
@@ -164,7 +174,7 @@ const resources = {
       "footer_cookie_settings": "Cookie-Einstellungen",
       "footer_copyright": "© {{year}} 1618 Digital. Vertreten durch Ömer Arslaner.",
       "cookie_title": "Cookie-Einstellungen",
-      "cookie_text_before": "Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten und Analysedaten (Vercel Analytics) zu erfassen. Weitere Informationen finden Sie in unserer ",
+      "cookie_text_before": "Wir verwenden Cookies, um Ihnen die bestmögliche Erfahrung auf unserer Website zu bieten und Analyse- sowie Marketingdaten zu erfassen (z. B. Google Analytics, Meta Pixel, Vercel Analytics). Weitere Informationen finden Sie in unserer ",
       "cookie_text_after": ".",
       "cookie_privacy_link": "Datenschutzerklärung",
       "cookie_accept_all": "Alle Akzeptieren",
@@ -231,7 +241,17 @@ const resources = {
       "svc_not_found_text": "Diese Leistungsseite konnten wir nicht finden.",
       "svc_not_found_cta": "Zur Startseite",
       "svc_all_services_heading": "Alle Leistungen",
-      "svc_view_details": "Details ansehen"
+      "svc_view_details": "Details ansehen",
+      "blog_meta_title": "Blog | 1618 Digital — Web, Video & Drohnen-Insights aus Berlin",
+      "blog_meta_description": "Praktische Guides zu Hochzeitsvideo, Drohnenaufnahmen und Webentwicklung in Berlin — Preise, rechtliche Basics und worauf Sie achten sollten, von 1618 Digital.",
+      "blog_overline": "INSIGHTS",
+      "blog_title": "Blog",
+      "blog_subtitle": "Praktische Guides zu Preisen, rechtlichen Basics und worauf Sie achten sollten — aus unserer Arbeit in Berlin.",
+      "blog_read_more": "Artikel lesen",
+      "blog_back_to_blog": "Zurück zum Blog",
+      "nav_blog": "BLOG",
+      "nav_blog_sub": "SYS.LOG // FELDNOTIZEN",
+      "footer_blog": "Blog"
     }
   },
   tr: {
@@ -278,7 +298,7 @@ const resources = {
       "footer_cookie_settings": "Çerez Ayarları",
       "footer_copyright": "© {{year}} 1618 Digital. Temsilci: Ömer Arslaner.",
       "cookie_title": "Çerez Ayarları",
-      "cookie_text_before": "Web sitemizde size mümkün olan en iyi deneyimi sunmak ve analiz verileri (Vercel Analytics) toplamak için çerezler kullanıyoruz. Daha fazla bilgi için ",
+      "cookie_text_before": "Web sitemizde size mümkün olan en iyi deneyimi sunmak ve analiz/pazarlama verileri toplamak (ör. Google Analytics, Meta Pixel, Vercel Analytics) için çerezler kullanıyoruz. Daha fazla bilgi için ",
       "cookie_text_after": " sayfamızı inceleyebilirsiniz.",
       "cookie_privacy_link": "Gizlilik Politikası",
       "cookie_accept_all": "Tümünü Kabul Et",
@@ -345,7 +365,17 @@ const resources = {
       "svc_not_found_text": "Bu hizmet sayfasını bulamadık.",
       "svc_not_found_cta": "Ana Sayfaya Dön",
       "svc_all_services_heading": "Tüm Hizmetler",
-      "svc_view_details": "Detayları Gör"
+      "svc_view_details": "Detayları Gör",
+      "blog_meta_title": "Blog | 1618 Digital — Berlin'den Web, Video & Drone İçgörüleri",
+      "blog_meta_description": "Berlin'de düğün video çekimi, drone çekimi ve web geliştirme hakkında pratik rehberler — fiyatlar, yasal temeller ve nelere dikkat etmeli, 1618 Digital'den.",
+      "blog_overline": "İÇGÖRÜLER",
+      "blog_title": "Blog",
+      "blog_subtitle": "Fiyatlar, yasal temeller ve nelere dikkat etmeniz gerektiği hakkında pratik rehberler — Berlin'deki işimizden.",
+      "blog_read_more": "Makaleyi Oku",
+      "blog_back_to_blog": "Blog'a Dön",
+      "nav_blog": "BLOG",
+      "nav_blog_sub": "SYS.LOG // SAHA NOTLARI",
+      "footer_blog": "Blog"
     }
   }
 };

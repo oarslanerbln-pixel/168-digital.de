@@ -129,10 +129,26 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
         <p><strong>10. Vercel Analytics</strong></p>
         <p>Wir verwenden Vercel Analytics, um anonymisierte Statistiken zur Website-Nutzung zu erfassen und die Performance zu verbessern. Vercel Analytics verwendet keine Cookies und erfasst keine personenbezogenen Daten. IP-Adressen werden nicht gespeichert. Die Nutzung erfolgt nur nach Ihrer Einwilligung über den Cookie-Consent-Banner.</p>
 
-        <p><strong>11. SSL/TLS-Verschlüsselung</strong></p>
+        <p><strong>11. Google Analytics 4</strong></p>
+        <p>Sofern von uns aktiviert, verwenden wir Google Analytics 4, einen Webanalysedienst der Google Ireland Limited (Gordon House, Barrow Street, Dublin 4, Irland; Mutterunternehmen: Google LLC, USA). Google Analytics verwendet Cookies bzw. vergleichbare Technologien, die eine Analyse der Benutzung unserer Website ermöglichen (z. B. besuchte Seiten, Verweildauer, Herkunft der Zugriffe). Diese Informationen werden an Server von Google übertragen und dort verarbeitet. Für die Übermittlung in die USA stützen wir uns auf die EU-Standardvertragsklauseln von Google. Das Skript wird erst geladen, nachdem Sie im Cookie-Consent-Banner „Alle Akzeptieren" ausgewählt haben. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung); Sie können Ihre Einwilligung jederzeit über die Cookie-Einstellungen im Footer widerrufen.</p>
+        <p>Weitere Informationen entnehmen Sie der Datenschutzerklärung von Google:{' '}
+          <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+            https://policies.google.com/privacy
+          </a>
+        </p>
+
+        <p><strong>12. Meta Pixel (Facebook/Instagram)</strong></p>
+        <p>Sofern von uns aktiviert, verwenden wir den Meta Pixel der Meta Platforms Ireland Limited (4 Grand Canal Square, Dublin 2, Irland; Mutterunternehmen: Meta Platforms, Inc., USA), um die Wirksamkeit unserer Werbeanzeigen auf Facebook und Instagram zu messen und Besuchern relevantere Anzeigen zu zeigen (Retargeting). Dabei wird ein Cookie gesetzt und Ihr Browser über den Besuch dieser Website sowie Ihre Interaktionen informiert. Für die Übermittlung in die USA stützen wir uns auf die EU-Standardvertragsklauseln von Meta. Das Skript wird erst geladen, nachdem Sie im Cookie-Consent-Banner „Alle Akzeptieren" ausgewählt haben. Rechtsgrundlage ist Art. 6 Abs. 1 lit. a DSGVO (Einwilligung); Sie können Ihre Einwilligung jederzeit über die Cookie-Einstellungen im Footer widerrufen.</p>
+        <p>Weitere Informationen sowie Widerspruchsmöglichkeiten entnehmen Sie der Datenschutzerklärung von Meta:{' '}
+          <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">
+            https://www.facebook.com/privacy/policy/
+          </a>
+        </p>
+
+        <p><strong>13. SSL/TLS-Verschlüsselung</strong></p>
         <p>Diese Seite nutzt aus Sicherheitsgründen und zum Schutz der Übertragung vertraulicher Inhalte, wie zum Beispiel Anfragen, die Sie an uns als Seitenbetreiber senden, eine SSL- bzw. TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennen Sie daran, dass die Adresszeile des Browsers von „http://" auf „https://" wechselt und an dem Schloss-Symbol in Ihrer Browserzeile.</p>
 
-        <p><strong>12. Ihre Betroffenenrechte</strong></p>
+        <p><strong>14. Ihre Betroffenenrechte</strong></p>
         <p>Sie haben folgende Rechte hinsichtlich Ihrer personenbezogenen Daten:</p>
         <ul>
           <li>Recht auf Auskunft (Art. 15 DSGVO)</li>
@@ -146,10 +162,10 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
         </ul>
         <p>Die zuständige Aufsichtsbehörde ist: Berliner Beauftragte für Datenschutz und Informationsfreiheit, Friedrichstr. 219, 10969 Berlin.</p>
 
-        <p><strong>13. Aufbewahrungsdauer</strong></p>
+        <p><strong>15. Aufbewahrungsdauer</strong></p>
         <p>Sofern innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
 
-        <p><strong>14. Schriftarten (Self-Hosted)</strong></p>
+        <p><strong>16. Schriftarten (Self-Hosted)</strong></p>
         <p>Diese Website verwendet die Schriftart „Outfit". Die Schriftarten sind lokal auf unserem Server gehostet. Es werden keine Verbindungen zu externen Servern (z.B. Google) hergestellt. Somit werden keine personenbezogenen Daten (z.B. Ihre IP-Adresse) an Dritte übertragen.</p>
       </>
     ),

@@ -1,0 +1,99 @@
+/* ════════════════════════════════════════════════════════════════
+   BLOG — index list + article page. Reuses .service-page/.service-hero/
+   .service-breadcrumb/.service-related from ServicePage.css for layout
+   and typographic consistency; only blog-specific pieces live here.
+   ════════════════════════════════════════════════════════════════ */
+
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.blog-list-card {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 32px;
+  height: 100%;
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-list-meta {
+  font-family: var(--font-mono, monospace);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--card-glow) 70%, var(--text-muted));
+  text-transform: uppercase;
+}
+
+.blog-list-title {
+  font-size: 1.4rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.blog-list-excerpt {
+  color: var(--text-muted);
+  line-height: 1.65;
+  font-size: 0.95rem;
+  flex: 1;
+}
+
+.blog-list-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: color-mix(in srgb, var(--card-glow) 75%, var(--accent-silver));
+  margin-top: 4px;
+}
+
+/* ─── Article ─── */
+.blog-post-meta {
+  color: color-mix(in srgb, var(--card-glow) 75%, var(--text-muted));
+}
+
+.blog-post-body {
+  max-width: 720px;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.blog-post-body p {
+  font-size: clamp(1rem, 1.3vw, 1.1rem);
+  line-height: 1.8;
+  color: var(--text-secondary, var(--text-muted));
+  margin-bottom: 1.4rem;
+}
+
+.blog-post-body p strong {
+  color: var(--accent-silver);
+}
+
+.blog-post-h2 {
+  font-size: clamp(1.3rem, 2.4vw, 1.7rem);
+  font-weight: 800;
+  margin: 2.5rem 0 1.1rem;
+}
+
+.blog-post-list {
+  margin: 0 0 1.4rem;
+  padding-left: 1.3rem;
+  color: var(--text-secondary, var(--text-muted));
+  line-height: 1.8;
+}
+
+.blog-post-list li {
+  margin-bottom: 0.5rem;
+}
+
+.blog-post-list li::marker {
+  color: var(--card-glow);
+}
+
+.blog-post-related {
+  max-width: 720px;
+}

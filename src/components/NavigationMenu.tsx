@@ -205,6 +205,29 @@ export default function NavigationMenu() {
                     </motion.div>
                   </div>
                 ))}
+                <div className="nav-link-wrapper">
+                  <motion.div
+                    initial={{ y: '100%', opacity: 0 }}
+                    animate={{ y: '0%', opacity: 1 }}
+                    exit={{ y: '-100%', opacity: 0 }}
+                    transition={{
+                      duration: 0.6,
+                      ease: [0.16, 1, 0.3, 1],
+                      delay: 0.15 + ((navItems.length + services.length) * 0.05)
+                    }}
+                    style={{ width: '100%' }}
+                  >
+                    <Link
+                      to="/blog"
+                      onClick={() => { playClose(); setIsOpen(false); }}
+                      onMouseEnter={() => playTick()}
+                      className="nav-link-btn nav-service-link"
+                    >
+                      <span className="nav-link-num">→</span>
+                      <span className="nav-link-text">{t('nav_blog', 'BLOG')}</span>
+                    </Link>
+                  </motion.div>
+                </div>
               </div>
 
               {/* Bottom HUD info & redundant connection */}

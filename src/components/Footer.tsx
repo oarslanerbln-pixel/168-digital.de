@@ -19,6 +19,9 @@ export default function Footer({ onOpenCookies }: FooterProps) {
         <Link to="/contact" className="footer-link">
           {t('footer_contact')}
         </Link>
+        <Link to="/blog" className="footer-link">
+          {t('footer_blog')}
+        </Link>
         <a
           href="https://www.instagram.com/1618cinema/"
           target="_blank"
