@@ -248,6 +248,42 @@ body {
   box-shadow: 0 40px 100px rgba(33, 28, 21, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 
+/* Full-bleed live-site preview at the top of the project modal — breaks out
+   of .modal-content's 48px padding via negative margins, same accent-color
+   duotone treatment as the gallery cards for visual continuity. */
+.modal-media {
+  position: relative;
+  margin: -48px -48px 32px -48px;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  border-radius: 32px 32px 0 0;
+  background: #0d0c0a;
+}
+
+.modal-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+.modal-media::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--card-glow, var(--accent-cyan)) 50%, transparent) 0%, transparent 55%);
+  mix-blend-mode: color;
+  opacity: 0.85;
+}
+
+.modal-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, #fdfbf8 100%);
+}
+
 /* ─── Floating Label ─── */
 .floating-field {
   position: relative;
@@ -558,6 +594,48 @@ body {
   font-size: 0.85rem;
   font-weight: 600;
   color: var(--accent-silver);
+}
+
+/* Live-site capture strip. A color-mix duotone overlay + bottom fade unify
+   five very different screenshots under each project's own --card-glow, and
+   let the same dark gradient the card body uses take over seamlessly. */
+.project-card-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #0d0c0a;
+}
+
+.project-card-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: saturate(0.85) contrast(1.05);
+  transition: transform 0.7s var(--ease-premium), filter 0.7s var(--ease-premium);
+}
+
+.project-card:hover .project-card-media-img {
+  transform: scale(1.06);
+  filter: saturate(1) contrast(1.08);
+}
+
+.project-card-media::before {
+  /* Duotone tint in the project's accent color */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, color-mix(in srgb, var(--card-glow) 55%, transparent) 0%, transparent 60%);
+  mix-blend-mode: color;
+  opacity: 0.9;
+}
+
+.project-card-media::after {
+  /* Fade into the card's own dark gradient body below */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 45%, #0d0c0a 100%);
 }
 
 .project-card-header {

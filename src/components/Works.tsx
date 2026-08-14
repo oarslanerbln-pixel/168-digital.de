@@ -56,6 +56,16 @@ export default function Works() {
                 ['--card-glow' as string]: project.color,
               }}
             >
+              {/* Live-site capture, tinted to the project's own accent color */}
+              <div className="project-card-media">
+                <img
+                  src={project.image}
+                  alt=""
+                  loading="lazy"
+                  className="project-card-media-img"
+                />
+              </div>
+
               {/* Project Number Header */}
               <div className="project-card-header">
                 <span className="project-card-number">

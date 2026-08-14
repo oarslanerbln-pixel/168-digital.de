@@ -6,7 +6,7 @@
    Add new entries to SOURCES as content images are added.
    ════════════════════════════════════════════════════════════════ */
 import sharp from 'sharp';
-import { statSync } from 'node:fs';
+import { statSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -20,12 +20,36 @@ const SOURCES = [
   { in: 'philosophy_cinematic_visual.png', out: 'philosophy_cinematic_visual.webp', quality: 80 },
 ];
 
+// Works gallery thumbnails: live-site captures, cropped to a consistent
+// 16:10 card ratio (gravity 'north' keeps the hero/nav — the part that
+// actually reads as "a website" — in frame) and shipped small since they
+// only ever render inside a ~300-500px grid card.
+const WORKS_SOURCES = [
+  { in: 'works_taka.png', out: 'works/taka.webp', quality: 76 },
+  { in: 'works_sera.png', out: 'works/sera.webp', quality: 76 },
+  { in: 'works_boxx36.png', out: 'works/boxx36.webp', quality: 76 },
+  { in: 'works_donerbros.png', out: 'works/donerbros.webp', quality: 76 },
+  { in: 'works_impulse.png', out: 'works/impulse.webp', quality: 76 },
+];
+
 const kb = (p) => (statSync(p).size / 1024).toFixed(0);
 
 for (const s of SOURCES) {
   const src = join(srcDir, s.in);
   const dst = join(pub, s.out);
   await sharp(src).webp({ quality: s.quality }).toFile(dst);
+  console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
+}
+
+mkdirSync(join(pub, 'works'), { recursive: true });
+
+for (const s of WORKS_SOURCES) {
+  const src = join(srcDir, s.in);
+  const dst = join(pub, s.out);
+  await sharp(src)
+    .resize(960, 600, { fit: 'cover', position: 'north' })
+    .webp({ quality: s.quality })
+    .toFile(dst);
   console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
 }
 

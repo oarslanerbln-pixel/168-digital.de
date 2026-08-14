@@ -9,6 +9,8 @@ interface Project {
   url: string;
   titleKey: string;
   descKey: string;
+  image?: string;
+  color?: string;
 }
 
 interface ProjectModalProps {
@@ -44,6 +46,7 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
             role="dialog"
             aria-modal="true"
             aria-labelledby="project-modal-title"
+            style={project.color ? { ['--card-glow' as string]: project.color } : undefined}
           >
             <button
               onClick={() => { playClick(); onClose(); }}
@@ -53,6 +56,12 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
             >
               <X size={24} />
             </button>
+
+            {project.image && (
+              <div className="modal-media">
+                <img src={project.image} alt="" className="modal-media-img" />
+              </div>
+            )}
 
             <h2 id="project-modal-title" className="display-h modal-title">
               <span className="text-silver modal-title-text">
