@@ -18,15 +18,16 @@ export default function Home() {
     <>
       <SEOHead path="/" />
       <Hero />
-      {/* Marquee Band #1 — client names banner, directly under Hero */}
+      {/* Marquee Band #1 — client names banner, directly under Hero, teeing up Works right below */}
       <MarqueeTextBand direction="left" words={clientNames} />
+      <div className="section-divider" />
+      {/* Works moved up right after the client-names teaser — proof before pitch */}
+      <Works />
       <div className="section-divider" />
       <Services />
       {/* Marquee Band #2 — between Services and About, reverse direction */}
       <MarqueeTextBand direction="right" />
       <About />
-      <div className="section-divider" />
-      <Works />
       <div className="section-divider" />
       <WebDesignCatalog />
       <div className="section-divider" />
