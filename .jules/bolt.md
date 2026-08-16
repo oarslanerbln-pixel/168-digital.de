@@ -1,0 +1,3 @@
+## 2024-05-18 - Canvas Render Loop Memory Pressure
+**Learning:** Found an anti-pattern in the `AmbientBackground.tsx` canvas where constant values (like static CSS color strings built from random opacities, and composite velocities) were recomputed inside the `requestAnimationFrame` draw loop. This creates thousands of unnecessary object/string allocations per second, driving up GC pressure.
+**Action:** Always precompute static/derived values (like fixed RGBA color strings, total radii, and combined velocities) during initialization (`build`) and store them on the particle object, so the `draw` function only performs essential mutation and canvas API calls.
