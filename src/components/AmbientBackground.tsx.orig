@@ -30,40 +30,27 @@ export default function AmbientBackground() {
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const count = Math.min(90, Math.round((w * h) / 22000));
-
-      // ⚡ Bolt Optimization: Pre-calculating color strings and base movement velocities
-      // during the initialization phase to avoid string interpolation and math
-      // operations inside the 60fps draw loop.
-      particles = Array.from({ length: count }, () => {
-        const z = Math.random();
-        const baseVx = (Math.random() - 0.5) * 0.14;
-        const baseVy = (Math.random() - 0.5) * 0.14;
-        const baseR = Math.random() * 1.6 + 0.4;
-        const baseA = Math.random() * 0.4 + 0.1;
-        return {
-          x: Math.random() * w,
-          y: Math.random() * h,
-          vx: baseVx * (0.4 + z),
-          vy: baseVy * (0.4 + z),
-          r: baseR * (0.6 + z),
-          color: `rgba(163, 118, 60, ${baseA * (0.6 + z * 0.5)})`
-        };
-      });
+      particles = Array.from({ length: count }, () => ({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random(),
+        vx: (Math.random() - 0.5) * 0.14,
+        vy: (Math.random() - 0.5) * 0.14,
+        r: Math.random() * 1.6 + 0.4,
+        a: Math.random() * 0.4 + 0.1,
+      }));
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
       for (const p of particles) {
-        // ⚡ Bolt: Using pre-calculated velocities, radius, and color strings.
-        // This removes ~5400 math operations and string allocations per second
-        // from the requestAnimationFrame loop, reducing GC pauses and main thread load.
-        p.x += p.vx;
-        p.y += p.vy;
+        p.x += p.vx * (0.4 + p.z);
+        p.y += p.vy * (0.4 + p.z);
         if (p.x < -5) p.x = w + 5; else if (p.x > w + 5) p.x = -5;
         if (p.y < -5) p.y = h + 5; else if (p.y > h + 5) p.y = -5;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
+        ctx.arc(p.x, p.y, p.r * (0.6 + p.z), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(163, 118, 60, ${p.a * (0.6 + p.z * 0.5)})`;
         ctx.fill();
       }
     };
