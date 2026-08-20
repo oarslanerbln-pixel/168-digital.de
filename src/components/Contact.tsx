@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Send, CheckSquare, Square, Sparkles, Loader2 } from 'lucide-react';
 import { sendLead } from '../utils/leads';
+import { isValidEmail } from '../utils/validation';
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -18,6 +19,11 @@ export default function Contact() {
     const name = String(data.get('name') || '').trim();
     const email = String(data.get('email') || '').trim();
     const message = String(data.get('message') || '').trim();
+
+    if (!isValidEmail(email)) {
+      setStatus('error');
+      return;
+    }
 
     setStatus('sending');
     const delivered = await sendLead({ name, email, message, source: 'Contact Form' });

@@ -5,6 +5,7 @@ import { X, Send, CheckSquare, Square, Sparkles, Loader2 } from 'lucide-react';
 import { sendLead } from '../utils/leads';
 import { services } from '../data/services';
 import { useEscapeToClose } from '../hooks/useEscapeToClose';
+import { isValidEmail } from '../utils/validation';
 import { playClose } from '../utils/audio';
 import './AngebotWidget.css';
 
@@ -35,6 +36,11 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
     const service = String(data.get('service') || '').trim();
     const details = String(data.get('message') || '').trim();
     const message = service ? `Service: ${service}\n\n${details}` : details;
+
+    if (!isValidEmail(email)) {
+      setStatus('error');
+      return;
+    }
 
     setStatus('sending');
     const delivered = await sendLead({ name, email, message, source: 'Angebot Form' });
