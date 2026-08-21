@@ -1,0 +1,3 @@
+## 2024-11-20 - [Bypass React Renders for High-Frequency Animations]
+**Learning:** Using React's `useState` to track high-frequency events like `mousemove` causes continuous re-renders of the component. In this case, `FloatingHUD.tsx` was triggering a re-render 60+ times per second when hovering over navigation buttons.
+**Action:** Use Framer Motion's `useMotionValue` and `useSpring` and pass them directly to the `style` prop of a `motion` component. This updates the DOM directly and completely bypasses the React render cycle, resulting in significantly smoother animations and better performance.
