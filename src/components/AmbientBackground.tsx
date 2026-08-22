@@ -55,20 +55,48 @@ export default function AmbientBackground() {
       }
     };
 
+    const startLoop = () => {
+      if (!raf && !reduced) {
+        const loop = () => { draw(); raf = requestAnimationFrame(loop); };
+        raf = requestAnimationFrame(loop);
+      }
+    };
+
+    const stopLoop = () => {
+      if (raf) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
+    };
+
     build();
+
     if (reduced) {
       draw();
     } else {
-      const loop = () => { draw(); raf = requestAnimationFrame(loop); };
-      raf = requestAnimationFrame(loop);
+      startLoop();
     }
 
-    const onResize = () => { build(); if (reduced) draw(); };
+    const onVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        stopLoop();
+      } else {
+        startLoop();
+      }
+    };
+
+    document.addEventListener('visibilitychange', onVisibilityChange);
+
+    const onResize = () => {
+      build();
+      if (reduced || document.visibilityState === 'hidden') draw();
+    };
     window.addEventListener('resize', onResize);
 
     return () => {
-      cancelAnimationFrame(raf);
+      stopLoop();
       window.removeEventListener('resize', onResize);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
     };
   }, []);
 
