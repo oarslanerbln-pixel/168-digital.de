@@ -43,6 +43,11 @@ export default function AmbientBackground() {
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
+
+      // Hoist base color outside the loop to avoid string parsing and garbage collection overhead
+      // every frame. We use globalAlpha to set per-particle transparency instead of rgba() strings.
+      ctx.fillStyle = '#a3763c';
+
       for (const p of particles) {
         p.x += p.vx * (0.4 + p.z);
         p.y += p.vy * (0.4 + p.z);
@@ -50,9 +55,12 @@ export default function AmbientBackground() {
         if (p.y < -5) p.y = h + 5; else if (p.y > h + 5) p.y = -5;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r * (0.6 + p.z), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(163, 118, 60, ${p.a * (0.6 + p.z * 0.5)})`;
+        ctx.globalAlpha = p.a * (0.6 + p.z * 0.5);
         ctx.fill();
       }
+
+      // Reset alpha
+      ctx.globalAlpha = 1;
     };
 
     build();
