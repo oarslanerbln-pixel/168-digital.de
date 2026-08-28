@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, memo } from 'react';
 import { motion } from 'framer-motion';
 import { buildGoldenSpiral } from '../utils/goldenSpiral';
 import './HeroEmblem.css';
@@ -21,7 +21,7 @@ const DUST = [
  * own independent animations (no mouse-tracking). No three.js / no
  * external assets.
  */
-export default function HeroEmblem() {
+const HeroEmblem = memo(function HeroEmblem() {
   const clicks = useRef(0);
 
   // Triple-click opens the hidden dev console (parity with old 3D scene)
@@ -83,4 +83,6 @@ export default function HeroEmblem() {
       </motion.div>
     </div>
   );
-}
+});
+
+export default HeroEmblem;

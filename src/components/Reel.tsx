@@ -25,11 +25,12 @@ export default function Reel() {
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 120, damping: 15 });
 
   useEffect(() => {
+    if (!inView) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
     }, 2500);
     return () => clearInterval(interval);
-  }, []);
+  }, [inView]);
 
   // Defer fetching the multi-megabyte video source until this section is
   // actually about to scroll into view, instead of downloading it eagerly

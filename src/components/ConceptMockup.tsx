@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import './ConceptMockup.css';
 
 /**
@@ -6,7 +7,7 @@ import './ConceptMockup.css';
  * per concept, reusing that concept's exact theme palette/fonts so it reads
  * as a genuine preview rather than a decorative header.
  */
-export default function ConceptMockup({ theme }: { theme: string }) {
+const ConceptMockup = memo(function ConceptMockup({ theme }: { theme: string }) {
   switch (theme) {
     case 'c01': // Obsidian Editorial — luxury magazine cover
       return (
@@ -115,4 +116,6 @@ export default function ConceptMockup({ theme }: { theme: string }) {
     default:
       return null;
   }
-}
+});
+
+export default ConceptMockup;
