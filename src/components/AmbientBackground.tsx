@@ -63,12 +63,21 @@ export default function AmbientBackground() {
       raf = requestAnimationFrame(loop);
     }
 
-    const onResize = () => { build(); if (reduced) draw(); };
+    let resizeTimeout: ReturnType<typeof setTimeout>;
+    // Debounce the resize event to prevent performance degradation
+    const onResize = () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        build();
+        if (reduced) draw();
+      }, 200);
+    };
     window.addEventListener('resize', onResize);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener('resize', onResize);
+      clearTimeout(resizeTimeout);
     };
   }, []);
 

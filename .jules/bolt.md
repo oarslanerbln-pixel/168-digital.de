@@ -1,0 +1,3 @@
+## 2025-01-29 - Debouncing Canvas Resizing
+**Learning:** Window `resize` event fires continuously and excessively during window resizing. When a heavy operation like canvas rebuilding (`build()` and `draw()`) is attached directly to the event listener without debouncing, it leads to severe main thread blocking and visual jank.
+**Action:** Always wrap `resize` or `scroll` event listeners that perform expensive DOM/Canvas manipulations in a `setTimeout` or `requestAnimationFrame` debounce function to batch the updates and prevent CPU spikes.
