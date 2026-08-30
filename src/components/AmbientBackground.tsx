@@ -19,7 +19,7 @@ export default function AmbientBackground() {
     let raf = 0;
     let w = 0, h = 0, dpr = 1;
 
-    interface P { x: number; y: number; z: number; vx: number; vy: number; r: number; a: number; }
+    interface P { x: number; y: number; vx: number; vy: number; r: number; color: string; }
     let particles: P[] = [];
 
     const build = () => {
@@ -30,27 +30,32 @@ export default function AmbientBackground() {
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const count = Math.min(90, Math.round((w * h) / 22000));
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        z: Math.random(),
-        vx: (Math.random() - 0.5) * 0.14,
-        vy: (Math.random() - 0.5) * 0.14,
-        r: Math.random() * 1.6 + 0.4,
-        a: Math.random() * 0.4 + 0.1,
-      }));
+      particles = Array.from({ length: count }, () => {
+        const z = Math.random();
+        const a = Math.random() * 0.4 + 0.1;
+        // Pre-calculate expensive loop operations (multiplication & string template)
+        // to prevent doing it 60 times a second for every particle.
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.14 * (0.4 + z),
+          vy: (Math.random() - 0.5) * 0.14 * (0.4 + z),
+          r: (Math.random() * 1.6 + 0.4) * (0.6 + z),
+          color: `rgba(163, 118, 60, ${(a * (0.6 + z * 0.5)).toFixed(3)})`,
+        };
+      });
     };
 
     const draw = () => {
       ctx.clearRect(0, 0, w, h);
       for (const p of particles) {
-        p.x += p.vx * (0.4 + p.z);
-        p.y += p.vy * (0.4 + p.z);
+        p.x += p.vx;
+        p.y += p.vy;
         if (p.x < -5) p.x = w + 5; else if (p.x > w + 5) p.x = -5;
         if (p.y < -5) p.y = h + 5; else if (p.y > h + 5) p.y = -5;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r * (0.6 + p.z), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(163, 118, 60, ${p.a * (0.6 + p.z * 0.5)})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
         ctx.fill();
       }
     };
