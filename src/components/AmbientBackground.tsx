@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import './AmbientBackground.css';
 
 /**
@@ -6,7 +6,7 @@ import './AmbientBackground.css';
  * A slow drifting bronze-gold particle field on a 2D canvas over CSS aurora
  * gradients, on a light parchment backdrop. No WebGL, no external assets.
  */
-export default function AmbientBackground() {
+export default memo(function AmbientBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -19,7 +19,10 @@ export default function AmbientBackground() {
     let raf = 0;
     let w = 0, h = 0, dpr = 1;
 
-    interface P { x: number; y: number; z: number; vx: number; vy: number; r: number; a: number; }
+    // ⚡ Bolt Optimization:
+    // Pre-calculate `fillColor` to avoid expensive string allocations inside the 60fps draw loop.
+    // Impact: Eliminates ~5,400 string allocations and garbage collection cycles per second (90 particles * 60fps).
+    interface P { x: number; y: number; z: number; vx: number; vy: number; r: number; a: number; fillColor: string; }
     let particles: P[] = [];
 
     const build = () => {
@@ -30,15 +33,20 @@ export default function AmbientBackground() {
       canvas.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const count = Math.min(90, Math.round((w * h) / 22000));
-      particles = Array.from({ length: count }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        z: Math.random(),
-        vx: (Math.random() - 0.5) * 0.14,
-        vy: (Math.random() - 0.5) * 0.14,
-        r: Math.random() * 1.6 + 0.4,
-        a: Math.random() * 0.4 + 0.1,
-      }));
+      particles = Array.from({ length: count }, () => {
+        const z = Math.random();
+        const a = Math.random() * 0.4 + 0.1;
+        return {
+          x: Math.random() * w,
+          y: Math.random() * h,
+          z,
+          vx: (Math.random() - 0.5) * 0.14,
+          vy: (Math.random() - 0.5) * 0.14,
+          r: Math.random() * 1.6 + 0.4,
+          a,
+          fillColor: `rgba(163, 118, 60, ${a * (0.6 + z * 0.5)})`,
+        };
+      });
     };
 
     const draw = () => {
@@ -50,7 +58,7 @@ export default function AmbientBackground() {
         if (p.y < -5) p.y = h + 5; else if (p.y > h + 5) p.y = -5;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r * (0.6 + p.z), 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(163, 118, 60, ${p.a * (0.6 + p.z * 0.5)})`;
+        ctx.fillStyle = p.fillColor;
         ctx.fill();
       }
     };
@@ -79,4 +87,4 @@ export default function AmbientBackground() {
       <div className="ambient-vignette" />
     </div>
   );
-}
+});
