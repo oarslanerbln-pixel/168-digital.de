@@ -1,0 +1,3 @@
+## 2024-05-18 - Optimize Canvas Rendering Loop in AmbientBackground.tsx
+**Learning:** Precalculating static values in a 60fps canvas animation loop significantly reduces math overhead and string allocations (jank). In `AmbientBackground.tsx`, particle `alpha` and `z-index` values are constant after creation, meaning velocity multipliers, final radius, and RGBA color strings can be safely precomputed during initialization.
+**Action:** When working on rendering or animation loops (like `requestAnimationFrame`), inspect the loop body to identify calculations and string creations that involve variables which remain static over the lifecycle of the object, and move them to initialization blocks.
