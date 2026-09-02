@@ -1,0 +1,3 @@
+## 2023-11-20 - Unnecessary React renders for off-screen carousels
+**Learning:** Components that rely on intervals for visual updates (like text carousels) can cause continuous layout recalculations and DOM updates even when far outside the user's viewport, impacting overall page responsiveness.
+**Action:** Use intersection observers (like Framer Motion's `useInView`) to conditionally run continuous intervals only when the component is actively visible on the screen.

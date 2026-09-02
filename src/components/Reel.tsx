@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
 import './Reel.css';
 
 const words = [
@@ -24,12 +24,19 @@ export default function Reel() {
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 120, damping: 15 });
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 120, damping: 15 });
 
+  const isInView = useInView(cardRef, { margin: "0px" });
+
+  // ⚡ Bolt: Performance optimization
+  // 💡 What: Pause interval when component is out of view
+  // 🎯 Why: Prevents unnecessary React state updates and layout recalculations for a component far below the fold
+  // 📊 Impact: Saves CPU cycles and avoids layout thrashing every 2.5s on the rest of the page
   useEffect(() => {
+    if (!isInView) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
     }, 2500);
     return () => clearInterval(interval);
-  }, []);
+  }, [isInView]);
 
   // Defer fetching the multi-megabyte video source until this section is
   // actually about to scroll into view, instead of downloading it eagerly
