@@ -2,7 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 
 /* ─── Animated Counter ─── */
-function StatHighlight({ label, sublabel }: { label: string; sublabel: string }) {
+interface StatHighlightProps {
+  label: string;
+  sublabel: string;
+}
+
+function StatHighlight({ label, sublabel }: StatHighlightProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -23,15 +28,19 @@ function StatHighlight({ label, sublabel }: { label: string; sublabel: string })
   );
 }
 
-const highlights = [
-  { label: "Boutique", sublabel: "Quality over Volume" },
-  { label: "Focused", sublabel: "Dedicated Attention" },
-  { label: "Tailored", sublabel: "Bespoke Solutions" },
-  { label: "Elite", sublabel: "Premium Standards" },
-];
+// Was hardcoded English ("Boutique", "Quality over Volume", …) with no
+// t() call at all — German and Turkish visitors saw these four words in
+// English regardless of the language they'd picked. Built from i18n keys
+// now, inside the component where `t` is available.
+const highlightKeys = ['boutique', 'focused', 'tailored', 'elite'] as const;
 
 export default function About() {
   const { t } = useTranslation();
+  const highlights = highlightKeys.map((key) => ({
+    key,
+    label: t(`about_stat_${key}_label`),
+    sublabel: t(`about_stat_${key}_sub`),
+  }));
 
   return (
     <section id="about" className="section-container">
@@ -71,9 +80,9 @@ export default function About() {
 
       {/* ─── Premium Value Highlights ─── */}
       <div className="stat-grid">
-        {highlights.map((item, idx) => (
+        {highlights.map((item) => (
           <StatHighlight
-            key={idx}
+            key={item.key}
             label={item.label}
             sublabel={item.sublabel}
           />

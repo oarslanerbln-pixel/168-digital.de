@@ -18,9 +18,9 @@ const doors = [
     to: '/about',
     numeral: '01',
     titleKey: 'outro_about_title',
-    titleFallback: 'Philosophy',
+    titleFallback: 'Approach',
     descKey: 'outro_about_desc',
-    descFallback: 'The ratio, the ethics and the people behind the studio.',
+    descFallback: 'The ratio, the judgment calls and the people behind the studio.',
   },
   {
     to: '/concepts',
