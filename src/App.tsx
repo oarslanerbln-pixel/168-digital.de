@@ -24,8 +24,9 @@ const LegalPage = lazy(() => import('./pages/LegalPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
-// Philosophy and the 50-concept design library used to render inside the
-// homepage; they now have their own routes and their own chunks.
+// Approach (the studio's working philosophy, /about) and the 50-concept
+// design library used to render inside the homepage; they now have their
+// own routes and their own chunks.
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ConceptsPage = lazy(() => import('./pages/ConceptsPage'));
 

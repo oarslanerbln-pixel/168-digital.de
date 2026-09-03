@@ -59,7 +59,11 @@ export default function ProjectModal({ isOpen, onClose, project }: ProjectModalP
 
             {project.image && (
               <div className="modal-media">
-                <img src={project.image} alt="" className="modal-media-img" />
+                <img
+                  src={project.image}
+                  alt={t('works_image_alt', { title: t(project.titleKey) })}
+                  className="modal-media-img"
+                />
               </div>
             )}
 

@@ -1,0 +1,228 @@
+/* ════════════════════════════════════════════════════════════════
+   prerender — bakes real, per-route static HTML for every URL in
+   sitemap.xml, so a crawler or link-preview bot that never runs
+   JavaScript sees the actual page instead of the SPA shell.
+
+   THE PROBLEM THIS SOLVES: this app is a pure client-rendered SPA —
+   `vite build` emits exactly one dist/index.html, and vercel.json
+   rewrites every route to it. Per-page title, description, canonical,
+   hreflang and JSON-LD are all applied by SEOHead.tsx inside a
+   useEffect, which only runs once JavaScript executes. Any bot that
+   doesn't run JS (most link-preview/unfurl services — WhatsApp, Slack,
+   iMessage, Twitter/X's and LinkedIn's first-pass fetchers — plus
+   simpler crawlers) saw the exact same homepage meta tags, and the
+   exact same (empty, pre-hydration) content, for every URL on the
+   site — including a <link rel="canonical"> that read
+   "https://1618-digital.de/" on every single page.
+
+   HOW IT WORKS: run *after* `vite build`. Serves the fresh dist/ with
+   `vite preview` (Vite's own SPA-fallback static server — the same
+   history-API-fallback behaviour vercel.json's rewrite gives in
+   production), then drives a real headless Chromium (Playwright) to
+   each route in sitemap.xml, waits for React to mount and SEOHead's
+   effect to run, and freezes the resulting DOM to a static file:
+     "/"           -> dist/index.html            (overwritten in place)
+     "/about"      -> dist/about/index.html
+     "/blog/slug"  -> dist/blog/slug/index.html
+   Vercel's static file serving resolves a request for "/about" to
+   "/about/index.html" automatically (its standard "clean URLs"
+   convention), so no vercel.json change is needed for this to take
+   effect once deployed.
+
+   The app still mounts and takes over normally for real visitors —
+   main.tsx uses ReactDOM.createRoot (not hydrateRoot), so React simply
+   clears #root and renders fresh on top of the prerendered markup.
+   Nothing about the runtime app changes; this only changes what a
+   crawler sees before that JS runs.
+
+   KNOWN LIMITATION: only the default-language URL of each route (no
+   ?lang= param) is prerendered. Vercel's static file serving matches
+   by pathname only, so a request for "/about?lang=de" resolves to the
+   same physical file as "/about" regardless of what content that file
+   holds — there is no way to serve a different static file per query
+   string without reintroducing a server-side rewrite layer. This is
+   not a regression (today every URL, language variants included, shows
+   literal homepage content to a non-JS bot); it means the DE/TR ?lang=
+   variants still rely on client-side hydration for bots that skip JS,
+   same as before. Properly fixing that would mean moving language
+   variants to their own paths (e.g. /de/about) — a bigger, separate
+   decision that touches every canonical URL, hreflang tag and the
+   sitemap itself.
+
+   Failure mode: exits non-zero on any error (a route that fails to
+   load, a check that doesn't pass) rather than silently shipping a
+   partial or unrendered build — a broken prerender should fail the
+   deploy, not quietly ship the very bug this script exists to fix.
+
+   BROWSER: uses `playwright-core` (the driver only, no bundled browser)
+   paired with `@sparticuz/chromium` — a Chromium build compiled
+   specifically for constrained serverless/build Linux images (AWS
+   Lambda, Vercel). Two earlier approaches were tried and failed for
+   real, not hypothetically:
+     - plain `playwright` + its own downloaded Chromium worked in CI
+       (a full Ubuntu VM) but failed on Vercel's build image with
+       "error while loading shared libraries: libnspr4.so: cannot open
+       shared object file" — that image is missing several system
+       libraries a desktop Chromium build expects, and there's no way
+       to apt-get them into a Vercel build step.
+     - `@sparticuz/chromium`'s binary is built against exactly that kind
+       of minimal image and needs none of those missing libraries. It
+       ships bundled in the npm package itself (Brotli-compressed,
+       decompressed to /tmp on first use), so there's also no separate
+       browser-download step to fail or flake — every environment that
+       runs `npm ci` already has it.
+   ════════════════════════════════════════════════════════════════ */
+import { chromium } from 'playwright-core';
+import sparticuzChromium from '@sparticuz/chromium';
+import { spawn } from 'node:child_process';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const PORT = 41734; // arbitrary, unlikely to collide with anything else
+const HOST = '127.0.0.1';
+const BASE_URL = `http://${HOST}:${PORT}`;
+
+/** Pull the route list straight from sitemap.xml, so that file stays the
+ * single source of truth for "what pages exist" instead of a second,
+ * driftable list living here. */
+function readRoutesFromSitemap() {
+  const xml = readFileSync(join(root, 'public/sitemap.xml'), 'utf-8');
+  const locs = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((m) => m[1]);
+  return locs.map((url) => new URL(url).pathname);
+}
+
+/** dist/index.html for "/", dist/<route>/index.html for everything else —
+ * Vercel's "clean URLs" static serving resolves a request for a path to
+ * exactly this file layout with no rewrite needed. */
+function outputPathFor(route) {
+  if (route === '/') return join(root, 'dist/index.html');
+  return join(root, 'dist', route.replace(/^\//, ''), 'index.html');
+}
+
+async function waitForHydration(page) {
+  // SEOHead's effect runs synchronously once React mounts; this waits for
+  // its actual output (a non-empty title that isn't the pre-hydration
+  // default) rather than a fixed sleep, so the script can't race it.
+  await page.waitForFunction(
+    () => document.title.trim().length > 0 && document.readyState === 'complete',
+    { timeout: 15_000 },
+  );
+  // One more frame so framer-motion's initial mount styles (opacity: 0
+  // before the first animation frame) don't get frozen into the static
+  // output — a real visitor's browser paints past this in milliseconds,
+  // but a prerendered snapshot taken mid-transition would freeze it.
+  await page.waitForTimeout(400);
+}
+
+async function main() {
+  const routes = readRoutesFromSitemap();
+  console.log(`[prerender] ${routes.length} route(s) from sitemap.xml`);
+
+  const preview = spawn(
+    'npx',
+    // --host pins the bind address to match BASE_URL exactly. Without it,
+    // Vite binds the bare string "localhost", and on some CI runners (seen
+    // on GitHub Actions' Ubuntu images) Node resolves that to the IPv6
+    // loopback (::1) first — the server comes up fine, but our health check
+    // below is fetching the IPv4 127.0.0.1, gets ECONNREFUSED on every
+    // attempt, and times out reporting "did not become ready" even though
+    // the process is alive and listening (visible in CI logs as an orphan
+    // node process still running at job cleanup).
+    ['vite', 'preview', '--host', HOST, '--port', String(PORT), '--strictPort'],
+    // detached: true puts this process in its own process group, so it
+    // (and any further child it spawns) can be killed as a group below —
+    // see the note on preview.kill() in the finally block.
+    { cwd: root, stdio: 'pipe', detached: true },
+  );
+  let previewOutput = '';
+  preview.stdout.on('data', (d) => { previewOutput += d; });
+  preview.stderr.on('data', (d) => { previewOutput += d; });
+
+  const previewExited = new Promise((_, reject) => {
+    preview.once('exit', (code) => reject(new Error(`vite preview exited early (code ${code}):\n${previewOutput}`)));
+  });
+
+  try {
+    await Promise.race([waitForServer(BASE_URL), previewExited]);
+
+    // Optional escape hatch: point at an already-installed Chromium binary
+    // instead of extracting @sparticuz/chromium's bundled one. Useful for
+    // local debugging against a different browser build.
+    const executablePath =
+      process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (await sparticuzChromium.executablePath());
+    const browser = await chromium.launch({ args: sparticuzChromium.args, executablePath });
+    try {
+      const page = await browser.newPage();
+      // Same flag the rest of this app's own dev/QA tooling uses to skip
+      // the intro preloader — without it every prerendered page would
+      // freeze on the loading screen instead of the real content.
+      await page.addInitScript(() => {
+        localStorage.setItem('1618_bypass_preloader', 'true');
+      });
+
+      for (const route of routes) {
+        const url = `${BASE_URL}${route}`;
+        await page.goto(url, { waitUntil: 'networkidle', timeout: 30_000 });
+        await waitForHydration(page);
+
+        const canonical = await page.evaluate(
+          () => document.querySelector('link[rel="canonical"]')?.getAttribute('href') ?? null,
+        );
+        if (!canonical) {
+          throw new Error(`${route}: no canonical link found after hydration — SEOHead may not have run`);
+        }
+
+        const html = await page.content();
+        const outPath = outputPathFor(route);
+        mkdirSync(dirname(outPath), { recursive: true });
+        writeFileSync(outPath, html);
+        console.log(`[prerender] ${route.padEnd(40)} -> ${outPath.replace(root + '/', '')}`);
+      }
+    } finally {
+      await browser.close();
+    }
+  } finally {
+    // preview.kill() would only signal the immediate `npx` process. On at
+    // least some CI runners `npx` doesn't exec into `vite` but spawns it as
+    // a further child instead, so that grandchild's listening socket (and
+    // this script's own stdout/stderr pipes into it, still open) survives
+    // a plain kill — which was silently hanging this entire build step (and
+    // so the whole CI job, for well over an hour, past a job-level timeout
+    // this workflow doesn't set) even though "done" below had already
+    // logged: Node won't exit on its own while those pipes stay open.
+    // Killing the whole process group (negative pid, enabled by `detached`
+    // above) reaches the grandchild too.
+    try {
+      process.kill(-preview.pid, 'SIGTERM');
+    } catch {
+      // already exited
+    }
+  }
+
+  console.log(`[prerender] done: ${routes.length} route(s) written.`);
+  // Belt-and-braces: exit explicitly rather than relying on Node's event
+  // loop draining naturally, so no lingering handle (from vite preview or
+  // otherwise) can hang the process past this point ever again.
+  process.exit(0);
+}
+
+async function waitForServer(url, timeoutMs = 15_000) {
+  const start = Date.now();
+  while (Date.now() - start < timeoutMs) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return;
+    } catch {
+      // not up yet
+    }
+    await new Promise((r) => setTimeout(r, 150));
+  }
+  throw new Error(`vite preview did not become ready at ${url} within ${timeoutMs}ms`);
+}
+
+main().catch((err) => {
+  console.error('[prerender] FAILED:', err);
+  process.exit(1);
+});

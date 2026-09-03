@@ -10,7 +10,7 @@ import HomeOutro from '../components/HomeOutro';
    HOMEPAGE — four sections, in the order a first-time visitor needs
    them: who we've done it for → what we do → how to start.
 
-   Philosophy (/about) and the 50-concept design library (/concepts)
+   Approach (/about) and the 50-concept design library (/concepts)
    used to sit between Services and Contact. Together they were more
    than half the page's height on a phone, and they pushed the contact
    form far below anything a visitor would realistically scroll to.

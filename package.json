@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && node scripts/prerender.mjs",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
@@ -23,6 +23,7 @@
     "react-router-dom": "^6.30.4"
   },
   "devDependencies": {
+    "@sparticuz/chromium": "147.0.0",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.9.1",
@@ -30,6 +31,7 @@
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.0",
     "jsdom": "^29.1.1",
+    "playwright-core": "^1.62.1",
     "sharp": "^0.35.3",
     "typescript": "^5.4.5",
     "vite": "^5.2.11",
