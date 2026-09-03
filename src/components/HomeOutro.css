@@ -1,0 +1,110 @@
+.home-outro {
+  position: relative;
+  z-index: 10;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 32px 120px;
+}
+
+.home-outro-inner {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+
+.home-outro-door {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 18px;
+  padding: 36px 28px 36px 4px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--text-main);
+  transition: padding-left 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium);
+}
+
+/* Hairline between the two doors, not around them — the section should
+   read as two rows of a table, not as two boxes. */
+.home-outro-door:first-child {
+  border-right: 1px solid var(--line);
+  padding-right: 40px;
+}
+
+.home-outro-door:last-child {
+  padding-left: 40px;
+}
+
+.home-outro-door:hover {
+  padding-left: 14px;
+  border-color: var(--line-strong);
+}
+
+.home-outro-door:last-child:hover {
+  padding-left: 50px;
+}
+
+.home-outro-num {
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  padding-top: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.home-outro-body {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.home-outro-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.home-outro-desc {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.home-outro-arrow {
+  color: var(--text-faint);
+  margin-top: 3px;
+  transition: color 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
+}
+
+.home-outro-door:hover .home-outro-arrow {
+  color: var(--accent-cyan);
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 780px) {
+  .home-outro {
+    padding: 0 20px 88px;
+  }
+
+  /* One column: the vertical rule between the doors becomes a horizontal
+     one, so they stack as a plain list. */
+  .home-outro-inner {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-outro-door,
+  .home-outro-door:first-child,
+  .home-outro-door:last-child {
+    border-right: none;
+    padding: 30px 4px;
+  }
+
+  .home-outro-door:hover,
+  .home-outro-door:last-child:hover {
+    padding-left: 12px;
+  }
+}

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Globe, Box, Video, Smartphone, Camera, ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
@@ -17,6 +17,11 @@ const cards = [
     descKey: 'service_web_desc',
     tags: ['Websites', 'Landing Pages', 'Web Apps'],
     slug: 'web-saas-development',
+    // Flagship offering: given a double-width cell on wide screens. Five
+    // equal cards in a three-column grid left a hole in the second row;
+    // promoting the first card fills the grid exactly (2+1 / 1+1+1) and
+    // gives the section a hierarchy instead of five identical boxes.
+    featured: true,
   },
   {
     icon: Box,
@@ -48,26 +53,29 @@ const cards = [
   },
 ];
 
-function ServiceCard({ card }: { card: any }) {
+function ServiceCard({ card, index }: { card: any; index: number }) {
   const { t } = useTranslation();
   const Icon = card.icon;
   const ref = useRef(null);
 
-  // Parallax scroll effect
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.2 1"]
-  });
+  /* A card used to have its opacity, y and scale driven continuously by
+     scroll position (useScroll + useTransform, offset ["0 1", "1.2 1"]).
+     That meant a card was only fully opaque while the page sat inside a
+     narrow scroll window: land past it, restore a scroll position, or
+     scroll faster than the smooth-scroll wrapper settles, and the card
+     stayed at opacity 0 — visibly a blank gap where the service grid
+     should be.
 
-  const y = useTransform(scrollYProgress, [0, 1], [60, 0]);
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1]);
-
+     A one-shot `whileInView` reveal latches on first sight and then stays
+     put, which is both sturdier and quieter. */
   return (
     <motion.div
       ref={ref}
-      className="service-card-cell"
-      style={{ y, opacity, scale }}
+      className={`service-card-cell${card.featured ? ' service-card-cell-featured' : ''}`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
+      transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
         to={`/${card.slug}`}
@@ -122,8 +130,8 @@ export default function Services() {
       </motion.div>
 
       <div className="services-grid">
-        {cards.map((card) => (
-          <ServiceCard key={card.titleKey} card={card} />
+        {cards.map((card, i) => (
+          <ServiceCard key={card.titleKey} card={card} index={i} />
         ))}
       </div>
     </section>

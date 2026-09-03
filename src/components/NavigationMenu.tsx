@@ -54,11 +54,23 @@ export default function NavigationMenu() {
     }
   }, [isOpen]);
 
+  // Pages that live outside the homepage's four sections.
+  const extraPages = [
+    { to: '/about', label: t('nav_about', 'PHILOSOPHY') },
+    { to: '/concepts', label: t('nav_concepts', 'CONCEPTS') },
+    { to: '/blog', label: t('nav_blog', 'BLOG') },
+  ];
+
+  // In-page anchors. Every id here must exist on the homepage — a miss is
+  // silent (scrollIntoView on null does nothing), so the menu item simply
+  // stops working.
+  //   • 'reel' was one such miss: the element's real id is 'reel-card'.
+  //   • PHILOSOPHY pointed at '#about', which is no longer a homepage
+  //     section at all; it is now a route, listed in extraPages above.
   const navItems = [
     { label: t('nav_home', 'HOME'), id: 'hero', sub: t('nav_home_sub', 'SYS.BOOT // CORE INTERFACE') },
-    { label: t('nav_cinematics', 'CINEMATICS'), id: 'reel', sub: t('nav_cinematics_sub', 'SYS.REEL // AUDIO VISUAL GRID') },
+    { label: t('nav_cinematics', 'CINEMATICS'), id: 'reel-card', sub: t('nav_cinematics_sub', 'SYS.REEL // AUDIO VISUAL GRID') },
     { label: t('nav_ecosystems', 'ECOSYSTEMS'), id: 'works', sub: t('nav_ecosystems_sub', 'SYS.WORK // ARCHITECTED PLATFORMS') },
-    { label: t('nav_philosophy', 'PHILOSOPHY'), id: 'about', sub: t('nav_philosophy_sub', 'SYS.MIND // RATIONAL DESIGN DOCS') },
     { label: t('nav_capabilities', 'CAPABILITIES'), id: 'services', sub: t('nav_capabilities_sub', 'SYS.SPEC // STACK CAPABILITIES') },
     { label: t('nav_initiate', 'INITIATE'), id: 'contact', sub: t('nav_initiate_sub', 'SYS.COMM // TRANSMIT PROPOSAL') },
   ];
@@ -205,29 +217,34 @@ export default function NavigationMenu() {
                     </motion.div>
                   </div>
                 ))}
-                <div className="nav-link-wrapper">
-                  <motion.div
-                    initial={{ y: '100%', opacity: 0 }}
-                    animate={{ y: '0%', opacity: 1 }}
-                    exit={{ y: '-100%', opacity: 0 }}
-                    transition={{
-                      duration: 0.6,
-                      ease: [0.16, 1, 0.3, 1],
-                      delay: 0.15 + ((navItems.length + services.length) * 0.05)
-                    }}
-                    style={{ width: '100%' }}
-                  >
-                    <Link
-                      to="/blog"
-                      onClick={() => { playClose(); setIsOpen(false); }}
-                      onMouseEnter={() => playTick()}
-                      className="nav-link-btn nav-service-link"
+                {/* Standalone pages. Philosophy and Concepts used to be
+                    sections of the homepage; now that they have their own
+                    routes the menu is the primary way to reach them. */}
+                {extraPages.map((page, i) => (
+                  <div className="nav-link-wrapper" key={page.to}>
+                    <motion.div
+                      initial={{ y: '100%', opacity: 0 }}
+                      animate={{ y: '0%', opacity: 1 }}
+                      exit={{ y: '-100%', opacity: 0 }}
+                      transition={{
+                        duration: 0.6,
+                        ease: [0.16, 1, 0.3, 1],
+                        delay: 0.15 + ((navItems.length + services.length + i) * 0.05)
+                      }}
+                      style={{ width: '100%' }}
                     >
-                      <span className="nav-link-num">→</span>
-                      <span className="nav-link-text">{t('nav_blog', 'BLOG')}</span>
-                    </Link>
-                  </motion.div>
-                </div>
+                      <Link
+                        to={page.to}
+                        onClick={() => { playClose(); setIsOpen(false); }}
+                        onMouseEnter={() => playTick()}
+                        className="nav-link-btn nav-service-link"
+                      >
+                        <span className="nav-link-num">→</span>
+                        <span className="nav-link-text">{page.label}</span>
+                      </Link>
+                    </motion.div>
+                  </div>
+                ))}
               </div>
 
               {/* Bottom HUD info & redundant connection */}

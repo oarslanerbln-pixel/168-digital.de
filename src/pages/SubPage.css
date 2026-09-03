@@ -1,0 +1,41 @@
+/* Shared chrome for content lifted off the homepage onto its own route. */
+.subpage {
+  position: relative;
+  z-index: 10;
+  min-height: 60vh;
+}
+
+.subpage-head {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 128px 32px 0;
+}
+
+.subpage-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.3s var(--ease-premium);
+}
+
+.subpage-back:hover {
+  color: var(--text-main);
+}
+
+@media (max-width: 900px) {
+  .subpage-head {
+    padding: 104px 24px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .subpage-head {
+    padding: 92px 20px 0;
+  }
+}

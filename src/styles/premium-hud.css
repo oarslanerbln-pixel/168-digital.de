@@ -2,13 +2,17 @@
 
 :root {
   /* Color Palette */
-  --hud-bg-deep: #0a0908;
-  --hud-cyan: #c5a073; /* Warm Bronze Gold */
-  --hud-blue: #855b32; /* Cocoa Brown */
-  --hud-amber: #e5c185; /* Champagne */
+  --hud-bg-deep: #0d0d0c;
+  /* These HUD tokens render on dark surfaces (nav overlay, reel frame,
+     dev console), so they resolve to neutral whites rather than to the
+     page's ink. The bronze/cocoa/champagne trio they replace was the
+     last of the warm palette. */
+  --hud-cyan: #e8e8e4;
+  --hud-blue: #9a9a95;
+  --hud-amber: #ffffff;
   --hud-glass: rgba(255, 255, 255, 0.03);
-  --hud-border: rgba(197, 160, 115, 0.3);
-  --hud-glow: rgba(197, 160, 115, 0.12);
+  --hud-border: rgba(255, 255, 255, 0.16);
+  --hud-glow: rgba(255, 255, 255, 0.08);
   
   /* Effects */
   --hud-blur: blur(12px);

@@ -1,0 +1,43 @@
+/* ─── Fixed language toggle ───
+
+   Previously styled inline with `color: #fff` on a 5%-white background —
+   a leftover from the dark theme that rendered as white-on-white and was
+   effectively invisible once the site moved to a light ground. It is now
+   an ink outline pill, matching the hamburger on the opposite corner. */
+.lang-toggle-btn {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 9px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 40px;
+  background: var(--bg-raised);
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(18, 18, 17, 0.07);
+  transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
+}
+
+.lang-toggle-btn:hover {
+  background: var(--text-main);
+  border-color: var(--text-main);
+  color: var(--bg-dark);
+}
+
+@media (max-width: 768px) {
+  .lang-toggle-btn {
+    top: 18px;
+    left: 18px;
+    min-width: 46px;
+    padding: 8px 14px;
+  }
+}

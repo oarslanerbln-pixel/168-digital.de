@@ -136,7 +136,7 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
                 {dsgvoConsent ? (
                   <CheckSquare size={22} color="var(--accent-cyan)" />
                 ) : (
-                  <Square size={22} color="rgba(33,28,21,0.35)" />
+                  <Square size={22} color="rgba(18, 18, 17,0.35)" />
                 )}
               </div>
               <p className="dsgvo-text">{t('contact_dsgvo_consent')}</p>

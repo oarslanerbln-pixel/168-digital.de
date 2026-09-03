@@ -11,36 +11,37 @@
   pointer-events: auto;
 }
 
-/* 🚨 WhatsApp Floating Button */
+/* WhatsApp floating button.
+
+   Was a near-black disc with a green icon, a green rim glow and a green
+   drop-shadow on the glyph — three separate glows that read as a muddy
+   grey-green smudge against the light page. It is now solid WhatsApp
+   green with a white glyph: the brand colour is worth keeping (people
+   recognise it instantly), but it belongs on the button, not smeared
+   around it. */
 .wa-floating-btn {
   position: relative;
-  width: 60px;
-  height: 60px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
-  background: rgba(10, 9, 8, 0.75);
-  border: 1px solid rgba(37, 211, 102, 0.2); /* Soft WhatsApp Green border */
-  color: #25d366; /* WhatsApp Green */
+  background: #25d366;
+  border: none;
+  color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.6),
-    0 0 15px rgba(37, 211, 102, 0.05);
-  transition: all 0.4s var(--ease-premium);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+  transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
   outline: none;
 }
 
 .wa-floating-btn:hover {
-  border-color: rgba(37, 211, 102, 0.5);
-  color: #34e073;
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.8),
-    0 0 25px rgba(37, 211, 102, 0.2);
+  transform: scale(1.05);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.42);
 }
 
 .wa-icon {
-  filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.4));
   transition: transform 0.4s var(--ease-premium);
   z-index: 2;
 }
@@ -55,8 +56,8 @@
   inset: -3px;
   border-radius: 50%;
   border: 1px solid #25d366;
-  opacity: 0.6;
-  animation: wa-pulse-ring 2.2s infinite cubic-bezier(0.25, 0, 0, 1);
+  opacity: 0.35;
+  animation: wa-pulse-ring 2.6s infinite cubic-bezier(0.25, 0, 0, 1);
   pointer-events: none;
   z-index: 0;
 }

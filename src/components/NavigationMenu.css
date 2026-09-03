@@ -2,52 +2,48 @@
    PREMIUM FUTURISTIC NAV MATRIX
    ═══════════════════════════════════════════════════════════════ */
 
-/* Floating Hamburger Trigger */
+/* ─── Floating hamburger trigger ───
+
+   Positioned with `right`, so it is only ever where you expect it if the
+   page has not widened the viewport underneath it. That guarantee now
+   comes from the overflow clamp on <html> in index.css; this button was
+   the most visible casualty when it was missing — on a 390px phone the
+   layout resolved to 434px and the button laid out at x=410, entirely
+   off-screen.
+
+   Styling is a plain ink disc: solid, high contrast on the light ground,
+   no bronze glow and no orbiting dashed ring. */
 .nav-toggle-btn {
   position: fixed;
-  top: 32px;
-  right: 32px;
+  top: 28px;
+  right: 28px;
   z-index: 99999;
-  border: 1px solid rgba(197, 160, 115, 0.18);
-  color: #fff;
-  width: 56px;
-  height: 56px;
+  border: 1px solid var(--text-main);
+  color: var(--bg-dark);
+  width: 52px;
+  height: 52px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   outline: none;
-  background: rgba(10, 9, 8, 0.6);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  box-shadow: 
-    0 10px 30px rgba(0, 0, 0, 0.4),
-    0 0 15px rgba(197, 160, 115, 0.05);
-  transition: all 0.4s var(--ease-premium);
+  background: var(--text-main);
+  box-shadow: 0 6px 20px rgba(18, 18, 17, 0.16);
+  transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
 }
 
 .nav-toggle-btn:hover {
-  border-color: rgba(197, 160, 115, 0.5);
-  box-shadow: 
-    0 10px 35px rgba(0, 0, 0, 0.6),
-    0 0 25px rgba(197, 160, 115, 0.2);
-  color: var(--accent-cyan);
+  background: var(--bg-dark);
+  color: var(--text-main);
+  transform: scale(1.04);
 }
 
+/* The perpetually spinning dashed ring around the button was pure
+   decoration competing with the hero for attention. Kept in the DOM for
+   the open/close state transition, but no longer drawn. */
 .nav-btn-ring {
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  border: 1px dashed rgba(197, 160, 115, 0.25);
-  animation: nav-ring-spin 25s linear infinite;
-  pointer-events: none;
-  transition: border-color 0.4s;
-}
-
-.nav-toggle-btn:hover .nav-btn-ring {
-  border-color: rgba(197, 160, 115, 0.6);
-  animation-duration: 10s; /* Spins faster on hover */
+  display: none;
 }
 
 @keyframes nav-ring-spin {
@@ -64,7 +60,7 @@
   color: var(--accent-cyan);
   background: rgba(10, 9, 8, 0.85);
   padding: 5px 10px;
-  border: 1px solid rgba(197, 160, 115, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 4px;
   pointer-events: none;
   opacity: 0;
@@ -114,8 +110,8 @@
   position: absolute;
   inset: 0;
   background-image: 
-    linear-gradient(rgba(197, 160, 115, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(197, 160, 115, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 50px 50px;
   background-position: center;
   pointer-events: none;
@@ -128,7 +124,7 @@
   width: 50vw;
   height: 50vw;
   max-width: 600px;
-  background: radial-gradient(circle, rgba(197, 160, 115, 0.04) 0%, rgba(197, 160, 115, 0) 70%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
   bottom: -20%;
   left: -10%;
   pointer-events: none;
@@ -141,7 +137,7 @@
   position: absolute;
   width: 24px;
   height: 24px;
-  border-color: rgba(197, 160, 115, 0.25);
+  border-color: rgba(255, 255, 255, 0.25);
   border-style: solid;
   pointer-events: none;
   transition: all 0.5s;
@@ -152,7 +148,7 @@
 .nav-hud-bracket.bottom-right { bottom: 40px; right: 40px; border-width: 0 2px 2px 0; }
 
 .nav-overlay:hover .nav-hud-bracket {
-  border-color: rgba(197, 160, 115, 0.45);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 
 /* Bottom status bar */
@@ -245,7 +241,7 @@
 /* Hover behaviors */
 .nav-link-btn:hover {
   color: #faf8f6;
-  text-shadow: 0 0 20px rgba(197, 160, 115, 0.25);
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
 }
 
 .nav-link-btn:hover .nav-link-num {
@@ -360,10 +356,10 @@
   }
   
   .nav-toggle-btn {
-    top: 24px;
-    right: 24px;
-    width: 48px;
-    height: 48px;
+    top: 18px;
+    right: 18px;
+    width: 46px;
+    height: 46px;
   }
 
   .nav-content-wrapper {

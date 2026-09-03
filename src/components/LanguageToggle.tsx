@@ -1,4 +1,5 @@
 import { useTranslation } from 'react-i18next';
+import './LanguageToggle.css';
 import { motion } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
 
@@ -21,22 +22,8 @@ export default function LanguageToggle() {
       whileTap={{ scale: 0.95 }}
       onMouseEnter={playTick}
       onClick={toggleLanguage}
-      className="glass-panel"
-      style={{
-        position: 'fixed',
-        top: '32px',
-        left: '32px',
-        padding: '8px 16px',
-        background: 'rgba(255, 255, 255, 0.05)',
-        border: '1px solid rgba(255, 255, 255, 0.1)',
-        borderRadius: '20px',
-        color: '#fff',
-        fontWeight: 600,
-        cursor: 'pointer',
-        zIndex: 100,
-        fontSize: '0.9rem',
-        letterSpacing: '1px'
-      }}
+      className="lang-toggle-btn"
+      aria-label={`Language: ${i18n.language.substring(0, 2).toUpperCase()}`}
     >
       {i18n.language.substring(0, 2).toUpperCase()}
     </motion.button>

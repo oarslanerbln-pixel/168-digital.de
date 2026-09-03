@@ -21,14 +21,14 @@
   position: relative;
   padding: 8px; /* Inner bezel */
   background: rgba(10, 9, 8, 0.8) !important;
-  border: 1px solid rgba(197, 160, 115, 0.15) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
   transition: box-shadow 0.5s var(--ease-premium), border-color 0.5s var(--ease-premium);
   will-change: transform;
 }
 
 .reel-glass-panel:hover {
-  border-color: rgba(197, 160, 115, 0.4) !important;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(197, 160, 115, 0.1);
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 40px rgba(255, 255, 255, 0.1);
 }
 
 /* Always-on slow smooth rotation glow */
@@ -173,7 +173,7 @@
   left: 50%;
   width: clamp(100px, 15vw, 160px);
   height: clamp(100px, 15vw, 160px);
-  border: 1px dashed rgba(197, 160, 115, 0.2);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   pointer-events: none;
   z-index: 2;
@@ -181,7 +181,7 @@
 }
 
 .reel-glass-panel:hover .hud-focus-ring {
-  border-color: rgba(197, 160, 115, 0.4);
+  border-color: rgba(255, 255, 255, 0.4);
   transform: translate(-50%, -50%) rotate(45deg);
 }
 
