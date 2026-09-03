@@ -1,62 +1,68 @@
 /* ═══════════════════════════════════════════════════════════════
-   HERO SECTION — 3D Perspective Edition
+   HERO — editorial, left-aligned, one accent.
+
+   Layout: a two-column grid (statement | numbered service rail) that
+   collapses to a single column below 900px. Nothing here has a fixed
+   minimum width, so the section can never widen the viewport.
    ═══════════════════════════════════════════════════════════════ */
 
-/* Hero Background Container */
 .hero-section {
   position: relative;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  padding: 0 24px;
-}
-
-.hero-3d-bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  /* Premium dark gradient fade to blend with globe */
-  background: radial-gradient(circle at center, transparent 0%, var(--bg-dark) 100%);
-  opacity: 0.8;
-  pointer-events: none;
-}
-
-
-/* Hero Content */
-.hero-content-wrapper {
-  position: relative;
   z-index: 1;
-  pointer-events: none;
-  text-align: center;
-  max-width: 1100px;
+  max-width: 1240px;
   margin: 0 auto;
+  padding: 168px 32px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 96px;
 }
 
-/* ─── HEADLINE — plain, bold, no gradient/shimmer ─── */
+.hero-inner {
+  display: grid;
+  /* minmax(0, …) on both tracks: without the 0 floor, a long unbroken
+     word in a translation would set a min-content width and push the
+     grid — and with it the whole page — wider than the screen. */
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 72px;
+  align-items: start;
+}
+
+.hero-main {
+  min-width: 0;
+}
+
+/* ─── Eyebrow ─── */
+.hero-eyebrow {
+  display: block;
+  margin-bottom: 28px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+/* ─── Headline ─── */
 .hero-headline {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
   color: var(--text-main);
-
-  /* Word wrap for long translations */
+  margin: 0 0 28px;
+  text-wrap: balance;
   overflow-wrap: break-word;
-  word-break: break-word;
 }
 
+/* ─── The one piece of colour on the page.
 
-/* ─── Headline word accents — a slow, continuous shimmer sweeps through
-   "Bild"/"image"/"Görüntü" (blue) and "Code"/"code"/"kodun" (gold),
-   like sunlight passing across the letters. Pure background-clip:text,
-   no glow/shadow — restrained, not neon. ─── */
+   A slow gradient sweeps back and forth through "image" (blue) and
+   "code" (gold), like light moving across the letters. `alternate`
+   keeps it continuous — it eases to a stop and reverses rather than
+   snapping back to the start. Everything else on the site is
+   deliberately monochrome so this reads as the accent, not as one
+   effect among many. ─── */
 .hero-title-word {
   display: inline-block;
   white-space: nowrap;
@@ -65,21 +71,30 @@
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  /* alternate = smooth back-and-forth, never jumps/resets mid-word */
   animation: hero-word-sweep 4s ease-in-out infinite alternate;
 }
 
 .hero-title-word-blue {
-  background-image: linear-gradient(100deg, #2b4f9c 0%, #2b4f9c 38%, #a9c8ff 50%, #2b4f9c 62%, #2b4f9c 100%);
+  background-image: linear-gradient(
+    100deg,
+    var(--shimmer-blue) 0%, var(--shimmer-blue) 38%,
+    var(--shimmer-blue-lit) 50%,
+    var(--shimmer-blue) 62%, var(--shimmer-blue) 100%
+  );
 }
 
 .hero-title-word-gold {
-  background-image: linear-gradient(100deg, #8a6a3f 0%, #8a6a3f 38%, #f5d999 50%, #8a6a3f 62%, #8a6a3f 100%);
+  background-image: linear-gradient(
+    100deg,
+    var(--shimmer-gold) 0%, var(--shimmer-gold) 38%,
+    var(--shimmer-gold-lit) 50%,
+    var(--shimmer-gold) 62%, var(--shimmer-gold) 100%
+  );
   animation-delay: 1.4s;
 }
 
 @keyframes hero-word-sweep {
-  0% { background-position: 100% 0; }
+  0%   { background-position: 100% 0; }
   100% { background-position: 0% 0; }
 }
 
@@ -90,364 +105,230 @@
   }
 }
 
-/* ─── EYEBROW (category + location) — plain text, no pill/box ─── */
-.hero-eyebrow {
-  display: block;
-  margin-bottom: 16px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-  color: var(--accent-purple);
-}
-
-
-/* ─── SUBTITLE — minimalist sans, distinct from the bold headline ─── */
+/* ─── Subtitle ─── */
 .hero-subtitle {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 500;
-  font-style: normal;
-  letter-spacing: 0.005em;
-  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
-  line-height: 1.55;
-  color: var(--text-main);
-  margin: 0 auto 40px;
-  max-width: 640px;
+  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-muted);
+  max-width: 46ch;
+  margin: 0 0 44px;
 }
 
-
-/* ─── SCANNABLE SERVICE STRIP — equal-width cells regardless of label
-   length, so short and long labels read as one symmetric row ─── */
-.hero-service-strip {
-  pointer-events: auto;
-  list-style: none;
-  margin: 36px 0 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 10px;
-  max-width: 720px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.hero-service-strip li {
-  display: flex;
-}
-
-.hero-service-chip {
+/* ─── Actions — one solid button, one quiet link ─── */
+.hero-actions {
   display: flex;
   align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding: 10px 14px;
-  border-radius: 0;
-  border: 1px solid rgba(33, 28, 21, 0.12);
-  background: rgba(33, 28, 21, 0.04);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  color: rgba(33, 28, 21, 0.75);
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0.3px;
-  text-align: center;
-  white-space: normal;
-  text-decoration: none;
-  transition: all 0.35s var(--ease-premium);
-}
-
-.hero-service-chip:hover {
-  border-color: rgba(33, 28, 21, 0.3);
-  background: rgba(33, 28, 21, 0.08);
-  color: var(--text-main);
-  transform: translateY(-2px);
-}
-
-
-/* ═══════════════════════════════════════════════════════════════
-   HERO BUTTONS V2 — Premium Minimalist
-   ═══════════════════════════════════════════════════════════════ */
-
-.hero-actions-v2 {
-  pointer-events: auto;
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  justify-content: center;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
-/* ── Divider Dot ── */
-.hero-actions-dot {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: rgba(33, 28, 21, 0.25);
-  flex-shrink: 0;
-}
-
-/* ── PRIMARY CTA — bolder, filled/bordered for more presence ── */
-.hero-btn-primary-v2 {
-  position: relative;
+.hero-cta {
   display: inline-flex;
   align-items: center;
-  gap: 14px;
-  padding: 16px 30px;
-  background: rgba(33, 28, 21, 0.04);
-  border: 1.5px solid var(--services-accent-2, #8f4a1f);
+  gap: 10px;
+  padding: 15px 26px;
+  border: 1px solid var(--text-main);
   border-radius: 0;
-  cursor: pointer;
-  color: var(--text-main);
+  background: var(--text-main);
+  color: var(--bg-dark);
   font-family: 'Outfit', sans-serif;
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: 2.5px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  overflow: hidden;
-  transition: background 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium), transform 0.4s var(--ease-premium);
+  cursor: pointer;
+  transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium);
 }
 
-.hero-btn-primary-v2:hover {
-  background: rgba(33, 28, 21, 0.08);
-  transform: translateY(-2px);
+.hero-cta svg {
+  transition: transform 0.35s var(--ease-premium);
 }
 
-/* Same gold sweep as the "Code"/"Bild" headline words */
-.hero-btn-text {
-  position: relative;
-  z-index: 1;
-  display: inline-block;
-  background-image: linear-gradient(100deg, #8a6a3f 0%, #8a6a3f 38%, #f5d999 50%, #8a6a3f 62%, #8a6a3f 100%);
-  background-repeat: no-repeat;
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: hero-word-sweep 4s ease-in-out infinite alternate;
+.hero-cta:hover {
+  background: transparent;
+  color: var(--text-main);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-btn-text {
-    animation: none;
-    background-position: 50% 0;
-  }
-}
-
-.hero-btn-arrow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  border: 1px solid rgba(197, 160, 115, 0.35);
-  background: rgba(197, 160, 115, 0.1);
-  color: var(--accent-cyan);
-  transition: all 0.5s var(--ease-premium);
-  flex-shrink: 0;
-}
-
-/* Animated underline */
-.hero-btn-line {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-silver));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s var(--ease-premium);
-}
-
-.hero-btn-primary-v2:hover .hero-btn-line {
-  transform: scaleX(1);
-}
-
-.hero-btn-primary-v2:hover .hero-btn-arrow {
-  background: rgba(197, 160, 115, 0.22);
-  border-color: rgba(197, 160, 115, 0.6);
-  box-shadow: 0 0 20px rgba(197, 160, 115, 0.25);
+.hero-cta:hover svg {
   transform: translateX(4px);
 }
 
-.hero-btn-primary-v2:hover .hero-btn-text {
-  color: var(--accent-purple);
-}
-
-
-/* ── CONTACT PILLS — Minimal Icon-Forward ── */
-.hero-contact-pills {
-  display: flex;
-  gap: 8px;
-}
-
-.hero-pill {
+.hero-cta-ghost {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border-radius: 0;
-  background: linear-gradient(
-    120deg,
-    color-mix(in srgb, #c97b3d 16%, transparent) 0%,
-    color-mix(in srgb, var(--accent-cyan) 16%, transparent) 33%,
-    color-mix(in srgb, var(--accent-purple) 16%, transparent) 66%,
-    color-mix(in srgb, #c97b3d 16%, transparent) 100%
-  );
-  background-size: 300% 100%;
-  animation: hero-pill-flow 9s linear infinite;
-  border: 1px solid rgba(33, 28, 21, 0.12);
+  padding: 15px 24px;
+  border: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: border-color 0.35s var(--ease-premium), color 0.35s var(--ease-premium);
+}
+
+.hero-cta-ghost:hover {
+  border-color: var(--line-strong);
   color: var(--text-main);
-  cursor: pointer;
-  font-family: 'Outfit', sans-serif;
-  font-size: 0.78rem;
+}
+
+/* ─── Right column: service rail + facts ─── */
+.hero-side {
+  min-width: 0;
+}
+
+.hero-rail {
+  min-width: 0;
+  border-top: 1px solid var(--line);
+  padding-top: 4px;
+}
+
+.hero-rail-item {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 2px;
+  border-bottom: 1px solid var(--line);
+  text-decoration: none;
+  color: var(--text-main);
+  transition: padding-left 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
+}
+
+.hero-rail-item:hover {
+  padding-left: 10px;
+  border-color: var(--line-strong);
+}
+
+.hero-rail-num {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.hero-rail-label {
+  font-size: 0.95rem;
   font-weight: 500;
-  letter-spacing: 0.8px;
-  transition: border-color 0.4s var(--ease-premium), transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
+  line-height: 1.35;
 }
 
-@keyframes hero-pill-flow {
-  0% { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-pill {
-    animation: none;
-    background-position: 0% 50%;
-  }
-}
-
-.hero-pill-label {
+.hero-rail-arrow {
+  color: var(--text-faint);
   opacity: 0;
-  max-width: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  transition: all 0.4s var(--ease-premium);
+  transform: translateX(-5px);
+  transition: opacity 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
 }
 
-/* On hover: label slides out */
-.hero-pill:hover .hero-pill-label {
+.hero-rail-item:hover .hero-rail-arrow {
   opacity: 1;
-  max-width: 100px;
-  margin-left: 2px;
+  transform: translateX(0);
+  color: var(--accent-cyan);
 }
 
-.hero-pill:hover {
-  border-color: rgba(33, 28, 21, 0.3);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(33, 28, 21, 0.1);
+/* ─── Facts under the rail ─── */
+.hero-facts {
+  margin: 36px 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
 }
 
+.hero-fact {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.hero-fact dt {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
+
+.hero-fact dd {
+  margin: 0;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+/* ─── Showreel ─── */
+.hero-reel-container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.hero-reel-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 18px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+}
 
 /* ═══════════════════════════════════════════════════════════════
-   RESPONSIVE — Mobile Adjustments
+   RESPONSIVE
    ═══════════════════════════════════════════════════════════════ */
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .hero-inner {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 56px;
+  }
+
+  .hero-section {
+    padding: 132px 24px 80px;
+    gap: 72px;
+  }
+
+  /* Stacked into one column there is width to spare, so the three facts
+     sit side by side rather than adding three more rows of height. */
+  .hero-facts {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero-section {
+    padding: 112px 20px 64px;
+    gap: 56px;
+  }
+
   .hero-headline {
-    font-size: clamp(2.5rem, 10vw, 4rem);
+    font-size: clamp(2.15rem, 10.5vw, 3.4rem);
+    letter-spacing: -0.03em;
   }
 
-  .hero-actions-v2 {
-    flex-direction: column;
-    gap: 20px;
+  .hero-subtitle {
+    margin-bottom: 32px;
   }
 
-  .hero-actions-dot {
-    display: none;
+  /* Full-width stacked buttons read better than two half-width ones
+     that wrap unevenly at narrow widths. */
+  .hero-actions {
+    gap: 10px;
   }
 
-  .hero-contact-pills {
-    gap: 12px;
+  .hero-cta,
+  .hero-cta-ghost {
+    flex: 1 1 100%;
+    justify-content: center;
   }
 
-  /* Show labels by default on mobile (no hover) */
-  .hero-pill-label {
+  /* The arrow is always visible on touch, where there is no hover. */
+  .hero-rail-arrow {
     opacity: 1;
-    max-width: 100px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-headline {
-    font-size: clamp(2rem, 12vw, 3rem);
-  }
-}
-
-/* ─── CENTERED, SYMMETRIC HERO LAYOUT ─── */
-.hero-content-grid {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 780px;
-  margin: 0 auto;
-  position: relative;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.hero-left {
-  min-width: 0;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-}
-
-/* Small centered brand mark above the eyebrow — the 400px SVG emblem is
-   scaled down uniformly to fit a compact, symmetric slot. */
-.hero-emblem-mark {
-  width: 180px;
-  height: 180px;
-  margin: 0 auto 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: auto;
-}
-
-.hero-emblem-mark .hero-emblem {
-  min-height: 0;
-  transform: scale(0.45);
-}
-
-/* HUD Loader overlay styling */
-.hud-loader-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-
-.hud-loader-spinner {
-  width: 40px;
-  height: 40px;
-  border: 2px solid rgba(197, 160, 115, 0.1);
-  border-top-color: var(--accent-cyan);
-  border-radius: 50%;
-  animation: hud-spinner 1s linear infinite;
-}
-
-@keyframes hud-spinner {
-  to { transform: rotate(360deg); }
-}
-
-@media (max-width: 480px) {
-  .hero-emblem-mark {
-    width: 140px;
-    height: 140px;
-  }
-  .hero-emblem-mark .hero-emblem {
-    transform: scale(0.35);
+    transform: none;
   }
 }

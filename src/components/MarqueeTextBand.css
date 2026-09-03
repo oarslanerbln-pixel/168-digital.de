@@ -1,10 +1,12 @@
 .marquee-band {
   overflow: hidden;
-  padding: 20px 0;
+  padding: 22px 0;
   position: relative;
   z-index: 10;
-  border-top: 1px solid rgba(255, 255, 255, 0.04);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  /* These were white-on-white (a leftover from the old dark theme) and so
+     never rendered; the band had no edges at all. */
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 .marquee-mask {
@@ -24,10 +26,11 @@
 .marquee-text {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   font-weight: 600;
-  letter-spacing: 6px;
+  letter-spacing: 0.32em;
   text-transform: uppercase;
   font-family: 'Outfit', sans-serif;
 
-  /* Plain solid black — no glow/shimmer effect */
-  color: #000;
+  /* Muted rather than pure black: this is supporting social proof, it
+     should not out-shout the headline sitting right above it. */
+  color: var(--text-muted);
 }

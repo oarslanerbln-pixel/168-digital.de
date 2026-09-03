@@ -1,14 +1,14 @@
 .footer-wrapper {
   width: 100%;
   padding: 40px 24px;
-  border-top: 1px solid rgba(33, 28, 21, 0.08);
+  border-top: 1px solid rgba(18, 18, 17, 0.08);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 24px;
-  background: rgba(250, 247, 242, 0.9);
+  background: rgba(251, 251, 250, 0.9);
   position: relative;
   z-index: 10;
 }
@@ -23,6 +23,13 @@
   display: flex;
   gap: 24px;
   align-items: center;
+  /* Without wrapping, the four links form one unbreakable 410px row that
+     runs off a 390px screen (and gets clipped by the viewport clamp).
+     Wrapping lets them reflow onto a second line instead. */
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: 12px;
+  max-width: 100%;
 }
 
 .footer-link {

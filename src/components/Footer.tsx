@@ -19,6 +19,14 @@ export default function Footer({ onOpenCookies }: FooterProps) {
         <Link to="/contact" className="footer-link">
           {t('footer_contact')}
         </Link>
+        {/* Both of these moved off the homepage onto their own routes; the
+            footer keeps them one click away from every page. */}
+        <Link to="/about" className="footer-link">
+          {t('nav_about', 'Philosophy')}
+        </Link>
+        <Link to="/concepts" className="footer-link">
+          {t('nav_concepts', 'Concepts')}
+        </Link>
         <Link to="/blog" className="footer-link">
           {t('footer_blog')}
         </Link>

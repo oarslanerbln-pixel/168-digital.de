@@ -24,6 +24,10 @@ const LegalPage = lazy(() => import('./pages/LegalPage'));
 const ContactPage = lazy(() => import('./pages/ContactPage'));
 const BlogPage = lazy(() => import('./pages/BlogPage'));
 const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+// Philosophy and the 50-concept design library used to render inside the
+// homepage; they now have their own routes and their own chunks.
+const AboutPage = lazy(() => import('./pages/AboutPage'));
+const ConceptsPage = lazy(() => import('./pages/ConceptsPage'));
 
 const INTRO_SEEN_KEY = '1618_intro_seen_at';
 const INTRO_TTL_MS = 24 * 60 * 60 * 1000; // show the intro at most once per 24h
@@ -133,6 +137,8 @@ function App() {
               <Route path="/impressum" element={<LegalPage />} />
               <Route path="/datenschutz" element={<LegalPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/concepts" element={<ConceptsPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/:slug" element={<ServicePage />} />

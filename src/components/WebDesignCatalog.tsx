@@ -49,8 +49,13 @@ export default function WebDesignCatalog() {
   const displayedConcepts = isExpanded ? webDesignConcepts : webDesignConcepts.slice(0, 8);
 
   return (
-    <section ref={sectionRef} className="relative py-24 z-10 web-design-catalog-container">
-      <div className="max-w-[1300px] mx-auto px-6 md:px-12">
+    <section ref={sectionRef} className="web-design-catalog-container">
+      {/* Tailwind is not installed in this project, so the utility classes
+          that used to be here (max-w-[1300px] mx-auto px-6) were inert —
+          the catalog had no max width and no side padding, which is what
+          let its mobile carousel's negative margin overhang the screen.
+          .wd-wrap is the real stylesheet equivalent. */}
+      <div className="wd-wrap">
         <motion.div 
           className="services-header"
           initial={{ opacity: 0, y: 30 }}
@@ -59,10 +64,14 @@ export default function WebDesignCatalog() {
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
           <span className="services-overline">DESIGN LIBRARY</span>
-          <h2 className="services-title text-silver">
-            50 Premium Web <em className="text-transparent" style={{ WebkitTextStroke: '1px #c9a96e' }}>Concepts</em>
+          {/* "Concepts" used to be an italic outline (-webkit-text-stroke in
+              bronze) that read as a different, scrappier typeface next to
+              the solid words beside it. It is now simply the same heading
+              in the muted ink, which sets it apart without shouting. */}
+          <h2 className="services-title">
+            50 Premium Web <em className="wd-title-em">Concepts</em>
           </h2>
-          <p className="text-silver mt-6" style={{ maxWidth: '500px', margin: '20px auto 0', opacity: 0.7, fontSize: '14px', lineHeight: 1.6 }}>
+          <p className="services-subtitle">
             A curated collection of highly aesthetic, conversion-optimized design archetypes crafted for forward-thinking brands.
           </p>
         </motion.div>
