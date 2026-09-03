@@ -16,9 +16,6 @@ jobs:
       - run: npx tsc --noEmit
       # vite build, then scripts/prerender.mjs — the same two steps
       # `npm run build` chains for a real deploy. Split out (rather than
-      # just running `npm run build`) so tsc above isn't repeated. This is
-      # also where the postinstall Chromium fetch (best-effort, see
-      # package.json) actually gets exercised: if that fetch failed,
-      # prerender.mjs's own browser launch fails loudly right here.
+      # just running `npm run build`) so tsc above isn't repeated.
       - run: npx vite build && node scripts/prerender.mjs
       - run: npm test

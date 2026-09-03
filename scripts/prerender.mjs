@@ -54,16 +54,26 @@
    partial or unrendered build — a broken prerender should fail the
    deploy, not quietly ship the very bug this script exists to fix.
 
-   `npm install`'s "postinstall" hook (`playwright install chromium ||
-   true`) fetches the browser this script needs, but is deliberately
-   allowed to fail without failing the install itself — a blocked
-   download shouldn't also take down typecheck/tests, which don't need
-   a browser at all. This script is what actually enforces "a working
-   browser is required": if postinstall's fetch failed, chromium.launch()
-   below throws and the build fails here, loudly, instead of silently
-   shipping the unrendered SPA shell this whole script exists to avoid.
+   BROWSER: uses `playwright-core` (the driver only, no bundled browser)
+   paired with `@sparticuz/chromium` — a Chromium build compiled
+   specifically for constrained serverless/build Linux images (AWS
+   Lambda, Vercel). Two earlier approaches were tried and failed for
+   real, not hypothetically:
+     - plain `playwright` + its own downloaded Chromium worked in CI
+       (a full Ubuntu VM) but failed on Vercel's build image with
+       "error while loading shared libraries: libnspr4.so: cannot open
+       shared object file" — that image is missing several system
+       libraries a desktop Chromium build expects, and there's no way
+       to apt-get them into a Vercel build step.
+     - `@sparticuz/chromium`'s binary is built against exactly that kind
+       of minimal image and needs none of those missing libraries. It
+       ships bundled in the npm package itself (Brotli-compressed,
+       decompressed to /tmp on first use), so there's also no separate
+       browser-download step to fail or flake — every environment that
+       runs `npm ci` already has it.
    ════════════════════════════════════════════════════════════════ */
-import { chromium } from 'playwright';
+import { chromium } from 'playwright-core';
+import sparticuzChromium from '@sparticuz/chromium';
 import { spawn } from 'node:child_process';
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -135,12 +145,11 @@ async function main() {
     await Promise.race([waitForServer(BASE_URL), previewExited]);
 
     // Optional escape hatch: point at an already-installed Chromium binary
-    // instead of the one `playwright install` manages. Useful in
-    // environments where downloading Playwright's own browser build isn't
-    // possible or desirable (e.g. a locked-down network, or swapping in a
-    // serverless-optimized build like @sparticuz/chromium on Vercel).
-    const executablePath = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || undefined;
-    const browser = await chromium.launch({ executablePath });
+    // instead of extracting @sparticuz/chromium's bundled one. Useful for
+    // local debugging against a different browser build.
+    const executablePath =
+      process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH || (await sparticuzChromium.executablePath());
+    const browser = await chromium.launch({ args: sparticuzChromium.args, executablePath });
     try {
       const page = await browser.newPage();
       // Same flag the rest of this app's own dev/QA tooling uses to skip
