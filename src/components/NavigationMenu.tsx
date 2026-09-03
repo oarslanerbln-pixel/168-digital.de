@@ -1,12 +1,39 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { MessageCircle } from 'lucide-react';
+import { Menu, X, ArrowUpRight, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { playWhoosh, playTick, playClose } from '../utils/audio';
 import { services } from '../data/services';
 import { useEscapeToClose } from '../hooks/useEscapeToClose';
 import './NavigationMenu.css';
+
+/* ════════════════════════════════════════════════════════════════
+   NAVIGATION — light, plain-language, three tiers.
+
+   Replaces a near-black sci-fi overlay that had several real problems:
+
+   • It was never actually full-screen. `.nav-overlay` set
+     `position: fixed`, but the `hud-scanline-container` class it also
+     carried set `position: relative` at equal specificity and won the
+     cascade, so the panel laid out in normal flow. On a 390×844 phone
+     it measured 788px tall — the bottom 56px of the screen stayed
+     uncovered, which is where the floating WhatsApp and quote buttons
+     were showing through it.
+   • Grey text on near-black failed contrast; the labels were hard to
+     read at any size.
+   • The labels were jargon: CINEMATICS, PROJECTS, CAPABILITIES,
+     INITIATE. A visitor cannot tell that "INITIATE" means contact.
+   • Twelve items at one visual weight, main items centred while the
+     service sub-list was left-aligned, plus a grid overlay, corner
+     brackets, a status bar and blue numerals.
+
+   Now: paper ground and ink type to match the rest of the site (no
+   jarring theme flip when you open the menu), plain words, and a real
+   hierarchy — pages, then services, then everything else.
+   ════════════════════════════════════════════════════════════════ */
+
+const ease = [0.16, 1, 0.3, 1] as const;
 
 export default function NavigationMenu() {
   const { t } = useTranslation();
@@ -22,21 +49,15 @@ export default function NavigationMenu() {
   useEscapeToClose(isOpen, closeMenu);
 
   const toggleMenu = () => {
-    if (!isOpen) {
-      playWhoosh();
-    } else {
-      playClose();
-    }
+    if (!isOpen) playWhoosh();
+    else playClose();
     setIsOpen(!isOpen);
   };
 
   const scrollTo = (id: string) => {
     playClose();
     setIsOpen(false);
-    const scroll = () => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    };
+    const scroll = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(scroll, 500);
@@ -45,235 +66,147 @@ export default function NavigationMenu() {
     }
   };
 
-  // Prevent background scrolling when menu is open
+  /* While the menu is open, lock the page and mark <body> so the floating
+     widgets can take themselves out of the way. They are siblings of this
+     overlay, not children, so CSS here cannot reach them any other way. */
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
-    } else {
-      setTimeout(() => { document.body.style.overflow = ''; }, 500);
+      document.body.classList.add('nav-menu-open');
+      return () => {
+        document.body.style.overflow = '';
+        document.body.classList.remove('nav-menu-open');
+      };
     }
   }, [isOpen]);
 
-  // Pages that live outside the homepage's four sections.
-  const extraPages = [
-    { to: '/about', label: t('nav_about', 'PHILOSOPHY') },
-    { to: '/concepts', label: t('nav_concepts', 'CONCEPTS') },
-    { to: '/blog', label: t('nav_blog', 'BLOG') },
+  // In-page anchors. Every id must exist on the homepage — a miss is
+  // silent, so the item would simply stop working.
+  const pages = [
+    { label: t('nav_home', 'Home'), id: 'hero' },
+    { label: t('nav_ecosystems', 'Work'), id: 'works' },
+    { label: t('nav_capabilities', 'Services'), id: 'services' },
+    { label: t('nav_cinematics', 'Showreel'), id: 'reel-card' },
+    { label: t('nav_initiate', 'Contact'), id: 'contact' },
   ];
 
-  // In-page anchors. Every id here must exist on the homepage — a miss is
-  // silent (scrollIntoView on null does nothing), so the menu item simply
-  // stops working.
-  //   • 'reel' was one such miss: the element's real id is 'reel-card'.
-  //   • PHILOSOPHY pointed at '#about', which is no longer a homepage
-  //     section at all; it is now a route, listed in extraPages above.
-  const navItems = [
-    { label: t('nav_home', 'HOME'), id: 'hero', sub: t('nav_home_sub', 'SYS.BOOT // CORE INTERFACE') },
-    { label: t('nav_cinematics', 'CINEMATICS'), id: 'reel-card', sub: t('nav_cinematics_sub', 'SYS.REEL // AUDIO VISUAL GRID') },
-    { label: t('nav_ecosystems', 'ECOSYSTEMS'), id: 'works', sub: t('nav_ecosystems_sub', 'SYS.WORK // ARCHITECTED PLATFORMS') },
-    { label: t('nav_capabilities', 'CAPABILITIES'), id: 'services', sub: t('nav_capabilities_sub', 'SYS.SPEC // STACK CAPABILITIES') },
-    { label: t('nav_initiate', 'INITIATE'), id: 'contact', sub: t('nav_initiate_sub', 'SYS.COMM // TRANSMIT PROPOSAL') },
+  const morePages = [
+    { to: '/about', label: t('nav_about', 'Philosophy') },
+    { to: '/concepts', label: t('nav_concepts', 'Concepts') },
+    { to: '/blog', label: t('nav_blog', 'Blog') },
   ];
 
   return (
     <>
-      {/* Fixed Hamburger Button with Dashed Scanner Frame */}
-      <motion.button
+      <button
+        type="button"
         onClick={toggleMenu}
         onMouseEnter={() => !isOpen && playTick()}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
         className={`nav-toggle-btn ${isOpen ? 'open' : ''}`}
-        aria-label="Toggle navigation menu"
+        aria-label={isOpen ? t('nav_close', 'Close menu') : t('nav_open', 'Open menu')}
+        aria-expanded={isOpen}
       >
-        <span className="nav-btn-ring" />
-        <span className="nav-btn-label font-mono">SYS.NAV // {isOpen ? 'CLOSE' : 'MENU'}</span>
-        
-        {/* Morphing SVG Lines */}
-        <svg width="22" height="22" viewBox="0 0 22 22" style={{ zIndex: 10 }}>
-          <motion.path
-            initial="closed"
-            fill="transparent"
-            strokeWidth="2"
-            stroke="currentColor"
-            strokeLinecap="round"
-            variants={{
-              closed: { d: "M 2 5 L 20 5" },
-              open: { d: "M 3 19 L 19 3" }
-            }}
-            animate={isOpen ? "open" : "closed"}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          />
-          <motion.path
-            initial="closed"
-            fill="transparent"
-            strokeWidth="2"
-            stroke="currentColor"
-            strokeLinecap="round"
-            d="M 2 11 L 20 11"
-            variants={{
-              closed: { opacity: 1, scaleX: 1 },
-              open: { opacity: 0, scaleX: 0 }
-            }}
-            animate={isOpen ? "open" : "closed"}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-          />
-          <motion.path
-            initial="closed"
-            fill="transparent"
-            strokeWidth="2"
-            stroke="currentColor"
-            strokeLinecap="round"
-            variants={{
-              closed: { d: "M 2 17 L 20 17" },
-              open: { d: "M 3 3 L 19 19" }
-            }}
-            animate={isOpen ? "open" : "closed"}
-            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          />
-        </svg>
-      </motion.button>
+        {isOpen
+          ? <X size={20} strokeWidth={1.75} aria-hidden="true" />
+          : <Menu size={20} strokeWidth={1.75} aria-hidden="true" />}
+      </button>
 
-      {/* Full Screen Overlay Matrix */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ clipPath: 'circle(0% at calc(100% - 60px) 60px)' }}
-            animate={{ clipPath: 'circle(150% at calc(100% - 60px) 60px)' }}
-            exit={{ clipPath: 'circle(0% at calc(100% - 60px) 60px)' }}
-            transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
-            className="nav-overlay hud-scanline-container"
+            /* A plain fade. The previous circle-reveal clip-path was the
+               kind of effect that has to be perfect to not look broken,
+               and on tall viewports it wasn't. */
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.35, ease }}
+            className="nav-overlay"
             role="dialog"
             aria-modal="true"
-            aria-label="Navigation menu"
+            aria-label={t('nav_menu', 'Menu')}
           >
-            {/* Tech grid backdrop */}
-            <div className="nav-grid-overlay" />
-            <div className="nav-ambient-glow" />
-
-            {/* Corner Brackets */}
-            <div className="nav-hud-bracket top-left" />
-            <div className="nav-hud-bracket top-right" />
-            <div className="nav-hud-bracket bottom-left" />
-            <div className="nav-hud-bracket bottom-right" />
-
-            {/* Navigation Content Wrapper for scrolling & vertical centering */}
-            <div className="nav-content-wrapper">
-              {/* Navigation links container */}
-              <div className="nav-links-container">
-                {navItems.map((item, index) => (
-                  <div key={item.id} className="nav-link-wrapper">
-                    <motion.div
-                      initial={{ y: '100%', opacity: 0 }}
-                      animate={{ y: '0%', opacity: 1 }}
-                      exit={{ y: '-100%', opacity: 0 }}
-                      transition={{ 
-                        duration: 0.6, 
-                        ease: [0.16, 1, 0.3, 1],
-                        delay: 0.15 + (index * 0.05)
-                      }}
-                      style={{ width: '100%' }}
-                    >
-                      <button
-                        onClick={() => scrollTo(item.id)}
-                        onMouseEnter={() => playTick()}
-                        className="nav-link-btn"
-                      >
-                        <span className="nav-link-num">0{index + 1}.</span>
-                        <span className="nav-link-text">{item.label}</span>
-                        <span className="nav-link-sub">{item.sub}</span>
-                      </button>
-                    </motion.div>
-                  </div>
+            <div className="nav-panel">
+              {/* ── Tier 1: pages ── */}
+              <nav className="nav-pages" aria-label={t('nav_menu', 'Menu')}>
+                {pages.map((item, i) => (
+                  <motion.button
+                    key={item.id}
+                    type="button"
+                    className="nav-page-item"
+                    onClick={() => scrollTo(item.id)}
+                    onMouseEnter={playTick}
+                    initial={{ opacity: 0, y: 14 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.06 + i * 0.045, duration: 0.5, ease }}
+                  >
+                    <span className="nav-page-label">{item.label}</span>
+                    <ArrowUpRight className="nav-page-arrow" size={18} strokeWidth={1.5} aria-hidden="true" />
+                  </motion.button>
                 ))}
-              </div>
+              </nav>
 
-              {/* Direct links to every dedicated service page — real <a> hrefs
-                  so search engines can crawl the full service directory from
-                  any page on the site. */}
-              <div className="nav-links-container nav-services-list">
-                {services.map((service, index) => (
-                  <div key={service.slug} className="nav-link-wrapper">
-                    <motion.div
-                      initial={{ y: '100%', opacity: 0 }}
-                      animate={{ y: '0%', opacity: 1 }}
-                      exit={{ y: '-100%', opacity: 0 }}
-                      transition={{
-                        duration: 0.6,
-                        ease: [0.16, 1, 0.3, 1],
-                        delay: 0.15 + ((navItems.length + index) * 0.05)
-                      }}
-                      style={{ width: '100%' }}
-                    >
-                      <Link
-                        to={`/${service.slug}`}
-                        onClick={() => { playClose(); setIsOpen(false); }}
-                        onMouseEnter={() => playTick()}
-                        className="nav-link-btn nav-service-link"
-                      >
-                        <span className="nav-link-num">→</span>
-                        <span className="nav-link-text">{t(service.titleKey)}</span>
-                      </Link>
-                    </motion.div>
-                  </div>
-                ))}
-                {/* Standalone pages. Philosophy and Concepts used to be
-                    sections of the homepage; now that they have their own
-                    routes the menu is the primary way to reach them. */}
-                {extraPages.map((page, i) => (
-                  <div className="nav-link-wrapper" key={page.to}>
-                    <motion.div
-                      initial={{ y: '100%', opacity: 0 }}
-                      animate={{ y: '0%', opacity: 1 }}
-                      exit={{ y: '-100%', opacity: 0 }}
-                      transition={{
-                        duration: 0.6,
-                        ease: [0.16, 1, 0.3, 1],
-                        delay: 0.15 + ((navItems.length + services.length + i) * 0.05)
-                      }}
-                      style={{ width: '100%' }}
-                    >
-                      <Link
-                        to={page.to}
-                        onClick={() => { playClose(); setIsOpen(false); }}
-                        onMouseEnter={() => playTick()}
-                        className="nav-link-btn nav-service-link"
-                      >
-                        <span className="nav-link-num">→</span>
-                        <span className="nav-link-text">{page.label}</span>
-                      </Link>
-                    </motion.div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Bottom HUD info & redundant connection */}
+              {/* ── Tier 2: services, grouped and labelled ── */}
               <motion.div
-                initial={{ opacity: 0, y: 30 }}
+                className="nav-group"
+                initial={{ opacity: 0, y: 14 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="nav-bottom-links"
+                transition={{ delay: 0.28, duration: 0.5, ease }}
               >
-                <a 
-                  href={`https://wa.me/491787277867?text=${encodeURIComponent(t('wa_message'))}`}
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="nav-whatsapp-link"
-                  onClick={() => playClose()}
-                  onMouseEnter={() => playTick()}
-                >
-                  <MessageCircle size={20} />
-                  <span>WhatsApp Connection</span>
-                </a>
+                <span className="nav-group-label">{t('services_overline', 'What we do')}</span>
+                <div className="nav-group-items">
+                  {services.map((service) => (
+                    <Link
+                      key={service.slug}
+                      to={`/${service.slug}`}
+                      className="nav-sub-item"
+                      onClick={closeMenu}
+                      onMouseEnter={playTick}
+                    >
+                      {t(service.titleKey)}
+                    </Link>
+                  ))}
+                </div>
               </motion.div>
-            </div>
 
-            {/* HUD Status Coordinates */}
-            <div className="nav-hud-status-bar font-mono">
-              <span>TERM.CONN // SECURED_TRANS</span>
-              <span>NODE.LOC // BERLIN_LAT.52.5200</span>
-              <span>SYS.REF // DA-NAV-2026</span>
+              {/* ── Tier 3: everything else ── */}
+              <motion.div
+                className="nav-group"
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.34, duration: 0.5, ease }}
+              >
+                <span className="nav-group-label">{t('nav_more', 'More')}</span>
+                <div className="nav-group-items">
+                  {morePages.map((page) => (
+                    <Link
+                      key={page.to}
+                      to={page.to}
+                      className="nav-sub-item"
+                      onClick={closeMenu}
+                      onMouseEnter={playTick}
+                    >
+                      {page.label}
+                    </Link>
+                  ))}
+                </div>
+              </motion.div>
+
+              {/* ── Footer: the one action worth a button ── */}
+              <motion.a
+                href={`https://wa.me/491787277867?text=${encodeURIComponent(t('wa_message'))}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="nav-whatsapp"
+                onClick={closeMenu}
+                onMouseEnter={playTick}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.5, ease }}
+              >
+                <MessageCircle size={17} strokeWidth={1.75} aria-hidden="true" />
+                {t('nav_whatsapp', 'Message us on WhatsApp')}
+              </motion.a>
             </div>
           </motion.div>
         )}
