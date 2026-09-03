@@ -71,7 +71,8 @@ import { dirname, join } from 'node:path';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const PORT = 41734; // arbitrary, unlikely to collide with anything else
-const BASE_URL = `http://127.0.0.1:${PORT}`;
+const HOST = '127.0.0.1';
+const BASE_URL = `http://${HOST}:${PORT}`;
 
 /** Pull the route list straight from sitemap.xml, so that file stays the
  * single source of truth for "what pages exist" instead of a second,
@@ -111,7 +112,15 @@ async function main() {
 
   const preview = spawn(
     'npx',
-    ['vite', 'preview', '--port', String(PORT), '--strictPort'],
+    // --host pins the bind address to match BASE_URL exactly. Without it,
+    // Vite binds the bare string "localhost", and on some CI runners (seen
+    // on GitHub Actions' Ubuntu images) Node resolves that to the IPv6
+    // loopback (::1) first — the server comes up fine, but our health check
+    // below is fetching the IPv4 127.0.0.1, gets ECONNREFUSED on every
+    // attempt, and times out reporting "did not become ready" even though
+    // the process is alive and listening (visible in CI logs as an orphan
+    // node process still running at job cleanup).
+    ['vite', 'preview', '--host', HOST, '--port', String(PORT), '--strictPort'],
     { cwd: root, stdio: 'pipe' },
   );
   let previewOutput = '';
