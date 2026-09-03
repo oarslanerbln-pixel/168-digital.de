@@ -4,8 +4,8 @@ import { initReactI18next } from 'react-i18next';
 const resources = {
   en: {
     translation: {
-      "meta_title": "1618 Digital | Web Development & Cinematic Video Production · Berlin",
-      "meta_description": "1618 Digital builds custom websites & SaaS platforms, cinematic video & drone production, and social media content in Berlin. End-to-end digital solutions that grow your brand.",
+      "meta_title": "1618 Digital | Web & Video Production Studio, Berlin",
+      "meta_description": "Berlin studio for custom websites, SaaS platforms, cinematic video, drone footage, and social media content that grows your brand.",
       "hero_eyebrow": "Digital Studio · Berlin",
       "hero_title": "Where image and code become one.",
       "hero_title_pre": "Where ",
@@ -61,6 +61,7 @@ const resources = {
       "works_boxx36_desc": "Premium gastronomy supply platform featuring interactive 3D product integration.",
       "works_impulse_title": "Impulse Production",
       "works_impulse_desc": "High-end cinematic gateway for a creative production studio.",
+      "works_image_alt": "Screenshot of the {{title}} website",
       "about_title": "Approach",
       "about_subtitle": "Ratio. Judgment.",
       "about_text": "1.618 isn't a slogan for us — it's a working principle: the fewest, best-considered elements carrying the most weight. We pair technical precision with visual judgment across software, photography and film, shaping each project around what the brand actually needs rather than a fixed template.",
@@ -154,8 +155,8 @@ const resources = {
   },
   de: {
     translation: {
-      "meta_title": "1618 Digital | Webentwicklung & Kinoreife Videoproduktion · Berlin",
-      "meta_description": "1618 Digital entwickelt individuelle Websites & SaaS-Plattformen, kinoreife Video- und Drohnenproduktionen sowie Social-Media-Content in Berlin. Digitale Komplettlösungen für Ihr Wachstum.",
+      "meta_title": "1618 Digital | Web- & Videoproduktion, Berlin",
+      "meta_description": "Berliner Studio für individuelle Websites, SaaS-Plattformen, kinoreife Video- und Drohnenproduktion sowie Social-Media-Content.",
       "hero_eyebrow": "Digitalstudio · Berlin",
       "hero_title": "Wo Bild und Code eins werden.",
       "hero_title_pre": "Wo ",
@@ -207,6 +208,7 @@ const resources = {
       "works_sera_desc": "Premium-Event-Management-Plattform mit maßgeschneiderten digitalen Abläufen.",
       "works_impulse_title": "Impulse Production",
       "works_impulse_desc": "High-End-Kino-Portal für ein kreatives Produktionsstudio.",
+      "works_image_alt": "Screenshot der Website von {{title}}",
       "about_title": "Ansatz",
       "about_subtitle": "Proportion. Urteil.",
       "about_text": "1,618 ist für uns kein Slogan, sondern ein Arbeitsprinzip: möglichst wenige, möglichst durchdachte Elemente, die möglichst viel bewirken. Wir verbinden technische Präzision mit gestalterischem Urteilsvermögen — in Software, Fotografie und Film — und entwickeln jedes Projekt entlang dem, was die Marke wirklich braucht, statt nach Schema.",
@@ -300,8 +302,8 @@ const resources = {
   },
   tr: {
     translation: {
-      "meta_title": "1618 Digital | Web Geliştirme & Sinematik Video Prodüksiyon · Berlin",
-      "meta_description": "1618 Digital, Berlin'de özel web siteleri & SaaS platformları, sinematik video & drone prodüksiyonları ve sosyal medya içerikleri geliştirir. Markanızı büyüten uçtan uca dijital çözümler.",
+      "meta_title": "1618 Digital | Web & Video Prodüksiyon, Berlin",
+      "meta_description": "Berlin merkezli stüdyo: özel web siteleri, SaaS platformları, sinematik video & drone prodüksiyon ve sosyal medya içerikleri.",
       "hero_eyebrow": "Dijital Stüdyo · Berlin",
       "hero_title": "Görüntü ile kodun bir olduğu yer.",
       "hero_title_pre": "",
@@ -353,6 +355,7 @@ const resources = {
       "works_sera_desc": "Özel dijital akışlara sahip premium etkinlik yönetim platformu.",
       "works_impulse_title": "Impulse Production",
       "works_impulse_desc": "Yaratıcı bir prodüksiyon stüdyosu için üst düzey sinematik giriş.",
+      "works_image_alt": "{{title}} web sitesinin ekran görüntüsü",
       "about_title": "Yaklaşım",
       "about_subtitle": "Oran. Karar.",
       "about_text": "1.618 bizim için bir slogan değil, bir çalışma ilkesi: en az sayıda, en doğru düşünülmüş öğeyle en çok etkiyi yaratmak. Yazılım, fotoğraf ve filmde teknik hassasiyeti görsel kararla birleştiriyor, her projeyi hazır bir şablona değil markanın gerçek ihtiyacına göre şekillendiriyoruz.",

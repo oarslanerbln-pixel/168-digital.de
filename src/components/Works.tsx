@@ -58,11 +58,17 @@ export default function Works() {
               transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Live-site capture, shown as shot — the photograph is the
-                  only colour on the card. */}
+                  only colour on the card. This is the card's primary
+                  content, not decoration, so it carries real alt text:
+                  was alt="" (correct only for purely decorative images),
+                  which meant screen-reader visitors got no description of
+                  any of the five portfolio pieces, and Google Images had
+                  nothing to index them by — a real channel for a design
+                  studio's own portfolio. */}
               <div className="project-card-media">
                 <img
                   src={project.image}
-                  alt=""
+                  alt={t('works_image_alt', { title: t(project.titleKey) })}
                   loading="lazy"
                   className="project-card-media-img"
                 />
