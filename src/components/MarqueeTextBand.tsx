@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import './MarqueeTextBand.css';
 
 const defaultWords = [
@@ -20,22 +19,19 @@ interface MarqueeTextBandProps {
 
 export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
   const strip = buildStrip(words);
-  const dur = 40; // seconds for one full loop
 
   return (
     <div className="marquee-band">
       {/* fade masks left & right */}
       <div className="marquee-mask" />
 
-      <motion.div
-        animate={{ x: direction === 'left' ? [0, -2400] : [-2400, 0] }}
-        transition={{ duration: dur, ease: 'linear', repeat: Infinity }}
-        className="marquee-inner"
+      <div
+        className={`marquee-inner direction-${direction}`}
       >
         <span className="marquee-text">
           {strip}
         </span>
-      </motion.div>
+      </div>
     </div>
   );
 }

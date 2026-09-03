@@ -21,6 +21,32 @@
   will-change: transform;
 }
 
+.marquee-inner.direction-left {
+  animation: scroll-left 40s linear infinite;
+}
+
+.marquee-inner.direction-right {
+  animation: scroll-right 40s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-2400px);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-2400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
 .marquee-text {
   font-size: clamp(0.9rem, 1.5vw, 1.1rem);
   font-weight: 600;
