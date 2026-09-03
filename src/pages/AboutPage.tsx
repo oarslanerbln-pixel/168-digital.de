@@ -18,9 +18,13 @@ export default function AboutPage() {
 
   return (
     <>
+      {/* Was t('about_headline', …) — a key that doesn't exist anywhere in
+          i18n.ts, so the browser tab title silently fell back to its
+          hardcoded English default in every language. about_subtitle is
+          the key About.tsx actually renders as the on-page headline. */}
       <SEOHead
         path="/about"
-        title={`${t('about_headline', 'Ratio. Ethics.')} — 1618 Digital`}
+        title={`${t('about_subtitle', 'Ratio. Judgment.')} — 1618 Digital`}
       />
       <div className="subpage">
         <div className="subpage-head">

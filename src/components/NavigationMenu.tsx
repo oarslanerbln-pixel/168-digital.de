@@ -91,7 +91,7 @@ export default function NavigationMenu() {
   ];
 
   const morePages = [
-    { to: '/about', label: t('nav_about', 'Philosophy') },
+    { to: '/about', label: t('nav_about', 'Approach') },
     { to: '/concepts', label: t('nav_concepts', 'Concepts') },
     { to: '/blog', label: t('nav_blog', 'Blog') },
   ];
