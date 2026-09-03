@@ -41,9 +41,14 @@ export default function Contact() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        {/* Holographic Header */}
+        {/* Card heading. Deliberately its own key (contact_form_title),
+            not contact_title: on the homepage this is the only heading
+            for the section, but on /contact (ContactPage.tsx) the page
+            already has an H1 with that exact text right above this card
+            — reusing it here printed "Initiate a Project" twice on the
+            same screen. */}
         <div className="contact-header">
-          <h2 className="contact-title">{t('contact_title')}</h2>
+          <h2 className="contact-title">{t('contact_form_title', 'Send us a message')}</h2>
           <div className="contact-decorative-line" />
         </div>
 
@@ -57,7 +62,7 @@ export default function Contact() {
               animate={{ rotate: [0, 15, -15, 0], scale: [1, 1.2, 1] }}
               transition={{ duration: 0.8 }}
             >
-              <Sparkles size={52} />
+              <Sparkles size={44} color="var(--accent-cyan)" strokeWidth={1.5} />
             </motion.div>
             <span>{t('contact_success')}</span>
           </motion.div>

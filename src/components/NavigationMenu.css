@@ -1,34 +1,28 @@
 /* ═══════════════════════════════════════════════════════════════
-   PREMIUM FUTURISTIC NAV MATRIX
+   NAVIGATION — light overlay, ink type, three tiers.
    ═══════════════════════════════════════════════════════════════ */
 
-/* ─── Floating hamburger trigger ───
+/* ─── Trigger ───
 
-   Positioned with `right`, so it is only ever where you expect it if the
-   page has not widened the viewport underneath it. That guarantee now
-   comes from the overflow clamp on <html> in index.css; this button was
-   the most visible casualty when it was missing — on a 390px phone the
-   layout resolved to 434px and the button laid out at x=410, entirely
-   off-screen.
-
-   Styling is a plain ink disc: solid, high contrast on the light ground,
-   no bronze glow and no orbiting dashed ring. */
+   Positioned with `right`, which only lands where you expect it while the
+   page has not widened the viewport underneath it. That guarantee comes
+   from the overflow clamp on <html> in index.css. */
 .nav-toggle-btn {
   position: fixed;
   top: 28px;
   right: 28px;
-  z-index: 99999;
-  border: 1px solid var(--text-main);
-  color: var(--bg-dark);
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid var(--text-main);
+  background: var(--text-main);
+  color: var(--bg-dark);
   cursor: pointer;
   outline: none;
-  background: var(--text-main);
   box-shadow: 0 6px 20px rgba(18, 18, 17, 0.16);
   transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
 }
@@ -39,322 +33,177 @@
   transform: scale(1.04);
 }
 
-/* The perpetually spinning dashed ring around the button was pure
-   decoration competing with the hero for attention. Kept in the DOM for
-   the open/close state transition, but no longer drawn. */
-.nav-btn-ring {
-  display: none;
+/* Open state: inverted, so the button reads as "close" against the
+   light panel behind it. */
+.nav-toggle-btn.open {
+  background: var(--bg-raised);
+  color: var(--text-main);
+  border-color: var(--line-strong);
 }
 
-@keyframes nav-ring-spin {
-  to { transform: rotate(360deg); }
+.nav-toggle-btn.open:hover {
+  background: var(--text-main);
+  color: var(--bg-dark);
+  border-color: var(--text-main);
 }
 
-.nav-btn-label {
-  position: absolute;
-  right: 68px;
-  font-family: monospace;
-  font-size: 7.5px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: var(--accent-cyan);
-  background: rgba(10, 9, 8, 0.85);
-  padding: 5px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateX(10px);
-  transition: all 0.3s var(--ease-premium);
-  white-space: nowrap;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-}
+/* ─── Overlay ───
 
-.nav-toggle-btn:hover .nav-btn-label {
-  opacity: 0.95;
-  transform: translateX(0);
-}
+   NOTE: do not add another class here that also sets `position`. The
+   previous markup carried `hud-scanline-container`, whose
+   `position: relative` beat this rule at equal specificity — the overlay
+   then laid out in normal flow and never covered the full screen.
 
-/* Full Screen Overlay Matrix */
+   `100dvh` tracks the *dynamic* viewport on mobile, so the panel still
+   reaches the bottom edge when the browser's address bar collapses;
+   `100vh` is the fallback for engines without dvh. */
 .nav-overlay {
   position: fixed;
   inset: 0;
-  background: linear-gradient(135deg, rgba(8, 7, 6, 0.98) 0%, rgba(5, 5, 5, 0.99) 100%);
-  -webkit-backdrop-filter: blur(25px);
-  backdrop-filter: blur(25px);
-  z-index: 99998;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 24px;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 99999;
+  background: var(--bg-dark);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
-/* Scrollable Content Wrapper */
-.nav-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  max-width: 650px;
-  margin: auto 0;
-  padding: 80px 0;
-  position: relative;
-  z-index: 5;
-}
-
-/* Grid Backdrop */
-.nav-grid-overlay {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
-  background-position: center;
-  pointer-events: none;
-  z-index: -1;
-}
-
-/* Ambient glowing nodes inside overlay */
-.nav-ambient-glow {
-  position: absolute;
-  width: 50vw;
-  height: 50vw;
-  max-width: 600px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 70%);
-  bottom: -20%;
-  left: -10%;
-  pointer-events: none;
-  z-index: -1;
-  filter: blur(50px);
-}
-
-/* HUD telemetry corners */
-.nav-hud-bracket {
-  position: absolute;
-  width: 24px;
-  height: 24px;
-  border-color: rgba(255, 255, 255, 0.25);
-  border-style: solid;
-  pointer-events: none;
-  transition: all 0.5s;
-}
-.nav-hud-bracket.top-left { top: 40px; left: 40px; border-width: 2px 0 0 2px; }
-.nav-hud-bracket.top-right { top: 40px; right: 40px; border-width: 2px 2px 0 0; }
-.nav-hud-bracket.bottom-left { bottom: 40px; left: 40px; border-width: 0 0 2px 2px; }
-.nav-hud-bracket.bottom-right { bottom: 40px; right: 40px; border-width: 0 2px 2px 0; }
-
-.nav-overlay:hover .nav-hud-bracket {
-  border-color: rgba(255, 255, 255, 0.45);
-}
-
-/* Bottom status bar */
-.nav-hud-status-bar {
-  position: absolute;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 30px;
-  font-family: monospace;
-  font-size: 8px;
-  color: rgba(250, 248, 246, 0.5);
-  letter-spacing: 2px;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-/* Links List */
-.nav-links-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  align-items: center;
-  max-width: 100%;
-  width: 100%;
-}
-
-.nav-link-wrapper {
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-/* Premium Link Button */
-.nav-link-btn {
-  background: transparent;
-  border: none;
-  color: rgba(250, 248, 246, 0.4);
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(1.4rem, 4.5vw, 2.8rem);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 4px;
-  cursor: pointer;
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transition: color 0.4s var(--ease-premium);
-  position: relative;
-  outline: none;
-  width: 100%;
-  white-space: normal;
-  word-wrap: break-word;
-}
-
-/* Slide up details on hover */
-.nav-link-num {
-  font-family: monospace;
-  font-size: 0.8rem;
-  letter-spacing: 2px;
-  color: var(--accent-cyan);
-  opacity: 0.5;
-  transition: all 0.4s;
-}
-
-.nav-link-text {
-  position: relative;
-  transition: transform 0.4s var(--ease-premium);
-  max-width: 100%;
-  text-align: center;
-  word-break: keep-all;
-  overflow-wrap: break-word;
-}
-
-.nav-link-sub {
-  font-family: monospace;
-  font-size: 8.5px;
-  color: rgba(250, 248, 246, 0.5);
-  letter-spacing: 2px;
+/* Floating widgets are siblings of the overlay, so they cannot be styled
+   from inside it. While the menu is open <body> carries .nav-menu-open and
+   they step aside — previously they sat on top of (well, below the short
+   edge of) the panel. */
+body.nav-menu-open .wa-widget-wrapper,
+body.nav-menu-open .angebot-fab,
+body.nav-menu-open .lang-toggle-btn,
+body.nav-menu-open .home-logo-wrap {
   opacity: 0;
-  transform: translateY(5px);
-  transition: all 0.4s var(--ease-premium);
-  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.25s var(--ease-premium);
 }
 
-/* Hover behaviors */
-.nav-link-btn:hover {
-  color: #faf8f6;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.25);
+.nav-panel {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 120px 32px 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
 }
 
-.nav-link-btn:hover .nav-link-num {
+/* ─── Tier 1: pages ─── */
+.nav-pages {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--line);
+}
+
+.nav-page-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  width: 100%;
+  padding: 22px 2px;
+  border: none;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  text-align: left;
+  cursor: pointer;
+  transition: padding-left 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
+}
+
+.nav-page-item:hover {
+  padding-left: 12px;
+  border-color: var(--line-strong);
+}
+
+.nav-page-label {
+  font-size: clamp(1.75rem, 5vw, 2.75rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.nav-page-arrow {
+  flex-shrink: 0;
+  color: var(--text-faint);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.35s var(--ease-premium), transform 0.35s var(--ease-premium), color 0.35s var(--ease-premium);
+}
+
+.nav-page-item:hover .nav-page-arrow {
   opacity: 1;
-  transform: scale(1.1);
-}
-
-.nav-link-btn:hover .nav-link-sub {
-  opacity: 0.8;
-  transform: translateY(0);
+  transform: translateX(0);
   color: var(--accent-cyan);
 }
 
-/* Hover crosshairs/lines */
-.nav-link-btn::before,
-.nav-link-btn::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  width: 75%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-  transform: translateX(-50%) scaleX(0);
-  transition: transform 0.4s var(--ease-premium);
-  pointer-events: none;
+/* ─── Tiers 2 & 3: grouped, clearly secondary ─── */
+.nav-group {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.nav-link-btn::before {
-  top: 0;
+.nav-group-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-faint);
 }
 
-.nav-link-btn::after {
-  bottom: 0;
+.nav-group-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 28px;
 }
 
-.nav-link-btn:hover::before,
-.nav-link-btn:hover::after {
-  transform: translateX(-50%) scaleX(1);
-}
-
-.nav-services-list {
-  margin-top: 8px;
-  gap: 4px;
-}
-
-.nav-service-link {
+.nav-sub-item {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--text-muted);
   text-decoration: none;
-  flex-direction: row;
-  font-size: clamp(0.85rem, 2.2vw, 1.05rem);
-  letter-spacing: 1.5px;
-  gap: 10px;
-  padding: 6px 20px;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s var(--ease-premium), border-color 0.3s var(--ease-premium);
 }
 
-.nav-service-link .nav-link-num {
-  font-size: 0.85rem;
-  opacity: 0.6;
+.nav-sub-item:hover {
+  color: var(--text-main);
+  border-bottom-color: var(--text-main);
 }
 
-/* Bottom Links */
-.nav-bottom-links {
-  margin-top: 50px;
-  display: flex;
-  gap: 24px;
-  align-items: center;
-  z-index: 10;
-}
-
-.nav-whatsapp-link {
-  display: flex;
+/* ─── Footer action ─── */
+.nav-whatsapp {
+  display: inline-flex;
   align-items: center;
   gap: 10px;
-  color: #25d366;
+  align-self: flex-start;
+  padding: 14px 24px;
+  border: 1px solid var(--line-strong);
+  color: var(--text-main);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  background: rgba(37, 211, 102, 0.05);
-  padding: 14px 28px;
-  border-radius: 12px;
-  border: 1px solid rgba(37, 211, 102, 0.2);
-  transition: all 0.3s var(--ease-premium);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
 }
 
-.nav-whatsapp-link:hover {
-  background: rgba(37, 211, 102, 0.12);
-  border-color: rgba(37, 211, 102, 0.4);
-  box-shadow: 
-    0 8px 25px rgba(0, 0, 0, 0.5),
-    0 0 15px rgba(37, 211, 102, 0.15);
-  transform: translateY(-2px);
+.nav-whatsapp:hover {
+  background: var(--text-main);
+  border-color: var(--text-main);
+  color: var(--bg-dark);
 }
 
-/* ─── Responsive Media Queries ─── */
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+
 @media (max-width: 768px) {
-  .nav-hud-status-bar {
-    display: none; /* Hide status bar on tablet */
-  }
-  
-  .nav-hud-bracket {
-    top: 24px !important;
-    bottom: 24px !important;
-    left: 24px !important;
-    right: 24px !important;
-    width: 16px;
-    height: 16px;
-  }
-  
-  .nav-btn-label {
-    display: none; /* Hide label to the left of the button */
-  }
-  
   .nav-toggle-btn {
     top: 18px;
     right: 18px;
@@ -362,67 +211,30 @@
     height: 46px;
   }
 
-  .nav-content-wrapper {
-    padding: 60px 0 40px 0;
+  .nav-panel {
+    padding: 92px 24px 48px;
+    gap: 40px;
   }
 
-  .nav-links-container {
-    gap: 12px;
-  }
-  
-  .nav-link-btn {
-    font-size: clamp(1.1rem, 4vw, 1.8rem);
-    letter-spacing: 2px;
-    padding: 8px 10px;
-  }
-  
-  .nav-link-num {
-    font-size: 0.7rem;
-  }
-  
-  .nav-link-sub {
-    font-size: 7.5px;
-    letter-spacing: 1px;
-    max-width: 90%;
-    line-height: 1.3;
-  }
-  
-  .nav-bottom-links {
-    margin-top: 30px;
+  .nav-page-item {
+    padding: 18px 2px;
   }
 }
 
 @media (max-width: 480px) {
-  .nav-overlay {
-    padding: 0 16px;
+  .nav-panel {
+    padding: 84px 20px 44px;
+    gap: 34px;
   }
 
-  .nav-content-wrapper {
-    padding: 50px 0 30px 0;
+  /* The arrow has no hover to reveal it on touch, so it is always on. */
+  .nav-page-arrow {
+    opacity: 1;
+    transform: none;
   }
 
-  .nav-links-container {
+  .nav-group-items {
+    flex-direction: column;
     gap: 8px;
-  }
-
-  .nav-link-btn {
-    font-size: clamp(0.95rem, 4vw, 1.3rem);
-    letter-spacing: 1.5px;
-    padding: 6px 8px;
-  }
-  
-  .nav-link-sub {
-    font-size: 7px;
-    letter-spacing: 0.5px;
-  }
-  
-  .nav-bottom-links {
-    margin-top: 24px;
-  }
-  
-  .nav-whatsapp-link {
-    padding: 10px 20px;
-    font-size: 0.85rem;
-    border-radius: 8px;
   }
 }

@@ -13,9 +13,8 @@ export default function Works() {
   return (
     <>
       <section id="works" className="section-container">
-        <h2 className="works-headline">
-          <span className="text-silver">{t('works_title')}</span>
-        </h2>
+        <span className="works-overline">{t('works_overline', 'Selected work')}</span>
+        <h2 className="works-headline">{t('works_title')}</h2>
         <p className="works-subtitle">{t('works_subtitle')}</p>
         <button
           type="button"
@@ -46,17 +45,20 @@ export default function Works() {
               role="button"
               tabIndex={0}
               aria-label={t(project.titleKey)}
-              className="glass-panel-silver glow-card project-card"
-              initial={{ opacity: 0, y: 30 }}
+              /* `glow-card` is gone: it painted a conic-gradient border
+                 spinning on a permanent 6s loop behind every card, and
+                 `glass-panel-silver` brought a competing background and
+                 its own hover lift. Hover is now handled entirely in CSS
+                 (one transform + shadow), and no project colour is
+                 injected — see the .project-card note in index.css. */
+              className={`project-card${index === 0 ? ' project-card-featured' : ''}`}
+              initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.8, delay: index * 0.1, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{ y: -12, scale: 1.01 }}
-              style={{
-                ['--card-glow' as string]: project.color,
-              }}
+              viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
+              transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Live-site capture, tinted to the project's own accent color */}
+              {/* Live-site capture, shown as shot — the photograph is the
+                  only colour on the card. */}
               <div className="project-card-media">
                 <img
                   src={project.image}
@@ -71,20 +73,12 @@ export default function Works() {
                 <span className="project-card-number">
                   {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
                 </span>
-                <motion.div
-                  whileHover={{ rotate: 45, scale: 1.2 }}
-                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <ArrowUpRight size={24} color="var(--card-glow)" />
-                </motion.div>
+                <ArrowUpRight className="project-card-arrow" size={18} strokeWidth={1.5} aria-hidden="true" />
               </div>
-
-              {/* Accent top line */}
-              <div className="project-card-divider" />
 
               {/* Content */}
               <div className="project-card-content">
-                <h3 className="text-silver project-card-title">
+                <h3 className="project-card-title">
                   {t(project.titleKey)}
                 </h3>
                 <p className="project-card-desc">
