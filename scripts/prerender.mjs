@@ -131,7 +131,10 @@ async function main() {
     // the process is alive and listening (visible in CI logs as an orphan
     // node process still running at job cleanup).
     ['vite', 'preview', '--host', HOST, '--port', String(PORT), '--strictPort'],
-    { cwd: root, stdio: 'pipe' },
+    // detached: true puts this process in its own process group, so it
+    // (and any further child it spawns) can be killed as a group below —
+    // see the note on preview.kill() in the finally block.
+    { cwd: root, stdio: 'pipe', detached: true },
   );
   let previewOutput = '';
   preview.stdout.on('data', (d) => { previewOutput += d; });
@@ -181,10 +184,28 @@ async function main() {
       await browser.close();
     }
   } finally {
-    preview.kill();
+    // preview.kill() would only signal the immediate `npx` process. On at
+    // least some CI runners `npx` doesn't exec into `vite` but spawns it as
+    // a further child instead, so that grandchild's listening socket (and
+    // this script's own stdout/stderr pipes into it, still open) survives
+    // a plain kill — which was silently hanging this entire build step (and
+    // so the whole CI job, for well over an hour, past a job-level timeout
+    // this workflow doesn't set) even though "done" below had already
+    // logged: Node won't exit on its own while those pipes stay open.
+    // Killing the whole process group (negative pid, enabled by `detached`
+    // above) reaches the grandchild too.
+    try {
+      process.kill(-preview.pid, 'SIGTERM');
+    } catch {
+      // already exited
+    }
   }
 
   console.log(`[prerender] done: ${routes.length} route(s) written.`);
+  // Belt-and-braces: exit explicitly rather than relying on Node's event
+  // loop draining naturally, so no lingering handle (from vite preview or
+  // otherwise) can hang the process past this point ever again.
+  process.exit(0);
 }
 
 async function waitForServer(url, timeoutMs = 15_000) {
