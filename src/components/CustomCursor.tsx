@@ -40,9 +40,9 @@ export default function CustomCursor() {
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (
-        window.getComputedStyle(target).cursor === 'pointer' ||
         target.closest('a') ||
-        target.closest('button')
+        target.closest('button') ||
+        window.getComputedStyle(target).cursor === 'pointer'
       ) {
         setIsHovered(true);
       } else {
