@@ -1,13 +1,17 @@
-import { useState, useRef, ReactNode } from 'react';
-import { motion } from 'framer-motion';
+import { useRef, ReactNode } from 'react';
+import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Home, Video, Grid, Mail, MessageCircle } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
 import './FloatingHUD.css';
 
 // Premium Magnetic Wrapper
 function MagneticButton({ children, onClick, title, as = "button", href }: { children: ReactNode, onClick?: () => void, title?: string, as?: "button" | "a", href?: string }) {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
   const ref = useRef<HTMLButtonElement & HTMLAnchorElement>(null);
+
+  const mvX = useMotionValue(0);
+  const mvY = useMotionValue(0);
+  const springX = useSpring(mvX, { stiffness: 150, damping: 15, mass: 0.1 });
+  const springY = useSpring(mvY, { stiffness: 150, damping: 15, mass: 0.1 });
 
   const handleMouse = (e: React.MouseEvent) => {
     if (!ref.current) return;
@@ -15,11 +19,13 @@ function MagneticButton({ children, onClick, title, as = "button", href }: { chi
     const { height, width, left, top } = ref.current.getBoundingClientRect();
     const middleX = clientX - (left + width / 2);
     const middleY = clientY - (top + height / 2);
-    setPosition({ x: middleX * 0.35, y: middleY * 0.35 });
+    mvX.set(middleX * 0.35);
+    mvY.set(middleY * 0.35);
   };
 
   const reset = () => {
-    setPosition({ x: 0, y: 0 });
+    mvX.set(0);
+    mvY.set(0);
   };
 
   const Component = as === "a" ? motion.a : motion.button;
@@ -32,8 +38,7 @@ function MagneticButton({ children, onClick, title, as = "button", href }: { chi
       onMouseLeave={reset}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      animate={{ x: position.x, y: position.y }}
-      transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.1 }}
+      style={{ x: springX, y: springY }}
       onClick={onClick}
       href={href}
       target={as === "a" ? "_blank" : undefined}
