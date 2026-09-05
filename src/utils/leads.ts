@@ -2,9 +2,10 @@
    LEADS — Delivers contact form & chat leads to email via Web3Forms
    ----------------------------------------------------------------
    Leads are delivered to whichever inbox registered the access key
-   currently set in the VITE_WEB3FORMS_KEY env var (arslaner1993@gmail.com
-   as of writing — confirmed fine to keep as-is). No server or SMTP
-   password required.
+   currently set in the VITE_WEB3FORMS_KEY env var — intended to be
+   info.1618digital@gmail.com, the address published on the contact page
+   and in the Impressum, so replies come from the same inbox visitors
+   already write to. No server or SMTP password required.
 
    If the destination inbox ever needs to change, Web3Forms has no
    per-request "to" override — register a new key under the new inbox

@@ -731,6 +731,23 @@ html, body {
   color: var(--text-main);
 }
 
+/* Sits inline after the title so the label reads as part of the project's
+   name, not as a separate piece of metadata. Deliberately quiet: an outline
+   rather than a fill, so it states the status without competing with it. */
+.project-card-beta {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  border: 1px solid var(--line-strong);
+  border-radius: 30px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  vertical-align: middle;
+  color: var(--text-muted);
+}
+
 .project-card-featured .project-card-title {
   font-size: 1.5rem;
 }

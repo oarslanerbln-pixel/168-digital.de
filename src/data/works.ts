@@ -5,7 +5,10 @@ export interface WorkProject {
   descKey: string;
   tags: string[];
   color: string;
-  image: string;
+  /** Omitted while a project has no live-site capture yet. */
+  image?: string;
+  /** Marks work that is published but not finished, labelled as such on the card. */
+  beta?: boolean;
 }
 
 export const projects: WorkProject[] = [
@@ -53,6 +56,15 @@ export const projects: WorkProject[] = [
     tags: ['Vercel', 'Video', 'Branding'],
     color: '#f59e0b',
     image: '/works/impulse.webp',
+  },
+  {
+    id: 'medisade',
+    url: 'https://medisade.de/',
+    titleKey: 'works_medisade_title',
+    descKey: 'works_medisade_desc',
+    tags: ['Next.js', 'Supabase', 'OCR'],
+    color: '#14b8a6',
+    beta: true,
   },
 ];
 
