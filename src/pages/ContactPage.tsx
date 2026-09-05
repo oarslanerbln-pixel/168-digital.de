@@ -68,9 +68,9 @@ export default function ContactPage() {
             <h3 className="text-silver service-feature-title">WhatsApp</h3>
             <p className="service-feature-desc">{t('wa_tap_to_chat')}</p>
           </a>
-          <a href="mailto:info@1618-digital.de" className="glass-panel-silver glow-card service-feature-card service-card-link">
+          <a href="mailto:info.1618digital@gmail.com" className="glass-panel-silver glow-card service-feature-card service-card-link">
             <Mail size={20} color="var(--accent-silver)" strokeWidth={1.5} />
-            <h3 className="text-silver service-feature-title">info@1618-digital.de</h3>
+            <h3 className="text-silver service-feature-title">info.1618digital@gmail.com</h3>
             <p className="service-feature-desc">Email / E-Mail</p>
           </a>
           <div className="glass-panel-silver glow-card service-feature-card">

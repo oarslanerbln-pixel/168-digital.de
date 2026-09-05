@@ -23,7 +23,7 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
           Germany<br /><br />
 
           <strong>Contact:</strong><br />
-          E-Mail: info@1618-digital.de
+          E-Mail: info.1618digital@gmail.com
         </p>
         <p>
           Gemäß § 19 UStG wird als Kleinunternehmer keine Umsatzsteuer berechnet und ausgewiesen.
@@ -75,7 +75,7 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
           1618 Digital<br/>
           Ömer Arslaner<br/>
           Wirmerzeile 4, 13627 Berlin<br/>
-          E-Mail: info@1618-digital.de<br/>
+          E-Mail: info.1618digital@gmail.com<br/>
           Telefon: +49 178 7277867
         </p>
 
