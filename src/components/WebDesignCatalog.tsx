@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { webDesignConcepts } from '../data/webDesignConcepts';
 import ConceptMockup from './ConceptMockup';
@@ -25,6 +26,7 @@ function loadCatalogFonts() {
 }
 
 export default function WebDesignCatalog() {
+  const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -63,16 +65,16 @@ export default function WebDesignCatalog() {
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="services-overline">DESIGN LIBRARY</span>
+          <span className="services-overline">{t('wd_overline')}</span>
           {/* "Concepts" used to be an italic outline (-webkit-text-stroke in
               bronze) that read as a different, scrappier typeface next to
               the solid words beside it. It is now simply the same heading
               in the muted ink, which sets it apart without shouting. */}
           <h2 className="services-title">
-            50 Premium Web <em className="wd-title-em">Concepts</em>
+            {t('wd_title_pre')}<em className="wd-title-em">{t('wd_title_em')}</em>
           </h2>
           <p className="services-subtitle">
-            A curated collection of highly aesthetic, conversion-optimized design archetypes crafted for forward-thinking brands.
+            {t('wd_subtitle')}
           </p>
         </motion.div>
 
@@ -113,7 +115,7 @@ export default function WebDesignCatalog() {
               onClick={() => setIsExpanded(true)}
               className="wd-explore-btn"
             >
-              <span>Explore All Concepts</span>
+              <span>{t('wd_explore_cta')}</span>
             </button>
           </div>
         )}

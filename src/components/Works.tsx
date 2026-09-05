@@ -58,15 +58,18 @@ export default function Works() {
               transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
             >
               {/* Live-site capture, shown as shot — the photograph is the
-                  only colour on the card. */}
-              <div className="project-card-media">
-                <img
-                  src={project.image}
-                  alt=""
-                  loading="lazy"
-                  className="project-card-media-img"
-                />
-              </div>
+                  only colour on the card. Omitted entirely for work that has
+                  no capture yet, rather than rendering a broken image. */}
+              {project.image && (
+                <div className="project-card-media">
+                  <img
+                    src={project.image}
+                    alt=""
+                    loading="lazy"
+                    className="project-card-media-img"
+                  />
+                </div>
+              )}
 
               {/* Project Number Header */}
               <div className="project-card-header">
@@ -80,6 +83,9 @@ export default function Works() {
               <div className="project-card-content">
                 <h3 className="project-card-title">
                   {t(project.titleKey)}
+                  {project.beta && (
+                    <span className="project-card-beta">{t('works_beta_badge')}</span>
+                  )}
                 </h3>
                 <p className="project-card-desc">
                   {t(project.descKey)}
