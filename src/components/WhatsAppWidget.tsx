@@ -10,26 +10,28 @@ export default function WhatsAppWidget() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [phoneCopied, setPhoneCopied] = useState(false);
 
-  // Close tooltip on scroll
+  // Only attach global listeners (scroll, click outside) when the tooltip is actually open.
+  // This avoids firing handlers on every single scroll tick globally when it's closed.
   useEffect(() => {
-    const handleScroll = () => {
-      setIsExpanded(false);
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    if (!isExpanded) return;
 
-  // Close tooltip on click outside
-  useEffect(() => {
+    const handleScroll = () => setIsExpanded(false);
+
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest('.wa-widget-wrapper')) {
         setIsExpanded(false);
       }
     };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
     document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [isExpanded]);
 
   const getWhatsAppLink = () => {
     const message = t('wa_message');
