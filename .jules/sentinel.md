@@ -7,3 +7,8 @@
 **Vulnerability:** Missing security headers (X-Frame-Options, X-Content-Type-Options, etc.) in the Vercel deployment configuration (`vercel.json`).
 **Learning:** Modern web apps deployed via Vercel often omit basic HTTP security headers by default, exposing the app to risks like clickjacking (if framed) and MIME-type sniffing.
 **Prevention:** Always define a `headers` block in `vercel.json` matching `/(.*)` with standard security headers (Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) for defense in depth.
+
+## 2026-09-12 - [Missing Input Length Limits]
+**Vulnerability:** User inputs in the contact form and Angebot modal lacked maximum length restrictions.
+**Learning:** Unrestricted input lengths can be exploited to cause a Denial of Service (DoS) by sending excessively large payloads, consuming server or external API resources (Web3Forms).
+**Prevention:** Always implement length constraints on user inputs both in the HTML (using `maxLength`) and in the submit handler (using `.slice()` or similar validation logic) as a defense-in-depth measure.
