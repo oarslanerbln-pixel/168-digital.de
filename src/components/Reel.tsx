@@ -10,8 +10,33 @@ const words = [
   "CINEMATICS"
 ];
 
-export default function Reel() {
+function ReelTextCarousel() {
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIndex((prev) => (prev + 1) % words.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <AnimatePresence mode="wait">
+      <motion.h2
+        key={index}
+        initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
+        animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+        exit={{ opacity: 0, y: -15, filter: 'blur(8px)' }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className="reel-text text-silver"
+      >
+        {words[index]}
+      </motion.h2>
+    </AnimatePresence>
+  );
+}
+
+export default function Reel() {
   const [inView, setInView] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -23,13 +48,6 @@ export default function Reel() {
   // Smooth springs to avoid jittery movements
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 120, damping: 15 });
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 120, damping: 15 });
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % words.length);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, []);
 
   // Defer fetching the multi-megabyte video source until this section is
   // actually about to scroll into view, instead of downloading it eagerly
@@ -44,18 +62,33 @@ export default function Reel() {
     }
   }, [inView]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Cache bounding box to avoid layout thrashing on mousemove
+  const rectCache = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+
+  const handleMouseEnter = () => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
+    rectCache.current = {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+      width: rect.width,
+      height: rect.height,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!rectCache.current) return;
+    const { left, top, width, height } = rectCache.current;
+
+    const mouseX = e.pageX - left - width / 2;
+    const mouseY = e.pageY - top - height / 2;
+
     x.set(mouseX / width);
     y.set(mouseY / height);
   };
 
   const handleMouseLeave = () => {
+    rectCache.current = null;
     x.set(0);
     y.set(0);
   };
@@ -76,6 +109,7 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
@@ -105,18 +139,7 @@ export default function Reel() {
 
         {/* Animated Text Overlay */}
         <div className="reel-text-overlay" style={{ transform: 'translateZ(30px) translate(-50%, -50%)' }}>
-          <AnimatePresence mode="wait">
-            <motion.h2
-              key={index}
-              initial={{ opacity: 0, y: 15, filter: 'blur(8px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -15, filter: 'blur(8px)' }}
-              transition={{ duration: 0.6, ease: "easeOut" }}
-              className="reel-text text-silver"
-            >
-              {words[index]}
-            </motion.h2>
-          </AnimatePresence>
+          <ReelTextCarousel />
         </div>
       </motion.div>
     </div>
