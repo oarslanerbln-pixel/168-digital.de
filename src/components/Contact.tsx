@@ -15,9 +15,9 @@ export default function Contact() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const message = String(data.get('message') || '').trim();
+    const name = String(data.get('name') || '').trim().slice(0, 100);
+    const email = String(data.get('email') || '').trim().slice(0, 150);
+    const message = String(data.get('message') || '').trim().slice(0, 2000);
 
     setStatus('sending');
     const delivered = await sendLead({ name, email, message, source: 'Contact Form' });
@@ -79,6 +79,7 @@ export default function Contact() {
                   placeholder=" "
                   id="contact-name"
                   className="premium-input"
+                  maxLength={100}
                 />
                 <label htmlFor="contact-name" className="premium-label">{t('contact_name')}</label>
                 <div className="input-focus-border" />
@@ -92,6 +93,7 @@ export default function Contact() {
                   placeholder=" "
                   id="contact-email"
                   className="premium-input"
+                  maxLength={150}
                 />
                 <label htmlFor="contact-email" className="premium-label">{t('contact_email')}</label>
                 <div className="input-focus-border" />
@@ -107,6 +109,7 @@ export default function Contact() {
                 placeholder=" "
                 id="contact-message"
                 className="premium-input premium-textarea"
+                maxLength={2000}
               />
               <label htmlFor="contact-message" className="premium-label">{t('contact_message')}</label>
               <div className="input-focus-border" />

@@ -30,10 +30,10 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const service = String(data.get('service') || '').trim();
-    const details = String(data.get('message') || '').trim();
+    const name = String(data.get('name') || '').trim().slice(0, 100);
+    const email = String(data.get('email') || '').trim().slice(0, 150);
+    const service = String(data.get('service') || '').trim().slice(0, 150);
+    const details = String(data.get('message') || '').trim().slice(0, 2000);
     const message = service ? `Service: ${service}\n\n${details}` : details;
 
     setStatus('sending');
@@ -92,12 +92,12 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="input-group">
               <div className="input-field-wrapper">
-                <input required type="text" name="name" placeholder=" " id="angebot-name" className="premium-input" />
+                <input required type="text" name="name" placeholder=" " id="angebot-name" className="premium-input" maxLength={100} />
                 <label htmlFor="angebot-name" className="premium-label">{t('contact_name')}</label>
                 <div className="input-focus-border" />
               </div>
               <div className="input-field-wrapper">
-                <input required type="email" name="email" placeholder=" " id="angebot-email" className="premium-input" />
+                <input required type="email" name="email" placeholder=" " id="angebot-email" className="premium-input" maxLength={150} />
                 <label htmlFor="angebot-email" className="premium-label">{t('contact_email')}</label>
                 <div className="input-focus-border" />
               </div>
@@ -114,7 +114,7 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
             </div>
 
             <div className="input-field-wrapper">
-              <textarea rows={4} name="message" placeholder=" " id="angebot-message" className="premium-input premium-textarea" />
+              <textarea rows={4} name="message" placeholder=" " id="angebot-message" className="premium-input premium-textarea" maxLength={2000} />
               <label htmlFor="angebot-message" className="premium-label">{t('contact_message')}</label>
               <div className="input-focus-border" />
             </div>
