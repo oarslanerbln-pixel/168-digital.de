@@ -1,3 +1,4 @@
+import React, { useMemo } from 'react';
 import './MarqueeTextBand.css';
 
 const defaultWords = [
@@ -17,8 +18,9 @@ interface MarqueeTextBandProps {
   words?: string[];
 }
 
-export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
-  const strip = buildStrip(words);
+const MarqueeTextBand = React.memo(function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
+  // Memoize the strip calculation to avoid unnecessary string concatenation on re-renders
+  const strip = useMemo(() => buildStrip(words), [words]);
 
   return (
     <div className="marquee-band">
@@ -34,4 +36,6 @@ export default function MarqueeTextBand({ direction = 'left', words = defaultWor
       </div>
     </div>
   );
-}
+});
+
+export default MarqueeTextBand;
