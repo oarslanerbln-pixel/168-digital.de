@@ -7,3 +7,8 @@
 **Vulnerability:** Missing security headers (X-Frame-Options, X-Content-Type-Options, etc.) in the Vercel deployment configuration (`vercel.json`).
 **Learning:** Modern web apps deployed via Vercel often omit basic HTTP security headers by default, exposing the app to risks like clickjacking (if framed) and MIME-type sniffing.
 **Prevention:** Always define a `headers` block in `vercel.json` matching `/(.*)` with standard security headers (Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) for defense in depth.
+
+## 2026-09-13 - [Security Enhancement: Client-side Email Validation]
+**Vulnerability:** Contact form allowed any string to be sent to Web3Forms API without email format verification.
+**Learning:** React client forms without robust server-side validation require client-side defense in depth. `package-lock.json` modifications via `npm install` on an agent's environment can cause severe cross-platform dependency issues.
+**Prevention:** Avoid running `npm install` and committing `package-lock.json` without verifying changes to ensure other architectures' dependencies are not removed.

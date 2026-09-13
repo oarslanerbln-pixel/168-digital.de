@@ -9,6 +9,11 @@ export default function Contact() {
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [dsgvoConsent, setDsgvoConsent] = useState(false);
 
+  // Simple regex for email validation
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!dsgvoConsent || status === 'sending') return;
@@ -18,6 +23,11 @@ export default function Contact() {
     const name = String(data.get('name') || '').trim();
     const email = String(data.get('email') || '').trim();
     const message = String(data.get('message') || '').trim();
+
+    if (!isValidEmail(email)) {
+      setStatus('error');
+      return;
+    }
 
     setStatus('sending');
     const delivered = await sendLead({ name, email, message, source: 'Contact Form' });
