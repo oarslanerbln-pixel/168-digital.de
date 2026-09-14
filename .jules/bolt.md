@@ -1,6 +1,3 @@
-## 2024-11-20 - Fast DOM query short-circuit
-**Learning:**  is an expensive synchronous layout/style read. When chaining with other DOM checks like , always put  at the end to leverage short-circuiting.
-**Action:** When handling frequent UI events (like `mousemove` or `mouseover`), arrange conditional checks so that fast methods (`closest`, `matches`) are evaluated before slow layout reads (`getComputedStyle`, `getBoundingClientRect`).
-## 2024-11-20 - Fast DOM query short-circuit
-**Learning:** `window.getComputedStyle(target)` is an expensive synchronous layout/style read. When chaining with other DOM checks like `target.closest()`, always put `getComputedStyle` at the end to leverage short-circuiting.
-**Action:** When handling frequent UI events (like `mousemove` or `mouseover`), arrange conditional checks so that fast methods (`closest`, `matches`) are evaluated before slow layout reads (`getComputedStyle`, `getBoundingClientRect`).
+## 2024-03-24 - React Scroll and Interval Optimizations
+**Learning:** React state updates and Framer Motion animations inside a `setInterval` (like the rotating text in the Reel component) run continuously in the background even when the component is off-screen. Similarly, global `scroll` event listeners on components that only need them under specific states (like the WhatsApp tooltip being expanded) fire unnecessarily on every scroll event.
+**Action:** When working with continuous animations or intervals, always use intersection observers (like Framer Motion's `useInView`) to pause execution when the element is not visible. For global event listeners tied to temporary UI states, conditionally attach the listener only when that state is active.

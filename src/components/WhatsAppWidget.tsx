@@ -12,12 +12,14 @@ export default function WhatsAppWidget() {
 
   // Close tooltip on scroll
   useEffect(() => {
+    if (!isExpanded) return;
+
     const handleScroll = () => {
       setIsExpanded(false);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isExpanded]);
 
   // Close tooltip on click outside
   useEffect(() => {
