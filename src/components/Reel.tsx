@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion';
 import './Reel.css';
 
 const words = [
@@ -24,12 +24,15 @@ export default function Reel() {
   const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 120, damping: 15 });
   const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 120, damping: 15 });
 
+  const isCardInView = useInView(cardRef);
+
   useEffect(() => {
+    if (!isCardInView) return;
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % words.length);
     }, 2500);
     return () => clearInterval(interval);
-  }, []);
+  }, [isCardInView]);
 
   // Defer fetching the multi-megabyte video source until this section is
   // actually about to scroll into view, instead of downloading it eagerly
