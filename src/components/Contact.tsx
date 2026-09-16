@@ -112,30 +112,36 @@ export default function Contact() {
               <div className="input-focus-border" />
             </div>
 
-            {/* DSGVO Consent */}
-            <div
-              className={`dsgvo-checkbox-wrapper ${dsgvoConsent ? 'active' : ''}`}
-              onClick={() => setDsgvoConsent(!dsgvoConsent)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  setDsgvoConsent(!dsgvoConsent);
-                }
-              }}
-              role="checkbox"
-              aria-checked={dsgvoConsent}
-              tabIndex={0}
-            >
-              <div className="dsgvo-icon">
-                {dsgvoConsent ? (
-                  <CheckSquare size={22} color="var(--accent-cyan)" />
-                ) : (
-                  <Square size={22} color="rgba(18, 18, 17,0.35)" />
-                )}
-              </div>
-              <p className="dsgvo-text">
-                {t('contact_dsgvo_consent')}
-              </p>
+            {/* DSGVO Consent.
+
+                A real <input type="checkbox"> rather than a div carrying
+                role="checkbox". The div version looked identical but was not
+                a form control: it never took part in form validation, screen
+                readers announced a widget the browser could not operate, and
+                — because the whole row was the click target — tapping the
+                "Datenschutz" link inside the label text toggled the consent
+                instead of opening the policy. The native control fixes all
+                three, and the custom icon is kept purely as decoration. */}
+            <div className={`dsgvo-checkbox-wrapper ${dsgvoConsent ? 'active' : ''}`}>
+              <input
+                required
+                type="checkbox"
+                id="contact-dsgvo"
+                name="dsgvo"
+                className="dsgvo-native-checkbox"
+                checked={dsgvoConsent}
+                onChange={(e) => setDsgvoConsent(e.target.checked)}
+              />
+              <label htmlFor="contact-dsgvo" className="dsgvo-label">
+                <span className="dsgvo-icon" aria-hidden="true">
+                  {dsgvoConsent ? (
+                    <CheckSquare size={22} color="var(--accent-cyan)" />
+                  ) : (
+                    <Square size={22} color="rgba(18, 18, 17,0.35)" />
+                  )}
+                </span>
+                <span className="dsgvo-text">{t('contact_dsgvo_consent')}</span>
+              </label>
             </div>
 
             {/* Submit Button */}
