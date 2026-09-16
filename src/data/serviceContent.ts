@@ -122,18 +122,18 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
 
   'video-drone-production': {
     en: {
-      metaTitle: '1618 Digital | Cinematic & Drone Video Production Berlin',
+      metaTitle: '1618 Digital | Video & Drone Production Berlin',
       metaDescription:
-        'Cinematic video production, aerial drone footage and DaVinci Resolve color grading for brands and businesses in Berlin — trailers, ads and storytelling.',
+        'Video production, aerial drone footage and DaVinci Resolve color grading for brands and businesses in Berlin — trailers, ads and storytelling.',
       overline: 'PRODUCTION',
-      h1: 'Cinematic & Drone Video Production in Berlin',
+      h1: 'Video & Drone Production in Berlin',
       intro: [
-        'We produce high-end video content for brands that need more than a phone-shot reel: aerial drone footage, product and brand films, and cinematic trailers that make your business look as good as it performs.',
-        'Every project goes through professional color grading in DaVinci Resolve, giving footage a consistent, cinematic look — whether it\'s an aerial shot of your facility, a product launch teaser, or a full brand story built for ads and social media.',
+        'We produce high-end video content for brands that need more than a phone-shot reel: aerial drone footage, product and brand films, and trailers that make your business look as good as it performs.',
+        'Every project goes through professional color grading in DaVinci Resolve, giving footage a consistent, professional look — whether it\'s an aerial shot of your facility, a product launch teaser, or a full brand story built for ads and social media.',
       ],
       features: [
         { title: 'Aerial Drone Filming', desc: 'Licensed drone operation for real estate, hospitality, events and corporate footage.' },
-        { title: 'Brand & Product Films', desc: 'Cinematic storytelling that presents your product or business at its best.' },
+        { title: 'Brand & Product Films', desc: 'Storytelling that presents your product or business at its best.' },
         { title: 'DaVinci Resolve Color Grading', desc: 'Professional color work that gives every project a consistent, premium look.' },
         { title: 'Trailers & Ad Cuts', desc: 'Short-form, high-impact edits built specifically for paid ads and social platforms.' },
         { title: 'On-Location & Studio Shoots', desc: 'Full production support, from concept and shot list to final delivery.' },
@@ -141,7 +141,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       process: [
         { title: 'Concept & Shot Planning', desc: 'We define the story, locations and shot list before a single frame is filmed.' },
-        { title: 'Filming', desc: 'On-site production with drone and cinema-grade equipment, directed for your brand.' },
+        { title: 'Filming', desc: 'On-site production with drone and professional-grade equipment, directed for your brand.' },
         { title: 'Edit & Color Grade', desc: 'Full post-production, sound design and color grading in DaVinci Resolve.' },
       ],
       faq: [
@@ -154,18 +154,18 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: ['impulse'],
     },
     de: {
-      metaTitle: '1618 Digital | Kino-Video- & Drohnenproduktion Berlin',
+      metaTitle: '1618 Digital | Video- & Drohnenproduktion Berlin',
       metaDescription:
-        'Kinoreife Videoproduktion, Drohnenaufnahmen und DaVinci Resolve Color Grading für Marken und Unternehmen in Berlin — Trailer, Werbespots und Storytelling.',
+        'Videoproduktion, Drohnenaufnahmen und DaVinci Resolve Color Grading für Marken und Unternehmen in Berlin — Trailer, Werbespots und Storytelling.',
       overline: 'PRODUKTION',
-      h1: 'Kino-Video- & Drohnenproduktion in Berlin',
+      h1: 'Video- & Drohnenproduktion in Berlin',
       intro: [
-        'Wir produzieren hochwertigen Videocontent für Marken, die mehr brauchen als ein Handy-Reel: Drohnenaufnahmen, Produkt- und Markenfilme sowie kinoreife Trailer, die Ihr Unternehmen so gut aussehen lassen, wie es performt.',
-        'Jedes Projekt durchläuft professionelles Color Grading in DaVinci Resolve für einen konsistenten, kinoreifen Look — ob Luftaufnahme Ihres Standorts, Teaser für einen Produktlaunch oder komplette Markengeschichte für Ads und Social Media.',
+        'Wir produzieren hochwertigen Videocontent für Marken, die mehr brauchen als ein Handy-Reel: Drohnenaufnahmen, Produkt- und Markenfilme sowie Trailer, die Ihr Unternehmen so gut aussehen lassen, wie es performt.',
+        'Jedes Projekt durchläuft professionelles Color Grading in DaVinci Resolve für einen konsistenten, professionellen Look — ob Luftaufnahme Ihres Standorts, Teaser für einen Produktlaunch oder komplette Markengeschichte für Ads und Social Media.',
       ],
       features: [
         { title: 'Drohnenaufnahmen', desc: 'Lizenzierter Drohnenbetrieb für Immobilien, Hospitality, Events und Unternehmensaufnahmen.' },
-        { title: 'Marken- & Produktfilme', desc: 'Kinoreifes Storytelling, das Ihr Produkt oder Unternehmen bestmöglich präsentiert.' },
+        { title: 'Marken- & Produktfilme', desc: 'Storytelling, das Ihr Produkt oder Unternehmen bestmöglich präsentiert.' },
         { title: 'DaVinci Resolve Color Grading', desc: 'Professionelle Farbkorrektur für einen konsistenten, hochwertigen Look bei jedem Projekt.' },
         { title: 'Trailer & Werbespots', desc: 'Kurzformatige, wirkungsvolle Schnitte, speziell für bezahlte Anzeigen und Social-Media-Plattformen.' },
         { title: 'Vor-Ort- & Studio-Drehs', desc: 'Vollständige Produktionsbegleitung von Konzept und Shot-Liste bis zur finalen Auslieferung.' },
@@ -173,7 +173,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       process: [
         { title: 'Konzept & Shot-Planung', desc: 'Wir definieren Story, Locations und Shot-Liste, bevor eine einzige Einstellung gedreht wird.' },
-        { title: 'Dreh', desc: 'Produktion vor Ort mit Drohne und Kino-tauglichem Equipment, inszeniert für Ihre Marke.' },
+        { title: 'Dreh', desc: 'Produktion vor Ort mit Drohne und professionellem Equipment, inszeniert für Ihre Marke.' },
         { title: 'Schnitt & Color Grading', desc: 'Vollständige Postproduktion, Sounddesign und Color Grading in DaVinci Resolve.' },
       ],
       faq: [
@@ -186,18 +186,18 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: ['impulse'],
     },
     tr: {
-      metaTitle: '1618 Digital | Sinematik & Drone Video Prodüksiyon Berlin',
+      metaTitle: '1618 Digital | Video & Drone Prodüksiyon Berlin',
       metaDescription:
-        'Berlin\'de markalar ve işletmeler için sinematik video prodüksiyon, drone çekimi ve DaVinci Resolve renk düzenleme — fragman, reklam ve hikaye anlatımı.',
+        'Berlin\'de markalar ve işletmeler için video prodüksiyon, drone çekimi ve DaVinci Resolve renk düzenleme — fragman, reklam ve hikaye anlatımı.',
       overline: 'PRODÜKSİYON',
-      h1: 'Berlin\'de Sinematik & Drone Video Prodüksiyon',
+      h1: 'Berlin\'de Video & Drone Prodüksiyon',
       intro: [
-        'Telefonla çekilmiş bir videodan fazlasına ihtiyaç duyan markalar için üst düzey video içerikleri üretiyoruz: drone çekimleri, ürün ve marka filmleri ile işletmenizi performansı kadar iyi gösteren sinematik fragmanlar.',
-        'Her proje, DaVinci Resolve\'de profesyonel renk düzenlemesinden geçer ve tutarlı, sinematik bir görünüm kazanır — tesisinizin havadan görüntüsü, bir ürün lansmanı teaser\'ı ya da reklam ve sosyal medya için tam bir marka hikayesi olsun fark etmez.',
+        'Telefonla çekilmiş bir videodan fazlasına ihtiyaç duyan markalar için üst düzey video içerikleri üretiyoruz: drone çekimleri, ürün ve marka filmleri ile işletmenizi performansı kadar iyi gösteren fragmanlar.',
+        'Her proje, DaVinci Resolve\'de profesyonel renk düzenlemesinden geçer ve tutarlı, profesyonel bir görünüm kazanır — tesisinizin havadan görüntüsü, bir ürün lansmanı teaser\'ı ya da reklam ve sosyal medya için tam bir marka hikayesi olsun fark etmez.',
       ],
       features: [
         { title: 'Drone Çekimi', desc: 'Emlak, hizmet sektörü, etkinlikler ve kurumsal çekimler için lisanslı drone operasyonu.' },
-        { title: 'Marka & Ürün Filmleri', desc: 'Ürününüzü veya işletmenizi en iyi şekilde sunan sinematik hikaye anlatımı.' },
+        { title: 'Marka & Ürün Filmleri', desc: 'Ürününüzü veya işletmenizi en iyi şekilde sunan hikaye anlatımı.' },
         { title: 'DaVinci Resolve Renk Düzenleme', desc: 'Her projeye tutarlı, premium bir görünüm kazandıran profesyonel renk çalışması.' },
         { title: 'Fragman & Reklam Kurguları', desc: 'Ücretli reklamlar ve sosyal medya platformları için özel olarak kurgulanmış kısa ve etkili videolar.' },
         { title: 'Mekanda & Stüdyoda Çekim', desc: 'Konsept ve çekim listesinden nihai teslimata kadar tam prodüksiyon desteği.' },
@@ -205,7 +205,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       process: [
         { title: 'Konsept & Çekim Planlaması', desc: 'Tek bir kare çekilmeden önce hikayeyi, mekanları ve çekim listesini belirliyoruz.' },
-        { title: 'Çekim', desc: 'Drone ve sinema kalitesinde ekipmanla, markanıza göre yönetilen mekanda prodüksiyon.' },
+        { title: 'Çekim', desc: 'Drone ve profesyonel ekipmanla, markanıza göre yönetilen mekanda prodüksiyon.' },
         { title: 'Kurgu & Renk Düzenleme', desc: 'DaVinci Resolve\'de tam post-prodüksiyon, ses tasarımı ve renk düzenleme.' },
       ],
       faq: [
@@ -221,18 +221,18 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
 
   'wedding-event-films': {
     en: {
-      metaTitle: '1618 Digital | Wedding & Event Cinematography Berlin',
+      metaTitle: '1618 Digital | Wedding & Event Films Berlin',
       metaDescription:
-        'Emotional, cinematic wedding and event films in Berlin. Full-day coverage, drone shots and film-quality editing that captures every moment.',
+        'Emotional wedding and event films in Berlin. Full-day coverage, drone shots and film-quality editing that captures every moment.',
       overline: 'WEDDINGS & EVENTS',
-      h1: 'Wedding & Event Cinematography in Berlin',
+      h1: 'Wedding & Event Films in Berlin',
       intro: [
-        'Your wedding day happens once — we film it like the cinematic story it deserves. From getting-ready shots to the last dance, we capture the real, emotional moments in high resolution and give them the color and pacing of a film, not a home video.',
+        'Your wedding day happens once — we film it like the story it deserves. From getting-ready shots to the last dance, we capture the real, emotional moments in high resolution and give them the color and pacing of a film, not a home video.',
         'The same care goes into corporate and private events: conferences, launches, and celebrations filmed with a documentary eye and delivered as a polished highlight film your team or family will actually rewatch.',
       ],
       features: [
         { title: 'Full-Day Wedding Coverage', desc: 'From preparation to the final send-off, filmed discreetly so the day feels natural, not staged.' },
-        { title: 'Cinematic Highlight Films', desc: 'A 3–6 minute edit that captures the emotional arc of your day, set to music and paced like a film.' },
+        { title: 'Wedding Highlight Films', desc: 'A 3–6 minute edit that captures the emotional arc of your day, set to music and paced like a film.' },
         { title: 'Aerial & Venue Shots', desc: 'Drone footage of your venue and location, woven into the story where it fits.' },
         { title: 'Corporate Event Filming', desc: 'Conferences, launches and celebrations captured and edited into a shareable recap.' },
         { title: 'Multi-Camera Coverage', desc: 'Multiple angles ensure no key moment — vows, speeches, reactions — is ever missed.' },
@@ -253,18 +253,18 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     de: {
-      metaTitle: '1618 Digital | Hochzeits- & Event-Kinematografie Berlin',
+      metaTitle: '1618 Digital | Hochzeits- & Eventfilme Berlin',
       metaDescription:
-        'Emotionale, kinoreife Hochzeits- und Eventfilme in Berlin. Ganztägige Begleitung, Drohnenaufnahmen und Schnitt in Filmqualität, der jeden Moment einfängt.',
+        'Emotionale Hochzeits- und Eventfilme in Berlin. Ganztägige Begleitung, Drohnenaufnahmen und Schnitt in Filmqualität, der jeden Moment einfängt.',
       overline: 'HOCHZEITEN & EVENTS',
-      h1: 'Hochzeits- & Event-Kinematografie in Berlin',
+      h1: 'Hochzeits- & Eventfilme in Berlin',
       intro: [
-        'Ihr Hochzeitstag passiert einmal — wir filmen ihn wie die kinoreife Geschichte, die er verdient. Vom Getting-Ready bis zum letzten Tanz halten wir die echten, emotionalen Momente in hoher Auflösung fest und geben ihnen die Farbgebung und den Rhythmus eines Films, kein Home-Video.',
+        'Ihr Hochzeitstag passiert einmal — wir filmen ihn wie die Geschichte, die er verdient. Vom Getting-Ready bis zum letzten Tanz halten wir die echten, emotionalen Momente in hoher Auflösung fest und geben ihnen die Farbgebung und den Rhythmus eines Films, kein Home-Video.',
         'Dieselbe Sorgfalt gilt für Firmen- und private Events: Konferenzen, Launches und Feiern, mit dokumentarischem Blick gefilmt und als polierter Höhepunktfilm geliefert, den Ihr Team oder Ihre Familie wirklich wieder ansieht.',
       ],
       features: [
         { title: 'Ganztägige Hochzeitsbegleitung', desc: 'Von der Vorbereitung bis zur letzten Verabschiedung, diskret gefilmt, damit sich der Tag natürlich anfühlt, nicht gestellt.' },
-        { title: 'Kinoreife Höhepunktfilme', desc: 'Ein 3–6-minütiger Schnitt, der den emotionalen Bogen Ihres Tages einfängt, vertont und im Tempo eines Films.' },
+        { title: 'Hochzeits-Höhepunktfilme', desc: 'Ein 3–6-minütiger Schnitt, der den emotionalen Bogen Ihres Tages einfängt, vertont und im Tempo eines Films.' },
         { title: 'Luft- & Location-Aufnahmen', desc: 'Drohnenaufnahmen Ihrer Location, dort in die Geschichte eingewoben, wo sie passen.' },
         { title: 'Firmenevent-Filmproduktion', desc: 'Konferenzen, Launches und Feiern, festgehalten und zu einem teilbaren Recap geschnitten.' },
         { title: 'Mehrkamera-Abdeckung', desc: 'Mehrere Kamerawinkel stellen sicher, dass kein wichtiger Moment — Gelübde, Reden, Reaktionen — verpasst wird.' },
@@ -285,18 +285,18 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
     tr: {
-      metaTitle: '1618 Digital | Düğün & Etkinlik Sinematografisi Berlin',
+      metaTitle: '1618 Digital | Düğün & Etkinlik Filmleri Berlin',
       metaDescription:
-        'Berlin\'de duygusal, sinematik düğün ve etkinlik filmleri. Tüm gün çekim, drone görüntüleri ve her anı yakalayan film kalitesinde kurgu.',
+        'Berlin\'de duygusal düğün ve etkinlik filmleri. Tüm gün çekim, drone görüntüleri ve her anı yakalayan film kalitesinde kurgu.',
       overline: 'DÜĞÜN & ETKİNLİK',
-      h1: 'Berlin\'de Düğün & Etkinlik Sinematografisi',
+      h1: 'Berlin\'de Düğün & Etkinlik Filmleri',
       intro: [
-        'Düğün gününüz bir kez yaşanır — onu hak ettiği sinematik hikaye gibi çekiyoruz. Hazırlıktan son dansa kadar gerçek, duygusal anları yüksek çözünürlükte yakalıyor ve onlara ev videosu değil, bir filmin rengini ve temposunu veriyoruz.',
+        'Düğün gününüz bir kez yaşanır — onu hak ettiği hikaye gibi çekiyoruz. Hazırlıktan son dansa kadar gerçek, duygusal anları yüksek çözünürlükte yakalıyor ve onlara ev videosu değil, bir filmin rengini ve temposunu veriyoruz.',
         'Aynı özeni kurumsal ve özel etkinliklere de gösteriyoruz: konferanslar, lansmanlar ve kutlamalar belgesel bakış açısıyla çekilip, ekibinizin veya ailenizin gerçekten tekrar izleyeceği cilalı bir özet filme dönüştürülüyor.',
       ],
       features: [
         { title: 'Tüm Gün Düğün Çekimi', desc: 'Hazırlıktan son uğurlamaya kadar, günün doğal hissettirmesi için sezdirmeden çekiliyor.' },
-        { title: 'Sinematik Özet Filmler', desc: 'Gününüzün duygusal akışını yakalayan, müzikli ve bir film temposunda 3-6 dakikalık kurgu.' },
+        { title: 'Düğün Özet Filmleri', desc: 'Gününüzün duygusal akışını yakalayan, müzikli ve bir film temposunda 3-6 dakikalık kurgu.' },
         { title: 'Havadan & Mekan Görüntüleri', desc: 'Mekanınızın drone görüntüleri, hikayeye uygun yerlerde işleniyor.' },
         { title: 'Kurumsal Etkinlik Çekimi', desc: 'Konferanslar, lansmanlar ve kutlamalar çekilip paylaşılabilir bir özet videoya dönüştürülüyor.' },
         { title: 'Çoklu Kamera Çekimi', desc: 'Birden fazla açı, yeminler, konuşmalar, tepkiler gibi kritik anların asla kaçırılmamasını sağlar.' },

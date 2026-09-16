@@ -48,7 +48,7 @@ const cards = [
     icon: Camera,
     titleKey: 'service_event_title',
     descKey: 'service_event_desc',
-    tags: ['Events', 'Weddings', 'Cinematic'],
+    tags: ['Events', 'Weddings', 'Documentary'],
     slug: 'wedding-event-films',
   },
 ];
