@@ -2,7 +2,7 @@
 .ambient-bg {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: var(--z-backdrop);
   pointer-events: none;
   overflow: hidden;
   background: var(--bg-dark);

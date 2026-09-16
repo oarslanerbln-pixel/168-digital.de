@@ -2,7 +2,7 @@
 .preloader-overlay-p {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: var(--z-preloader);
   background: var(--bg-dark);
   display: flex;
   justify-content: center;

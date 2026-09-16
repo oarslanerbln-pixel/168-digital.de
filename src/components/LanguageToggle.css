@@ -8,7 +8,7 @@
   position: fixed;
   top: 28px;
   left: 28px;
-  z-index: 100;
+  z-index: var(--z-chrome);
   display: inline-flex;
   align-items: center;
   justify-content: center;

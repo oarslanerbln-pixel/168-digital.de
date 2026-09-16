@@ -11,7 +11,7 @@
   position: fixed;
   top: 28px;
   right: 28px;
-  z-index: 100000;
+  z-index: var(--z-nav-toggle);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -62,7 +62,7 @@
   inset: 0;
   height: 100vh;
   height: 100dvh;
-  z-index: 99999;
+  z-index: var(--z-nav-panel);
   background: var(--bg-dark);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;

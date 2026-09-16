@@ -40,6 +40,29 @@
   --accent-silver: #121211;    /* .text-silver headings read as ink */
   --accent-platinum: #ffffff;
 
+  /* ── Stacking order ──────────────────────────────────────────────
+     Every element that escapes the document flow (position: fixed) takes
+     its layer from this list, so the order of the site's chrome is one
+     decision recorded in one place instead of an arms race of literals.
+     The values it replaced had drifted to 100, 999, 9000, 9999, 10000,
+     99999, 100000 and 999999 — the menu button's 100000 beat the
+     preloader's 9999, which is why the hamburger painted on top of the
+     intro overlay.
+
+     Gaps of 100 leave room to slot a new layer in without renumbering.
+     ──────────────────────────────────────────────────────────────── */
+  --z-backdrop: -1;      /* ambient canvas, section background washes */
+  --z-content: 10;       /* in-flow sections above the backdrop */
+  --z-chrome: 100;       /* logo, language toggle */
+  --z-fab: 900;          /* WhatsApp + Angebot floating buttons */
+  --z-cursor: 1000;      /* custom cursor, never interactive */
+  --z-nav-panel: 2000;   /* full-screen navigation overlay */
+  --z-nav-toggle: 2100;  /* its close button — must outrank the panel */
+  --z-modal: 3000;       /* legal, offer and project modals */
+  --z-consent: 4000;     /* cookie banner: blocks consent-gated UI */
+  --z-devconsole: 5000;  /* owner-only tooling */
+  --z-preloader: 6000;   /* the intro covers everything while it runs */
+
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -272,7 +295,7 @@ html, body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  z-index: 9999;
+  z-index: var(--z-modal);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1305,13 +1328,41 @@ html, body {
 .dsgvo-checkbox-wrapper {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
   padding: 20px;
   border-radius: 16px;
   background: rgba(18, 18, 17, 0.03);
   border: 1px solid rgba(18, 18, 17, 0.08);
-  cursor: pointer;
   transition: all 0.3s ease;
+}
+
+/* The real control. Kept in the layout (not display:none, which would take
+   it out of the accessibility tree and off the keyboard tab order) but
+   visually replaced by the icon in the label — so the browser still runs
+   `required` validation and screen readers still announce a checkbox. */
+.dsgvo-native-checkbox {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  margin: 0;
+  pointer-events: none;
+}
+
+/* The label is the click target, which is what makes the icon and the text
+   toggle the box natively — no JS click handler on the row. */
+.dsgvo-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  cursor: pointer;
+}
+
+/* Keyboard focus lands on the hidden input; show it on the row instead, so
+   a keyboard user can see where they are. */
+.dsgvo-native-checkbox:focus-visible + .dsgvo-label .dsgvo-icon {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .dsgvo-checkbox-wrapper.active {
@@ -1325,7 +1376,7 @@ html, body {
   transition: transform 0.2s;
 }
 
-.dsgvo-checkbox-wrapper:hover .dsgvo-icon {
+.dsgvo-label:hover .dsgvo-icon {
   transform: scale(1.1);
 }
 
