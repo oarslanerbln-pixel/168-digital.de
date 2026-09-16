@@ -7,3 +7,8 @@
 **Vulnerability:** Missing security headers (X-Frame-Options, X-Content-Type-Options, etc.) in the Vercel deployment configuration (`vercel.json`).
 **Learning:** Modern web apps deployed via Vercel often omit basic HTTP security headers by default, exposing the app to risks like clickjacking (if framed) and MIME-type sniffing.
 **Prevention:** Always define a `headers` block in `vercel.json` matching `/(.*)` with standard security headers (Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) for defense in depth.
+
+## 2026-09-16 - [Session Storage Authentication Bypass]
+**Vulnerability:** DevConsole authentication could be bypassed by manually setting a boolean flag ('1618_dev_authenticated': 'true') in sessionStorage.
+**Learning:** Relying on simple boolean flags in client-side storage for authentication checks allows any user with developer tools to bypass security gateways.
+**Prevention:** Store a cryptographic hash or secure token in client storage and re-verify it against the expected server-side or environment-configured secret on load.

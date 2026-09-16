@@ -45,8 +45,8 @@ export default function DevConsole({ isOpen, onClose }: DevConsoleProps) {
   // Fetch / save states
   useEffect(() => {
     // Check if previously authenticated in this session
-    const isSessionAuthed = sessionStorage.getItem('1618_dev_authenticated') === 'true';
-    if (isSessionAuthed) {
+    const storedHash = sessionStorage.getItem('1618_dev_token_hash');
+    if (MASTER_HASH && storedHash === MASTER_HASH) {
       setIsAuthenticated(true);
     }
 
@@ -87,7 +87,7 @@ export default function DevConsole({ isOpen, onClose }: DevConsoleProps) {
       const hash = await sha256(cleanToken);
       if (MASTER_HASH && hash === MASTER_HASH) {
         setIsAuthenticated(true);
-        sessionStorage.setItem('1618_dev_authenticated', 'true');
+        sessionStorage.setItem('1618_dev_token_hash', hash);
         addLog("DECRYPT SUCCESS: MASTER SIGNATURE DETECTED", "success");
         addLog("DEVELOPER ACCESS GRANTED // WELCOME BACK ÖMER ARSLANER", "success");
         setAuthError(null);
