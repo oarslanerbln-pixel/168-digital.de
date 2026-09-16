@@ -703,11 +703,49 @@ html, body {
   height: 100%;
   object-fit: cover;
   display: block;
-  transition: transform 0.7s var(--ease-premium);
+  /* Quiet at rest so six very different screenshots read as one grid rather
+     than six competing pictures; full colour on hover, which is what makes
+     the card feel like it wakes up under the cursor. */
+  filter: saturate(0.82);
+  transform: scale(1.005); /* hides the edge the scale-down would expose */
+  transition: transform 0.7s var(--ease-premium), filter 0.5s var(--ease-premium);
 }
 
 .project-card:hover .project-card-media-img {
-  transform: scale(1.03);
+  transform: scale(1.04);
+  filter: saturate(1.06);
+}
+
+/* Stand-in for work whose capture doesn't exist yet. It holds the same box
+   as a photograph so the card keeps its silhouette, and states the absence
+   in the site's own editorial voice instead of leaving a gap. */
+.project-card-media-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      transparent 0 14px,
+      rgba(18, 18, 17, 0.022) 14px 28px
+    ),
+    var(--bg-sunken);
+}
+
+.project-card-monogram {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-faint);
+  opacity: 0.55;
+  transition: opacity 0.5s var(--ease-premium);
+}
+
+.project-card:hover .project-card-monogram {
+  opacity: 0.8;
 }
 
 /* ─── Header ─── */
@@ -741,7 +779,6 @@ html, body {
 
 /* ─── Content ─── */
 .project-card-content {
-  flex: 1;
   padding: 14px 26px 0;
 }
 
@@ -782,10 +819,16 @@ html, body {
 }
 
 /* ─── Tags ─── */
+/* `margin-top: auto` pins the tag row to the bottom of the card. Cards in a
+   row are stretched to the tallest one, and without this the tags floated
+   directly under a short description, leaving a visible hole beneath them.
+   Pinned, the hole becomes deliberate breathing room and the tag rows line
+   up across the row. */
 .project-card-tags {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: auto;
   padding: 20px 26px 26px;
 }
 

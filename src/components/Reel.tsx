@@ -10,9 +10,42 @@ const words = [
   "CINEMATICS"
 ];
 
+/**
+ * Decide what this visitor should download for the showreel.
+ *
+ * The clip is decoration: it plays muted and looping at 0.85 opacity behind
+ * a heavy vignette with the headline on top of it. Nobody reads the water,
+ * so it is encoded far below the panel's pixel size — and for anyone who has
+ * asked not to be sent megabytes, or not to be shown motion, the poster
+ * frame alone tells the same story at 54 KB.
+ *
+ * Resolved once, at mount, rather than on resize: swapping the source
+ * mid-playback would restart the clip, and the size difference between the
+ * two files does not justify that.
+ */
+function pickReelSource(): string | null {
+  if (typeof window === 'undefined') return null;
+
+  // Save-Data header equivalent — set by the visitor, or by the browser on a
+  // metered connection. Not in every browser's typings, hence the cast.
+  const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+  if (connection?.saveData) return null;
+
+  if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return null;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return null;
+
+  // A phone shows the panel about 360 px wide; the 960 file is for the
+  // 1184 px it reaches on a desktop.
+  return window.matchMedia('(max-width: 768px)').matches
+    ? '/reel-640.mp4'
+    : '/reel-960.mp4';
+}
+
 export default function Reel() {
   const [index, setIndex] = useState(0);
   const [inView, setInView] = useState(false);
+  // Resolved once on mount: which file to attach, or null for poster only.
+  const [source] = useState(pickReelSource);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -31,18 +64,17 @@ export default function Reel() {
     return () => clearInterval(interval);
   }, []);
 
-  // Defer fetching the multi-megabyte video source until this section is
-  // actually about to scroll into view, instead of downloading it eagerly
-  // on page load — it sits below the fold and shouldn't compete with the
-  // hero's initial paint for bandwidth.
+  // Defer fetching the video until this section is about to scroll into
+  // view, instead of downloading it eagerly on page load — it sits below
+  // the fold and shouldn't compete with the hero's initial paint.
   useEffect(() => {
-    if (inView && videoRef.current) {
+    if (inView && source && videoRef.current) {
       videoRef.current.load();
       videoRef.current.play().catch(error => {
         console.error("Video autoplay prevented:", error);
       });
     }
-  }, [inView]);
+  }, [inView, source]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -79,18 +111,23 @@ export default function Reel() {
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
-        {/* The Looping Aerial Drone Video — source is only attached once in view, see effect above */}
+        {/* The looping aerial drone clip. The source is attached only once the
+            panel is in view (see the effect above), and only if this visitor
+            should get one at all — otherwise the poster stands in for it.
+
+            The poster is a frame from the clip itself. It used to be
+            philosophy_cinematic_visual.webp, an unrelated image, so the panel
+            showed one picture and then cut to something else entirely. */}
         <video
           ref={videoRef}
           loop
           muted
           playsInline
           preload="none"
-          poster="/philosophy_cinematic_visual.webp"
+          poster="/reel-poster.webp"
           className="reel-video"
         >
-          {inView && <source src="/1618-intro-opt.mp4" type="video/mp4" />}
-          Your browser does not support the video tag.
+          {inView && source && <source src={source} type="video/mp4" />}
         </video>
         
         {/* Cinematic Vignette Overlay */}
