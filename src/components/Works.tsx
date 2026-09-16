@@ -6,9 +6,37 @@ import { playClick, playTick } from '../utils/audio';
 import ProjectModal from './ProjectModal';
 import { projects } from '../data/works';
 
+/**
+ * Two letters from the project name, for cards that have no capture yet.
+ *
+ * Splits on spaces and hyphens, and also inside a name that runs two words
+ * together in camel case — "MediSade" is M and S, not M and E.
+ */
+function monogram(title: string): string {
+  const parts = title
+    .trim()
+    .split(/[\s-]+/)
+    .flatMap(word => word.split(/(?<=[a-zà-ÿ])(?=[A-ZÀ-Þ])/))
+    .filter(Boolean);
+
+  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
+  return title.replace(/[^A-Za-zÀ-ÿ]/g, '').slice(0, 2).toUpperCase();
+}
+
 export default function Works() {
   const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+
+  /*
+   * The first card spans two of the three columns. That only closes the grid
+   * when the column units divide by three — with the span, n projects occupy
+   * n + 1 units. It worked at five projects and broke silently at six: the
+   * last card was left alone in a row two thirds empty.
+   *
+   * So the emphasis is applied only when it costs nothing. At six projects
+   * the grid is a clean 3 x 2; at five or eight the featured card comes back.
+   */
+  const featuredSpans = (projects.length + 1) % 3 === 0;
 
   return (
     <>
@@ -51,25 +79,35 @@ export default function Works() {
                  its own hover lift. Hover is now handled entirely in CSS
                  (one transform + shadow), and no project colour is
                  injected — see the .project-card note in index.css. */
-              className={`project-card${index === 0 ? ' project-card-featured' : ''}`}
+              className={`project-card${featuredSpans && index === 0 ? ' project-card-featured' : ''}`}
               initial={{ opacity: 0, y: 22 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
               transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
             >
-              {/* Live-site capture, shown as shot — the photograph is the
-                  only colour on the card. Omitted entirely for work that has
-                  no capture yet, rather than rendering a broken image. */}
-              {project.image && (
-                <div className="project-card-media">
+              {/* Live-site capture, shown as shot — the photograph is the only
+                  colour on the card.
+
+                  Work without a capture yet used to render no media block at
+                  all. That left one card in the grid as a bare slab of text
+                  among five photographs, and it was the last one — the grid
+                  fell apart exactly where a portfolio should close strongest.
+                  It now keeps the same silhouette as its neighbours and says
+                  plainly that the capture is still to come. */}
+              <div className="project-card-media">
+                {project.image ? (
                   <img
                     src={project.image}
                     alt=""
                     loading="lazy"
                     className="project-card-media-img"
                   />
-                </div>
-              )}
+                ) : (
+                  <div className="project-card-media-placeholder" aria-hidden="true">
+                    <span className="project-card-monogram">{monogram(t(project.titleKey))}</span>
+                  </div>
+                )}
+              </div>
 
               {/* Project Number Header */}
               <div className="project-card-header">
