@@ -27,14 +27,14 @@ export const services: ServiceMeta[] = [
     slug: 'video-drone-production',
     icon: Video,
     glowColor: '#f59e0b',
-    tags: ['Drone', 'Cinematic', 'Color Grading'],
+    tags: ['Drone', 'Aerial', 'Color Grading'],
     titleKey: 'service_media_title',
   },
   {
     slug: 'wedding-event-films',
     icon: Camera,
     glowColor: '#f43f5e',
-    tags: ['Weddings', 'Events', 'Cinematic'],
+    tags: ['Weddings', 'Events', 'Documentary'],
     titleKey: 'service_event_title',
   },
   {

@@ -7,7 +7,7 @@ const words = [
   "APP BUILDING",
   "SOFTWARE PRODUCTION",
   "AERIAL DRONE",
-  "CINEMATICS"
+  "COLOR GRADING"
 ];
 
 /**
