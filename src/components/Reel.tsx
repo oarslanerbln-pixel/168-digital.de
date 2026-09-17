@@ -48,6 +48,7 @@ export default function Reel() {
   const [source] = useState(pickReelSource);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const rectCacheRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
 
   // Motion values for smooth 3D tilt effect
   const x = useMotionValue(0);
@@ -76,13 +77,22 @@ export default function Reel() {
     }
   }, [inView, source]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = () => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
+    rectCacheRef.current = {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+      width: rect.width,
+      height: rect.height,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!rectCacheRef.current) return;
+    const { left, top, width, height } = rectCacheRef.current;
+    const mouseX = e.pageX - left - width / 2;
+    const mouseY = e.pageY - top - height / 2;
     x.set(mouseX / width);
     y.set(mouseY / height);
   };
@@ -90,6 +100,7 @@ export default function Reel() {
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    rectCacheRef.current = null;
   };
 
   return (
@@ -108,6 +119,7 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
