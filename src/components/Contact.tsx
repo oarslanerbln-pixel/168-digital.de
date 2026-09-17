@@ -76,6 +76,7 @@ export default function Contact() {
                   required
                   type="text"
                   name="name"
+                  maxLength={100}
                   placeholder=" "
                   id="contact-name"
                   className="premium-input"
@@ -89,6 +90,7 @@ export default function Contact() {
                   required
                   type="email"
                   name="email"
+                  maxLength={150}
                   placeholder=" "
                   id="contact-email"
                   className="premium-input"
@@ -104,6 +106,7 @@ export default function Contact() {
                 required
                 rows={5}
                 name="message"
+                maxLength={5000}
                 placeholder=" "
                 id="contact-message"
                 className="premium-input premium-textarea"

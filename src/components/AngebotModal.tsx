@@ -92,12 +92,12 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
           <form onSubmit={handleSubmit} className="contact-form">
             <div className="input-group">
               <div className="input-field-wrapper">
-                <input required type="text" name="name" placeholder=" " id="angebot-name" className="premium-input" />
+                <input required type="text" name="name" maxLength={100} placeholder=" " id="angebot-name" className="premium-input" />
                 <label htmlFor="angebot-name" className="premium-label">{t('contact_name')}</label>
                 <div className="input-focus-border" />
               </div>
               <div className="input-field-wrapper">
-                <input required type="email" name="email" placeholder=" " id="angebot-email" className="premium-input" />
+                <input required type="email" name="email" maxLength={150} placeholder=" " id="angebot-email" className="premium-input" />
                 <label htmlFor="angebot-email" className="premium-label">{t('contact_email')}</label>
                 <div className="input-focus-border" />
               </div>
@@ -114,7 +114,7 @@ export default function AngebotModal({ onClose }: AngebotModalProps) {
             </div>
 
             <div className="input-field-wrapper">
-              <textarea rows={4} name="message" placeholder=" " id="angebot-message" className="premium-input premium-textarea" />
+              <textarea rows={4} name="message" maxLength={5000} placeholder=" " id="angebot-message" className="premium-input premium-textarea" />
               <label htmlFor="angebot-message" className="premium-label">{t('contact_message')}</label>
               <div className="input-focus-border" />
             </div>
