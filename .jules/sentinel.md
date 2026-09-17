@@ -7,3 +7,8 @@
 **Vulnerability:** Missing security headers (X-Frame-Options, X-Content-Type-Options, etc.) in the Vercel deployment configuration (`vercel.json`).
 **Learning:** Modern web apps deployed via Vercel often omit basic HTTP security headers by default, exposing the app to risks like clickjacking (if framed) and MIME-type sniffing.
 **Prevention:** Always define a `headers` block in `vercel.json` matching `/(.*)` with standard security headers (Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) for defense in depth.
+
+## 2026-11-20 - Missing Input Length Limits
+**Vulnerability:** Forms in `src/components/Contact.tsx` and `src/components/AngebotModal.tsx` lacked `maxLength` constraints on their inputs (`name`, `email`, `message`), creating a risk for Client-Side DoS via excessively large payloads.
+**Learning:** Even simple contact forms should have basic constraints enforced at the client layer to protect users and backend services from unnecessarily large payloads.
+**Prevention:** Always include reasonable `maxLength` restrictions on `<input>` and `<textarea>` elements processing user text.
