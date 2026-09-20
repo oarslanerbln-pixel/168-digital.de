@@ -76,18 +76,41 @@ export default function Reel() {
     }
   }, [inView, source]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  // Cache the card's document-relative bounds to prevent layout thrashing
+  // (calling getBoundingClientRect) on every mousemove event.
+  const boundsRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
+
+  const handleMouseEnter = () => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
+    boundsRef.current = {
+      width: rect.width,
+      height: rect.height,
+      // Calculate document-relative position so it remains accurate during scrolling
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY,
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!boundsRef.current) {
+      handleMouseEnter();
+    }
+    if (!boundsRef.current) return;
+
+    const { left, top, width, height } = boundsRef.current;
+
+    // Use pageX/pageY instead of clientX/clientY to account for scrolling
+    // without needing to recalculate the bounds.
+    const mouseX = e.pageX - left - width / 2;
+    const mouseY = e.pageY - top - height / 2;
+
     x.set(mouseX / width);
     y.set(mouseY / height);
   };
 
   const handleMouseLeave = () => {
+    boundsRef.current = null; // Clear cache
     x.set(0);
     y.set(0);
   };
@@ -108,6 +131,7 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
