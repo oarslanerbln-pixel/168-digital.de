@@ -46,6 +46,7 @@ export default function Reel() {
   const [inView, setInView] = useState(false);
   // Resolved once on mount: which file to attach, or null for poster only.
   const [source] = useState(pickReelSource);
+  const containerRef = useRef<HTMLDivElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -77,8 +78,11 @@ export default function Reel() {
   }, [inView, source]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
+    if (!containerRef.current) return;
+    // ⚡ Bolt Optimization: Read layout from static container, not animated card
+    // Reading getBoundingClientRect() on a 3D-transformed element forces layout
+    // recalculations and causes non-linear mouse mapping as the element warps.
+    const rect = containerRef.current.getBoundingClientRect();
     const width = rect.width;
     const height = rect.height;
     const mouseX = e.clientX - rect.left - width / 2;
@@ -93,7 +97,13 @@ export default function Reel() {
   };
 
   return (
-    <div id="reel-card" className="reel-card-container">
+    <div
+      id="reel-card"
+      className="reel-card-container"
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <motion.div
         ref={cardRef}
         className="glass-panel glow-card reel-glass-panel"
@@ -108,8 +118,6 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
-        onMouseMove={handleMouseMove}
-        onMouseLeave={handleMouseLeave}
       >
         {/* The looping aerial drone clip. The source is attached only once the
             panel is in view (see the effect above), and only if this visitor
