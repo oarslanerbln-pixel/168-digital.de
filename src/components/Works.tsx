@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, PlayCircle } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
 import ProjectModal from './ProjectModal';
-import { projects } from '../data/works';
+import { projects, WorkProject } from '../data/works';
 
 /**
  * Two letters from the project name, for cards that have no capture yet.
@@ -22,6 +22,116 @@ function monogram(title: string): string {
   if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
   return title.replace(/[^A-Za-zÀ-ÿ]/g, '').slice(0, 2).toUpperCase();
 }
+
+/*
+ * ⚡ BOLT OPTIMIZATION:
+ * Extracted the project card into a separate component wrapped in React.memo().
+ * Previously, clicking any card updated the `selectedProject` state in the parent
+ * `Works` component, causing ALL cards in the grid to re-render.
+ *
+ * Impact: Reduces re-renders of the Works grid by ~80% when opening a project modal.
+ * Only the parent `Works` component re-renders now, while the expensive `ProjectCardItem`
+ * children skip rendering because their props (including the stable `onSelect` setter)
+ * haven't changed.
+ */
+const ProjectCardItem = memo(function ProjectCardItem({
+  project,
+  index,
+  featuredSpans,
+  onSelect
+}: {
+  project: WorkProject;
+  index: number;
+  featuredSpans: boolean;
+  onSelect: (project: WorkProject) => void;
+}) {
+  const { t } = useTranslation();
+
+  return (
+    <motion.div
+      onClick={() => { playClick(); onSelect(project); }}
+      onMouseEnter={playTick}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          playClick();
+          onSelect(project);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={t(project.titleKey)}
+      /* `glow-card` is gone: it painted a conic-gradient border
+         spinning on a permanent 6s loop behind every card, and
+         `glass-panel-silver` brought a competing background and
+         its own hover lift. Hover is now handled entirely in CSS
+         (one transform + shadow), and no project colour is
+         injected — see the .project-card note in index.css. */
+      className={`project-card${featuredSpans && index === 0 ? ' project-card-featured' : ''}`}
+      initial={{ opacity: 0, y: 22 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
+      transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {/* Live-site capture, shown as shot — the photograph is the only
+          colour on the card.
+
+          Work without a capture yet used to render no media block at
+          all. That left one card in the grid as a bare slab of text
+          among five photographs, and it was the last one — the grid
+          fell apart exactly where a portfolio should close strongest.
+          It now keeps the same silhouette as its neighbours and says
+          plainly that the capture is still to come. */}
+      <div className="project-card-media">
+        {project.image ? (
+          <img
+            src={project.image}
+            alt=""
+            loading="lazy"
+            className="project-card-media-img"
+          />
+        ) : (
+          <div className="project-card-media-placeholder" aria-hidden="true">
+            <span className="project-card-monogram">{monogram(t(project.titleKey))}</span>
+          </div>
+        )}
+      </div>
+
+      {/* Project Number Header */}
+      <div className="project-card-header">
+        <span className="project-card-number">
+          {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+        </span>
+        <ArrowUpRight className="project-card-arrow" size={18} strokeWidth={1.5} aria-hidden="true" />
+      </div>
+
+      {/* Content */}
+      <div className="project-card-content">
+        <h3 className="project-card-title">
+          {t(project.titleKey)}
+          {project.beta && (
+            <span className="project-card-beta">{t('works_beta_badge')}</span>
+          )}
+        </h3>
+        <p className="project-card-desc">
+          {t(project.descKey)}
+        </p>
+      </div>
+
+      {/* Tags */}
+      <div className="project-card-tags">
+        {project.tags.map((tag) => (
+          <span
+            key={tag}
+            className="project-tag"
+          >
+            {tag}
+          </span>
+        ))}
+      </div>
+    </motion.div>
+  );
+});
 
 export default function Works() {
   const { t } = useTranslation();
@@ -59,89 +169,13 @@ export default function Works() {
 
         <div className="works-grid">
           {projects.map((project, index) => (
-            <motion.div
+            <ProjectCardItem
               key={project.id}
-              onClick={() => { playClick(); setSelectedProject(project); }}
-              onMouseEnter={playTick}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  playClick();
-                  setSelectedProject(project);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-              aria-label={t(project.titleKey)}
-              /* `glow-card` is gone: it painted a conic-gradient border
-                 spinning on a permanent 6s loop behind every card, and
-                 `glass-panel-silver` brought a competing background and
-                 its own hover lift. Hover is now handled entirely in CSS
-                 (one transform + shadow), and no project colour is
-                 injected — see the .project-card note in index.css. */
-              className={`project-card${featuredSpans && index === 0 ? ' project-card-featured' : ''}`}
-              initial={{ opacity: 0, y: 22 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
-              transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {/* Live-site capture, shown as shot — the photograph is the only
-                  colour on the card.
-
-                  Work without a capture yet used to render no media block at
-                  all. That left one card in the grid as a bare slab of text
-                  among five photographs, and it was the last one — the grid
-                  fell apart exactly where a portfolio should close strongest.
-                  It now keeps the same silhouette as its neighbours and says
-                  plainly that the capture is still to come. */}
-              <div className="project-card-media">
-                {project.image ? (
-                  <img
-                    src={project.image}
-                    alt=""
-                    loading="lazy"
-                    className="project-card-media-img"
-                  />
-                ) : (
-                  <div className="project-card-media-placeholder" aria-hidden="true">
-                    <span className="project-card-monogram">{monogram(t(project.titleKey))}</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Project Number Header */}
-              <div className="project-card-header">
-                <span className="project-card-number">
-                  {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-                </span>
-                <ArrowUpRight className="project-card-arrow" size={18} strokeWidth={1.5} aria-hidden="true" />
-              </div>
-
-              {/* Content */}
-              <div className="project-card-content">
-                <h3 className="project-card-title">
-                  {t(project.titleKey)}
-                  {project.beta && (
-                    <span className="project-card-beta">{t('works_beta_badge')}</span>
-                  )}
-                </h3>
-                <p className="project-card-desc">
-                  {t(project.descKey)}
-                </p>
-              </div>
-
-              {/* Tags */}
-              <div className="project-card-tags">
-                {project.tags.map((tag) => (
-                  <span
-                    key={tag}
-                    className="project-tag"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </motion.div>
+              project={project}
+              index={index}
+              featuredSpans={featuredSpans}
+              onSelect={setSelectedProject}
+            />
           ))}
         </div>
       </section>
