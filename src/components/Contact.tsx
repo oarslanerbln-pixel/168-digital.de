@@ -79,6 +79,7 @@ export default function Contact() {
                   placeholder=" "
                   id="contact-name"
                   className="premium-input"
+                  maxLength={100}
                 />
                 <label htmlFor="contact-name" className="premium-label">{t('contact_name')}</label>
                 <div className="input-focus-border" />
@@ -92,6 +93,7 @@ export default function Contact() {
                   placeholder=" "
                   id="contact-email"
                   className="premium-input"
+                  maxLength={255}
                 />
                 <label htmlFor="contact-email" className="premium-label">{t('contact_email')}</label>
                 <div className="input-focus-border" />
@@ -107,6 +109,7 @@ export default function Contact() {
                 placeholder=" "
                 id="contact-message"
                 className="premium-input premium-textarea"
+                maxLength={3000}
               />
               <label htmlFor="contact-message" className="premium-label">{t('contact_message')}</label>
               <div className="input-focus-border" />

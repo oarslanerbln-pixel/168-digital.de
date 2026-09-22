@@ -198,6 +198,7 @@ export default function DevConsole({ isOpen, onClose }: DevConsoleProps) {
                   handleKeyVerification(manualKey);
                 }
               }}
+              maxLength={255}
             />
 
             {authError && (

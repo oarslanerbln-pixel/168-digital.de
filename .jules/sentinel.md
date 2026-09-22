@@ -1,9 +1,4 @@
-## 2024-07-24 - Hardcoded API Key in Lead Delivery Module
-**Vulnerability:** A hardcoded Web3Forms API key (`'d10c80c0-53bb-42bc-8c88-13b634b41996'`) was found in `src/utils/leads.ts`.
-**Learning:** Even for "client-side" or seemingly public API keys, embedding them directly in source code exposes them to anyone with read access to the repository, leading to potential quota exhaustion or abuse by unauthorized actors.
-**Prevention:** Always use environment variables (e.g., `import.meta.env.VITE_WEB3FORMS_KEY`) with an empty string or secure placeholder fallback instead of hardcoded strings in source code.
-
-## 2026-09-03 - [Missing Security Headers in Vercel Config]
-**Vulnerability:** Missing security headers (X-Frame-Options, X-Content-Type-Options, etc.) in the Vercel deployment configuration (`vercel.json`).
-**Learning:** Modern web apps deployed via Vercel often omit basic HTTP security headers by default, exposing the app to risks like clickjacking (if framed) and MIME-type sniffing.
-**Prevention:** Always define a `headers` block in `vercel.json` matching `/(.*)` with standard security headers (Strict-Transport-Security, X-Frame-Options, X-Content-Type-Options, Referrer-Policy) for defense in depth.
+## 2026-09-22 - [Add input length limits]
+**Vulnerability:** User inputs lacked maximum length limitations, presenting potential vectors for minor denial of service or large payload submissions.
+**Learning:** Common standard input forms often lack length limitation unless strictly enforced; React-based web apps may need client-side limitation to mitigate heavy backend process logic and UI payload issues.
+**Prevention:** Consider creating common form components that inherit these limitations or include maximum length attributes as standard practice for any `<input>` and `<textarea>` components during development.
