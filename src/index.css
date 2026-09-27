@@ -54,7 +54,7 @@
   --z-backdrop: -1;      /* ambient canvas, section background washes */
   --z-content: 10;       /* in-flow sections above the backdrop */
   --z-chrome: 100;       /* logo, language toggle */
-  --z-fab: 900;          /* WhatsApp + Angebot floating buttons */
+  --z-fab: 900;          /* WhatsApp floating button */
   --z-cursor: 1000;      /* custom cursor, never interactive */
   --z-nav-panel: 2000;   /* full-screen navigation overlay */
   --z-nav-toggle: 2100;  /* its close button — must outrank the panel */
@@ -62,6 +62,11 @@
   --z-consent: 4000;     /* cookie banner: blocks consent-gated UI */
   --z-devconsole: 5000;  /* owner-only tooling */
   --z-preloader: 6000;   /* the intro covers everything while it runs */
+
+  /* Height of the mobile WhatsApp bottom bar (WhatsAppWidget.css). One
+     token so the bar's own height and the scroll-space every page reserves
+     for it (below) can never drift apart. */
+  --wa-bar-height: 60px;
 
   --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -122,7 +127,17 @@ html, body {
   max-width: 100%;
 }
 
-
+/* Reserves room for the mobile WhatsApp bottom bar (WhatsAppWidget.css),
+   which is fixed and therefore not part of document flow. Without this,
+   the bar simply renders on top of whatever is last on the page — on the
+   homepage that is the footer's own links. `main` wraps every route's
+   content AND the Footer (see App.tsx), so padding here lands exactly
+   once, after everything, on every page — not per-section. */
+@media (max-width: 640px) {
+  main {
+    padding-bottom: var(--wa-bar-height);
+  }
+}
 
 .font-serif {
   font-family: 'Playfair Display', serif;
@@ -135,6 +150,18 @@ html, body {
   margin: 0 auto;
   position: relative;
   z-index: 10;
+}
+
+/* 120px of top+bottom padding, repeated across every section that uses
+   this class (Works, About, service pages, Blog, Contact page, Legal),
+   is generous editorial breathing room on a wide screen. On a phone it's
+   most of a screen's height spent on nothing, per section — the single
+   biggest reason the homepage was ~11 screens of scrolling. Matches the
+   tightened rhythm .services-light already uses below. */
+@media (max-width: 768px) {
+  .section-container {
+    padding: 72px 20px;
+  }
 }
 
 /* Premium Glassmorphism Utilities */
@@ -1232,6 +1259,12 @@ html, body {
   z-index: 10;
   max-width: 800px;
   margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 56px 20px 72px 20px;
+  }
 }
 
 .contact-card {
