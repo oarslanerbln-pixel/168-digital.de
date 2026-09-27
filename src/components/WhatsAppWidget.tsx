@@ -12,15 +12,23 @@ export default function WhatsAppWidget() {
 
   // Close tooltip on scroll
   useEffect(() => {
+    // ⚡ Bolt Optimization: Only attach global scroll listeners when the widget is expanded.
+    // This prevents running the handler on every scroll event when the widget is closed (99% of the time).
+    if (!isExpanded) return;
+
     const handleScroll = () => {
       setIsExpanded(false);
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [isExpanded]);
 
   // Close tooltip on click outside
   useEffect(() => {
+    // ⚡ Bolt Optimization: Only attach global click listeners when the widget is expanded.
+    // This saves CPU cycles by not evaluating click targets for every click on the document.
+    if (!isExpanded) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest('.wa-widget-wrapper')) {
@@ -29,7 +37,7 @@ export default function WhatsAppWidget() {
     };
     document.addEventListener('click', handleClickOutside);
     return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+  }, [isExpanded]);
 
   const getWhatsAppLink = () => {
     const message = t('wa_message');
