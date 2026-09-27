@@ -74,7 +74,6 @@
    they step aside — previously they sat on top of (well, below the short
    edge of) the panel. */
 body.nav-menu-open .wa-widget-wrapper,
-body.nav-menu-open .angebot-fab,
 body.nav-menu-open .lang-toggle-btn,
 body.nav-menu-open .home-logo-wrap {
   opacity: 0;

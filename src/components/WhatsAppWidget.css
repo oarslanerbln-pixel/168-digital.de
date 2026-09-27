@@ -41,6 +41,15 @@
   box-shadow: 0 12px 30px rgba(37, 211, 102, 0.42);
 }
 
+/* Only shown once the mobile media query below turns this into a bar —
+   a bare icon has no room to also carry a label on the 56px disc. */
+.wa-bar-label {
+  display: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
 .wa-icon {
   transition: transform 0.4s var(--ease-premium);
   z-index: 2;
@@ -262,26 +271,46 @@
   color: #25d366;
 }
 
-/* ─── Mobile Responsiveness ─── */
-@media (max-width: 500px) {
+/* ─── Mobile: a docked bar, not a corner disc ───
+
+   The 56px disc sat at bottom:40px/left:40px on every screen size,
+   including phones — where it repeatedly landed on top of real content
+   as the page scrolled underneath it (a works card's title, a service
+   feature's heading, the "View Details" link). A fixed element always
+   overlaps *something* on a full-width single-column layout; the fix
+   isn't a smarter position, it's a bigger, more deliberate footprint:
+   docked to the full width of the screen, with a solid background and a
+   label, it reads as a permanent bottom bar (a pattern every mobile user
+   already recognises) instead of an accidental collision.
+
+   `main`'s bottom padding (index.css) reserves this bar's height so real
+   content — including the footer — never renders underneath it. */
+@media (max-width: 640px) {
   .wa-widget-wrapper {
-    bottom: 24px;
-    left: 24px;
-  }
-  
-  .wa-floating-btn {
-    width: 52px;
-    height: 52px;
-  }
-  
-  .wa-detail-tooltip {
-    bottom: 68px;
+    bottom: 0;
     left: 0;
-    width: 250px;
-    padding: 14px;
+    right: 0;
+    width: 100%;
   }
-  
-  .wa-detail-tooltip::before {
-    left: 20px;
+
+  .wa-floating-btn {
+    width: 100%;
+    height: var(--wa-bar-height);
+    border-radius: 0;
+    gap: 10px;
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.16);
+  }
+
+  .wa-bar-label {
+    display: inline;
+  }
+
+  /* Designed for a circular disc — a rotating frame line and a status
+     dot pinned to its edge. Neither means anything on a full-width bar,
+     so they're dropped rather than stretched into something else. */
+  .wa-btn-pulse,
+  .wa-btn-frame,
+  .wa-status-dot {
+    display: none;
   }
 }

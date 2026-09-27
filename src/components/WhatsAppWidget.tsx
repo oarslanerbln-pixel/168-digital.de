@@ -5,10 +5,27 @@ import { MessageCircle, Check, ArrowUpRight } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
 import './WhatsAppWidget.css';
 
+/* Below this width the button becomes a full-width bottom bar instead of a
+   corner disc (see the component doc comment for why). Matches the
+   breakpoint every other floating widget in the site already uses. */
+const MOBILE_BAR_QUERY = '(max-width: 640px)';
+
 export default function WhatsAppWidget() {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [phoneCopied, setPhoneCopied] = useState(false);
+  const [isMobileBar, setIsMobileBar] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(MOBILE_BAR_QUERY).matches
+  );
+
+  // Tracks the breakpoint live (not just at mount) so rotating a tablet or
+  // resizing a browser window switches layouts without a reload.
+  useEffect(() => {
+    const mql = window.matchMedia(MOBILE_BAR_QUERY);
+    const handleChange = () => setIsMobileBar(mql.matches);
+    mql.addEventListener('change', handleChange);
+    return () => mql.removeEventListener('change', handleChange);
+  }, []);
 
   // Close tooltip on scroll
   useEffect(() => {
@@ -52,8 +69,14 @@ export default function WhatsAppWidget() {
 
   const handleWidgetClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // On mobile or touch-enabled devices, toggle the tooltip
-    // On desktop, click opens WhatsApp directly since hovering already expands it
+    // The mobile bar IS the affordance — its label already says "tap to
+    // chat", so a tap opens WhatsApp immediately. The tooltip (phone
+    // number, copy button) only exists for the desktop/tablet disc, where
+    // there's room to offer a second option before committing to a tap.
+    if (isMobileBar) {
+      handleConnectWhatsApp();
+      return;
+    }
     const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     if (isTouch) {
       playClick();
@@ -96,13 +119,20 @@ export default function WhatsAppWidget() {
         {/* WhatsApp Icon */}
         <MessageCircle size={22} className="wa-icon" />
 
-        {/* Online Status Dot Indicator */}
+        {/* Online Status Dot Indicator — the circular disc only, hidden
+            once CSS turns this into a full-width bar (see .css). */}
         <span className="wa-status-dot" />
+
+        {/* Bar label — the reverse: invisible on the disc, shown once the
+            button becomes a full-width mobile bar, where a bare icon isn't
+            enough of a call to action. Reuses wa_tap_to_chat, the same
+            copy the desktop tooltip's button already uses. */}
+        <span className="wa-bar-label">{t('wa_tap_to_chat')}</span>
       </motion.button>
 
       {/* Expanded Hover/Touch Detail Tooltip */}
       <AnimatePresence>
-        {isExpanded && (
+        {isExpanded && !isMobileBar && (
           <motion.div
             className="wa-detail-tooltip hud-scanline-container"
             initial={{ opacity: 0, x: -20, scale: 0.95 }}
