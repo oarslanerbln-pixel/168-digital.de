@@ -39,9 +39,10 @@ export default function CustomCursor() {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
+      // Optimize fast-path checks using closest() before falling back to the
+      // expensive getComputedStyle layout read.
       if (
-        target.closest('a') ||
-        target.closest('button') ||
+        target.closest('a, button, input[type="button"], input[type="submit"], input[type="reset"], [role="button"], [role="link"]') ||
         window.getComputedStyle(target).cursor === 'pointer'
       ) {
         setIsHovered(true);
