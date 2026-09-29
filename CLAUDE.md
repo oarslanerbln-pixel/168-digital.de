@@ -86,7 +86,10 @@ Feature bringt.
   bricht der Vercel-Production-Build bewusst ab (`vite.config.ts`). Genau
   dieser Key fehlte einmal ~9 Wochen lang, und das Formular verwarf jede
   Anfrage, während der Deploy grün war. Wer eine Konfiguration umzieht,
-  sorgt dafür, dass ihr Fehlen den Deploy rot macht.
+  sorgt dafür, dass ihr Fehlen den Deploy rot macht. Einziger Ausweg ist
+  `LEAD_FALLBACK_ONLY=true` in Vercel – eine sichtbare, bewusste
+  Entscheidung für „nur WhatsApp/E-Mail"; sie wird gelöscht, sobald der Key
+  gesetzt ist.
 
 ### 2. Der Viewport ist heilig
 `html`/`body` sind in `src/index.css` auf `overflow-x: clip` geklemmt,

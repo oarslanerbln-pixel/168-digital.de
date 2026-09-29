@@ -13,17 +13,31 @@ import react from '@vitejs/plugin-react'
  *
  * Scoped to Vercel's production environment: GitHub CI, preview
  * deployments and local builds have no key and must keep building.
+ *
+ * LEAD_FALLBACK_ONLY=true (a Vercel variable, deliberately without the
+ * VITE_ prefix so it never reaches the bundle) is the one way past the
+ * guard: a recorded decision to ship with the WhatsApp/email fallback
+ * only, e.g. while a new key is being registered. It is ignored as soon
+ * as the key exists, and should be deleted then.
  */
 function assertLeadDeliveryConfigured(mode: string) {
   if (process.env.VERCEL_ENV !== 'production') return
   const env = loadEnv(mode, process.cwd(), 'VITE_')
-  if (!env.VITE_WEB3FORMS_KEY) {
-    throw new Error(
-      'VITE_WEB3FORMS_KEY is not set for this production build. Without it the ' +
-        'contact form cannot deliver leads. Set it in Vercel → Project → Settings → ' +
-        'Environment Variables (Production) and redeploy. See .env.example.'
+  if (env.VITE_WEB3FORMS_KEY) return
+  if (process.env.LEAD_FALLBACK_ONLY === 'true') {
+    console.warn(
+      '\n⚠  Building production WITHOUT lead delivery (LEAD_FALLBACK_ONLY=true): the ' +
+        'contact form will only offer WhatsApp/email. Set VITE_WEB3FORMS_KEY and ' +
+        'delete LEAD_FALLBACK_ONLY in Vercel.\n'
     )
+    return
   }
+  throw new Error(
+    'VITE_WEB3FORMS_KEY is not set for this production build. Without it the ' +
+      'contact form cannot deliver leads. Set it in Vercel → Project → Settings → ' +
+      'Environment Variables (Production) and redeploy — or, to ship with the ' +
+      'WhatsApp/email fallback only, set LEAD_FALLBACK_ONLY=true. See .env.example.'
+  )
 }
 
 // https://vitejs.dev/config/
