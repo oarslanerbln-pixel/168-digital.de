@@ -12,7 +12,25 @@
    at https://web3forms.com, then update VITE_WEB3FORMS_KEY in Vercel
    (Project -> Settings -> Environment Variables) and redeploy. Do NOT
    commit the key itself to this file.
+
+   The key is public by design: Vite inlines every VITE_* variable into
+   the client bundle, so moving it out of this file keeps configuration
+   in one place but hides nothing. Abuse protection has to come from
+   Web3Forms itself (domain restriction, spam filtering).
+
+   Two safety nets exist because this path once failed silently for
+   weeks — the key was moved out of the code and never set in Vercel, so
+   the minifier compiled sendLead() down to "warn and return false":
+   - vite.config.ts refuses to build production without the key;
+   - leadFallbackLinks() lets the visitor send the same text via
+     WhatsApp or email when delivery fails for any reason, so an
+     inquiry is never lost to a configuration or network problem.
    ════════════════════════════════════════════════════════════════ */
+
+/** Same inbox as the Impressum and the contact page. */
+export const LEAD_EMAIL = 'info.1618digital@gmail.com';
+/** Same number as every wa.me link on the site, without "+". */
+export const LEAD_WHATSAPP_NUMBER = '491787277867';
 
 export const WEB3FORMS_ACCESS_KEY =
   (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) ||
@@ -31,6 +49,25 @@ export interface LeadPayload {
   message?: string;
   /** Where the lead came from, e.g. "Contact Form" or "AI Chat". */
   source?: string;
+}
+
+/**
+ * One-tap alternatives for when sendLead() fails: the visitor's own text,
+ * pre-filled into a WhatsApp chat and into an email to the studio inbox.
+ * Both are plain navigations the visitor triggers themselves — no request
+ * leaves the page on its own, which keeps the DSGVO rule intact.
+ */
+export function leadFallbackLinks(
+  body: string,
+  subject: string
+): { whatsapp: string; mailto: string } {
+  return {
+    whatsapp: `https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(body)}`,
+    mailto:
+      `mailto:${LEAD_EMAIL}` +
+      `?subject=${encodeURIComponent(subject)}` +
+      `&body=${encodeURIComponent(body)}`,
+  };
 }
 
 /**

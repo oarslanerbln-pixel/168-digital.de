@@ -1,13 +1,21 @@
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Send, CheckSquare, Square, Sparkles, Loader2 } from 'lucide-react';
-import { sendLead } from '../utils/leads';
+import { Send, CheckSquare, Square, Sparkles, Loader2, MessageCircle, Mail } from 'lucide-react';
+import { sendLead, leadFallbackLinks } from '../utils/leads';
+
+/* Field limits. Well above any real inquiry, but they bound what a script
+   can push through the form, and they keep the fallback links below
+   within the URL lengths WhatsApp and desktop mail clients accept. */
+const MAX_NAME = 100;
+const MAX_EMAIL = 254; // RFC 5321 path limit
+const MAX_MESSAGE = 3000;
 
 export default function Contact() {
   const { t } = useTranslation();
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [dsgvoConsent, setDsgvoConsent] = useState(false);
+  const [fallback, setFallback] = useState<{ whatsapp: string; mailto: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -24,10 +32,20 @@ export default function Contact() {
 
     if (delivered) {
       setStatus('success');
+      setFallback(null);
       form.reset();
       setDsgvoConsent(false);
       setTimeout(() => setStatus('idle'), 6000);
     } else {
+      // "Try again" alone is useless when the cause is configuration: the
+      // retry fails the same way. Hand the visitor their own text, ready to
+      // send through a channel that does not depend on the form backend.
+      setFallback(
+        leadFallbackLinks(
+          t('contact_fallback_body', { name, email, message }),
+          t('contact_fallback_subject')
+        )
+      );
       setStatus('error');
     }
   };
@@ -76,6 +94,8 @@ export default function Contact() {
                   required
                   type="text"
                   name="name"
+                  maxLength={MAX_NAME}
+                  autoComplete="name"
                   placeholder=" "
                   id="contact-name"
                   className="premium-input"
@@ -89,6 +109,8 @@ export default function Contact() {
                   required
                   type="email"
                   name="email"
+                  maxLength={MAX_EMAIL}
+                  autoComplete="email"
                   placeholder=" "
                   id="contact-email"
                   className="premium-input"
@@ -104,6 +126,7 @@ export default function Contact() {
                 required
                 rows={5}
                 name="message"
+                maxLength={MAX_MESSAGE}
                 placeholder=" "
                 id="contact-message"
                 className="premium-input premium-textarea"
@@ -163,8 +186,25 @@ export default function Contact() {
               )}
             </motion.button>
 
-            {status === 'error' && (
-              <p className="contact-error">{t('contact_error')}</p>
+            {status === 'error' && fallback && (
+              <div className="contact-error" role="alert">
+                <p>{t('contact_error')}</p>
+                <div className="contact-fallback">
+                  <a
+                    href={fallback.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="premium-button premium-button-silver"
+                  >
+                    <MessageCircle size={18} aria-hidden="true" />
+                    {t('contact_fallback_whatsapp')}
+                  </a>
+                  <a href={fallback.mailto} className="premium-button premium-button-glass">
+                    <Mail size={18} aria-hidden="true" />
+                    {t('contact_fallback_email')}
+                  </a>
+                </div>
+              </div>
             )}
           </form>
         )}
