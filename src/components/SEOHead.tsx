@@ -12,6 +12,12 @@ interface SEOHeadProps {
   description?: string;
   /** JSON-LD object(s) to inject for this page only (Service, BreadcrumbList, FAQPage, etc). Replaced on every route/language change. */
   jsonLd?: object | object[];
+  /**
+   * Mark the page as not indexable. Used by the not-found view: Vercel
+   * rewrites every path to index.html with HTTP 200, so without this a
+   * mistyped URL reads to Google as a real page (a "soft 404").
+   */
+  noindex?: boolean;
 }
 
 /**
@@ -21,8 +27,18 @@ interface SEOHeadProps {
  * language, so each page + hreflang variant (?lang=en/de/tr) actually
  * reflects what it claims to search engines.
  */
-export default function SEOHead({ path = '/', title, description, jsonLd }: SEOHeadProps) {
+export default function SEOHead({ path = '/', title, description, jsonLd, noindex = false }: SEOHeadProps) {
   const { t, i18n } = useTranslation();
+
+  // Its own effect with a cleanup, so the flag is lifted the moment the
+  // not-found view unmounts — the next page never inherits "noindex".
+  useEffect(() => {
+    if (!noindex) return;
+    const robots = document.querySelector('meta[name="robots"]');
+    const previous = robots?.getAttribute('content') ?? 'index, follow';
+    robots?.setAttribute('content', 'noindex, follow');
+    return () => robots?.setAttribute('content', previous);
+  }, [noindex]);
 
   useEffect(() => {
     const lang = i18n.language.substring(0, 2).toLowerCase();

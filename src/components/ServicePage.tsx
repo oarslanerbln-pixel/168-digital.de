@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowUpRight } from 'lucide-react';
 import SEOHead from './SEOHead';
+import NotFoundPage from '../pages/NotFoundPage';
 import Contact from './Contact';
 import { getServiceBySlug, services } from '../data/services';
 import { serviceContent, type Lang } from '../data/serviceContent';
@@ -19,16 +20,10 @@ export default function ServicePage() {
   const service = slug ? getServiceBySlug(slug) : undefined;
   const content = slug ? serviceContent[slug]?.[lang] ?? serviceContent[slug]?.en : undefined;
 
+  // `/:slug` catches every single-segment path, so most mistyped URLs
+  // land here rather than on the catch-all route.
   if (!service || !content) {
-    return (
-      <div className="service-not-found section-container">
-        <h1 className="text-silver">{t('svc_not_found_title')}</h1>
-        <p>{t('svc_not_found_text')}</p>
-        <Link to="/" className="premium-button premium-button-silver">
-          {t('svc_not_found_cta')}
-        </Link>
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   const Icon = service.icon;

@@ -23,6 +23,14 @@
    The script owns both halves of the job so they cannot drift apart:
    it downloads the .woff2 files into public/fonts/ AND rewrites the
    @font-face block in index.html between the FONT-FACE markers.
+
+   Variable fonts: Outfit, Plus Jakarta Sans and Playfair Display are
+   variable, so the API answers every requested weight with the SAME file
+   URL. Saved per weight, that became up to four byte-identical files —
+   and four separate downloads, because a browser caches by URL. Faces
+   that share a source URL now share one file (see shareVariableFiles).
+   Each weight keeps its own @font-face with its single weight value, so
+   the rendered weights stay exactly what they were.
    ════════════════════════════════════════════════════════════════ */
 
 import { writeFileSync, mkdirSync, existsSync, readFileSync, readdirSync, unlinkSync } from 'fs';
@@ -55,7 +63,7 @@ const CSS_URL =
  * does not sit in fallback type while the browser discovers the CSS —
  * everything else may swap in late without anyone noticing.
  */
-const PRELOAD = ['outfit-400-latin.woff2', 'playfair-700-latin.woff2'];
+const PRELOAD = ['outfit-latin.woff2', 'playfair-latin.woff2'];
 
 const fontsDir = path.join('public', 'fonts');
 if (!existsSync(fontsDir)) mkdirSync(fontsDir, { recursive: true });
@@ -81,6 +89,44 @@ function parseFaces(css) {
     faces.push({ family, weight, style, subset, url, range, file });
   }
   return faces;
+}
+
+/**
+ * Point every face that shares a source URL at one file. The weight drops
+ * out of the name because the file serves all of them: outfit-latin.woff2
+ * rather than outfit-300-latin.woff2 … outfit-800-latin.woff2. A face with
+ * a URL of its own keeps its per-weight name.
+ */
+function shareVariableFiles(faces, slugOf) {
+  const byUrl = new Map();
+  for (const f of faces) {
+    if (!byUrl.has(f.url)) byUrl.set(f.url, []);
+    byUrl.get(f.url).push(f);
+  }
+  for (const group of byUrl.values()) {
+    if (group.length < 2) continue;
+    const { family, style, subset } = group[0];
+    const name = `${slugOf(family)}${style === 'italic' ? '-italic' : ''}-${subset}.woff2`;
+    for (const f of group) f.file = name;
+  }
+  return faces;
+}
+
+/** Download each distinct file once, however many faces point at it. */
+async function downloadUnique(faces, dir) {
+  const seen = new Set();
+  let total = 0;
+  for (const face of faces) {
+    if (seen.has(face.file)) continue;
+    seen.add(face.file);
+    const data = Buffer.from(
+      await (await fetch(face.url, { headers: { 'User-Agent': UA } })).arrayBuffer()
+    );
+    writeFileSync(path.join(dir, face.file), data);
+    total += data.length;
+    console.log(`✅ ${face.file} (${(data.length / 1024).toFixed(1)} KB)`);
+  }
+  return total;
 }
 
 /** Emit the @font-face rules for index.html, indented to match the file. */
@@ -134,7 +180,7 @@ function replaceBlock(html, name, content, { css = false } = {}) {
 
 const res = await fetch(CSS_URL, { headers: { 'User-Agent': UA } });
 if (!res.ok) throw new Error(`Font CSS request failed: ${res.status}`);
-const faces = parseFaces(await res.text());
+const faces = shareVariableFiles(parseFaces(await res.text()), family => FAMILY_SLUG[family]);
 if (!faces.length) throw new Error('No usable @font-face rules came back');
 
 // Any .woff2/.ttf already in the folder that this run does not produce is
@@ -147,16 +193,7 @@ for (const existing of readdirSync(fontsDir)) {
   }
 }
 
-let bytes = 0;
-for (const face of faces) {
-  const dest = path.join(fontsDir, face.file);
-  const data = Buffer.from(
-    await (await fetch(face.url, { headers: { 'User-Agent': UA } })).arrayBuffer()
-  );
-  writeFileSync(dest, data);
-  bytes += data.length;
-  console.log(`✅ ${face.file} (${(data.length / 1024).toFixed(1)} KB)`);
-}
+const bytes = await downloadUnique(faces, fontsDir);
 
 let html = readFileSync('index.html', 'utf8');
 html = replaceBlock(html, 'FONT-FACE', renderCss(faces), { css: true });
@@ -179,6 +216,9 @@ writeFileSync('index.html', html);
    doesn't scroll to the gallery ever pays for it.
    ════════════════════════════════════════════════════════════════ */
 
+// Plus Jakarta Sans is deliberately absent: the site already declares it
+// (500–800) in index.html. Listing it here again gave the same family a
+// second URL, so /concepts downloaded a second copy of a cached file.
 const CATALOG_CSS_URL =
   'https://fonts.googleapis.com/css2' +
   '?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400' +
@@ -190,7 +230,7 @@ const CATALOG_CSS_URL =
   '&family=Amiri:wght@400;700&family=Share+Tech+Mono' +
   '&family=Orbitron:wght@400;700&family=IBM+Plex+Mono:wght@400;500' +
   '&family=IBM+Plex+Sans:wght@300;400&family=Instrument+Sans:wght@300;400' +
-  '&family=Courier+Prime:wght@400;700&family=Plus+Jakarta+Sans:wght@700;800' +
+  '&family=Courier+Prime:wght@400;700' +
   '&family=Figtree:wght@400;600;900&family=Bodoni+Moda:ital,wght@1,400' +
   '&family=Cinzel:wght@700&family=Josefin+Sans:wght@300;400;600' +
   '&family=Unbounded:wght@400;700&family=Anton&family=Oswald:wght@600' +
@@ -206,6 +246,8 @@ const catalogCss = await (
   await fetch(CATALOG_CSS_URL, { headers: { 'User-Agent': UA } })
 ).text();
 
+const catalogSlug = family => family.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+
 const catalogFaces = [];
 {
   // Same shape as parseFaces, but the family list is open-ended here, so
@@ -220,11 +262,12 @@ const catalogFaces = [];
     const url = /url\((https:[^)]+)\)/.exec(body)?.[1];
     const range = /unicode-range:\s*([^;]+);/.exec(body)?.[1]?.trim();
     if (!family || !url || !KEEP_SUBSETS.has(subset)) continue;
-    const slug = family.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const slug = catalogSlug(family);
     const file = `${slug}-${weight}${style === 'italic' ? '-italic' : ''}-${subset}.woff2`;
     catalogFaces.push({ family, weight, style, subset, url, range, file });
   }
 }
+shareVariableFiles(catalogFaces, catalogSlug);
 
 const catalogWanted = new Set(catalogFaces.map(f => f.file));
 for (const existing of readdirSync(catalogDir)) {
@@ -233,15 +276,7 @@ for (const existing of readdirSync(catalogDir)) {
   }
 }
 
-let catalogBytes = 0;
-for (const face of catalogFaces) {
-  const dest = path.join(catalogDir, face.file);
-  const data = Buffer.from(
-    await (await fetch(face.url, { headers: { 'User-Agent': UA } })).arrayBuffer()
-  );
-  writeFileSync(dest, data);
-  catalogBytes += data.length;
-}
+const catalogBytes = await downloadUnique(catalogFaces, catalogDir);
 
 writeFileSync(
   path.join(fontsDir, 'catalog.css'),

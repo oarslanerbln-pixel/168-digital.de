@@ -26,9 +26,7 @@ const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 // homepage; they now have their own routes and their own chunks.
 const AboutPage = lazy(() => import('./pages/AboutPage'));
 const ConceptsPage = lazy(() => import('./pages/ConceptsPage'));
-// Only ever opened by the site owner via the dev shortcut, so it must not be
-// part of what a visitor downloads: it is mounted only once opened.
-const DevConsole = lazy(() => import('./components/DevConsole'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 const INTRO_SEEN_KEY = '1618_intro_seen_at';
 const INTRO_TTL_MS = 24 * 60 * 60 * 1000; // show the intro at most once per 24h
@@ -53,7 +51,6 @@ function getInitialLoadedState(): boolean {
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
-  const [isConsoleOpen, setIsConsoleOpen] = useState(false);
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
   const [forceShowCookies, setForceShowCookies] = useState(false);
 
@@ -71,29 +68,17 @@ function App() {
     }
   }, [isLoaded]);
 
-  // Listen for global events to open legal modals (e.g. from cookie banner) and dev console
+  // Listen for global events to open legal modals (e.g. from cookie banner)
   useEffect(() => {
     const handleOpenDatenschutz = () => setLegalModalType('datenschutz');
     const handleOpenImpressum = () => setLegalModalType('impressum');
-    
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        setIsConsoleOpen(prev => !prev);
-      }
-    };
-    const handleOpenConsole = () => setIsConsoleOpen(true);
 
     window.addEventListener('openDatenschutz', handleOpenDatenschutz);
     window.addEventListener('openImpressum', handleOpenImpressum);
-    window.addEventListener('keydown', handleKeyDown);
-    window.addEventListener('open-dev-console', handleOpenConsole);
 
     return () => {
       window.removeEventListener('openDatenschutz', handleOpenDatenschutz);
       window.removeEventListener('openImpressum', handleOpenImpressum);
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('open-dev-console', handleOpenConsole);
     };
   }, []);
 
@@ -123,11 +108,6 @@ function App() {
       */}
       <div style={{ pointerEvents: isLoaded ? 'auto' : 'none' }}>
         <CustomCursor />
-        {isConsoleOpen && (
-          <Suspense fallback={null}>
-            <DevConsole isOpen onClose={() => setIsConsoleOpen(false)} />
-          </Suspense>
-        )}
         <NavigationMenu />
         <LanguageToggle />
         <HomeLogo />
@@ -146,7 +126,7 @@ function App() {
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogPostPage />} />
               <Route path="/:slug" element={<ServicePage />} />
-              <Route path="*" element={<Home />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </Suspense>
           <Footer

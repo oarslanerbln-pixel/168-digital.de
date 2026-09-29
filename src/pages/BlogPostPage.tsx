@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowUpRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
+import NotFoundPage from './NotFoundPage';
 import Contact from '../components/Contact';
 import { getBlogPostBySlug } from '../data/blogContent';
 import type { Lang } from '../data/serviceContent';
@@ -20,15 +21,7 @@ export default function BlogPostPage() {
   const content = post ? post.content[lang] ?? post.content.en : undefined;
 
   if (!post || !content) {
-    return (
-      <div className="service-not-found section-container">
-        <h1 className="text-silver">{t('svc_not_found_title')}</h1>
-        <p>{t('svc_not_found_text')}</p>
-        <Link to="/blog" className="premium-button premium-button-silver">
-          {t('blog_back_to_blog')}
-        </Link>
-      </div>
-    );
+    return <NotFoundPage backTo="/blog" backLabel={t('blog_back_to_blog')} />;
   }
 
   const relatedService = getServiceBySlug(post.relatedServiceSlug);
