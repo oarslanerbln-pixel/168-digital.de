@@ -34,7 +34,7 @@ gilt `package.json`, nicht das README.
 npm install         # einmalig
 npm run dev         # Dev-Server
 npm run build       # tsc && vite build – muss fehlerfrei sein
-npm test            # vitest (10 Tests, 5 Dateien)
+npm test            # vitest (17 Tests, 6 Dateien)
 npx tsc --noEmit    # reine Typprüfung
 node download-fonts.mjs  # Schriften neu holen + index.html/catalog.css regenerieren
 ```
@@ -57,7 +57,8 @@ lassen.**
 | Impressum/Datenschutz | `src/data/legalContent.tsx` |
 | 50 Design-Konzepte (Showcase) | `src/data/webDesignConcepts.ts` |
 | Meta-Tags pro Route | `src/components/SEOHead.tsx` |
-| Lead-Versand (Web3Forms) | `src/utils/leads.ts` |
+| Lead-Versand (Web3Forms) + WhatsApp/E-Mail-Fallback | `src/utils/leads.ts` |
+| 404-Seite (noindex) für jede unbekannte URL | `src/pages/NotFoundPage.tsx` |
 
 **Inhalte gehören nach `src/data/` oder `src/i18n.ts`, niemals hart in JSX.**
 Ein neuer Service heißt: Eintrag in `services.ts` + Texte in
@@ -80,6 +81,12 @@ Feature bringt.
   `src/components/CookieConsent.tsx`. Diese Reihenfolge nicht umbauen.
 - Keys kommen aus `import.meta.env.VITE_*`. Niemals ein Secret committen;
   `.env.example` dokumentiert die Variablen ohne Werte.
+- `VITE_*`-Werte landen beim Build **im Client-Bundle** – sie sind
+  Konfiguration, kein Geheimnis. `VITE_WEB3FORMS_KEY` ist Pflicht: Fehlt er,
+  bricht der Vercel-Production-Build bewusst ab (`vite.config.ts`). Genau
+  dieser Key fehlte einmal ~9 Wochen lang, und das Formular verwarf jede
+  Anfrage, während der Deploy grün war. Wer eine Konfiguration umzieht,
+  sorgt dafür, dass ihr Fehlen den Deploy rot macht.
 
 ### 2. Der Viewport ist heilig
 `html`/`body` sind in `src/index.css` auf `overflow-x: clip` geklemmt,
@@ -147,12 +154,17 @@ mit dem Schimmer um Aufmerksamkeit konkurriert.
 
 ## Bekannte offene Punkte
 
-- `public/1618-intro-opt.mp4` ist 9,4 MB. Lazy geladen, aber für Mobilfunk
-  zu schwer – braucht eine 720p-Variante, ein Poster-Bild und Respekt vor
-  `prefers-reduced-data`.
+- Die Seite wird nur clientseitig gerendert: `index.html` hat einen leeren
+  `<div id="root">`. Crawler ohne JavaScript (Link-Vorschauen, KI-Crawler)
+  sehen für jede URL nur die Meta-Tags der Startseite. Prerendering liegt
+  als Entwurf in PR #173 (inkl. Sitemap-Lücken `/about`, `/concepts`).
+- Sprache per `?lang=`: für hreflang gültig, aber nicht als eigene statische
+  Datei prerenderbar. Kommt Prerendering, sind `/de/`, `/tr/`-Pfade mit
+  301-Weiterleitungen zu entscheiden – betrifft alle URLs.
 - `src/index.css` ist mit ~1.450 Zeilen zu groß und vermischt Tokens,
   Utilities und Sektions-Styles.
 - `src/i18n.ts` ist ein 500-Zeilen-Objekt für drei Sprachen; ab dem
   nächsten größeren Textzuwachs nach `src/locales/{en,de,tr}.json` teilen.
-- Tests decken nur Preloader, Cursor, SEOHead und ServicePage ab. Das
-  Kontaktformular – der Umsatzpfad der Seite – hat keinen Test.
+- Tests decken Preloader, Cursor, SEOHead, ServicePage/404 und das
+  Kontaktformular samt Fallback ab – nicht aber Navigation, Cookie-Banner
+  und die Einwilligungs-Reihenfolge der Analytics.
