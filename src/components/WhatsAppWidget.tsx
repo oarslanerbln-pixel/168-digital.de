@@ -27,26 +27,33 @@ export default function WhatsAppWidget() {
     return () => mql.removeEventListener('change', handleChange);
   }, []);
 
-  // Close tooltip on scroll
+  // Conditionally attach scroll and click-outside listeners only when expanded
   useEffect(() => {
+    if (!isExpanded) return;
+
     const handleScroll = () => {
       setIsExpanded(false);
     };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
-  // Close tooltip on click outside
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: Event) => {
       const target = event.target as HTMLElement;
       if (!target.closest('.wa-widget-wrapper')) {
         setIsExpanded(false);
       }
     };
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, []);
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Use touchstart and mousedown to catch clicks outside early, rather than click
+    // which happens after touch ends and might cause flicker.
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isExpanded]);
 
   const getWhatsAppLink = () => {
     const message = t('wa_message');
