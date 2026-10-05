@@ -12,3 +12,8 @@
 **Incident:** After the Web3Forms key was moved to `VITE_WEB3FORMS_KEY`, the variable was never set in Vercel. Vite inlines `VITE_*` at build time, so the minifier compiled `sendLead()` down to "warn and return false" and the request vanished from the bundle. Production deployed green while the contact form — the site's only conversion path — dropped every inquiry for about nine weeks.
 **Learning:** A Web3Forms access key is public by design: any `VITE_*` value ends up in the client bundle anyway, so moving it to an env var hides nothing. Treat it as configuration, not a secret, and never change a configuration contract without making the deploy fail when the configuration is missing.
 **Prevention:** `vite.config.ts` fails the Vercel production build without the key, and the contact form offers WhatsApp/email with the visitor's text whenever delivery fails.
+
+## 2024-05-20 - [Missing Server-Side Validation Equivalent on API Request]
+**Vulnerability:** Lack of programmatic limits on the lead payload structure before dispatching requests to a third-party service (Web3Forms).
+**Learning:** Even with HTML5 form validation (`maxLength`, `required`, `type="email"`), an attacker can easily bypass the UI and programmatically hit the Web3Forms API endpoint via the exposed frontend function (`sendLead`), sending massive payloads or invalid email strings which could cause errors, exhaust quotas, or result in malformed data logic.
+**Prevention:** Always implement programmatic input validation (length limits and RegEx pattern matching) inside the request dispatcher function, even on the client side, to enforce defense in depth prior to firing the request.

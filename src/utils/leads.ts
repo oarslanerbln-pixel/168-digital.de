@@ -30,7 +30,13 @@
 /** Same inbox as the Impressum and the contact page. */
 export const LEAD_EMAIL = 'info.1618digital@gmail.com';
 /** Same number as every wa.me link on the site, without "+". */
+
 export const LEAD_WHATSAPP_NUMBER = '491787277867';
+
+export const MAX_NAME = 100;
+export const MAX_EMAIL = 254; // RFC 5321 path limit
+export const MAX_MESSAGE = 3000;
+
 
 export const WEB3FORMS_ACCESS_KEY =
   (import.meta.env.VITE_WEB3FORMS_KEY as string | undefined) ||
@@ -74,6 +80,7 @@ export function leadFallbackLinks(
  * Send a lead to the configured inbox.
  * Returns true on success, false on failure or missing configuration.
  */
+
 export async function sendLead(payload: LeadPayload): Promise<boolean> {
   if (!isLeadDeliveryConfigured()) {
     console.warn(
@@ -81,6 +88,20 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
     );
     return false;
   }
+
+  // Security enhancement: Validate input length limits
+  if (
+    !payload.email ||
+    payload.email.length > MAX_EMAIL ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email) ||
+    (payload.name && payload.name.length > MAX_NAME) ||
+    (payload.message && payload.message.length > MAX_MESSAGE) ||
+    (payload.source && payload.source.length > 50)
+  ) {
+    console.warn('[leads] Invalid lead payload. Validation failed.');
+    return false;
+  }
+
 
   try {
     const response = await fetch('https://api.web3forms.com/submit', {
