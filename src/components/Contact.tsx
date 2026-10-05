@@ -2,14 +2,11 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Send, CheckSquare, Square, Sparkles, Loader2, MessageCircle, Mail } from 'lucide-react';
-import { sendLead, leadFallbackLinks } from '../utils/leads';
+import { sendLead, leadFallbackLinks, MAX_NAME, MAX_EMAIL, MAX_MESSAGE } from '../utils/leads';
 
-/* Field limits. Well above any real inquiry, but they bound what a script
+/* Field limits imported from leads.ts. Well above any real inquiry, but they bound what a script
    can push through the form, and they keep the fallback links below
    within the URL lengths WhatsApp and desktop mail clients accept. */
-const MAX_NAME = 100;
-const MAX_EMAIL = 254; // RFC 5321 path limit
-const MAX_MESSAGE = 3000;
 
 export default function Contact() {
   const { t } = useTranslation();
