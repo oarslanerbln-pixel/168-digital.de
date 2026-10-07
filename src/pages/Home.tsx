@@ -2,13 +2,15 @@ import Hero from '../components/Hero';
 import MarqueeTextBand from '../components/MarqueeTextBand';
 import Works from '../components/Works';
 import Services from '../components/Services';
+import Showroom from '../components/Showroom';
 import SEOHead from '../components/SEOHead';
 import Contact from '../components/Contact';
 import HomeOutro from '../components/HomeOutro';
 
 /* ════════════════════════════════════════════════════════════════
-   HOMEPAGE — four sections, in the order a first-time visitor needs
-   them: who we've done it for → what we do → how to start.
+   HOMEPAGE — five sections, in the order a first-time visitor needs
+   them: who we've done it for → what we do → how it looks → how to
+   start.
 
    Philosophy (/about) and the 50-concept design library (/concepts)
    used to sit between Services and Contact. Together they were more
@@ -36,6 +38,10 @@ export default function Home() {
       <Works />
       <div className="section-divider" />
       <Services />
+      <div className="section-divider" />
+      {/* Proof of craft right before the ask: the visitor has just read
+          what we offer, now they see how it looks, then the form. */}
+      <Showroom />
       <div className="section-divider" />
       <Contact />
       {/* Quiet doorways to the two sections that moved off this page. */}
