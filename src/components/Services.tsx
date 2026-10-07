@@ -1,62 +1,31 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Globe, Box, Video, Smartphone, Camera, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
-import { useRef } from 'react';
+import { services, type ServiceGroup, type ServiceMeta } from '../data/services';
 
 /* ════════════════════════════════════════════════════════════════
    SERVICES — light, modern counterpoint section directly under Hero.
    Each card links to its dedicated, SEO-optimized service page.
+
+   The cards are split into the two halves of the business — software
+   (websites, digital menus) and film (weddings, drone, social) — each
+   under a quiet label. A flat grid of every offer read as a list of
+   unrelated things; two labelled rows let a café owner and a couple
+   planning a wedding each find their row at a glance and skip the
+   other. Cards come straight from src/data/services.ts, so a service
+   is added in one place and lands here, in the nav and on its page.
    ════════════════════════════════════════════════════════════════ */
 
-const cards = [
-  {
-    icon: Globe,
-    titleKey: 'service_web_title',
-    descKey: 'service_web_desc',
-    tags: ['Websites', 'Landing Pages', 'Web Apps'],
-    slug: 'web-saas-development',
-    // Flagship offering: given a double-width cell on wide screens. Five
-    // equal cards in a three-column grid left a hole in the second row;
-    // promoting the first card fills the grid exactly (2+1 / 1+1+1) and
-    // gives the section a hierarchy instead of five identical boxes.
-    featured: true,
-  },
-  {
-    icon: Box,
-    titleKey: 'service_saas_title',
-    descKey: 'service_saas_desc',
-    tags: ['SaaS', 'React', 'Firebase'],
-    slug: 'web-saas-development',
-  },
-  {
-    icon: Video,
-    titleKey: 'service_media_title',
-    descKey: 'service_media_desc',
-    tags: ['Drone', 'Color Grading', 'Trailers'],
-    slug: 'video-drone-production',
-  },
-  {
-    icon: Smartphone,
-    titleKey: 'service_social_title',
-    descKey: 'service_social_desc',
-    tags: ['Strategy', 'Content', 'Growth'],
-    slug: 'social-media-marketing',
-  },
-  {
-    icon: Camera,
-    titleKey: 'service_event_title',
-    descKey: 'service_event_desc',
-    tags: ['Events', 'Weddings', 'Documentary'],
-    slug: 'wedding-event-films',
-  },
+const groups: { id: ServiceGroup; labelKey: string }[] = [
+  { id: 'software', labelKey: 'services_group_software' },
+  { id: 'film', labelKey: 'services_group_film' },
 ];
 
-function ServiceCard({ card, index }: { card: any; index: number }) {
+function ServiceCard({ service, index }: { service: ServiceMeta; index: number }) {
   const { t } = useTranslation();
-  const Icon = card.icon;
-  const ref = useRef(null);
+  const Icon = service.icon;
 
   /* A card used to have its opacity, y and scale driven continuously by
      scroll position (useScroll + useTransform, offset ["0 1", "1.2 1"]).
@@ -70,15 +39,14 @@ function ServiceCard({ card, index }: { card: any; index: number }) {
      put, which is both sturdier and quieter. */
   return (
     <motion.div
-      ref={ref}
-      className={`service-card-cell${card.featured ? ' service-card-cell-featured' : ''}`}
+      className="service-card-cell"
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
       transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
-        to={`/${card.slug}`}
+        to={`/${service.slug}`}
         onMouseEnter={playTick}
         className="service-card-light"
       >
@@ -87,15 +55,15 @@ function ServiceCard({ card, index }: { card: any; index: number }) {
             <Icon size={24} strokeWidth={1.6} />
           </div>
 
-          <h3 className="service-card-title-light">
-            {t(card.titleKey)}
-          </h3>
+          <h4 className="service-card-title-light">
+            {t(service.titleKey)}
+          </h4>
           <p className="service-card-desc-light">
-            {t(card.descKey)}
+            {t(service.descKey)}
           </p>
 
           <div className="service-card-tags-light">
-            {card.tags.map((tag: string) => (
+            {service.tags.map((tag) => (
               <span key={tag} className="service-tag-light">{tag}</span>
             ))}
           </div>
@@ -111,10 +79,9 @@ function ServiceCard({ card, index }: { card: any; index: number }) {
 
 export default function Services() {
   const { t } = useTranslation();
-  const containerRef = useRef(null);
 
   return (
-    <section id="services" className="services-section services-light" ref={containerRef}>
+    <section id="services" className="services-section services-light">
       <motion.div
         className="services-header"
         initial={{ opacity: 0, y: 30 }}
@@ -129,11 +96,19 @@ export default function Services() {
         <p className="services-subtitle">{t('services_subtitle')}</p>
       </motion.div>
 
-      <div className="services-grid">
-        {cards.map((card, i) => (
-          <ServiceCard key={card.titleKey} card={card} index={i} />
-        ))}
-      </div>
+      {groups.map((group) => {
+        const items = services.filter((s) => s.group === group.id);
+        return (
+          <div key={group.id} className="services-group">
+            <h3 className="services-group-label">{t(group.labelKey)}</h3>
+            <div className={`services-grid services-grid-${items.length}`}>
+              {items.map((service, i) => (
+                <ServiceCard key={service.slug} service={service} index={i} />
+              ))}
+            </div>
+          </div>
+        );
+      })}
     </section>
   );
 }

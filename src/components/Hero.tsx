@@ -32,8 +32,9 @@ const rise = (delay: number) => ({
 
 const serviceLinks = [
   { slug: 'web-saas-development', key: 'chip_web' },
-  { slug: 'video-drone-production', key: 'chip_video' },
+  { slug: 'digital-menus', key: 'chip_menu' },
   { slug: 'wedding-event-films', key: 'chip_event' },
+  { slug: 'video-drone-production', key: 'chip_video' },
   { slug: 'social-media-marketing', key: 'chip_social' },
 ];
 

@@ -6,7 +6,8 @@ Sprache im Chat: **Deutsch**. Sprache in Code, Kommentaren, Commits und PRs: **E
 ## Was das hier ist
 
 Marketing- und Portfolio-Website der Berliner Agentur **1618 Digital**
-(Web/SaaS, Kinematografie & Drohne, Hochzeitsfilme, Social Media).
+(Web/SaaS, digitale Menüs (QR & TV), Kinematografie & Drohne,
+Hochzeitsfilme, Social Media).
 Kein CMS, kein Backend, keine Datenbank: eine statische React-SPA,
 die auf Vercel liegt. Jeder Inhalt steht im Repo.
 
