@@ -1087,9 +1087,35 @@ html, body {
   color: var(--services-ink-muted);
 }
 
-/* Cards Grid — fixed column counts (not auto-fit) so the grid is always a
-   full, symmetric matrix. Card count is kept a multiple of the column
-   count at each breakpoint (currently 6 cards → 3×2 / 2×3 / 1×6). */
+/* ─── Service groups — software / film. A small uppercase label with a
+   hairline running to the edge, so the two rows read as chapters of one
+   list rather than two separate sections. ─── */
+.services-group + .services-group {
+  margin-top: 64px;
+}
+
+.services-group-label {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--services-ink-muted);
+}
+
+.services-group-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--services-card-border);
+}
+
+/* Cards Grid — the column count follows the group's card count
+   (services-grid-2 / services-grid-3), so every row closes as a full,
+   symmetric matrix without a "featured" card padding out the gap. */
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1097,18 +1123,15 @@ html, body {
   align-items: stretch;
 }
 
+.services-grid-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 /* Grid cell wrapper — stretches to the row height set by CSS Grid so every
    card in a row shares the same height, keeping titles/tags/CTAs aligned. */
 .service-card-cell {
   display: flex;
   height: 100%;
-}
-
-/* The flagship card occupies two columns so the grid closes cleanly:
-   row 1 = featured + 1, row 2 = 1 + 1 + 1. Reset to a single column at
-   the one-column breakpoint below. */
-.service-card-cell-featured {
-  grid-column: span 2;
 }
 
 /* ─── Individual Card — angular, no rounded corners.
@@ -1222,15 +1245,22 @@ html, body {
   .services-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  /* Three cards on two columns: the odd one spans the row instead of
+     leaving a hole beside it. */
+  .services-grid-3 > .service-card-cell:last-child {
+    grid-column: 1 / -1;
+  }
 }
 
 @media (max-width: 600px) {
-  .services-grid {
+  .services-grid,
+  .services-grid-2 {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .service-card-cell-featured {
-    grid-column: span 1;
+  .services-group + .services-group {
+    margin-top: 48px;
   }
 }
 

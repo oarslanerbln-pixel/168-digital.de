@@ -6,7 +6,8 @@ Sprache im Chat: **Deutsch**. Sprache in Code, Kommentaren, Commits und PRs: **E
 ## Was das hier ist
 
 Marketing- und Portfolio-Website der Berliner Agentur **1618 Digital**
-(Web/SaaS, Kinematografie & Drohne, Hochzeitsfilme, Social Media).
+(Web/SaaS, digitale Menüs (QR & TV), Kinematografie & Drohne,
+Hochzeitsfilme, Social Media).
 Kein CMS, kein Backend, keine Datenbank: eine statische React-SPA,
 die auf Vercel liegt. Jeder Inhalt steht im Repo.
 
@@ -48,11 +49,12 @@ lassen.**
 | Aufgabe | Ort |
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
-| Startseite (4 Sektionen) | `src/pages/Home.tsx` |
+| Startseite (5 Sektionen) | `src/pages/Home.tsx` |
 | Alle Texte, 3 Sprachen (DE/EN/TR) | `src/i18n.ts` |
 | Service-Metadaten (Slug, Icon, Reihenfolge) | `src/data/services.ts` |
 | Service-Langtexte | `src/data/serviceContent.ts` |
 | Referenzen/Projekte | `src/data/works.ts` |
+| Showroom (eigene 3D-Demos, keine Kundenarbeit) | `src/data/showroom.ts` |
 | Blog | `src/data/blogContent.ts` |
 | Impressum/Datenschutz | `src/data/legalContent.tsx` |
 | 50 Design-Konzepte (Showcase) | `src/data/webDesignConcepts.ts` |

@@ -32,6 +32,15 @@ const WORKS_SOURCES = [
   { in: 'works_impulse.png', out: 'works/impulse.webp', quality: 76 },
 ];
 
+// Showroom posters: first-screen captures of the 3D product-stage demos
+// (vitrin-demo). Same 16:10 card crop as the Works thumbnails; self-hosted
+// so the homepage never loads anything from the demo domain itself.
+const SHOWROOM_SOURCES = ['gischt', 'solenne', 'kivilcim', 'elara', 'arca', 'origo'].map((n) => ({
+  in: `showroom/${n}.png`,
+  out: `showroom/${n}.webp`,
+  quality: 74,
+}));
+
 const kb = (p) => (statSync(p).size / 1024).toFixed(0);
 
 for (const s of SOURCES) {
@@ -44,6 +53,18 @@ for (const s of SOURCES) {
 mkdirSync(join(pub, 'works'), { recursive: true });
 
 for (const s of WORKS_SOURCES) {
+  const src = join(srcDir, s.in);
+  const dst = join(pub, s.out);
+  await sharp(src)
+    .resize(960, 600, { fit: 'cover', position: 'north' })
+    .webp({ quality: s.quality })
+    .toFile(dst);
+  console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
+}
+
+mkdirSync(join(pub, 'showroom'), { recursive: true });
+
+for (const s of SHOWROOM_SOURCES) {
   const src = join(srcDir, s.in);
   const dst = join(pub, s.out);
   await sharp(src)

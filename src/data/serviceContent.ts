@@ -15,7 +15,7 @@ export interface ServicePageContent {
 }
 
 /**
- * Long-form, per-service, per-language content for the 5 dedicated
+ * Long-form, per-service, per-language content for the dedicated
  * landing pages. Kept outside i18next (flat key/value store) because this
  * is structured content — arrays of features/process/FAQ — not simple UI
  * strings.
@@ -120,6 +120,104 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
     },
   },
 
+  'digital-menus': {
+    en: {
+      metaTitle: '1618 Digital | QR Code Menus & Digital Menu Boards Berlin',
+      metaDescription:
+        'QR code menus and animated TV menu boards for cafés and restaurants in Berlin. Multilingual, with allergens, updated everywhere from one source.',
+      overline: 'DIGITAL MENUS',
+      h1: 'QR Code Menus & Digital Menu Boards in Berlin',
+      intro: [
+        'A printed menu is out of date the day a price changes. We build digital menus for cafés, restaurants and bars: a QR code menu guests open on their own phone at the table, and animated menu boards that run on the TV screen above your counter.',
+        'Both draw on the same menu data, so one change to a dish or a price shows up on every table and every screen at once — in German, English, Turkish or whichever languages your guests speak.',
+      ],
+      features: [
+        { title: 'QR Code Menus', desc: 'Opens instantly in the phone\'s browser — no app, no login, no tracking cookies. Your design, your photos, your categories.' },
+        { title: 'Animated TV Menu Boards', desc: 'Moving dishes, rotating specials and clear prices on any smart TV or a small HDMI player behind the screen.' },
+        { title: 'One Source, Every Screen', desc: 'Table menu and screens share the same data — a new price or a sold-out dish is changed once, not on every sign.' },
+        { title: 'Multilingual', desc: 'German, English, Turkish and more, switchable by the guest with one tap.' },
+        { title: 'Allergens & Additives', desc: 'Labelling per dish, kept next to the dish it belongs to instead of on a separate sheet.' },
+        { title: 'Table Tents & Stickers', desc: 'We design the printed QR codes for tables, windows and the counter to match your brand.' },
+      ],
+      process: [
+        { title: 'Menu & Brand', desc: 'We take your current menu, photos and look, and agree on the categories, languages and screens you need.' },
+        { title: 'Design & Animation', desc: 'We design the QR menu and the TV boards together, so the table and the wall look like one brand.' },
+        { title: 'Set-up & Hand-over', desc: 'We put the menu live, set up the screens on site and print the QR codes — ready for the next service.' },
+      ],
+      faq: [
+        { q: 'Do my guests need to install an app?', a: 'No. The QR code opens a normal web page in the phone\'s browser, which works on every current smartphone.' },
+        { q: 'What hardware do I need for the TV menu boards?', a: 'Usually the TV you already have. A smart TV with a browser or a small, inexpensive HDMI player is enough — we advise on what fits your space.' },
+        { q: 'How are prices and dishes changed?', a: 'Centrally, in one place: a change updates the QR menu and every screen at once. Whether you edit yourself or we do it for you is agreed per project.' },
+      ],
+      ctaTitle: 'Want a menu that is always up to date?',
+      ctaText: 'Send us your current menu and tell us about your screens — we\'ll show you how it would look in your café or restaurant.',
+      relatedWorkIds: ['taka'],
+    },
+    de: {
+      metaTitle: '1618 Digital | QR-Code-Speisekarte & digitale Menüboards Berlin',
+      metaDescription:
+        'QR-Code-Speisekarten und animierte TV-Menüboards für Cafés und Restaurants in Berlin. Mehrsprachig, mit Allergenen, aus einer Quelle überall aktuell.',
+      overline: 'DIGITALE MENÜS',
+      h1: 'QR-Code-Speisekarten & digitale Menüboards in Berlin',
+      intro: [
+        'Eine gedruckte Karte ist veraltet, sobald sich ein Preis ändert. Wir bauen digitale Menüs für Cafés, Restaurants und Bars: eine QR-Code-Speisekarte, die Gäste am Tisch auf dem eigenen Handy öffnen, und animierte Menüboards für den Bildschirm über Ihrer Theke.',
+        'Beide greifen auf dieselben Menüdaten zu — eine Änderung an Gericht oder Preis erscheint sofort auf jedem Tisch und jedem Bildschirm, auf Deutsch, Englisch, Türkisch oder in den Sprachen Ihrer Gäste.',
+      ],
+      features: [
+        { title: 'QR-Code-Speisekarten', desc: 'Öffnet sich sofort im Browser des Handys — keine App, kein Login, keine Tracking-Cookies. Ihr Design, Ihre Fotos, Ihre Kategorien.' },
+        { title: 'Animierte TV-Menüboards', desc: 'Bewegte Gerichte, wechselnde Angebote und klare Preise auf jedem Smart-TV oder über einen kleinen HDMI-Player.' },
+        { title: 'Eine Quelle, jeder Bildschirm', desc: 'Tischkarte und Bildschirme teilen dieselben Daten — ein neuer Preis oder ein ausverkauftes Gericht wird einmal geändert, nicht an jedem Schild.' },
+        { title: 'Mehrsprachig', desc: 'Deutsch, Englisch, Türkisch und mehr — der Gast wechselt mit einem Tipp.' },
+        { title: 'Allergene & Zusatzstoffe', desc: 'Kennzeichnung direkt am Gericht statt auf einem separaten Zettel.' },
+        { title: 'Tischaufsteller & Sticker', desc: 'Wir gestalten die gedruckten QR-Codes für Tisch, Fenster und Theke passend zu Ihrer Marke.' },
+      ],
+      process: [
+        { title: 'Karte & Marke', desc: 'Wir übernehmen Ihre aktuelle Karte, Fotos und Ihren Look und legen Kategorien, Sprachen und Bildschirme fest.' },
+        { title: 'Design & Animation', desc: 'QR-Karte und TV-Boards entstehen gemeinsam, damit Tisch und Wand wie eine Marke aussehen.' },
+        { title: 'Einrichtung & Übergabe', desc: 'Wir schalten die Karte live, richten die Bildschirme vor Ort ein und drucken die QR-Codes — bereit für den nächsten Service.' },
+      ],
+      faq: [
+        { q: 'Müssen meine Gäste eine App installieren?', a: 'Nein. Der QR-Code öffnet eine normale Webseite im Browser des Handys — das funktioniert auf jedem aktuellen Smartphone.' },
+        { q: 'Welche Hardware brauche ich für die TV-Menüboards?', a: 'Meist den Fernseher, den Sie schon haben. Ein Smart-TV mit Browser oder ein kleiner, günstiger HDMI-Player reicht — wir beraten, was zu Ihrem Raum passt.' },
+        { q: 'Wie werden Preise und Gerichte geändert?', a: 'Zentral an einer Stelle: Eine Änderung aktualisiert QR-Karte und alle Bildschirme gleichzeitig. Ob Sie selbst pflegen oder wir das übernehmen, legen wir pro Projekt fest.' },
+      ],
+      ctaTitle: 'Eine Karte, die immer aktuell ist?',
+      ctaText: 'Schicken Sie uns Ihre aktuelle Karte und erzählen Sie uns von Ihren Bildschirmen — wir zeigen Ihnen, wie es in Ihrem Café oder Restaurant aussehen würde.',
+      relatedWorkIds: ['taka'],
+    },
+    tr: {
+      metaTitle: '1618 Digital | QR Kod Menü & Dijital Menü Panoları Berlin',
+      metaDescription:
+        'Berlin\'deki kafe ve restoranlar için QR kod menüler ve animasyonlu TV menü panoları. Çok dilli, alerjen bilgili, tek kaynaktan her yerde güncel.',
+      overline: 'DİJİTAL MENÜLER',
+      h1: 'Berlin\'de QR Kod Menüler & Dijital Menü Panoları',
+      intro: [
+        'Basılı bir menü, bir fiyat değiştiği gün eskir. Kafe, restoran ve barlar için dijital menüler yapıyoruz: misafirlerin masada kendi telefonlarıyla açtığı bir QR kod menü ve tezgâhınızın üstündeki TV ekranında dönen animasyonlu menü panoları.',
+        'İkisi de aynı menü verisini kullanır — bir yemekte veya fiyatta yapılan değişiklik aynı anda her masada ve her ekranda görünür; Almanca, İngilizce, Türkçe ya da misafirlerinizin konuştuğu dillerde.',
+      ],
+      features: [
+        { title: 'QR Kod Menüler', desc: 'Telefonun tarayıcısında anında açılır — uygulama yok, giriş yok, takip çerezi yok. Sizin tasarımınız, fotoğraflarınız, kategorileriniz.' },
+        { title: 'Animasyonlu TV Menü Panoları', desc: 'Hareketli yemek görselleri, dönen kampanyalar ve net fiyatlar; her akıllı TV\'de veya ekranın arkasındaki küçük bir HDMI oynatıcıyla.' },
+        { title: 'Tek Kaynak, Her Ekran', desc: 'Masa menüsü ve ekranlar aynı veriyi paylaşır — yeni bir fiyat ya da tükenen bir yemek bir kez değiştirilir, her tabelada ayrı ayrı değil.' },
+        { title: 'Çok Dilli', desc: 'Almanca, İngilizce, Türkçe ve daha fazlası — misafir tek dokunuşla dil değiştirir.' },
+        { title: 'Alerjenler & Katkı Maddeleri', desc: 'Etiketleme ayrı bir kâğıtta değil, doğrudan ait olduğu yemeğin yanında.' },
+        { title: 'Masa Standları & Etiketler', desc: 'Masa, cam ve tezgâh için basılı QR kodları markanıza uygun olarak tasarlıyoruz.' },
+      ],
+      process: [
+        { title: 'Menü & Marka', desc: 'Mevcut menünüzü, fotoğraflarınızı ve görünümünüzü alıyor; ihtiyacınız olan kategorileri, dilleri ve ekranları birlikte belirliyoruz.' },
+        { title: 'Tasarım & Animasyon', desc: 'QR menü ve TV panolarını birlikte tasarlıyoruz; böylece masa ve duvar tek bir marka gibi görünür.' },
+        { title: 'Kurulum & Teslim', desc: 'Menüyü yayına alıyor, ekranları yerinde kuruyor ve QR kodları basıyoruz — bir sonraki servise hazır.' },
+      ],
+      faq: [
+        { q: 'Misafirlerimin bir uygulama yüklemesi gerekiyor mu?', a: 'Hayır. QR kod, telefonun tarayıcısında normal bir web sayfası açar — güncel her akıllı telefonda çalışır.' },
+        { q: 'TV menü panoları için hangi donanım gerekiyor?', a: 'Genellikle zaten sahip olduğunuz televizyon. Tarayıcılı bir akıllı TV veya küçük, uygun fiyatlı bir HDMI oynatıcı yeterlidir — mekânınıza neyin uyduğu konusunda size danışmanlık veriyoruz.' },
+        { q: 'Fiyatlar ve yemekler nasıl değiştiriliyor?', a: 'Merkezi olarak, tek bir yerden: bir değişiklik QR menüyü ve tüm ekranları aynı anda günceller. Güncellemeyi sizin mi yoksa bizim mi yapacağımızı proje bazında belirliyoruz.' },
+      ],
+      ctaTitle: 'Her zaman güncel bir menü ister misiniz?',
+      ctaText: 'Mevcut menünüzü gönderin ve ekranlarınızdan bahsedin — kafenizde veya restoranınızda nasıl görüneceğini size gösterelim.',
+      relatedWorkIds: ['taka'],
+    },
+  },
   'video-drone-production': {
     en: {
       metaTitle: '1618 Digital | Video & Drone Production Berlin',
