@@ -1,9 +1,10 @@
 /* ═══════════════════════════════════════════════════════════════
-   HERO — editorial, left-aligned, one accent.
+   HERO — one statement, one action, one picture.
 
-   Layout: a two-column grid (statement | numbered service rail) that
-   collapses to a single column below 900px. Nothing here has a fixed
-   minimum width, so the section can never widen the viewport.
+   Layout: a single text column on the left; the optional background
+   picture fills the stage to the right and fades into the paper. The
+   showreel follows below. Nothing here has a fixed minimum width, so
+   the section can never widen the viewport.
    ═══════════════════════════════════════════════════════════════ */
 
 .hero-section {
@@ -11,24 +12,53 @@
   z-index: 1;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 168px 32px 96px;
+  padding: 0 32px 96px;
   display: flex;
   flex-direction: column;
   gap: 96px;
 }
 
-.hero-inner {
-  display: grid;
-  /* minmax(0, …) on both tracks: without the 0 floor, a long unbroken
-     word in a translation would set a min-content width and push the
-     grid — and with it the whole page — wider than the screen. */
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 72px;
-  align-items: start;
+/* The first screen. Tall enough that the picture reads as a scene, not a
+   strip; svh so mobile browser chrome doesn't push the buttons down. */
+.hero-stage {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: min(88svh, 860px);
+  padding-top: 132px;
+  padding-bottom: 48px;
+}
+
+/* Full-bleed picture behind the centred content: the same 100vw
+   break-out the Services band uses. html/body clip overflow-x, so the
+   scrollbar's width never turns this into a horizontal scroll. */
+.hero-bg {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: var(--z-backdrop);
+  pointer-events: none;
+  /* A mask fades the picture into the page instead of laying a colour
+     gradient over it — the shimmer stays the only gradient on the site,
+     and the left half, where the text sits, is plain paper. */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, transparent 52%, #000 84%);
+  mask-image: linear-gradient(90deg, transparent 0%, transparent 52%, #000 84%);
+}
+
+.hero-bg img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 70% 50%;
 }
 
 .hero-main {
   min-width: 0;
+  max-width: 640px;
 }
 
 /* ─── Eyebrow ─── */
@@ -173,88 +203,12 @@
   color: var(--text-main);
 }
 
-/* ─── Right column: service rail + facts ─── */
-.hero-side {
-  min-width: 0;
-}
-
-.hero-rail {
-  min-width: 0;
-  border-top: 1px solid var(--line);
-  padding-top: 4px;
-}
-
-.hero-rail-item {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 2px;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  color: var(--text-main);
-  transition: padding-left 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
-}
-
-.hero-rail-item:hover {
-  padding-left: 10px;
-  border-color: var(--line-strong);
-}
-
-.hero-rail-num {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
-}
-
-.hero-rail-label {
-  font-size: 0.95rem;
+/* ─── One quiet line of facts under the buttons ─── */
+.hero-meta {
+  margin: 28px 0 0;
+  font-size: 0.86rem;
   font-weight: 500;
-  line-height: 1.35;
-}
-
-.hero-rail-arrow {
   color: var(--text-faint);
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
-}
-
-.hero-rail-item:hover .hero-rail-arrow {
-  opacity: 1;
-  transform: translateX(0);
-  color: var(--accent-cyan);
-}
-
-/* ─── Facts under the rail ─── */
-.hero-facts {
-  margin: 36px 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.hero-fact {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.hero-fact dt {
-  font-size: 0.64rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-.hero-fact dd {
-  margin: 0;
-  font-size: 0.88rem;
-  font-weight: 500;
-  color: var(--text-muted);
 }
 
 /* ─── Showreel ─── */
@@ -280,29 +234,50 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 900px) {
-  .hero-inner {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 56px;
-  }
-
   .hero-section {
-    padding: 132px 24px 80px;
+    padding: 0 24px 80px;
     gap: 72px;
   }
 
-  /* Stacked into one column there is width to spare, so the three facts
-     sit side by side rather than adding three more rows of height. */
-  .hero-facts {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px 40px;
+  .hero-stage {
+    min-height: 0;
+    padding-top: 120px;
+  }
+
+  /* Narrow screens have no empty right half to hold the picture, and
+     text over a photo is hard to read on a phone. So the picture leaves
+     the background and becomes its own full-bleed band under the text,
+     fading in from the paper at its top edge. */
+  .hero-stage-has-image {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: 0;
+  }
+
+  .hero-bg {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    order: 2;
+    height: min(62vw, 340px);
+    margin-top: 40px;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 38%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 38%);
+  }
+
+  .hero-bg img {
+    object-position: 50% 60%;
   }
 }
 
 @media (max-width: 600px) {
   .hero-section {
-    padding: 112px 20px 64px;
+    padding: 0 20px 64px;
     gap: 56px;
+  }
+
+  .hero-stage {
+    padding-top: 108px;
   }
 
   .hero-headline {
@@ -324,11 +299,5 @@
   .hero-cta-ghost {
     flex: 1 1 100%;
     justify-content: center;
-  }
-
-  /* The arrow is always visible on touch, where there is no hover. */
-  .hero-rail-arrow {
-    opacity: 1;
-    transform: none;
   }
 }

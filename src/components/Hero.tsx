@@ -1,27 +1,32 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { playClick, playTick } from '../utils/audio';
 import { ArrowRight, ArrowDown } from 'lucide-react';
 import Reel from './Reel';
 import './Hero.css';
 
 /* ════════════════════════════════════════════════════════════════
-   HERO — editorial, left-aligned, one accent.
+   HERO — one statement, one action, one picture.
 
-   Reworked from the previous centred layout: the headline is now flush
-   left at editorial scale, with the service list moved into a numbered
-   rail on the right. That rail replaces the old four-across chip grid,
-   which had a hard 150px-per-column floor and was the main cause of the
-   page overflowing its own viewport on phones.
+   The previous hero split the first screen into a statement column and
+   a numbered rail of all five services plus three labelled facts. The
+   rail repeated the Services section that follows a scroll later, and
+   on a phone it pushed the page's first real choice below the fold.
+   Now the first screen asks for exactly one thing — get in touch — with
+   WhatsApp beside it, and the facts shrink to a single quiet line.
 
-   The only colour in the section is the blue-to-gold shimmer sweeping
-   through the two headline words. Everything else — mark, rules, meta,
-   buttons — is ink on paper, so the sweep is unmistakably the focal
-   point rather than one effect competing with five others.
+   The only colour stays the blue-to-gold shimmer in the headline. The
+   background picture sits to the right and fades into the paper under a
+   mask (not a colour gradient), so the text always reads ink on paper
+   and the shimmer is still the focal point.
    ════════════════════════════════════════════════════════════════ */
 
 const ease = [0.16, 1, 0.3, 1] as const;
+
+/* Background picture, self-hosted WebP (see scripts/optimize-images.mjs).
+   null renders the hero without a picture — keep it null until a final
+   image is in public/hero/, so the page never requests a missing file. */
+const HERO_IMAGE: { src: string; srcMobile: string } | null = null;
 
 /** Staggered reveal — one shared definition instead of per-element delays. */
 const rise = (delay: number) => ({
@@ -30,26 +35,26 @@ const rise = (delay: number) => ({
   transition: { delay, duration: 0.85, ease },
 });
 
-const serviceLinks = [
-  { slug: 'web-saas-development', key: 'chip_web' },
-  { slug: 'digital-menus', key: 'chip_menu' },
-  { slug: 'wedding-event-films', key: 'chip_event' },
-  { slug: 'video-drone-production', key: 'chip_video' },
-  { slug: 'social-media-marketing', key: 'chip_social' },
-];
-
 export default function Hero() {
   const { t } = useTranslation();
 
-  const scrollToServices = () => {
+  const scrollToContact = () => {
     playClick();
-    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section id="hero" className="hero-section">
-      <div className="hero-inner">
-        {/* ── Left: the statement ── */}
+      <div className={`hero-stage${HERO_IMAGE ? ' hero-stage-has-image' : ''}`}>
+        {HERO_IMAGE && (
+          <picture className="hero-bg" aria-hidden="true">
+            <source media="(max-width: 700px)" srcSet={HERO_IMAGE.srcMobile} />
+            {/* The hero picture is the largest thing on the first screen,
+                so it loads eagerly and first rather than lazily. */}
+            <img src={HERO_IMAGE.src} alt="" fetchPriority="high" decoding="async" />
+          </picture>
+        )}
+
         <div className="hero-main">
           <motion.span className="hero-eyebrow" {...rise(0.05)}>
             {t('hero_eyebrow')}
@@ -72,9 +77,9 @@ export default function Hero() {
               type="button"
               className="hero-cta"
               onMouseEnter={playTick}
-              onClick={scrollToServices}
+              onClick={scrollToContact}
             >
-              {t('hero_button')}
+              {t('hero_cta_contact')}
               <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
             </button>
 
@@ -89,45 +94,14 @@ export default function Hero() {
               WhatsApp
             </a>
           </motion.div>
+
+          {/* The three questions a prospect has before writing in — where,
+              which language, how fast — answered in one line instead of
+              three labelled rows. */}
+          <motion.p className="hero-meta" {...rise(0.42)}>
+            {t('hero_fact_based_value')} · {t('hero_fact_langs_value')} · {t('hero_meta_reply')}
+          </motion.p>
         </div>
-
-        {/* ── Right: numbered service rail. A vertical list rather than a
-             four-across grid, so it can never force the page wider than
-             the screen the way the old chip row did. ── */}
-        <motion.aside className="hero-side" {...rise(0.42)}>
-          <nav className="hero-rail" aria-label={t('services_title')}>
-            {serviceLinks.map((item, i) => (
-              <Link
-                key={item.slug}
-                to={`/${item.slug}`}
-                className="hero-rail-item"
-                onMouseEnter={playTick}
-              >
-                <span className="hero-rail-num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="hero-rail-label">{t(item.key)}</span>
-                <ArrowRight className="hero-rail-arrow" size={14} strokeWidth={1.75} aria-hidden="true" />
-              </Link>
-            ))}
-          </nav>
-
-          {/* Three facts that answer the questions a prospect actually has
-              before they write in. They also close the tall gap the rail
-              used to leave under itself on wide screens. */}
-          <dl className="hero-facts">
-            <div className="hero-fact">
-              <dt>{t('hero_fact_based_label', 'Based in')}</dt>
-              <dd>{t('hero_fact_based_value', 'Berlin, Germany')}</dd>
-            </div>
-            <div className="hero-fact">
-              <dt>{t('hero_fact_langs_label', 'We work in')}</dt>
-              <dd>{t('hero_fact_langs_value', 'German · English · Turkish')}</dd>
-            </div>
-            <div className="hero-fact">
-              <dt>{t('hero_fact_reply_label', 'Reply time')}</dt>
-              <dd>{t('hero_fact_reply_value', 'Within 24 hours')}</dd>
-            </div>
-          </dl>
-        </motion.aside>
       </div>
 
       {/* ── Showreel ── */}
