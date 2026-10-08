@@ -6,7 +6,7 @@
    Add new entries to SOURCES as content images are added.
    ════════════════════════════════════════════════════════════════ */
 import sharp from 'sharp';
-import { statSync, mkdirSync } from 'node:fs';
+import { statSync, mkdirSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
@@ -72,6 +72,22 @@ for (const s of SHOWROOM_SOURCES) {
     .webp({ quality: s.quality })
     .toFile(dst);
   console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
+}
+
+// Hero background: one source in assets-src/hero/hero.png, shipped as a
+// wide desktop WebP and a smaller mobile crop. Skipped until the source
+// exists; Hero.tsx keeps HERO_IMAGE null until then.
+const heroSrc = join(srcDir, 'hero', 'hero.png');
+if (existsSync(heroSrc)) {
+  mkdirSync(join(pub, 'hero'), { recursive: true });
+  for (const v of [
+    { out: 'hero/hero.webp', width: 2000, quality: 72 },
+    { out: 'hero/hero-mobile.webp', width: 900, quality: 70 },
+  ]) {
+    const dst = join(pub, v.out);
+    await sharp(heroSrc).resize({ width: v.width, withoutEnlargement: true }).webp({ quality: v.quality }).toFile(dst);
+    console.log(`hero/hero.png (${kb(heroSrc)} KB) -> ${v.out} (${kb(dst)} KB)`);
+  }
 }
 
 console.log('Done.');
