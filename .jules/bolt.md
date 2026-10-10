@@ -1,6 +1,3 @@
-## 2024-11-20 - Fast DOM query short-circuit
-**Learning:**  is an expensive synchronous layout/style read. When chaining with other DOM checks like , always put  at the end to leverage short-circuiting.
-**Action:** When handling frequent UI events (like `mousemove` or `mouseover`), arrange conditional checks so that fast methods (`closest`, `matches`) are evaluated before slow layout reads (`getComputedStyle`, `getBoundingClientRect`).
-## 2024-11-20 - Fast DOM query short-circuit
-**Learning:** `window.getComputedStyle(target)` is an expensive synchronous layout/style read. When chaining with other DOM checks like `target.closest()`, always put `getComputedStyle` at the end to leverage short-circuiting.
-**Action:** When handling frequent UI events (like `mousemove` or `mouseover`), arrange conditional checks so that fast methods (`closest`, `matches`) are evaluated before slow layout reads (`getComputedStyle`, `getBoundingClientRect`).
+## 2023-10-27 - Preventing List Re-renders in `Works.tsx`
+**Learning:** Selecting a single project from a mapped list stored in the parent component's state (`Works.tsx`) triggered a re-render of all projects in the grid.
+**Action:** Extract list items into a separate `ProjectCard` component, wrap it with `React.memo`, and wrap the state-updating handler in `useCallback` to prevent O(N) re-renders for O(1) state changes.
