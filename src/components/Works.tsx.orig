@@ -130,7 +130,6 @@ export default function Works() {
   const { t } = useTranslation();
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
 
-  // ⚡ Bolt: Wrapped in useCallback to preserve function reference across renders.
   const handleSelect = useCallback((project: typeof projects[0]) => {
     setSelectedProject(project);
   }, []);
@@ -178,10 +177,10 @@ export default function Works() {
         </div>
       </section>
 
-      <ProjectModal 
-        isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)} 
-        project={selectedProject} 
+      <ProjectModal
+        isOpen={!!selectedProject}
+        onClose={() => setSelectedProject(null)}
+        project={selectedProject}
       />
     </>
   );
