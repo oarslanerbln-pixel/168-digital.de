@@ -70,6 +70,10 @@ export function leadFallbackLinks(
   };
 }
 
+/** Rate limiting state to prevent accidental or scripted spam. */
+let lastSentTimestamp = 0;
+const RATE_LIMIT_MS = 30000; // 30 seconds
+
 /**
  * Send a lead to the configured inbox.
  * Returns true on success, false on failure or missing configuration.
@@ -81,6 +85,13 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
     );
     return false;
   }
+
+  const now = Date.now();
+  if (now - lastSentTimestamp < RATE_LIMIT_MS) {
+    console.warn('[leads] Rate limit exceeded — wait before sending another lead.');
+    return false;
+  }
+  lastSentTimestamp = now;
 
   try {
     const response = await fetch('https://api.web3forms.com/submit', {
