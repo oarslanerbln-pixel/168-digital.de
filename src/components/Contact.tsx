@@ -23,9 +23,9 @@ export default function Contact() {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const message = String(data.get('message') || '').trim();
+    const name = String(data.get('name') || '').trim().slice(0, MAX_NAME);
+    const email = String(data.get('email') || '').trim().slice(0, MAX_EMAIL);
+    const message = String(data.get('message') || '').trim().slice(0, MAX_MESSAGE);
 
     setStatus('sending');
     const delivered = await sendLead({ name, email, message, source: 'Contact Form' });
