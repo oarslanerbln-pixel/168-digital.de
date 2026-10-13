@@ -9,9 +9,11 @@
  *
  * Output follows Vercel's cleanUrls: /about -> dist/about.html,
  * /blog/x -> dist/blog/x.html, / -> dist/index.html. The untouched SPA
- * shell is kept as dist/spa.html; vercel.json rewrites every URL without
- * its own file there, so an unknown path still gets the client app (and
- * its noindex not-found view) instead of the homepage.
+ * shell is written as dist/404.html, which Vercel serves for every URL
+ * without its own file — with a real 404 status, so crawlers drop typos
+ * instead of indexing them, while visitors still get the client app and
+ * its not-found view with the way back. (A rewrite to a shell file does
+ * not work with cleanUrls: the .html target itself is no longer served.)
  *
  * Any failure throws, so a broken prerender fails the deploy loudly.
  */
@@ -87,7 +89,7 @@ const template = await fs.readFile(path.join(DIST, 'index.html'), 'utf8');
 if (!template.includes('<div id="root"></div>')) {
   throw new Error('prerender: dist/index.html has no empty <div id="root"></div> — already prerendered?');
 }
-await fs.writeFile(path.join(DIST, 'spa.html'), template);
+await fs.writeFile(path.join(DIST, '404.html'), template);
 
 const { render, routes } = await import(pathToFileURL(path.join(SSR_DIR, 'entry-server.js')).href);
 

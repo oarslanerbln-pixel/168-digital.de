@@ -168,7 +168,8 @@ mit dem Schimmer um Aufmerksamkeit konkurriert.
   `entry-server.tsx` + `sitemap.xml`.** Code, der beim Rendern (nicht im
   Effect) `window`/`localStorage` anfasst, bricht den Build – mit
   `typeof window === 'undefined'` absichern. Unbekannte URLs bekommen
-  `dist/spa.html` (vercel.json).
+  `dist/404.html` (SPA-Hülle) mit echtem 404-Status – es gibt bewusst keine
+  Catch-all-Rewrite mehr in `vercel.json`.
 - Sprache per `?lang=`: für hreflang gültig, aber nicht als eigene statische
   Datei prerenderbar – vorgerendert wird nur Englisch. Crawler ohne
   JavaScript sehen die deutsche/türkische Fassung daher nicht. Lösung wären

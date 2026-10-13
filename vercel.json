@@ -35,11 +35,5 @@
       ]
     }
   ],
-  "rewrites": [
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/spa.html"
-    }
-  ],
   "cleanUrls": true
 }
