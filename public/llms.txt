@@ -1,0 +1,34 @@
+# 1618 Digital
+
+> Berlin web and software studio. We build websites and custom software for restaurants, cafés, event businesses and local companies (SMEs) in Berlin and across Germany — online booking and reservation systems, digital QR menus and TV menu boards, customer portals and business dashboards, and lead/process automation — plus film, drone and social media content from the same team. We work in German, English and Turkish.
+
+The site is a client-rendered app; the pages below carry the full content.
+
+## Services
+
+- [Web Design & SaaS Development](https://1618-digital.de/web-saas-development): websites, web apps, booking systems, customer portals and SaaS MVPs. Landing pages typically take 2–3 weeks; business platforms 6–10 weeks.
+- [QR Code Menus & Digital Menu Boards](https://1618-digital.de/digital-menus): QR menus guests open at the table and animated TV menu boards, both from one menu source, in several languages.
+- [Wedding & Event Films](https://1618-digital.de/wedding-event-films)
+- [Video & Drone Production](https://1618-digital.de/video-drone-production)
+- [Social Media Marketing & Content](https://1618-digital.de/social-media-marketing)
+
+## How a project runs
+
+1. Free intro call (20–30 minutes, phone, WhatsApp or in person).
+2. Concept and a written quote with fixed scope and price before any work starts.
+3. Design and build with regular preview links.
+4. Launch, team handover and ongoing support.
+
+## Contact
+
+- [Contact form](https://1618-digital.de/contact) — reply within 24 hours
+- WhatsApp: +49 178 7277867
+- Email: info.1618digital@gmail.com
+- Address: Wirmerzeile 4, 13627 Berlin, Germany
+
+## More
+
+- [Selected work](https://1618-digital.de/#works)
+- [About the studio](https://1618-digital.de/about)
+- [Blog](https://1618-digital.de/blog)
+- [Impressum](https://1618-digital.de/impressum)

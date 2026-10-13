@@ -1,0 +1,459 @@
+/* ═══════════════════════════════════════════════════════════════
+   HOME SECTIONS — Solutions, Process, FAQ.
+
+   One shared section header and one card language (raised white on the
+   paper ground, a hairline, a soft shadow, 18px radius), so the new
+   sections read as one system instead of three experiments. All grids
+   use minmax(0, …) tracks (CLAUDE.md rule 2).
+   ═══════════════════════════════════════════════════════════════ */
+
+.home-section {
+  position: relative;
+  z-index: var(--z-content);
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 112px 32px;
+}
+
+.home-section-header {
+  max-width: 720px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+
+.home-overline {
+  display: block;
+  margin-bottom: 14px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.home-title {
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+  text-wrap: balance;
+}
+
+.home-subtitle {
+  margin-top: 18px;
+  font-size: clamp(1rem, 1.6vw, 1.12rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  text-wrap: pretty;
+}
+
+/* ─── Solutions ─── */
+.solutions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+}
+
+.solution-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+}
+
+.solution-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 330px;
+  padding: 32px 36px;
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--bg-raised) 0%, transparent 60%),
+    var(--bg-sunken);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.solution-visual .mock-stage {
+  max-width: 440px;
+}
+
+.solution-visual .mock-phone-solo {
+  width: 168px;
+  margin-top: 70px; /* let the phone run off the bottom edge like a crop */
+}
+
+.solution-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 30px 32px 32px;
+}
+
+.solution-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  color: var(--text-main);
+}
+
+.solution-pitch {
+  margin-top: 10px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.solution-points {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 0.93rem;
+  color: var(--text-main);
+}
+
+.solution-points li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.solution-points svg {
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--accent-cyan);
+}
+
+.solution-fit {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  margin-bottom: 18px;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.solution-fit span {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.solution-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--accent-cyan);
+  font: inherit;
+  font-size: 0.93rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.solution-cta svg {
+  transition: transform 0.3s var(--ease-premium);
+}
+
+.solution-cta:hover svg {
+  transform: translateX(4px);
+}
+
+.solutions-note {
+  margin-top: 28px;
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--text-faint);
+}
+
+/* ─── Process ─── */
+.process-section {
+  max-width: none;
+  background: var(--bg-sunken);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.process-section > :not(.home-section-header) {
+  max-width: 1176px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.process-steps {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.process-step {
+  position: relative;
+  padding: 28px 24px 26px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+}
+
+.process-num {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--accent-cyan);
+}
+
+.process-time {
+  position: absolute;
+  top: 28px;
+  right: 22px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent-cyan);
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.process-step-title {
+  margin-top: 22px;
+  font-size: 1.08rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.process-step-desc {
+  margin-top: 8px;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.promises {
+  margin-top: 72px;
+}
+
+.promises-title {
+  margin-bottom: 24px;
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.promises-grid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.promise {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.promise strong {
+  color: var(--text-main);
+  font-size: 0.98rem;
+}
+
+.promise-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  margin-bottom: 6px;
+  border-radius: 10px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  color: var(--accent-cyan);
+}
+
+/* ─── Mid-page call to action ─── */
+.cta-band {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  margin-top: 72px;
+  padding: 40px 44px;
+  border-radius: var(--radius-card);
+  background: var(--text-main);
+  color: var(--bg-raised);
+}
+
+.cta-band-copy {
+  min-width: 0;
+}
+
+.cta-band h3 {
+  font-size: clamp(1.35rem, 2.6vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.cta-band p {
+  margin-top: 8px;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  opacity: 0.72;
+}
+
+.cta-band-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 26px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--bg-raised);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-premium);
+}
+
+.cta-band-button:hover {
+  transform: translateY(-2px);
+}
+
+.cta-band-button:focus-visible {
+  outline-color: var(--bg-raised);
+}
+
+/* ─── FAQ ─── */
+.faq-list {
+  max-width: 820px;
+  margin: 0 auto;
+  border-top: 1px solid var(--line);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 4px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-item h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--text-main);
+}
+
+.faq-icon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+  transition: transform 0.3s var(--ease-premium);
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+  color: var(--accent-cyan);
+}
+
+.faq-item p {
+  max-width: 68ch;
+  padding: 0 4px 24px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1000px) {
+  .process-steps,
+  .promises-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 860px) {
+  .solutions-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cta-band {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-section {
+    padding: 80px 20px;
+  }
+
+  .home-section-header {
+    margin-bottom: 44px;
+  }
+
+  .solution-visual {
+    height: 260px;
+    padding: 24px 18px;
+  }
+
+  .solution-visual .mock-phone-solo {
+    width: 140px;
+    margin-top: 60px;
+  }
+
+  .solution-body {
+    padding: 24px 22px 26px;
+  }
+
+  .process-steps,
+  .promises-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .promises {
+    margin-top: 56px;
+  }
+
+  .cta-band {
+    margin-top: 56px;
+    padding: 30px 24px;
+  }
+
+  .cta-band-button {
+    width: 100%;
+    justify-content: center;
+  }
+}

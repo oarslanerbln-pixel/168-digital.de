@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import Contact from './Contact';
+import { CONTACT_TOPIC_EVENT } from '../utils/contactTopic';
 
 /*
  * The contact form is the site's only conversion path, so the two things
@@ -120,5 +121,30 @@ describe('Contact form', () => {
     expect(screen.getByLabelText('contact_name')).toHaveAttribute('maxLength', '100');
     expect(screen.getByLabelText('contact_email')).toHaveAttribute('maxLength', '254');
     expect(screen.getByLabelText('contact_message')).toHaveAttribute('maxLength', '3000');
+  });
+
+  /*
+   * The topic chips sort the inbox. They must stay optional (the test
+   * above pins the untouched message) and, once chosen — by the visitor
+   * or by an "Ask about a system like this" button — reach the message.
+   */
+  it('prefixes the message with a chosen topic', async () => {
+    render(<Contact />);
+    fireEvent.click(screen.getByRole('radio', { name: 'contact_topic_menu' }));
+    fillAndSubmit();
+
+    await waitFor(() =>
+      expect(sendLead).toHaveBeenCalledWith(
+        expect.objectContaining({ message: '[contact_topic_menu] Hallo' })
+      )
+    );
+  });
+
+  it('preselects the topic requested from another section', () => {
+    render(<Contact />);
+    act(() => {
+      window.dispatchEvent(new CustomEvent(CONTACT_TOPIC_EVENT, { detail: 'software' }));
+    });
+    expect(screen.getByRole('radio', { name: 'contact_topic_software' })).toBeChecked();
   });
 });

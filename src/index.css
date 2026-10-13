@@ -40,6 +40,15 @@
   --accent-silver: #121211;    /* .text-silver headings read as ink */
   --accent-platinum: #ffffff;
 
+  /* ── Accent tints and depth — for the product mockups and the cards
+     around them. Tints of the one accent rather than new hues, so the
+     mockups read as "our UI" without adding a colour to the system. ── */
+  --accent-soft: rgba(31, 63, 134, 0.08);
+  --accent-line: rgba(31, 63, 134, 0.24);
+  --shadow-card: 0 1px 2px rgba(18, 18, 17, 0.04), 0 18px 40px -22px rgba(18, 18, 17, 0.18);
+  --shadow-float: 0 30px 70px -28px rgba(18, 18, 17, 0.35);
+  --radius-card: 18px;
+
   /* ── Stacking order ──────────────────────────────────────────────
      Every element that escapes the document flow (position: fixed) takes
      its layer from this list, so the order of the site's chrome is one
@@ -1298,17 +1307,12 @@ html, body {
 }
 
 .contact-card {
-  background: linear-gradient(
-    165deg,
-    #ffffff 0%,
-    #f7f3ec 100%
-  );
-  border: 1px solid rgba(18, 18, 17, 0.08);
-  border-radius: 24px;
+  background: var(--bg-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
   padding: 56px 48px;
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  box-shadow: 0 30px 60px rgba(18, 18, 17, 0.1);
+  box-shadow: var(--shadow-float);
+  min-width: 0;
   position: relative;
   overflow: hidden;
 }
@@ -1318,6 +1322,161 @@ html, body {
    family regardless. Removed rather than recoloured: the card reads
    cleanly as a plain surface without it. */
 
+/* ─── Homepage variant: "what happens next" beside the form ───
+   The steps column turns the form from a cold box into the visible
+   first step of a short, known process. */
+.contact-section.contact-section-split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 56px;
+  align-items: start;
+  max-width: 1180px;
+  padding-top: 112px;
+}
+
+.contact-aside {
+  padding-top: 24px;
+}
+
+.contact-aside-title {
+  font-size: clamp(1.8rem, 3.4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+
+.contact-steps {
+  list-style: none;
+  display: grid;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.contact-steps li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.contact-steps li span {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-cyan);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.contact-direct {
+  display: grid;
+  gap: 10px;
+  margin-top: 40px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.contact-direct p {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.contact-direct a {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.contact-direct a:hover {
+  color: var(--accent-cyan);
+}
+
+/* ─── Topic chips (radio inputs styled as pills) ─── */
+.contact-topics {
+  border: 0;
+  margin: 0 0 8px;
+  padding: 0;
+  min-width: 0;
+}
+
+.contact-topics legend {
+  margin-bottom: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.contact-topic-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.contact-topic {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 15px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.contact-topic:hover {
+  border-color: var(--text-main);
+  color: var(--text-main);
+}
+
+.contact-topic.is-selected {
+  border-color: var(--accent-cyan);
+  background: var(--accent-soft);
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+/* The radio stays in the accessibility tree and keyboard order; only its
+   default dot is hidden. Focus is shown on the pill instead. */
+.contact-topic input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.contact-topic:has(input:focus-visible) {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .contact-section.contact-section-split {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 32px;
+    padding-top: 72px;
+  }
+
+  .contact-aside {
+    padding-top: 0;
+  }
+}
+
 .contact-header {
   text-align: center;
   margin-bottom: 48px;
@@ -1326,7 +1485,8 @@ html, body {
 }
 
 .contact-title {
-  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  text-wrap: balance;
   font-weight: 700;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
@@ -1605,6 +1765,6 @@ html, body {
     gap: 32px;
   }
   .contact-title {
-    font-size: 2.2rem;
+    font-size: 1.6rem;
   }
 }
