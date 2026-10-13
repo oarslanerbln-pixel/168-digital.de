@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Send, CheckSquare, Square, Sparkles, Loader2, MessageCircle, Mail } from 'lucide-react';
-import { sendLead, leadFallbackLinks } from '../utils/leads';
+import { Send, CheckSquare, Square, Sparkles, Loader2, MessageCircle, Mail, Check } from 'lucide-react';
+import { sendLead, leadFallbackLinks, LEAD_EMAIL, LEAD_WHATSAPP_NUMBER } from '../utils/leads';
+import { CONTACT_TOPICS, CONTACT_TOPIC_EVENT, type ContactTopic } from '../utils/contactTopic';
 
 /* Field limits. Well above any real inquiry, but they bound what a script
    can push through the form, and they keep the fallback links below
@@ -11,11 +12,30 @@ const MAX_NAME = 100;
 const MAX_EMAIL = 254; // RFC 5321 path limit
 const MAX_MESSAGE = 3000;
 
-export default function Contact() {
+interface ContactProps {
+  /**
+   * Show the "what happens next" column beside the form. On the homepage
+   * it is the last reassurance before the ask; /contact has its own intro
+   * and direct-contact block above the card, so it opts out.
+   */
+  withSteps?: boolean;
+}
+
+export default function Contact({ withSteps = false }: ContactProps) {
   const { t } = useTranslation();
+  const [topic, setTopic] = useState<ContactTopic | null>(null);
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [dsgvoConsent, setDsgvoConsent] = useState(false);
   const [fallback, setFallback] = useState<{ whatsapp: string; mailto: string } | null>(null);
+
+  // A "Ask about a system like this" button elsewhere on the page picks
+  // the topic for the visitor — one less decision between interest and
+  // a sent inquiry.
+  useEffect(() => {
+    const onTopic = (e: Event) => setTopic((e as CustomEvent<ContactTopic>).detail);
+    window.addEventListener(CONTACT_TOPIC_EVENT, onTopic);
+    return () => window.removeEventListener(CONTACT_TOPIC_EVENT, onTopic);
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,7 +45,10 @@ export default function Contact() {
     const data = new FormData(form);
     const name = String(data.get('name') || '').trim();
     const email = String(data.get('email') || '').trim();
-    const message = String(data.get('message') || '').trim();
+    const typed = String(data.get('message') || '').trim();
+    // The topic travels as a prefix in the message itself, so the inbox
+    // shows it at a glance and the lead payload stays unchanged.
+    const message = topic ? `[${t(`contact_topic_${topic}`)}] ${typed}` : typed;
 
     setStatus('sending');
     const delivered = await sendLead({ name, email, message, source: 'Contact Form' });
@@ -34,6 +57,7 @@ export default function Contact() {
       setStatus('success');
       setFallback(null);
       form.reset();
+      setTopic(null);
       setDsgvoConsent(false);
       setTimeout(() => setStatus('idle'), 6000);
     } else {
@@ -51,7 +75,29 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="contact-section">
+    <section id="contact" className={`contact-section ${withSteps ? 'contact-section-split' : ''}`}>
+      {withSteps && (
+        <aside className="contact-aside">
+          <h2 className="contact-aside-title">{t('contact_next_title')}</h2>
+          <ol className="contact-steps">
+            {['contact_next_1', 'contact_next_2', 'contact_next_3'].map((key, i) => (
+              <li key={key}>
+                <span aria-hidden="true">{i + 1}</span>
+                {t(key)}
+              </li>
+            ))}
+          </ol>
+          <div className="contact-direct">
+            <p>{t('contact_direct_title')}</p>
+            <a href={`https://wa.me/${LEAD_WHATSAPP_NUMBER}`} target="_blank" rel="noopener noreferrer">
+              <MessageCircle size={17} aria-hidden="true" /> WhatsApp
+            </a>
+            <a href={`mailto:${LEAD_EMAIL}`}>
+              <Mail size={17} aria-hidden="true" /> {LEAD_EMAIL}
+            </a>
+          </div>
+        </aside>
+      )}
       <motion.div
         className="contact-card"
         initial={{ opacity: 0, y: 30 }}
@@ -86,7 +132,28 @@ export default function Contact() {
           </motion.div>
         ) : (
           <form onSubmit={handleSubmit} className="contact-form">
-            
+            {/* Topic chips: real radio inputs (rule 5), optional, and
+                deliberately few — they sort the inbox, they are not a
+                questionnaire standing between the visitor and "send". */}
+            <fieldset className="contact-topics">
+              <legend>{t('contact_topic_label')}</legend>
+              <div className="contact-topic-list">
+                {CONTACT_TOPICS.map((id) => (
+                  <label key={id} className={`contact-topic ${topic === id ? 'is-selected' : ''}`}>
+                    <input
+                      type="radio"
+                      name="topic"
+                      value={id}
+                      checked={topic === id}
+                      onChange={() => setTopic(id)}
+                    />
+                    {topic === id && <Check size={14} aria-hidden="true" />}
+                    {t(`contact_topic_${id}`)}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+
             {/* Input Group */}
             <div className="input-group">
               <div className="input-field-wrapper">

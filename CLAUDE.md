@@ -35,7 +35,7 @@ gilt `package.json`, nicht das README.
 npm install         # einmalig
 npm run dev         # Dev-Server
 npm run build       # tsc && vite build – muss fehlerfrei sein
-npm test            # vitest (17 Tests, 6 Dateien)
+npm test            # vitest (19 Tests, 6 Dateien)
 npx tsc --noEmit    # reine Typprüfung
 node download-fonts.mjs  # Schriften neu holen + index.html/catalog.css regenerieren
 ```
@@ -49,7 +49,9 @@ lassen.**
 | Aufgabe | Ort |
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
-| Startseite (5 Sektionen) | `src/pages/Home.tsx` |
+| Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
+| Startseiten-Inhalte: Lösungen, Ablauf, FAQ, Mockup-Texte (DE/EN/TR) | `src/data/homeContent.ts` |
+| Produkt-Mockups in HTML/CSS (keine Bilder) | `src/components/SystemMockups.tsx` |
 | Alle Texte, 3 Sprachen (DE/EN/TR) | `src/i18n.ts` |
 | Service-Metadaten (Slug, Icon, Reihenfolge) | `src/data/services.ts` |
 | Service-Langtexte | `src/data/serviceContent.ts` |
@@ -170,6 +172,7 @@ mit dem Schimmer um Aufmerksamkeit konkurriert.
   Utilities und Sektions-Styles.
 - `src/i18n.ts` ist ein 500-Zeilen-Objekt für drei Sprachen; ab dem
   nächsten größeren Textzuwachs nach `src/locales/{en,de,tr}.json` teilen.
+- Strategie, Zielgruppe und SEO/GEO-Fahrplan: `docs/redesign-2026-10.md`.
 - Tests decken Preloader, Cursor, SEOHead, ServicePage/404 und das
-  Kontaktformular samt Fallback ab – nicht aber Navigation, Cookie-Banner
+  Kontaktformular samt Fallback und Themenwahl ab – nicht aber Navigation, Cookie-Banner
   und die Einwilligungs-Reihenfolge der Analytics.

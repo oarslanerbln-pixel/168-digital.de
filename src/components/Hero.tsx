@@ -1,24 +1,32 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
 import { playClick, playTick } from '../utils/audio';
-import { ArrowRight, ArrowDown } from 'lucide-react';
-import Reel from './Reel';
+import { ArrowRight, Check } from 'lucide-react';
+import { HeroMockup } from './SystemMockups';
+import { getHomeContent } from '../data/homeContent';
 import './Hero.css';
 
 /* ════════════════════════════════════════════════════════════════
-   HERO — editorial, left-aligned, one accent.
+   HERO — outcome first, product visible, one obvious next step.
 
-   Reworked from the previous centred layout: the headline is now flush
-   left at editorial scale, with the service list moved into a numbered
-   rail on the right. That rail replaces the old four-across chip grid,
-   which had a hard 150px-per-column floor and was the main cause of the
-   page overflowing its own viewport on phones.
+   The previous hero led with a manifesto ("where image and code become
+   one") and a full-width showreel. Beautiful, but a restaurant owner or
+   a Mittelstand manager arriving from Instagram could not tell within
+   five seconds what they would get or what to do next. This version
+   answers both on the first screen:
 
-   The only colour in the section is the blue-to-gold shimmer sweeping
-   through the two headline words. Everything else — mark, rules, meta,
-   buttons — is ink on paper, so the sweep is unmistakably the focal
-   point rather than one effect competing with five others.
+   - the headline names the result (customers won, hours saved), with
+     the blue-to-gold shimmer kept on exactly those two words — still the
+     only colour gradient on the site (CLAUDE.md rule 7);
+   - a product mockup on the right shows the kind of system we build,
+     drawn in HTML/CSS so it costs no image request;
+   - one solid CTA goes straight to the inquiry form, WhatsApp sits next
+     to it for people who would rather message, and three short trust
+     lines answer the usual "but…" before it is asked.
+
+   The showreel moved down next to the film services, where it proves
+   the film half of the business instead of competing with the software
+   half for the first impression.
    ════════════════════════════════════════════════════════════════ */
 
 const ease = [0.16, 1, 0.3, 1] as const;
@@ -30,28 +38,23 @@ const rise = (delay: number) => ({
   transition: { delay, duration: 0.85, ease },
 });
 
-const serviceLinks = [
-  { slug: 'web-saas-development', key: 'chip_web' },
-  { slug: 'digital-menus', key: 'chip_menu' },
-  { slug: 'wedding-event-films', key: 'chip_event' },
-  { slug: 'video-drone-production', key: 'chip_video' },
-  { slug: 'social-media-marketing', key: 'chip_social' },
-];
+const trustKeys = ['hero_trust_1', 'hero_trust_2', 'hero_trust_3'];
 
 export default function Hero() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { mock } = getHomeContent(i18n.language);
 
-  const scrollToServices = () => {
+  const scrollToContact = () => {
     playClick();
-    document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section id="hero" className="hero-section">
       <div className="hero-inner">
-        {/* ── Left: the statement ── */}
         <div className="hero-main">
           <motion.span className="hero-eyebrow" {...rise(0.05)}>
+            <span className="hero-eyebrow-dot" aria-hidden="true" />
             {t('hero_eyebrow')}
           </motion.span>
 
@@ -72,7 +75,7 @@ export default function Hero() {
               type="button"
               className="hero-cta"
               onMouseEnter={playTick}
-              onClick={scrollToServices}
+              onClick={scrollToContact}
             >
               {t('hero_button')}
               <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
@@ -86,63 +89,29 @@ export default function Hero() {
               onMouseEnter={playTick}
               onClick={playClick}
             >
-              WhatsApp
+              {t('hero_whatsapp', 'WhatsApp')}
             </a>
           </motion.div>
-        </div>
 
-        {/* ── Right: numbered service rail. A vertical list rather than a
-             four-across grid, so it can never force the page wider than
-             the screen the way the old chip row did. ── */}
-        <motion.aside className="hero-side" {...rise(0.42)}>
-          <nav className="hero-rail" aria-label={t('services_title')}>
-            {serviceLinks.map((item, i) => (
-              <Link
-                key={item.slug}
-                to={`/${item.slug}`}
-                className="hero-rail-item"
-                onMouseEnter={playTick}
-              >
-                <span className="hero-rail-num">{String(i + 1).padStart(2, '0')}</span>
-                <span className="hero-rail-label">{t(item.key)}</span>
-                <ArrowRight className="hero-rail-arrow" size={14} strokeWidth={1.75} aria-hidden="true" />
-              </Link>
+          <motion.ul className="hero-trust" {...rise(0.4)}>
+            {trustKeys.map((key) => (
+              <li key={key}>
+                <Check size={15} strokeWidth={2.2} aria-hidden="true" />
+                {t(key)}
+              </li>
             ))}
-          </nav>
-
-          {/* Three facts that answer the questions a prospect actually has
-              before they write in. They also close the tall gap the rail
-              used to leave under itself on wide screens. */}
-          <dl className="hero-facts">
-            <div className="hero-fact">
-              <dt>{t('hero_fact_based_label', 'Based in')}</dt>
-              <dd>{t('hero_fact_based_value', 'Berlin, Germany')}</dd>
-            </div>
-            <div className="hero-fact">
-              <dt>{t('hero_fact_langs_label', 'We work in')}</dt>
-              <dd>{t('hero_fact_langs_value', 'German · English · Turkish')}</dd>
-            </div>
-            <div className="hero-fact">
-              <dt>{t('hero_fact_reply_label', 'Reply time')}</dt>
-              <dd>{t('hero_fact_reply_value', 'Within 24 hours')}</dd>
-            </div>
-          </dl>
-        </motion.aside>
-      </div>
-
-      {/* ── Showreel ── */}
-      <motion.div
-        className="hero-reel-container"
-        initial={{ opacity: 0, y: 32 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 1.1, ease }}
-      >
-        <div className="hero-reel-label">
-          <ArrowDown size={13} strokeWidth={1.75} aria-hidden="true" />
-          <span>{t('hero_reel_label', 'SHOWREEL')}</span>
+          </motion.ul>
         </div>
-        <Reel />
-      </motion.div>
+
+        <motion.div
+          className="hero-visual"
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.35, duration: 1, ease }}
+        >
+          <HeroMockup m={mock} />
+        </motion.div>
+      </div>
     </section>
   );
 }

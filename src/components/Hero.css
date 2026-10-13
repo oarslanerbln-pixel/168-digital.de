@@ -1,7 +1,7 @@
 /* ═══════════════════════════════════════════════════════════════
    HERO — editorial, left-aligned, one accent.
 
-   Layout: a two-column grid (statement | numbered service rail) that
+   Layout: a two-column grid (statement | product mockup) that
    collapses to a single column below 900px. Nothing here has a fixed
    minimum width, so the section can never widen the viewport.
    ═══════════════════════════════════════════════════════════════ */
@@ -11,7 +11,7 @@
   z-index: 1;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 168px 32px 96px;
+  padding: 152px 32px 88px;
   display: flex;
   flex-direction: column;
   gap: 96px;
@@ -22,9 +22,9 @@
   /* minmax(0, …) on both tracks: without the 0 floor, a long unbroken
      word in a translation would set a min-content width and push the
      grid — and with it the whole page — wider than the screen. */
-  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
-  gap: 72px;
-  align-items: start;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
 }
 
 .hero-main {
@@ -33,19 +33,34 @@
 
 /* ─── Eyebrow ─── */
 .hero-eyebrow {
-  display: block;
-  margin-bottom: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 26px;
+  padding: 7px 14px 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg-raised);
   font-size: 0.72rem;
   font-weight: 600;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--text-muted);
+}
+
+/* A small live-dot: "we're taking projects" without saying it twice. */
+.hero-eyebrow-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 0 4px var(--accent-soft);
 }
 
 /* ─── Headline ─── */
 .hero-headline {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  font-size: clamp(2.3rem, 4.1vw, 3.75rem);
   font-weight: 700;
   line-height: 1.03;
   letter-spacing: -0.035em;
@@ -111,8 +126,8 @@
   font-weight: 400;
   line-height: 1.6;
   color: var(--text-muted);
-  max-width: 46ch;
-  margin: 0 0 44px;
+  max-width: 48ch;
+  margin: 0 0 36px;
 }
 
 /* ─── Actions — one solid button, one quiet link ─── */
@@ -127,17 +142,17 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 15px 26px;
+  padding: 16px 26px;
   border: 1px solid var(--text-main);
-  border-radius: 0;
+  border-radius: 999px;
   background: var(--text-main);
   color: var(--bg-dark);
   font-family: 'Outfit', sans-serif;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  letter-spacing: 0.01em;
   cursor: pointer;
+  box-shadow: var(--shadow-card);
   transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium);
 }
 
@@ -146,8 +161,8 @@
 }
 
 .hero-cta:hover {
-  background: transparent;
-  color: var(--text-main);
+  background: var(--accent-cyan);
+  border-color: var(--accent-cyan);
 }
 
 .hero-cta:hover svg {
@@ -157,13 +172,13 @@
 .hero-cta-ghost {
   display: inline-flex;
   align-items: center;
-  padding: 15px 24px;
-  border: 1px solid var(--line);
-  color: var(--text-muted);
-  font-size: 0.82rem;
+  padding: 16px 24px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--bg-raised);
+  color: var(--text-main);
+  font-size: 0.95rem;
   font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
   text-decoration: none;
   transition: border-color 0.35s var(--ease-premium), color 0.35s var(--ease-premium);
 }
@@ -173,106 +188,32 @@
   color: var(--text-main);
 }
 
-/* ─── Right column: service rail + facts ─── */
-.hero-side {
-  min-width: 0;
-}
-
-.hero-rail {
-  min-width: 0;
-  border-top: 1px solid var(--line);
-  padding-top: 4px;
-}
-
-.hero-rail-item {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 2px;
-  border-bottom: 1px solid var(--line);
-  text-decoration: none;
-  color: var(--text-main);
-  transition: padding-left 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);
-}
-
-.hero-rail-item:hover {
-  padding-left: 10px;
-  border-color: var(--line-strong);
-}
-
-.hero-rail-num {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: var(--text-faint);
-  font-variant-numeric: tabular-nums;
-}
-
-.hero-rail-label {
-  font-size: 0.95rem;
-  font-weight: 500;
-  line-height: 1.35;
-}
-
-.hero-rail-arrow {
-  color: var(--text-faint);
-  opacity: 0;
-  transform: translateX(-5px);
-  transition: opacity 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
-}
-
-.hero-rail-item:hover .hero-rail-arrow {
-  opacity: 1;
-  transform: translateX(0);
-  color: var(--accent-cyan);
-}
-
-/* ─── Facts under the rail ─── */
-.hero-facts {
-  margin: 36px 0 0;
+/* ─── Trust lines — the three "but…" questions, answered in advance ─── */
+.hero-trust {
+  list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.hero-fact {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.hero-fact dt {
-  font-size: 0.64rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-faint);
-}
-
-.hero-fact dd {
-  margin: 0;
-  font-size: 0.88rem;
-  font-weight: 500;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 32px;
+  font-size: 0.86rem;
   color: var(--text-muted);
 }
 
-/* ─── Showreel ─── */
-.hero-reel-container {
-  width: 100%;
-  max-width: 100%;
+.hero-trust li {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
 }
 
-.hero-reel-label {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 18px;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--text-faint);
+.hero-trust svg {
+  flex-shrink: 0;
+  color: var(--accent-cyan);
+}
+
+/* ─── Right column: product mockup ─── */
+.hero-visual {
+  min-width: 0;
+  padding-top: 8px;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -290,12 +231,8 @@
     gap: 72px;
   }
 
-  /* Stacked into one column there is width to spare, so the three facts
-     sit side by side rather than adding three more rows of height. */
-  .hero-facts {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 12px 40px;
+  .hero-visual {
+    max-width: 620px;
   }
 }
 
@@ -326,9 +263,9 @@
     justify-content: center;
   }
 
-  /* The arrow is always visible on touch, where there is no hover. */
-  .hero-rail-arrow {
-    opacity: 1;
-    transform: none;
+  .hero-trust {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 24px;
   }
 }
