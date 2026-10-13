@@ -7,7 +7,7 @@
     <xhtml:link rel="alternate" hreflang="de" href="https://1618-digital.de/?lang=de"/>
     <xhtml:link rel="alternate" hreflang="tr" href="https://1618-digital.de/?lang=tr"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://1618-digital.de/"/>
-    <lastmod>2026-08-06</lastmod>
+    <lastmod>2026-10-13</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -122,5 +122,25 @@
     <lastmod>2026-07-23</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://1618-digital.de/about</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1618-digital.de/about"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://1618-digital.de/about?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://1618-digital.de/about?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1618-digital.de/about"/>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://1618-digital.de/concepts</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://1618-digital.de/concepts"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://1618-digital.de/concepts?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://1618-digital.de/concepts?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://1618-digital.de/concepts"/>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
 </urlset>

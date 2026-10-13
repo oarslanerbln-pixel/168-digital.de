@@ -1,8 +1,30 @@
-import { useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 const CANONICAL_BASE = 'https://1618-digital.de/';
-const OG_LOCALES: Record<string, string> = { en: 'en_US', de: 'de_DE', tr: 'tr_TR' };
+export const OG_LOCALES: Record<string, string> = { en: 'en_US', de: 'de_DE', tr: 'tr_TR' };
+
+/** Everything a page says about itself in <head>, resolved for one language. */
+export interface SeoData {
+  lang: string;
+  title: string;
+  description: string;
+  /** Canonical URL for this language (bare path for English, ?lang= otherwise). */
+  canonical: string;
+  /** The language-neutral page URL the hreflang alternates are built from. */
+  pageUrl: string;
+  noindex: boolean;
+  jsonLd: object[];
+}
+
+/**
+ * Build-time prerendering (scripts/prerender.mjs) provides one of these per
+ * rendered route. Effects never run during a server render, so SEOHead
+ * reports its resolved values here instead and the prerender script writes
+ * them into that route's static HTML. In the browser there is no provider
+ * and nothing changes: the effect below still owns <head>.
+ */
+export const SeoCollectorContext = createContext<((data: SeoData) => void) | null>(null);
 
 interface SEOHeadProps {
   /** Page path with leading slash, e.g. "/video-drone-production". Defaults to the homepage. */
@@ -29,6 +51,21 @@ interface SEOHeadProps {
  */
 export default function SEOHead({ path = '/', title, description, jsonLd, noindex = false }: SEOHeadProps) {
   const { t, i18n } = useTranslation();
+  const collect = useContext(SeoCollectorContext);
+
+  if (collect) {
+    const lang = i18n.language.substring(0, 2).toLowerCase();
+    const pageUrl = path === '/' ? CANONICAL_BASE : `${CANONICAL_BASE}${path.replace(/^\//, '')}`;
+    collect({
+      lang,
+      title: title ?? t('meta_title'),
+      description: description ?? t('meta_description'),
+      canonical: lang === 'en' ? pageUrl : `${pageUrl}?lang=${lang}`,
+      pageUrl,
+      noindex,
+      jsonLd: jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [],
+    });
+  }
 
   // Its own effect with a cleanup, so the flag is lifted the moment the
   // not-found view unmounts — the next page never inherits "noindex".

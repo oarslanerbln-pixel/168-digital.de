@@ -59,7 +59,7 @@ KI-Antworten auftauchen.** `llms.txt` und die statischen JSON-LD-Daten
 
 ## 4. Nächste Schritte (nach Wirkung sortiert)
 
-1. **Prerendering mergen** (PR #173) – siehe oben.
+1. ~~Prerendering~~ – erledigt: alle Routen werden beim Build als HTML vorgerendert (Englisch). Offen: `/de/`, `/tr/`-Pfade, damit auch die deutsche Fassung ohne JavaScript lesbar ist.
 2. **Google-Unternehmensprofil** pflegen: Kategorie „Webdesigner" +
    „Softwareunternehmen", Leistungen, Fotos, wöchentliche Beiträge.
 3. **Bewertungen sammeln** (Google): 5–10 echte Kundenstimmen; danach
