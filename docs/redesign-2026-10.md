@@ -90,8 +90,8 @@ branchenüblich sind. Bitte prüfen:
 Hero und Lösungs-Karten zeigen generierte Produktfotos statt der früheren
 HTML-Mockups (Quellen `assets-src/solutions/`, WebP 640/1080 px, 14–57 kB).
 Offene Schwächen, bei Gelegenheit neu generieren:
-- `ordering.jpg` zeigt **Dollar-Preise** („$14“) – für Berlin unpassend; mit
-  Euro-Preisen neu erzeugen.
+- `ordering.jpg`: Die generierten Dollar-Preise wurden nachträglich durch
+  Euro-Preise ersetzt (14 €, 12 €, 4,50 €).
 - Die Fotos tragen englische UI-Texte („RSVP“, „Send Email“) und im Dashboard
   einen grünen Wert – fällt in der Kartengröße kaum auf.
 - Das farbige Dashboard-Motiv (sechstes Bild) wurde wegen der Palette nicht verwendet.
