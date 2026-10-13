@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import './Footer.css';
+import { useLocalizedPath } from '../utils/localePath';
 
 interface FooterProps {
   onOpenCookies: () => void;
@@ -8,6 +9,7 @@ interface FooterProps {
 
 export default function Footer({ onOpenCookies }: FooterProps) {
   const { t } = useTranslation();
+  const { localize } = useLocalizedPath();
 
   return (
     <footer className="footer-wrapper">
@@ -16,18 +18,18 @@ export default function Footer({ onOpenCookies }: FooterProps) {
       </div>
 
       <div className="footer-links">
-        <Link to="/contact" className="footer-link">
+        <Link to={localize('/contact')} className="footer-link">
           {t('footer_contact')}
         </Link>
         {/* Both of these moved off the homepage onto their own routes; the
             footer keeps them one click away from every page. */}
-        <Link to="/about" className="footer-link">
+        <Link to={localize('/about')} className="footer-link">
           {t('nav_about', 'Philosophy')}
         </Link>
-        <Link to="/concepts" className="footer-link">
+        <Link to={localize('/concepts')} className="footer-link">
           {t('nav_concepts', 'Concepts')}
         </Link>
-        <Link to="/blog" className="footer-link">
+        <Link to={localize('/blog')} className="footer-link">
           {t('footer_blog')}
         </Link>
         <a
@@ -38,10 +40,10 @@ export default function Footer({ onOpenCookies }: FooterProps) {
         >
           Instagram
         </a>
-        <Link to="/impressum" className="footer-link">
+        <Link to={localize('/impressum')} className="footer-link">
           {t('footer_impressum')}
         </Link>
-        <Link to="/datenschutz" className="footer-link">
+        <Link to={localize('/datenschutz')} className="footer-link">
           {t('footer_datenschutz')}
         </Link>
         <button

@@ -1,10 +1,11 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import SEOHead from '../components/SEOHead';
+import { stripLanguagePrefix, useLocalizedPath } from '../utils/localePath';
 import './NotFoundPage.css';
 
 interface NotFoundPageProps {
-  /** Where the way back leads — the blog sends readers back to /blog. */
+  /** Where the way back leads (language-neutral) — the blog sends readers back to /blog. */
   backTo?: string;
   backLabel?: string;
 }
@@ -23,13 +24,14 @@ interface NotFoundPageProps {
 export default function NotFoundPage({ backTo = '/', backLabel }: NotFoundPageProps) {
   const { t } = useTranslation();
   const { pathname } = useLocation();
+  const { localize } = useLocalizedPath();
 
   return (
     <div className="not-found section-container">
-      <SEOHead path={pathname} title={`${t('not_found_title')} | 1618 Digital`} noindex />
+      <SEOHead path={stripLanguagePrefix(pathname)} title={`${t('not_found_title')} | 1618 Digital`} noindex />
       <h1 className="text-silver">{t('not_found_title')}</h1>
       <p>{t('not_found_text')}</p>
-      <Link to={backTo} className="premium-button premium-button-silver">
+      <Link to={localize(backTo)} className="premium-button premium-button-silver">
         {backLabel ?? t('not_found_cta')}
       </Link>
     </div>

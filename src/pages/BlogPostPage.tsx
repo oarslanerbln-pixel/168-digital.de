@@ -9,12 +9,13 @@ import { getBlogPostBySlug } from '../data/blogContent';
 import type { Lang } from '../data/serviceContent';
 import { getServiceBySlug } from '../data/services';
 import './BlogPage.css';
+import { SITE_URL, useLocalizedPath } from '../utils/localePath';
 
-const SITE_URL = 'https://1618-digital.de';
 
 export default function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const { t, i18n } = useTranslation();
+  const { localize, absolute } = useLocalizedPath();
   const lang = i18n.language.substring(0, 2).toLowerCase() as Lang;
 
   const post = slug ? getBlogPostBySlug(slug) : undefined;
@@ -36,16 +37,16 @@ export default function BlogPostPage() {
       dateModified: post.publishedAt,
       author: { '@type': 'Person', name: 'Ömer Arslaner' },
       publisher: { '@id': `${SITE_URL}/#business` },
-      url: `${SITE_URL}/blog/${post.slug}`,
+      url: absolute(`/blog/${post.slug}`),
       inLanguage: lang,
     },
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t('svc_breadcrumb_home'), item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: t('blog_title'), item: `${SITE_URL}/blog` },
-        { '@type': 'ListItem', position: 3, name: content.title, item: `${SITE_URL}/blog/${post.slug}` },
+        { '@type': 'ListItem', position: 1, name: t('svc_breadcrumb_home'), item: absolute('/') },
+        { '@type': 'ListItem', position: 2, name: t('blog_title'), item: absolute('/blog') },
+        { '@type': 'ListItem', position: 3, name: content.title, item: absolute(`/blog/${post.slug}`) },
       ],
     },
   ];
@@ -64,9 +65,9 @@ export default function BlogPostPage() {
         style={{ ['--card-glow' as string]: post.glowColor }}
       >
         <nav className="service-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">{t('svc_breadcrumb_home')}</Link>
+          <Link to={localize('/')}>{t('svc_breadcrumb_home')}</Link>
           <ChevronRight size={12} />
-          <Link to="/blog">{t('blog_title')}</Link>
+          <Link to={localize('/blog')}>{t('blog_title')}</Link>
           <ChevronRight size={12} />
           <span className="current">{content.title}</span>
         </nav>
@@ -110,10 +111,10 @@ export default function BlogPostPage() {
           <div className="service-related blog-post-related">
             <h2 className="service-section-heading">{t('svc_related_services_heading')}</h2>
             <div className="service-related-links">
-              <Link to={`/${relatedService.slug}`} className="service-related-link">
+              <Link to={localize(`/${relatedService.slug}`)} className="service-related-link">
                 {t(relatedService.titleKey)} <ArrowUpRight size={14} />
               </Link>
-              <Link to="/blog" className="service-related-link">
+              <Link to={localize('/blog')} className="service-related-link">
                 {t('blog_back_to_blog')} <ArrowUpRight size={14} />
               </Link>
             </div>

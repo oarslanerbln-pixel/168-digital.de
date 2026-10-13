@@ -1,4 +1,54 @@
 {
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "de"
+        }
+      ],
+      "destination": "/de",
+      "permanent": true
+    },
+    {
+      "source": "/:path((?!de/|de$|tr/|tr$).+)",
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "de"
+        }
+      ],
+      "destination": "/de/:path",
+      "permanent": true
+    },
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "tr"
+        }
+      ],
+      "destination": "/tr",
+      "permanent": true
+    },
+    {
+      "source": "/:path((?!de/|de$|tr/|tr$).+)",
+      "has": [
+        {
+          "type": "query",
+          "key": "lang",
+          "value": "tr"
+        }
+      ],
+      "destination": "/tr/:path",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/fonts/(.*).woff2",

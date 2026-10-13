@@ -23,7 +23,13 @@ describe('SEOHead', () => {
     );
     expect(seo).toMatchObject({
       title: 'About',
-      pageUrl: 'https://1618-digital.de/about',
+      canonical: 'https://1618-digital.de/about',
+      alternates: [
+        ['en', 'https://1618-digital.de/about'],
+        ['de', 'https://1618-digital.de/de/about'],
+        ['tr', 'https://1618-digital.de/tr/about'],
+        ['x-default', 'https://1618-digital.de/about'],
+      ],
       noindex: false,
       jsonLd: [{ '@type': 'Thing' }],
     });

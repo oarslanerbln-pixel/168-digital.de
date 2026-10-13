@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
 import './HomeOutro.css';
+import { useLocalizedPath } from '../utils/localePath';
 
 /* ════════════════════════════════════════════════════════════════
    HOME OUTRO — two hairline doorways to the sections that moved off
@@ -34,6 +35,7 @@ const doors = [
 
 export default function HomeOutro() {
   const { t } = useTranslation();
+  const { localize } = useLocalizedPath();
 
   return (
     <section className="home-outro" aria-label={t('outro_label', 'More')}>
@@ -41,7 +43,7 @@ export default function HomeOutro() {
         {doors.map((door) => (
           <Link
             key={door.to}
-            to={door.to}
+            to={localize(door.to)}
             className="home-outro-door"
             onMouseEnter={playTick}
           >
