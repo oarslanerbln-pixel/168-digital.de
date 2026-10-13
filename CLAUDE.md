@@ -34,14 +34,14 @@ gilt `package.json`, nicht das README.
 ```bash
 npm install         # einmalig
 npm run dev         # Dev-Server
-npm run build       # tsc && vite build – muss fehlerfrei sein
-npm test            # vitest (19 Tests, 6 Dateien)
+npm run build       # tsc → vite build → SSR-Build → Prerender (scripts/prerender.mjs) – muss fehlerfrei sein
+npm test            # vitest (20 Tests, 6 Dateien)
 npx tsc --noEmit    # reine Typprüfung
 node download-fonts.mjs  # Schriften neu holen + index.html/catalog.css regenerieren
 ```
 
 CI (`.github/workflows/ci.yml`) fährt genau: `npm ci` → `tsc --noEmit`
-→ `vite build` → `npm test`. **Vor jedem Push lokal dieselbe Kette laufen
+→ `npm run build` (inkl. Prerender) → `npm test`. **Vor jedem Push lokal dieselbe Kette laufen
 lassen.**
 
 ## Architektur – wo was liegt
@@ -50,8 +50,8 @@ lassen.**
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
 | Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
-| Startseiten-Inhalte: Lösungen, Ablauf, FAQ, Mockup-Texte (DE/EN/TR) | `src/data/homeContent.ts` |
-| Produkt-Mockups in HTML/CSS (keine Bilder) | `src/components/SystemMockups.tsx` |
+| Startseiten-Inhalte: Lösungen, Ablauf, FAQ (DE/EN/TR) + Produktfotos | `src/data/homeContent.ts` |
+| Produktfotos: Quellen `assets-src/solutions/`, WebP 640/1080 via `npm run optimize:images` | `public/solutions/` |
 | Alle Texte, 3 Sprachen (DE/EN/TR) | `src/i18n.ts` |
 | Service-Metadaten (Slug, Icon, Reihenfolge) | `src/data/services.ts` |
 | Service-Langtexte | `src/data/serviceContent.ts` |
@@ -61,6 +61,7 @@ lassen.**
 | Impressum/Datenschutz | `src/data/legalContent.tsx` |
 | 50 Design-Konzepte (Showcase) | `src/data/webDesignConcepts.ts` |
 | Meta-Tags pro Route | `src/components/SEOHead.tsx` |
+| Build-Prerender: Routenliste + SSR-Einstieg | `src/entry-server.tsx`, `scripts/prerender.mjs` |
 | Lead-Versand (Web3Forms) + WhatsApp/E-Mail-Fallback | `src/utils/leads.ts` |
 | 404-Seite (noindex) für jede unbekannte URL | `src/pages/NotFoundPage.tsx` |
 
@@ -161,13 +162,18 @@ mit dem Schimmer um Aufmerksamkeit konkurriert.
 
 ## Bekannte offene Punkte
 
-- Die Seite wird nur clientseitig gerendert: `index.html` hat einen leeren
-  `<div id="root">`. Crawler ohne JavaScript (Link-Vorschauen, KI-Crawler)
-  sehen für jede URL nur die Meta-Tags der Startseite. Prerendering liegt
-  als Entwurf in PR #173 (inkl. Sitemap-Lücken `/about`, `/concepts`).
+- Jede Route aus `src/entry-server.tsx` wird beim Build als statisches HTML
+  vorgerendert (englische Fassung, eigene Meta-Tags und JSON-LD). Der Client
+  übernimmt per `createRoot`, nicht per Hydration. **Neue Seite = Route in
+  `entry-server.tsx` + `sitemap.xml`.** Code, der beim Rendern (nicht im
+  Effect) `window`/`localStorage` anfasst, bricht den Build – mit
+  `typeof window === 'undefined'` absichern. Unbekannte URLs bekommen
+  `dist/404.html` (SPA-Hülle) mit echtem 404-Status – es gibt bewusst keine
+  Catch-all-Rewrite mehr in `vercel.json`.
 - Sprache per `?lang=`: für hreflang gültig, aber nicht als eigene statische
-  Datei prerenderbar. Kommt Prerendering, sind `/de/`, `/tr/`-Pfade mit
-  301-Weiterleitungen zu entscheiden – betrifft alle URLs.
+  Datei prerenderbar – vorgerendert wird nur Englisch. Crawler ohne
+  JavaScript sehen die deutsche/türkische Fassung daher nicht. Lösung wären
+  `/de/`, `/tr/`-Pfade mit 301-Weiterleitungen – betrifft alle URLs, offen.
 - `src/index.css` ist mit ~1.450 Zeilen zu groß und vermischt Tokens,
   Utilities und Sektions-Styles.
 - `src/i18n.ts` ist ein 500-Zeilen-Objekt für drei Sprachen; ab dem

@@ -41,7 +41,7 @@ function assertLeadDeliveryConfigured(mode: string) {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   assertLeadDeliveryConfigured(mode)
 
   return {
@@ -57,7 +57,9 @@ export default defineConfig(({ mode }) => {
         output: {
           // Split heavy vendors into their own long-cacheable chunks so the
           // main bundle stays small.
-          manualChunks: {
+          // Not for the prerender build: there framer-motion stays an
+          // external Node import and cannot be assigned to a chunk.
+          manualChunks: isSsrBuild ? undefined : {
             motion: ['framer-motion'],
           },
         },

@@ -44,12 +44,16 @@ export default function About() {
       >
         {/* Text Details — no visual, text-only per feedback */}
         <div className="about-text-container">
-          <h2 className="about-overline">
+          {/* The page's one <h1> is the headline; the label above it is a
+              label. This component used to be a homepage section (h2/h3)
+              and kept those levels after it moved to /about, leaving the
+              page without a main heading. */}
+          <p className="about-overline">
             {t('about_title')}
-          </h2>
-          <h3 className="text-silver about-headline">
+          </p>
+          <h1 className="text-silver about-headline">
             {t('about_subtitle')}
-          </h3>
+          </h1>
           <p className="about-description">
             {t('about_text')}
           </p>

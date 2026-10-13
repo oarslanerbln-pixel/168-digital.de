@@ -556,6 +556,10 @@ const resources = {
 const SUPPORTED_LANGS = ['en', 'de', 'tr'];
 
 const getUserLanguage = () => {
+  // Build-time prerendering runs in Node: render the canonical (English)
+  // version — the one the bare URL and the hreflang "en"/x-default claim.
+  if (typeof window === 'undefined') return 'en';
+
   // The ?lang= param is what our hreflang tags and sitemap.xml advertise to
   // search engines as distinct language URLs — it must take priority so those
   // URLs actually render the language they claim to.
@@ -584,6 +588,7 @@ i18n
 // ?lang= param when it changes, so the address bar always matches what's
 // displayed — keeping it shareable and consistent with our hreflang tags.
 i18n.on('languageChanged', (lng) => {
+  if (typeof window === 'undefined') return; // build-time prerender: no URL to sync
   localStorage.setItem('i18nextLng', lng);
   document.documentElement.lang = lng;
 

@@ -2,8 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { ArrowRight, Check } from 'lucide-react';
 import { playTick, playClick } from '../utils/audio';
-import { getHomeContent, type SolutionId } from '../data/homeContent';
-import { SolutionMockup } from './SystemMockups';
+import { getHomeContent, solutionImages, srcSet, type SolutionId } from '../data/homeContent';
 import { requestContactTopic, type ContactTopic } from '../utils/contactTopic';
 import './HomeSections.css';
 
@@ -14,7 +13,7 @@ import './HomeSections.css';
    (web, menus, film). Business owners think in problems: too many
    phone bookings, a menu that is out of date, orders in five
    spreadsheets, inquiries nobody answers. Each card names one of those
-   problems, shows the system that fixes it as a mockup, says who it
+   problems, shows the system that fixes it in use, says who it
    suits, and ends in a button that opens the inquiry form with the
    right topic already selected — one tap from "that's me" to a lead.
    ════════════════════════════════════════════════════════════════ */
@@ -28,7 +27,7 @@ const TOPIC_FOR: Record<SolutionId, ContactTopic> = {
 
 export default function Solutions() {
   const { t, i18n } = useTranslation();
-  const { solutions, mock } = getHomeContent(i18n.language);
+  const { solutions } = getHomeContent(i18n.language);
 
   return (
     <section id="solutions" className="home-section solutions-section">
@@ -55,7 +54,18 @@ export default function Solutions() {
             transition={{ duration: 0.6, delay: (i % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="solution-visual">
-              <SolutionMockup id={s.id} m={mock} />
+              {/* Lazy: every card sits below the fold. Decorative —
+                  the card's own copy says what the photo shows. */}
+              <img
+                src={`${solutionImages[s.id].stem}-640.webp`}
+                srcSet={srcSet(solutionImages[s.id])}
+                sizes="(max-width: 860px) 92vw, 600px"
+                width={solutionImages[s.id].width}
+                height={solutionImages[s.id].height}
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
             </div>
             <div className="solution-body">
               <h3 className="solution-title">{s.title}</h3>

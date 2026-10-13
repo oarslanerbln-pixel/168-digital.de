@@ -35,7 +35,10 @@ const INTRO_TTL_MS = 24 * 60 * 60 * 1000; // show the intro at most once per 24h
 // reflects whether the intro should play — no post-mount flash for admins,
 // returning visitors, or people who've asked for reduced motion.
 function getInitialLoadedState(): boolean {
-  if (typeof window === 'undefined') return false;
+  // Prerendered HTML is for crawlers and the first paint before the script
+  // runs: it carries the page, not the intro. The browser decides about the
+  // intro itself when React takes over.
+  if (typeof window === 'undefined') return true;
 
   const adminBypass = localStorage.getItem('1618_bypass_preloader') === 'true';
   if (adminBypass) return true;

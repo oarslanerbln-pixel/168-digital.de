@@ -76,9 +76,11 @@ export default function WebDesignCatalog() {
               bronze) that read as a different, scrappier typeface next to
               the solid words beside it. It is now simply the same heading
               in the muted ink, which sets it apart without shouting. */}
-          <h2 className="services-title">
+          {/* <h1>: since the catalog moved to /concepts this is the page's
+              main heading, not a homepage section heading. */}
+          <h1 className="services-title">
             {t('wd_title_pre')}<em className="wd-title-em">{t('wd_title_em')}</em>
-          </h2>
+          </h1>
           <p className="services-subtitle">
             {t('wd_subtitle')}
           </p>

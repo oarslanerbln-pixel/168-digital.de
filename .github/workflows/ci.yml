@@ -14,5 +14,7 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx tsc --noEmit
-      - run: npx vite build
+      # The full build: client bundle, SSR bundle and the per-route
+      # prerender, so a page that fails to render fails the PR, not the deploy.
+      - run: npm run build
       - run: npm test
