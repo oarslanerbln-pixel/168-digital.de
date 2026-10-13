@@ -1,0 +1,317 @@
+<!doctype html>
+<!--
+  The Leaf Berlin – portrait signage overlay (1080 × 1920, 9:16).
+
+  This page is not a website. It is the graphic layer that render.mjs
+  captures frame by frame and lays over the client's 10-second footage.
+  It renders transparent wherever the footage should show through, so
+  the same template serves both layouts the client signed off on:
+
+    Variant 1 "Fokus Video"   – footage + logo band only.
+    Variant 2 "Text & Motiv"  – adds title box, description box and a
+                                circular motif over the footage.
+
+  Animation is driven by window.renderAt(t) instead of CSS animations so
+  every frame is deterministic: the renderer asks for t = 0, 1/30, 2/30 …
+  and gets the identical picture on every run and every machine.
+
+  Layout rules come straight from the filming brief (DREHBRIEF.md):
+  top ~30 % is reserved for text, the centre for the product/motif, the
+  bottom ~25 % for the logo band. Everything sits inside a 72 px safe
+  margin because signage panels in "overscan" mode crop the edges.
+-->
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>The Leaf – Signage Overlay</title>
+<style>
+  /* Self-hosted Plus Jakarta Sans from the agency repo – no network access
+     during rendering, and latin-ext covers Turkish menu names (ç, ğ, ş, ı). */
+  @font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-weight: 400 800;
+    src: url('../../../../public/fonts/jakarta-latin.woff2') format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2212;
+  }
+  @font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-weight: 400 800;
+    src: url('../../../../public/fonts/jakarta-latin-ext.woff2') format('woff2');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20C0;
+  }
+
+  /* Brand tokens. Values are sampled from the client's layout sheet;
+     swap them for the exact codes from The Leaf's CI manual once received.
+     Surfaces are fully opaque on purpose: semi-transparent boxes let busy
+     footage bleed through and make the type look washed out on a TV. */
+  :root {
+    --leaf-green: #1E4A38;
+    --leaf-ivory: #F5F2EA;
+    --paper: #FBF9F4;
+    --safe: 72px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    width: 1080px; height: 1920px; overflow: hidden;
+    background: transparent;
+    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    color: var(--leaf-green);
+    -webkit-font-smoothing: antialiased;
+  }
+  #stage { position: absolute; inset: 0; }
+
+  /* Placeholder footage – only drawn when a slide has no real video yet,
+     so previews for the client never show an empty frame. */
+  #demo-bg { position: absolute; inset: 0; display: none; }
+
+  /* ---- Text zone (top) ----
+     Premium here means restraint: flat paper surfaces, no drop shadows,
+     generous padding and one typeface in two weights. */
+  #copy {
+    position: absolute; top: 180px; left: var(--safe);
+    width: calc(1080px - 2 * var(--safe));
+    display: flex; flex-direction: column; align-items: flex-start; gap: 18px;
+  }
+  .box { background: var(--paper); max-width: 100%; }
+  #title {
+    font-size: 100px; line-height: 1.04; font-weight: 700; letter-spacing: -0.025em;
+    padding: 30px 44px 34px;
+  }
+  #subtitle {
+    font-size: 44px; line-height: 1.25; font-weight: 500; letter-spacing: 0.005em;
+    padding: 22px 44px 24px;
+  }
+  .box > span { display: block; }
+
+  /* ---- Motif (centre) ----
+     Thin outer ring + ivory passe-partout, like a framed print. */
+  #motif {
+    position: absolute; width: 520px; height: 520px;
+    left: calc(670px - 260px); top: calc(1000px - 260px);
+    border-radius: 50%;
+    border: 4px solid var(--leaf-green);
+    background: var(--paper);
+    padding: 14px;
+  }
+  #motif .inner {
+    width: 100%; height: 100%; border-radius: 50%; overflow: hidden;
+    display: grid; place-items: center; text-align: center;
+  }
+  #motif img { width: 100%; height: 100%; object-fit: cover; }
+  #motif .motif-text {
+    font-size: 58px; font-weight: 600; line-height: 1.12; letter-spacing: -0.01em; padding: 0 60px;
+  }
+  #motif .motif-text::after {
+    content: ''; display: block; width: 56px; height: 3px; margin: 26px auto 0;
+    background: var(--leaf-green); opacity: 0.5;
+  }
+
+  /* ---- Logo band (bottom, always visible) ---- */
+  #band { position: absolute; inset: 0; pointer-events: none; }
+  #badge {
+    position: absolute; width: 320px; height: 320px;
+    left: calc(850px - 160px); top: calc(1690px - 160px);
+    border-radius: 50%;
+    background: var(--leaf-ivory);
+    border: 3px solid var(--leaf-green);
+    display: grid; place-items: center;
+  }
+  /* Inner hairline ring – the seal detail that makes the badge read as a mark, not a sticker. */
+  #badge::after {
+    content: ''; position: absolute; inset: 10px; border-radius: 50%;
+    border: 1.5px solid var(--leaf-green); opacity: 0.45;
+  }
+  #badge img { width: 220px; height: auto; }
+  .wordmark { display: flex; flex-direction: column; align-items: center; }
+  .wordmark svg { width: 56px; height: 56px; margin-bottom: 8px; }
+  .wordmark .name { font-size: 46px; font-weight: 700; letter-spacing: 0.04em; line-height: 1; }
+  .wordmark .city { font-size: 15px; font-weight: 600; letter-spacing: 0.6em; margin-top: 12px; padding-left: 0.6em; }
+
+  #placeholder-tag {
+    position: absolute; left: var(--safe); bottom: 96px; display: none;
+    font-size: 20px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--leaf-green); opacity: 0.45;
+  }
+</style>
+</head>
+<body>
+<div id="stage">
+  <canvas id="demo-bg" width="1080" height="1920"></canvas>
+
+  <div id="copy">
+    <div id="title" class="box"><span></span></div>
+    <div id="subtitle" class="box"><span></span></div>
+  </div>
+
+  <div id="motif"></div>
+
+  <svg id="band" viewBox="0 0 1080 1920" width="1080" height="1920" aria-hidden="true">
+    <!-- The curve rises to the right so the badge sits on the band's deepest
+         point and never covers the product in the centre of the shot. -->
+    <path d="M0 1652 C 360 1650 780 1560 1080 1300 L1080 1920 L0 1920 Z" fill="var(--leaf-ivory)"/>
+    <path d="M0 1652 C 360 1650 780 1560 1080 1300" fill="none" stroke="var(--leaf-green)" stroke-width="4"/>
+    <path d="M0 1670 C 360 1668 780 1580 1080 1322" fill="none" stroke="var(--leaf-green)" stroke-width="1.5" opacity="0.35"/>
+  </svg>
+
+  <div id="badge"></div>
+  <div id="placeholder-tag">Platzhalter · Footage folgt</div>
+</div>
+
+<script>
+  // Placeholder wordmark until the client's vector logo arrives (assets/logo.svg).
+  const PLACEHOLDER_LOGO = `
+    <div class="wordmark">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M78 10 C 40 14 18 40 24 74 C 56 76 84 52 78 10 Z" fill="var(--leaf-green)"/>
+        <path d="M24 74 C 40 54 56 38 70 24" stroke="var(--leaf-cream)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M24 74 L 16 90" stroke="var(--leaf-green)" stroke-width="5" stroke-linecap="round"/>
+      </svg>
+      <div class="name">THE LEAF</div>
+      <div class="city">BERLIN</div>
+    </div>`;
+
+  const $ = (id) => document.getElementById(id);
+  const clamp = (v) => Math.min(1, Math.max(0, v));
+  const easeOut = (v) => 1 - Math.pow(1 - clamp(v), 3);
+  const progress = (t, start, len) => easeOut((t - start) / len);
+
+  let cfg = null;
+
+  // Deterministic pseudo-random so placeholder grain is identical per run.
+  function rng(seed) {
+    return () => ((seed = (seed * 16807) % 2147483647) - 1) / 2147483646;
+  }
+  let grain = [];
+  window.setup = async (config) => {
+    cfg = { duration: 10, exit: true, ...config };
+
+    $('title').style.display = cfg.title ? '' : 'none';
+    $('title').firstElementChild.textContent = cfg.title || '';
+    $('subtitle').style.display = cfg.subtitle ? '' : 'none';
+    $('subtitle').firstElementChild.textContent = cfg.subtitle || '';
+
+    const motif = $('motif');
+    motif.style.display = cfg.motif ? '' : 'none';
+    motif.innerHTML = '';
+    if (cfg.motif?.image) {
+      const img = new Image();
+      img.src = cfg.motif.image;
+      motif.append(Object.assign(document.createElement('div'), { className: 'inner' }));
+      motif.firstChild.append(img);
+      await img.decode();
+    } else if (cfg.motif?.text) {
+      const el = document.createElement('div');
+      el.className = 'motif-text';
+      el.textContent = cfg.motif.text;
+      const inner = document.createElement('div');
+      inner.className = 'inner';
+      inner.append(el);
+      motif.append(inner);
+    }
+
+    const badge = $('badge');
+    if (cfg.logo) {
+      const img = new Image();
+      img.src = cfg.logo;
+      badge.replaceChildren(img);
+      await img.decode();
+    } else {
+      badge.innerHTML = PLACEHOLDER_LOGO;
+    }
+
+    const demo = !cfg.background;
+    $('demo-bg').style.display = demo ? 'block' : 'none';
+    $('placeholder-tag').style.display = demo ? 'block' : 'none';
+    // A few pre-baked grain tiles, cycled per frame, give the "shot on
+    // film" texture without per-frame noise generation.
+    const r = rng(1618);
+    grain = Array.from({ length: 4 }, () => {
+      const tile = document.createElement('canvas');
+      tile.width = tile.height = 256;
+      const tc = tile.getContext('2d');
+      const img = tc.createImageData(256, 256);
+      for (let i = 0; i < img.data.length; i += 4) {
+        const v = r() * 255;
+        img.data[i] = img.data[i + 1] = img.data[i + 2] = v;
+        img.data[i + 3] = 255;
+      }
+      tc.putImageData(img, 0, 0);
+      return tile;
+    });
+
+    await document.fonts.ready;
+  };
+
+  // Placeholder "studio" backdrop: near-black warm ground, one soft key
+  // light from top right and a lit table zone where the product will sit.
+  // Deliberately calm – it stands in for footage, it must not compete with it.
+  function drawDemoBackground(t, frame) {
+    const c = $('demo-bg').getContext('2d');
+    c.globalAlpha = 1;
+    c.fillStyle = '#0d0c0a';
+    c.fillRect(0, 0, 1080, 1920);
+
+    const breathe = 0.5 + 0.5 * Math.sin((t / cfg.duration) * Math.PI * 2);
+    const key = c.createRadialGradient(900, 260, 0, 900, 260, 1250);
+    key.addColorStop(0, `rgba(196, 160, 110, ${0.30 + 0.05 * breathe})`);
+    key.addColorStop(0.45, 'rgba(110, 82, 52, 0.12)');
+    key.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    c.fillStyle = key;
+    c.fillRect(0, 0, 1080, 1920);
+
+    c.save();
+    c.translate(560, 1260);
+    c.scale(1, 0.32);
+    const table = c.createRadialGradient(0, 0, 0, 0, 0, 620);
+    table.addColorStop(0, 'rgba(232, 214, 186, 0.22)');
+    table.addColorStop(1, 'rgba(232, 214, 186, 0)');
+    c.fillStyle = table;
+    c.beginPath();
+    c.arc(0, 0, 620, 0, Math.PI * 2);
+    c.fill();
+    c.restore();
+
+    const vig = c.createRadialGradient(540, 900, 500, 540, 960, 1300);
+    vig.addColorStop(0, 'rgba(0, 0, 0, 0)');
+    vig.addColorStop(1, 'rgba(0, 0, 0, 0.55)');
+    c.fillStyle = vig;
+    c.fillRect(0, 0, 1080, 1920);
+
+    c.globalAlpha = 0.07;
+    c.fillStyle = c.createPattern(grain[frame % grain.length], 'repeat');
+    c.fillRect(0, 0, 1080, 1920);
+    c.globalAlpha = 1;
+  }
+
+  // Returns a key describing the visual state; the renderer reuses the last
+  // captured frame while the key is unchanged (static middle section).
+  window.renderAt = (t, frame = 0) => {
+    const d = cfg.duration;
+    const out = cfg.exit ? 1 - progress(t, d - 0.7, 0.55) : 1;
+
+    const titleIn = progress(t, 0.2, 0.7);
+    const subIn = progress(t, 0.5, 0.7);
+    const motifIn = progress(t, 0.9, 0.8);
+
+    const reveal = (el, p) => {
+      el.style.clipPath = `inset(0 ${(1 - p) * 100}% 0 0)`;
+      el.style.opacity = out;
+      el.firstElementChild.style.transform = `translateY(${(1 - p) * 24}px)`;
+    };
+    reveal($('title'), titleIn);
+    reveal($('subtitle'), subIn);
+
+    const motif = $('motif');
+    motif.style.opacity = motifIn * out;
+    motif.style.transform = `scale(${0.9 + 0.1 * motifIn})`;
+
+    if (!cfg.background) {
+      drawDemoBackground(t, frame);
+      return `demo-${t}`;
+    }
+    return [titleIn, subIn, motifIn, out].map((v) => v.toFixed(4)).join('|');
+  };
+</script>
+</body>
+</html>
