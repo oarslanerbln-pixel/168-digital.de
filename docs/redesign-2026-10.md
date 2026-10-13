@@ -84,3 +84,14 @@ branchenüblich sind. Bitte prüfen:
 - Zeitrahmen „2–10 Wochen" (aus der Web/SaaS-Service-Seite übernommen)
 - „Antwort innerhalb von 24 Stunden" (stand bereits im Hero)
 - Die Zahlen in den Mockups sind illustrativ und als „Beispielansichten" gekennzeichnet.
+
+## 6. Produktfotos (generiert)
+
+Hero und Lösungs-Karten zeigen generierte Produktfotos statt der früheren
+HTML-Mockups (Quellen `assets-src/solutions/`, WebP 640/1080 px, 14–57 kB).
+Offene Schwächen, bei Gelegenheit neu generieren:
+- `ordering.jpg` zeigt **Dollar-Preise** („$14“) – für Berlin unpassend; mit
+  Euro-Preisen neu erzeugen.
+- Die Fotos tragen englische UI-Texte („RSVP“, „Send Email“) und im Dashboard
+  einen grünen Wert – fällt in der Kartengröße kaum auf.
+- Das farbige Dashboard-Motiv (sechstes Bild) wurde wegen der Palette nicht verwendet.

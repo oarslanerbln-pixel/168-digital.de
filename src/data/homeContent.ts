@@ -1,8 +1,8 @@
 import type { Lang } from './serviceContent';
 
 /**
- * Structured homepage content: the systems we build (with their mockup
- * copy), the four-step process, what a client can count on, and the FAQ.
+ * Structured homepage content: the systems we build, the four-step
+ * process, what a client can count on, and the FAQ.
  *
  * Kept here rather than in i18n.ts for the same reason as
  * serviceContent.ts: these are arrays of structured items, not UI labels.
@@ -26,36 +26,11 @@ export interface Solution {
   fit: string;
 }
 
-/** Labels printed inside the illustrative UI mockups. */
-export interface MockCopy {
-  /** Address-bar text in the browser frames — illustrative, not real domains. */
-  urlBooking: string;
-  urlPortal: string;
-  bookingTitle: string;
-  today: string;
-  guests: string;
-  confirmed: string;
-  newBadge: string;
-  toastTitle: string;
-  toastBody: string;
-  table: string;
-  menuTabs: [string, string, string];
-  menuItems: { name: string; price: string }[];
-  orderButton: string;
-  dashTitle: string;
-  kpis: { label: string; value: string }[];
-  recent: string;
-  recentItems: string[];
-  flowSteps: string[];
-  flowFoot: string;
-}
-
 export interface HomeContent {
   solutions: Solution[];
   process: { title: string; desc: string; time: string }[];
   promises: { title: string; desc: string }[];
   faq: { q: string; a: string }[];
-  mock: MockCopy;
 }
 
 export const homeContent: Record<Lang, HomeContent> = {
@@ -110,35 +85,6 @@ export const homeContent: Record<Lang, HomeContent> = {
       { q: 'Ist das Ganze DSGVO-konform?', a: 'Datenschutz ist Teil der Planung, nicht ein Nachtrag: Tracking startet erst nach Einwilligung, Schriften werden selbst gehostet, und wir setzen nur Dienste ein, die für Ihren Zweck nötig sind.' },
       { q: 'Arbeitet ihr nur in Berlin?', a: 'Unser Sitz ist Berlin und wir kommen hier gern vorbei. Websites und Software setzen wir aber für Kunden in ganz Deutschland um – per Video-Call, Telefon und WhatsApp.' },
     ],
-    mock: {
-      urlBooking: 'ihr-restaurant.de/reservieren',
-      urlPortal: 'portal.ihre-firma.de',
-      bookingTitle: 'Reservierungen',
-      today: 'Heute',
-      guests: 'Pers.',
-      confirmed: 'Bestätigt',
-      newBadge: 'Neu',
-      toastTitle: 'Neue Reservierung',
-      toastBody: 'Fr · 19:30 · 4 Personen',
-      table: 'Tisch 7',
-      menuTabs: ['Frühstück', 'Bowls', 'Getränke'],
-      menuItems: [
-        { name: 'Avocado-Toast', price: '9,50 €' },
-        { name: 'Lachs-Bowl', price: '13,90 €' },
-        { name: 'Flat White', price: '4,20 €' },
-      ],
-      orderButton: 'Bestellen · 27,60 €',
-      dashTitle: 'Übersicht',
-      kpis: [
-        { label: 'Buchungen', value: '128' },
-        { label: 'Anfragen', value: '34' },
-        { label: 'Auslastung', value: '86 %' },
-      ],
-      recent: 'Letzte Aktivität',
-      recentItems: ['Angebot an Sera Event gesendet', 'Neue Anfrage über Website', 'Rechnung #2041 bezahlt'],
-      flowSteps: ['Website-Anfrage', 'Kunde im CRM angelegt', 'WhatsApp an Ihr Team', 'Angebot per E-Mail'],
-      flowFoot: 'Läuft automatisch',
-    },
   },
 
   en: {
@@ -192,35 +138,6 @@ export const homeContent: Record<Lang, HomeContent> = {
       { q: 'Is it GDPR-compliant?', a: 'Privacy is part of the plan, not an afterthought: tracking only starts after consent, fonts are self-hosted, and we only use services your purpose actually needs.' },
       { q: 'Do you only work in Berlin?', a: 'We are based in Berlin and happy to visit in person here. Websites and software, however, we build for clients across Germany — via video call, phone and WhatsApp.' },
     ],
-    mock: {
-      urlBooking: 'your-restaurant.com/book',
-      urlPortal: 'portal.your-company.com',
-      bookingTitle: 'Reservations',
-      today: 'Today',
-      guests: 'guests',
-      confirmed: 'Confirmed',
-      newBadge: 'New',
-      toastTitle: 'New reservation',
-      toastBody: 'Fri · 7:30 pm · 4 guests',
-      table: 'Table 7',
-      menuTabs: ['Breakfast', 'Bowls', 'Drinks'],
-      menuItems: [
-        { name: 'Avocado toast', price: '€9.50' },
-        { name: 'Salmon bowl', price: '€13.90' },
-        { name: 'Flat white', price: '€4.20' },
-      ],
-      orderButton: 'Order · €27.60',
-      dashTitle: 'Overview',
-      kpis: [
-        { label: 'Bookings', value: '128' },
-        { label: 'Inquiries', value: '34' },
-        { label: 'Capacity', value: '86%' },
-      ],
-      recent: 'Recent activity',
-      recentItems: ['Quote sent to Sera Event', 'New inquiry via website', 'Invoice #2041 paid'],
-      flowSteps: ['Website inquiry', 'Customer added to CRM', 'WhatsApp to your team', 'Quote by email'],
-      flowFoot: 'Runs automatically',
-    },
   },
 
   tr: {
@@ -274,37 +191,32 @@ export const homeContent: Record<Lang, HomeContent> = {
       { q: 'DSGVO’ya (Avrupa veri koruma) uygun mu?', a: 'Veri koruma sonradan eklenmez, planın parçasıdır: Takip yalnızca izin verildikten sonra başlar, fontlar kendi sunucumuzda barındırılır ve yalnızca amacınız için gerekli hizmetleri kullanırız.' },
       { q: 'Sadece Berlin’de mi çalışıyorsunuz?', a: 'Merkezimiz Berlin ve burada sizi seve seve ziyaret ederiz. Web siteleri ve yazılımları ise tüm Almanya’daki müşteriler için – görüntülü görüşme, telefon ve WhatsApp üzerinden – geliştiriyoruz.' },
     ],
-    mock: {
-      urlBooking: 'restoraniniz.de/rezervasyon',
-      urlPortal: 'portal.firmaniz.de',
-      bookingTitle: 'Rezervasyonlar',
-      today: 'Bugün',
-      guests: 'kişi',
-      confirmed: 'Onaylandı',
-      newBadge: 'Yeni',
-      toastTitle: 'Yeni rezervasyon',
-      toastBody: 'Cum · 19:30 · 4 kişi',
-      table: 'Masa 7',
-      menuTabs: ['Kahvaltı', 'Bowl', 'İçecekler'],
-      menuItems: [
-        { name: 'Avokadolu tost', price: '9,50 €' },
-        { name: 'Somonlu bowl', price: '13,90 €' },
-        { name: 'Flat white', price: '4,20 €' },
-      ],
-      orderButton: 'Sipariş ver · 27,60 €',
-      dashTitle: 'Genel bakış',
-      kpis: [
-        { label: 'Rezervasyon', value: '128' },
-        { label: 'Talepler', value: '34' },
-        { label: 'Doluluk', value: '%86' },
-      ],
-      recent: 'Son hareketler',
-      recentItems: ['Sera Event’e teklif gönderildi', 'Web sitesinden yeni talep', '#2041 numaralı fatura ödendi'],
-      flowSteps: ['Web sitesi talebi', 'Müşteri CRM’e eklendi', 'Ekibinize WhatsApp', 'E-posta ile teklif'],
-      flowFoot: 'Otomatik çalışır',
-    },
   },
 };
+
+/**
+ * Product photos for the hero and the solution cards. Language-neutral, so
+ * one entry per image rather than per language. Generated mockups: sources
+ * in assets-src/solutions/, WebP widths written by scripts/optimize-images.mjs.
+ */
+export interface ResponsiveImage {
+  /** Path stem; the files are `${stem}-640.webp` and `${stem}-1080.webp`. */
+  stem: string;
+  /** Intrinsic ratio of the shipped crop, so the browser reserves the box. */
+  width: number;
+  height: number;
+}
+
+export const heroImage: ResponsiveImage = { stem: '/solutions/hero', width: 1080, height: 1080 };
+
+export const solutionImages: Record<SolutionId, ResponsiveImage> = {
+  booking: { stem: '/solutions/booking', width: 1080, height: 675 },
+  ordering: { stem: '/solutions/ordering', width: 1080, height: 675 },
+  dashboard: { stem: '/solutions/dashboard', width: 1080, height: 675 },
+  automation: { stem: '/solutions/automation', width: 1080, height: 675 },
+};
+
+export const srcSet = (img: ResponsiveImage) => `${img.stem}-640.webp 640w, ${img.stem}-1080.webp 1080w`;
 
 export const getHomeContent = (language: string): HomeContent =>
   homeContent[(language.substring(0, 2).toLowerCase() as Lang)] ?? homeContent.en;

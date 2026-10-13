@@ -67,25 +67,22 @@
 }
 
 .solution-visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 330px;
-  padding: 32px 36px;
-  background:
-    radial-gradient(120% 80% at 50% 0%, var(--bg-raised) 0%, transparent 60%),
-    var(--bg-sunken);
-  border-bottom: 1px solid var(--line);
+  aspect-ratio: 16 / 10;
   overflow: hidden;
+  background: var(--bg-sunken);
+  border-bottom: 1px solid var(--line);
 }
 
-.solution-visual .mock-stage {
-  max-width: 440px;
+.solution-visual img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-premium);
 }
 
-.solution-visual .mock-phone-solo {
-  width: 168px;
-  margin-top: 70px; /* let the phone run off the bottom edge like a crop */
+.solution-card:hover .solution-visual img {
+  transform: scale(1.03);
 }
 
 .solution-body {
@@ -424,15 +421,6 @@
     margin-bottom: 44px;
   }
 
-  .solution-visual {
-    height: 260px;
-    padding: 24px 18px;
-  }
-
-  .solution-visual .mock-phone-solo {
-    width: 140px;
-    margin-top: 60px;
-  }
 
   .solution-body {
     padding: 24px 22px 26px;

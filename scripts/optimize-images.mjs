@@ -74,4 +74,32 @@ for (const s of SHOWROOM_SOURCES) {
   console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
 }
 
+// Homepage product photos (generated mockups, see docs/redesign-2026-10.md):
+// the hero visual and one per solution card. Two widths each so a phone
+// on mobile data never downloads the desktop file (srcset in Hero.tsx /
+// Solutions.tsx). Card crops are 16:10 to match the card's visual area;
+// `position` keeps the screen — the part that sells — inside the crop.
+const SOLUTION_SOURCES = [
+  { name: 'hero', ratio: 1, position: 'centre' },
+  { name: 'booking', ratio: 1.6, position: 'centre' },
+  { name: 'ordering', ratio: 1.6, position: 'centre' },
+  { name: 'dashboard', ratio: 1.6, position: 'centre' },
+  { name: 'automation', ratio: 1.6, position: 'centre' },
+];
+const SOLUTION_WIDTHS = [640, 1080];
+
+mkdirSync(join(pub, 'solutions'), { recursive: true });
+
+for (const s of SOLUTION_SOURCES) {
+  const src = join(srcDir, 'solutions', `${s.name}.jpg`);
+  for (const w of SOLUTION_WIDTHS) {
+    const dst = join(pub, 'solutions', `${s.name}-${w}.webp`);
+    await sharp(src)
+      .resize(w, Math.round(w / s.ratio), { fit: 'cover', position: s.position, withoutEnlargement: false })
+      .webp({ quality: 72 })
+      .toFile(dst);
+    console.log(`solutions/${s.name}.jpg (${kb(src)} KB) -> solutions/${s.name}-${w}.webp (${kb(dst)} KB)`);
+  }
+}
+
 console.log('Done.');

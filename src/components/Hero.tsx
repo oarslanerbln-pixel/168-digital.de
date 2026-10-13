@@ -2,8 +2,7 @@ import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
 import { ArrowRight, Check } from 'lucide-react';
-import { HeroMockup } from './SystemMockups';
-import { getHomeContent } from '../data/homeContent';
+import { heroImage, srcSet } from '../data/homeContent';
 import './Hero.css';
 
 /* ════════════════════════════════════════════════════════════════
@@ -18,8 +17,10 @@ import './Hero.css';
    - the headline names the result (customers won, hours saved), with
      the blue-to-gold shimmer kept on exactly those two words — still the
      only colour gradient on the site (CLAUDE.md rule 7);
-   - a product mockup on the right shows the kind of system we build,
-     drawn in HTML/CSS so it costs no image request;
+   - a product photo on the right shows the kind of system we build —
+     a dashboard and a guest-facing menu in a real café — kept in the
+     page's monochrome with the one blue accent, so it supports the
+     shimmer instead of competing with it;
    - one solid CTA goes straight to the inquiry form, WhatsApp sits next
      to it for people who would rather message, and three short trust
      lines answer the usual "but…" before it is asked.
@@ -41,8 +42,7 @@ const rise = (delay: number) => ({
 const trustKeys = ['hero_trust_1', 'hero_trust_2', 'hero_trust_3'];
 
 export default function Hero() {
-  const { t, i18n } = useTranslation();
-  const { mock } = getHomeContent(i18n.language);
+  const { t } = useTranslation();
 
   const scrollToContact = () => {
     playClick();
@@ -109,7 +109,22 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.35, duration: 1, ease }}
         >
-          <HeroMockup m={mock} />
+          {/* The likely LCP element: eager, high priority, and sized by
+              srcset so a phone takes the 640 px file (about 24 kB). The
+              copy beside it says what it shows, hence the empty alt. */}
+          <img
+            className="hero-photo"
+            src={`${heroImage.stem}-1080.webp`}
+            srcSet={srcSet(heroImage)}
+            sizes="(max-width: 900px) 92vw, 540px"
+            width={heroImage.width}
+            height={heroImage.height}
+            alt=""
+            // Lower-case on purpose: React 18 does not know the
+            // camel-cased prop yet and would warn instead of passing it.
+            {...{ fetchpriority: 'high' }}
+            decoding="async"
+          />
         </motion.div>
       </div>
     </section>

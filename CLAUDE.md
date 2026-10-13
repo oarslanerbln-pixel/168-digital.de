@@ -50,8 +50,8 @@ lassen.**
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
 | Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
-| Startseiten-Inhalte: Lösungen, Ablauf, FAQ, Mockup-Texte (DE/EN/TR) | `src/data/homeContent.ts` |
-| Produkt-Mockups in HTML/CSS (keine Bilder) | `src/components/SystemMockups.tsx` |
+| Startseiten-Inhalte: Lösungen, Ablauf, FAQ (DE/EN/TR) + Produktfotos | `src/data/homeContent.ts` |
+| Produktfotos: Quellen `assets-src/solutions/`, WebP 640/1080 via `npm run optimize:images` | `public/solutions/` |
 | Alle Texte, 3 Sprachen (DE/EN/TR) | `src/i18n.ts` |
 | Service-Metadaten (Slug, Icon, Reihenfolge) | `src/data/services.ts` |
 | Service-Langtexte | `src/data/serviceContent.ts` |
