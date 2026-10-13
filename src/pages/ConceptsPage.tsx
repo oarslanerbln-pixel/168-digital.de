@@ -4,6 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import WebDesignCatalog from '../components/WebDesignCatalog';
 import './SubPage.css';
+import { useLocalizedPath } from '../utils/localePath';
 
 /**
  * ConceptsPage — the 50-concept design library, moved off the homepage.
@@ -15,6 +16,7 @@ import './SubPage.css';
  */
 export default function ConceptsPage() {
   const { t } = useTranslation();
+  const { localize } = useLocalizedPath();
 
   return (
     <>
@@ -24,7 +26,7 @@ export default function ConceptsPage() {
       />
       <div className="subpage">
         <div className="subpage-head">
-          <Link to="/" className="subpage-back">
+          <Link to={localize('/')} className="subpage-back">
             <ArrowLeft size={15} strokeWidth={1.75} aria-hidden="true" />
             {t('back_home', 'Home')}
           </Link>

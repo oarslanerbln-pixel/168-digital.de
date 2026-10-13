@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
 import { services, type ServiceGroup, type ServiceMeta } from '../data/services';
+import { useLocalizedPath } from '../utils/localePath';
 
 /* ════════════════════════════════════════════════════════════════
    SERVICES — light, modern counterpoint section directly under Hero.
@@ -25,6 +26,7 @@ const groups: { id: ServiceGroup; labelKey: string }[] = [
 
 function ServiceCard({ service, index }: { service: ServiceMeta; index: number }) {
   const { t } = useTranslation();
+  const { localize } = useLocalizedPath();
   const Icon = service.icon;
 
   /* A card used to have its opacity, y and scale driven continuously by
@@ -46,7 +48,7 @@ function ServiceCard({ service, index }: { service: ServiceMeta; index: number }
       transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
-        to={`/${service.slug}`}
+        to={localize(`/${service.slug}`)}
         onMouseEnter={playTick}
         className="service-card-light"
       >

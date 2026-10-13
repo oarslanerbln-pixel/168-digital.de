@@ -1,7 +1,8 @@
 import { Writable } from 'node:stream';
 import { renderToPipeableStream } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom/server';
-import './i18n';
+import i18n from './i18n';
+import { getPathLanguage } from './utils/localePath';
 import App from './App';
 import { SeoCollectorContext, type SeoData } from './components/SEOHead';
 import { services } from './data/services';
@@ -23,7 +24,15 @@ import { blogPosts } from './data/blogContent';
    the visitor's language) at the cost of one re-render on load.
    ════════════════════════════════════════════════════════════════ */
 
-/** Every indexable URL. Kept in step with public/sitemap.xml. */
+// The prerender script builds URLs and sitemap entries with the same
+// helpers the app uses, so the two cannot drift apart.
+export { SITE_URL, SUPPORTED_LANGUAGES, OG_LOCALES, localizePath, absoluteUrl, hreflangAlternates } from './utils/localePath';
+
+/**
+ * Every indexable page, language-neutral. The prerender renders each one
+ * once per language (/about, /de/about, /tr/about) and checks the list
+ * against public/sitemap.xml.
+ */
 export const routes: string[] = [
   '/',
   ...services.map((s) => `/${s.slug}`),
@@ -36,7 +45,9 @@ export const routes: string[] = [
   '/datenschutz',
 ];
 
-export function render(url: string): Promise<{ html: string; seo: SeoData | null }> {
+export async function render(url: string): Promise<{ html: string; seo: SeoData | null }> {
+  // The URL names the language (/de/… German); render that version.
+  await i18n.changeLanguage(getPathLanguage(url));
   let seo: SeoData | null = null;
 
   return new Promise((resolve, reject) => {

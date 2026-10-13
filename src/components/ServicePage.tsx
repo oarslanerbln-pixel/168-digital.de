@@ -9,12 +9,13 @@ import { getServiceBySlug, services } from '../data/services';
 import { serviceContent, type Lang } from '../data/serviceContent';
 import { getProjectById } from '../data/works';
 import './ServicePage.css';
+import { SITE_URL, useLocalizedPath } from '../utils/localePath';
 
-const SITE_URL = 'https://1618-digital.de';
 
 export default function ServicePage() {
   const { slug } = useParams<{ slug: string }>();
   const { t, i18n } = useTranslation();
+  const { localize, absolute } = useLocalizedPath();
   const lang = i18n.language.substring(0, 2).toLowerCase() as Lang;
 
   const service = slug ? getServiceBySlug(slug) : undefined;
@@ -38,14 +39,14 @@ export default function ServicePage() {
       description: content.metaDescription,
       provider: { '@id': `${SITE_URL}/#business` },
       areaServed: { '@type': 'City', name: 'Berlin' },
-      url: `${SITE_URL}/${service.slug}`,
+      url: absolute(`/${service.slug}`),
     },
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t('svc_breadcrumb_home'), item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: content.h1, item: `${SITE_URL}/${service.slug}` },
+        { '@type': 'ListItem', position: 1, name: t('svc_breadcrumb_home'), item: absolute('/') },
+        { '@type': 'ListItem', position: 2, name: content.h1, item: absolute(`/${service.slug}`) },
       ],
     },
     {
@@ -70,7 +71,7 @@ export default function ServicePage() {
 
       <section className="service-page section-container">
         <nav className="service-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">{t('svc_breadcrumb_home')}</Link>
+          <Link to={localize('/')}>{t('svc_breadcrumb_home')}</Link>
           <ChevronRight size={12} />
           <span className="current">{t(service.titleKey)}</span>
         </nav>
@@ -153,7 +154,7 @@ export default function ServicePage() {
           <h2 className="service-section-heading">{t('svc_related_services_heading')}</h2>
           <div className="service-related-links">
             {relatedServices.map((s) => (
-              <Link key={s.slug} to={`/${s.slug}`} className="service-related-link">
+              <Link key={s.slug} to={localize(`/${s.slug}`)} className="service-related-link">
                 {t(s.titleKey)} <ArrowUpRight size={14} />
               </Link>
             ))}

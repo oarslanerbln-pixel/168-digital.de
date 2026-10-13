@@ -1,19 +1,22 @@
 import { useTranslation } from 'react-i18next';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SUPPORTED_LANGUAGES, localizePath, toLanguage } from '../utils/localePath';
 import './LanguageToggle.css';
 import { motion } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
 
 export default function LanguageToggle() {
   const { i18n } = useTranslation();
+  const { pathname, search, hash } = useLocation();
+  const navigate = useNavigate();
 
+  // The language lives in the URL, so switching it means going to the same
+  // page under the next language's path; App's LanguageRouting follows.
   const toggleLanguage = () => {
     playClick();
-    const langs = ['en', 'de', 'tr'];
-    // Handle cases where language might be en-US
-    const currentBaseLang = i18n.language.substring(0, 2).toLowerCase();
-    const currentIndex = langs.indexOf(currentBaseLang) !== -1 ? langs.indexOf(currentBaseLang) : 0;
-    const nextIndex = (currentIndex + 1) % langs.length;
-    i18n.changeLanguage(langs[nextIndex]);
+    const current = SUPPORTED_LANGUAGES.indexOf(toLanguage(i18n.language));
+    const next = SUPPORTED_LANGUAGES[(current + 1) % SUPPORTED_LANGUAGES.length];
+    navigate(`${localizePath(pathname, next)}${search}${hash}`);
   };
 
   return (

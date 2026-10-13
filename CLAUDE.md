@@ -35,7 +35,7 @@ gilt `package.json`, nicht das README.
 npm install         # einmalig
 npm run dev         # Dev-Server
 npm run build       # tsc → vite build → SSR-Build → Prerender (scripts/prerender.mjs) – muss fehlerfrei sein
-npm test            # vitest (20 Tests, 6 Dateien)
+npm test            # vitest (28 Tests, 7 Dateien)
 npx tsc --noEmit    # reine Typprüfung
 node download-fonts.mjs  # Schriften neu holen + index.html/catalog.css regenerieren
 ```
@@ -64,6 +64,7 @@ lassen.**
 | Build-Prerender: Routenliste + SSR-Einstieg | `src/entry-server.tsx`, `scripts/prerender.mjs` |
 | Lead-Versand (Web3Forms) + WhatsApp/E-Mail-Fallback | `src/utils/leads.ts` |
 | 404-Seite (noindex) für jede unbekannte URL | `src/pages/NotFoundPage.tsx` |
+| Sprachpfade (`/`, `/de/…`, `/tr/…`): Canonical, hreflang, interne Links | `src/utils/localePath.ts` |
 
 **Inhalte gehören nach `src/data/` oder `src/i18n.ts`, niemals hart in JSX.**
 Ein neuer Service heißt: Eintrag in `services.ts` + Texte in
@@ -162,18 +163,23 @@ mit dem Schimmer um Aufmerksamkeit konkurriert.
 
 ## Bekannte offene Punkte
 
-- Jede Route aus `src/entry-server.tsx` wird beim Build als statisches HTML
-  vorgerendert (englische Fassung, eigene Meta-Tags und JSON-LD). Der Client
+- Jede Route aus `src/entry-server.tsx` wird beim Build **in allen drei
+  Sprachen** als statisches HTML vorgerendert (`/about`, `/de/about`,
+  `/tr/about`; eigene Meta-Tags, hreflang und JSON-LD). Der Client
   übernimmt per `createRoot`, nicht per Hydration. **Neue Seite = Route in
-  `entry-server.tsx` + `sitemap.xml`.** Code, der beim Rendern (nicht im
+  `entry-server.tsx` + *ein* Eintrag (englische URL) in `public/sitemap.xml`** –
+  der Prerender erweitert ihn auf alle Sprachen und bricht ab, wenn Liste und
+  Routen auseinanderlaufen. Code, der beim Rendern (nicht im
   Effect) `window`/`localStorage` anfasst, bricht den Build – mit
   `typeof window === 'undefined'` absichern. Unbekannte URLs bekommen
   `dist/404.html` (SPA-Hülle) mit echtem 404-Status – es gibt bewusst keine
   Catch-all-Rewrite mehr in `vercel.json`.
-- Sprache per `?lang=`: für hreflang gültig, aber nicht als eigene statische
-  Datei prerenderbar – vorgerendert wird nur Englisch. Crawler ohne
-  JavaScript sehen die deutsche/türkische Fassung daher nicht. Lösung wären
-  `/de/`, `/tr/`-Pfade mit 301-Weiterleitungen – betrifft alle URLs, offen.
+- Die Sprache steht im Pfad: Englisch ohne Präfix, Deutsch/Türkisch unter
+  `/de/`, `/tr/`. Interne Links laufen über `useLocalizedPath().localize()`,
+  nie als nackter String – sonst springt der Besucher zurück ins Englische.
+  Alte `?lang=de|tr`-URLs leitet `vercel.json` per 301 um. Nur beim ersten
+  Aufruf einer englischen URL leitet der Client nach gespeicherter Wahl bzw.
+  Browser-Sprache auf `/de/…` um (`LanguageRouting` in `App.tsx`).
 - `src/index.css` ist mit ~1.450 Zeilen zu groß und vermischt Tokens,
   Utilities und Sektions-Styles.
 - `src/i18n.ts` ist ein 500-Zeilen-Objekt für drei Sprachen; ab dem

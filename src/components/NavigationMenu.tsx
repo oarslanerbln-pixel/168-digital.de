@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { stripLanguagePrefix, useLocalizedPath } from '../utils/localePath';
 import { Menu, X, ArrowUpRight, MessageCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { playWhoosh, playTick, playClose } from '../utils/audio';
@@ -40,6 +41,7 @@ export default function NavigationMenu() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { localize } = useLocalizedPath();
 
   const closeMenu = () => {
     playClose();
@@ -58,8 +60,8 @@ export default function NavigationMenu() {
     playClose();
     setIsOpen(false);
     const scroll = () => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    if (location.pathname !== '/') {
-      navigate('/');
+    if (stripLanguagePrefix(location.pathname) !== '/') {
+      navigate(localize('/'));
       setTimeout(scroll, 500);
     } else {
       setTimeout(scroll, 400);
@@ -158,7 +160,7 @@ export default function NavigationMenu() {
                   {services.map((service) => (
                     <Link
                       key={service.slug}
-                      to={`/${service.slug}`}
+                      to={localize(`/${service.slug}`)}
                       className="nav-sub-item"
                       onClick={closeMenu}
                       onMouseEnter={playTick}
@@ -181,7 +183,7 @@ export default function NavigationMenu() {
                   {morePages.map((page) => (
                     <Link
                       key={page.to}
-                      to={page.to}
+                      to={localize(page.to)}
                       className="nav-sub-item"
                       onClick={closeMenu}
                       onMouseEnter={playTick}

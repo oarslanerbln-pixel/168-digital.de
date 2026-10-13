@@ -4,26 +4,27 @@ import { ChevronRight, Mail, Phone, MapPin, MessageCircle, Instagram } from 'luc
 import SEOHead from '../components/SEOHead';
 import Contact from '../components/Contact';
 import '../components/ServicePage.css';
+import { SITE_URL, useLocalizedPath } from '../utils/localePath';
 
-const SITE_URL = 'https://1618-digital.de';
 
 export default function ContactPage() {
   const { t } = useTranslation();
+  const { localize, absolute } = useLocalizedPath();
 
   const jsonLd = [
     {
       '@context': 'https://schema.org',
       '@type': 'ContactPage',
       name: t('contact_page_meta_title'),
-      url: `${SITE_URL}/contact`,
+      url: absolute('/contact'),
       about: { '@id': `${SITE_URL}/#business` },
     },
     {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
       itemListElement: [
-        { '@type': 'ListItem', position: 1, name: t('svc_breadcrumb_home'), item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: t('contact_title'), item: `${SITE_URL}/contact` },
+        { '@type': 'ListItem', position: 1, name: t('svc_breadcrumb_home'), item: absolute('/') },
+        { '@type': 'ListItem', position: 2, name: t('contact_title'), item: absolute('/contact') },
       ],
     },
   ];
@@ -39,7 +40,7 @@ export default function ContactPage() {
 
       <section className="service-page section-container">
         <nav className="service-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">{t('svc_breadcrumb_home')}</Link>
+          <Link to={localize('/')}>{t('svc_breadcrumb_home')}</Link>
           <ChevronRight size={12} />
           <span className="current">{t('contact_title')}</span>
         </nav>

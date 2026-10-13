@@ -6,18 +6,19 @@ import SEOHead from '../components/SEOHead';
 import { blogPosts } from '../data/blogContent';
 import type { Lang } from '../data/serviceContent';
 import './BlogPage.css';
+import { useLocalizedPath } from '../utils/localePath';
 
-const SITE_URL = 'https://1618-digital.de';
 
 export default function BlogPage() {
   const { t, i18n } = useTranslation();
+  const { localize, absolute } = useLocalizedPath();
   const lang = i18n.language.substring(0, 2).toLowerCase() as Lang;
 
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
     name: t('blog_meta_title'),
-    url: `${SITE_URL}/blog`,
+    url: absolute('/blog'),
   };
 
   return (
@@ -31,7 +32,7 @@ export default function BlogPage() {
 
       <section className="service-page section-container blog-index">
         <nav className="service-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">{t('svc_breadcrumb_home')}</Link>
+          <Link to={localize('/')}>{t('svc_breadcrumb_home')}</Link>
         </nav>
 
         <div className="service-hero">
@@ -54,7 +55,7 @@ export default function BlogPage() {
                 transition={{ duration: 0.6, delay: index * 0.06, ease: [0.16, 1, 0.3, 1] }}
               >
                 <Link
-                  to={`/blog/${post.slug}`}
+                  to={localize(`/blog/${post.slug}`)}
                   className="glass-panel-silver glow-card blog-list-card"
                   style={{ ['--card-glow' as string]: post.glowColor }}
                 >

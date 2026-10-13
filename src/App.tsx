@@ -1,5 +1,6 @@
-import { useState, useEffect, Suspense, lazy } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { useState, useEffect, useLayoutEffect, useRef, Suspense, lazy } from 'react';
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import AmbientBackground from './components/AmbientBackground';
 import Preloader from './components/Preloader';
@@ -12,6 +13,7 @@ import LegalModal from './components/LegalModal';
 import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
+import { PREFIXED_LANGUAGES, getPathLanguage, hasLanguagePrefix, localizePath, stripLanguagePrefix, toLanguage } from './utils/localePath';
 
 // Route-level code splitting: each page ships its own chunk, so a visitor
 // landing directly on a service or legal page never downloads the Home
@@ -52,6 +54,75 @@ function getInitialLoadedState(): boolean {
   return false;
 }
 
+// useLayoutEffect warns in a server render; the prerender never needs it.
+const useBrowserLayoutEffect = typeof window === 'undefined' ? useEffect : useLayoutEffect;
+
+/**
+ * Keeps the visible language and the URL in step. The path is the source
+ * of truth (/de/… German, /tr/… Turkish, bare English), so every link,
+ * reload and shared URL shows the language it names.
+ *
+ * One exception, on the very first load only: a bare URL opened by
+ * someone whose last choice or browser language is German/Turkish (i18n
+ * already starts in that language, see i18n.ts) is moved to that
+ * language's URL. Most visitors arrive through bare links (Instagram bio,
+ * QR codes) and used to get German automatically; this keeps that, while
+ * crawlers — no stored choice, English browser — get exactly the URL
+ * they asked for. Later navigation never redirects: switching to English
+ * means going to the bare URL on purpose.
+ */
+function LanguageRouting() {
+  const { i18n } = useTranslation();
+  const { pathname, search, hash } = useLocation();
+  const navigate = useNavigate();
+  const firstLoad = useRef(true);
+
+  useBrowserLayoutEffect(() => {
+    const current = toLanguage(i18n.language);
+
+    if (firstLoad.current) {
+      firstLoad.current = false;
+      const params = new URLSearchParams(search);
+      const hadLangParam = params.has('lang');
+      params.delete('lang');
+      const query = params.toString() ? `?${params}` : '';
+      if (!hasLanguagePrefix(pathname) && PREFIXED_LANGUAGES.includes(current)) {
+        navigate(`${localizePath(pathname, current)}${query}${hash}`, { replace: true });
+        return;
+      }
+      // A leftover ?lang= (e.g. ?lang=en, or carried through the 301) is
+      // now meaningless: drop it so the address bar shows the clean URL.
+      if (hadLangParam) navigate(`${pathname}${query}${hash}`, { replace: true });
+    }
+
+    const pathLang = getPathLanguage(pathname);
+    if (pathLang !== current) i18n.changeLanguage(pathLang);
+  }, [pathname, search, hash, i18n, navigate]);
+
+  return null;
+}
+
+/**
+ * Every page, mounted once per language: at "/" for English and under
+ * "/de" and "/tr". Relative paths, so each set nests under its prefix.
+ * The static "de"/"tr" segments outrank the ":slug" service route, so
+ * /de is the German homepage, not a service called "de".
+ */
+const pageRoutes = (
+  <>
+    <Route index element={<Home />} />
+    <Route path="impressum" element={<LegalPage />} />
+    <Route path="datenschutz" element={<LegalPage />} />
+    <Route path="contact" element={<ContactPage />} />
+    <Route path="about" element={<AboutPage />} />
+    <Route path="concepts" element={<ConceptsPage />} />
+    <Route path="blog" element={<BlogPage />} />
+    <Route path="blog/:slug" element={<BlogPostPage />} />
+    <Route path=":slug" element={<ServicePage />} />
+    <Route path="*" element={<NotFoundPage />} />
+  </>
+);
+
 function App() {
   const [isLoaded, setIsLoaded] = useState(() => getInitialLoadedState());
   const [legalModalType, setLegalModalType] = useState<'impressum' | 'datenschutz' | null>(null);
@@ -88,13 +159,16 @@ function App() {
   const location = useLocation();
 
   // Scroll to top on every route change (client-side navigation doesn't
-  // reset scroll position the way a full page load does).
+  // reset scroll position the way a full page load does). Switching only
+  // the language keeps the visitor where they are.
+  const neutralPath = stripLanguagePrefix(location.pathname);
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [location.pathname]);
+  }, [neutralPath]);
 
   return (
     <ReactLenis root>
+      <LanguageRouting />
       <AnimatePresence>
         {!isLoaded && <Preloader onComplete={handlePreloaderComplete} />}
       </AnimatePresence>
@@ -120,16 +194,10 @@ function App() {
         <main>
           <Suspense fallback={null}>
             <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/impressum" element={<LegalPage />} />
-              <Route path="/datenschutz" element={<LegalPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/concepts" element={<ConceptsPage />} />
-              <Route path="/blog" element={<BlogPage />} />
-              <Route path="/blog/:slug" element={<BlogPostPage />} />
-              <Route path="/:slug" element={<ServicePage />} />
-              <Route path="*" element={<NotFoundPage />} />
+              <Route path="/">{pageRoutes}</Route>
+              {PREFIXED_LANGUAGES.map((lang) => (
+                <Route key={lang} path={`/${lang}`}>{pageRoutes}</Route>
+              ))}
             </Routes>
           </Suspense>
           <Footer

@@ -1,14 +1,16 @@
 import { useLocation, Navigate, Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
+import { stripLanguagePrefix, useLocalizedPath } from '../utils/localePath';
 import { legalContent } from '../data/legalContent';
 import './LegalPage.css';
 
 export default function LegalPage() {
   const { pathname } = useLocation();
-  const type = pathname.replace(/^\//, '') as 'impressum' | 'datenschutz';
+  const { localize } = useLocalizedPath();
+  const type = stripLanguagePrefix(pathname).replace(/^\//, '') as 'impressum' | 'datenschutz';
 
   if (type !== 'impressum' && type !== 'datenschutz') {
-    return <Navigate to="/" replace />;
+    return <Navigate to={localize('/')} replace />;
   }
 
   const content = legalContent[type];
@@ -18,7 +20,7 @@ export default function LegalPage() {
       <SEOHead path={`/${type}`} title={`${content.title} | 1618 Digital`} />
       <section className="legal-page section-container">
         <nav className="legal-page-breadcrumb" aria-label="Breadcrumb">
-          <Link to="/">Home</Link> <span>/</span> <span>{content.title}</span>
+          <Link to={localize('/')}>Home</Link> <span>/</span> <span>{content.title}</span>
         </nav>
         <h1 className="text-silver legal-page-title">{content.title}</h1>
         <div className="legal-page-content">{content.text}</div>

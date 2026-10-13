@@ -2,6 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { playTick } from '../utils/audio';
 import './HomeLogo.css';
+import { stripLanguagePrefix, useLocalizedPath } from '../utils/localePath';
 
 // The site's persistent wordmark, top centre — and on every sub-page, a
 // clickable way back to the homepage.
@@ -15,7 +16,8 @@ import './HomeLogo.css';
 // header.
 export default function HomeLogo() {
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const { localize } = useLocalizedPath();
+  const isHome = stripLanguagePrefix(location.pathname) === '/';
 
   return (
     <motion.div
@@ -29,7 +31,7 @@ export default function HomeLogo() {
       aria-hidden={isHome || undefined}
     >
       <Link
-        to="/"
+        to={localize('/')}
         onMouseEnter={playTick}
         className="home-logo-link"
         aria-label="1618 Digital — back to homepage"

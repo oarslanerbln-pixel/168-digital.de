@@ -1,5 +1,6 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { getPathLanguage, hasLanguagePrefix, isLanguage, toLanguage, type Language } from './utils/localePath';
 
 const resources = {
   en: {
@@ -553,52 +554,45 @@ const resources = {
   }
 };
 
-const SUPPORTED_LANGS = ['en', 'de', 'tr'];
-
-const getUserLanguage = () => {
-  // Build-time prerendering runs in Node: render the canonical (English)
-  // version — the one the bare URL and the hreflang "en"/x-default claim.
+// The URL path decides the language: /de/… is German, /tr/… Turkish, a bare
+// path English (see utils/localePath.ts). Only a bare path falls back to the
+// visitor's last choice or browser language — App's LanguageRouting then
+// moves them to that language's URL on first load.
+const getInitialLanguage = (): Language => {
+  // Build-time prerendering runs in Node: entry-server sets the language
+  // per route before rendering.
   if (typeof window === 'undefined') return 'en';
 
-  // The ?lang= param is what our hreflang tags and sitemap.xml advertise to
-  // search engines as distinct language URLs — it must take priority so those
-  // URLs actually render the language they claim to.
-  const urlLang = new URLSearchParams(window.location.search).get('lang');
-  if (urlLang && SUPPORTED_LANGS.includes(urlLang)) return urlLang;
+  const { pathname, search } = window.location;
+  if (hasLanguagePrefix(pathname)) return getPathLanguage(pathname);
+
+  // Legacy ?lang= links (vercel.json 301s them in production).
+  const urlLang = new URLSearchParams(search).get('lang');
+  if (isLanguage(urlLang)) return urlLang;
 
   const storedLang = localStorage.getItem('i18nextLng');
-  if (storedLang) return storedLang;
+  if (isLanguage(storedLang)) return storedLang;
 
-  const browserLang = navigator.language.split('-')[0];
-  return SUPPORTED_LANGS.includes(browserLang) ? browserLang : 'en';
+  return toLanguage(navigator.language);
 };
 
 i18n
   .use(initReactI18next)
   .init({
     resources,
-    lng: getUserLanguage(),
+    lng: getInitialLanguage(),
     fallbackLng: "en",
     interpolation: {
       escapeValue: false 
     }
   });
 
-// Update language in localStorage, document lang attribute, and the URL's
-// ?lang= param when it changes, so the address bar always matches what's
-// displayed — keeping it shareable and consistent with our hreflang tags.
+// Remember the language for the next visit to a bare URL, and keep <html lang>
+// in step. The URL itself is changed by navigation, never here.
 i18n.on('languageChanged', (lng) => {
-  if (typeof window === 'undefined') return; // build-time prerender: no URL to sync
+  if (typeof window === 'undefined') return; // build-time prerender
   localStorage.setItem('i18nextLng', lng);
   document.documentElement.lang = lng;
-
-  const url = new URL(window.location.href);
-  if (lng === 'en') {
-    url.searchParams.delete('lang');
-  } else {
-    url.searchParams.set('lang', lng);
-  }
-  window.history.replaceState({}, '', url.toString());
 });
 
 // Set initial html lang attribute

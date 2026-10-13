@@ -1,18 +1,16 @@
 import { createContext, useContext, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-
-const CANONICAL_BASE = 'https://1618-digital.de/';
-export const OG_LOCALES: Record<string, string> = { en: 'en_US', de: 'de_DE', tr: 'tr_TR' };
+import { OG_LOCALES, absoluteUrl, hreflangAlternates, toLanguage } from '../utils/localePath';
 
 /** Everything a page says about itself in <head>, resolved for one language. */
 export interface SeoData {
   lang: string;
   title: string;
   description: string;
-  /** Canonical URL for this language (bare path for English, ?lang= otherwise). */
+  /** Canonical URL for this language (bare path for English, /de/… or /tr/… otherwise). */
   canonical: string;
-  /** The language-neutral page URL the hreflang alternates are built from. */
-  pageUrl: string;
+  /** [hreflang, href] pairs: every language of this page plus x-default. */
+  alternates: [string, string][];
   noindex: boolean;
   jsonLd: object[];
 }
@@ -27,7 +25,7 @@ export interface SeoData {
 export const SeoCollectorContext = createContext<((data: SeoData) => void) | null>(null);
 
 interface SEOHeadProps {
-  /** Page path with leading slash, e.g. "/video-drone-production". Defaults to the homepage. */
+  /** Language-neutral page path with leading slash, e.g. "/video-drone-production". Defaults to the homepage. */
   path?: string;
   /** Pre-localized title/description overrides for a specific page (skips the meta_title/meta_description i18n keys). */
   title?: string;
@@ -46,7 +44,7 @@ interface SEOHeadProps {
  * SEOHead Component
  * Dynamically updates document title, meta description, canonical URL,
  * Open Graph tags and page-specific JSON-LD based on the current route and
- * language, so each page + hreflang variant (?lang=en/de/tr) actually
+ * language, so each page + hreflang variant (/, /de/, /tr/) actually
  * reflects what it claims to search engines.
  */
 export default function SEOHead({ path = '/', title, description, jsonLd, noindex = false }: SEOHeadProps) {
@@ -54,14 +52,13 @@ export default function SEOHead({ path = '/', title, description, jsonLd, noinde
   const collect = useContext(SeoCollectorContext);
 
   if (collect) {
-    const lang = i18n.language.substring(0, 2).toLowerCase();
-    const pageUrl = path === '/' ? CANONICAL_BASE : `${CANONICAL_BASE}${path.replace(/^\//, '')}`;
+    const lang = toLanguage(i18n.language);
     collect({
       lang,
       title: title ?? t('meta_title'),
       description: description ?? t('meta_description'),
-      canonical: lang === 'en' ? pageUrl : `${pageUrl}?lang=${lang}`,
-      pageUrl,
+      canonical: absoluteUrl(path, lang),
+      alternates: hreflangAlternates(path),
       noindex,
       jsonLd: jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [],
     });
@@ -78,11 +75,10 @@ export default function SEOHead({ path = '/', title, description, jsonLd, noinde
   }, [noindex]);
 
   useEffect(() => {
-    const lang = i18n.language.substring(0, 2).toLowerCase();
+    const lang = toLanguage(i18n.language);
     const localizedTitle = title ?? t('meta_title');
     const metaDescription = description ?? t('meta_description');
-    const pageUrl = path === '/' ? CANONICAL_BASE : `${CANONICAL_BASE}${path.replace(/^\//, '')}`;
-    const cleanCanonical = lang === 'en' ? pageUrl : `${pageUrl}?lang=${lang}`;
+    const cleanCanonical = absoluteUrl(path, lang);
 
     document.title = localizedTitle;
 
@@ -95,7 +91,7 @@ export default function SEOHead({ path = '/', title, description, jsonLd, noinde
     updateMeta('meta[property="og:title"]', localizedTitle);
     updateMeta('meta[property="og:description"]', metaDescription);
     updateMeta('meta[property="og:url"]', cleanCanonical);
-    updateMeta('meta[property="og:locale"]', OG_LOCALES[lang] ?? OG_LOCALES.en);
+    updateMeta('meta[property="og:locale"]', OG_LOCALES[lang]);
     updateMeta('meta[property="twitter:title"]', localizedTitle);
     updateMeta('meta[property="twitter:description"]', metaDescription);
     updateMeta('meta[property="twitter:url"]', cleanCanonical);
@@ -113,10 +109,7 @@ export default function SEOHead({ path = '/', title, description, jsonLd, noinde
       link.setAttribute('href', href);
       head.appendChild(link);
     };
-    addAlternate('en', pageUrl);
-    addAlternate('de', `${pageUrl}?lang=de`);
-    addAlternate('tr', `${pageUrl}?lang=tr`);
-    addAlternate('x-default', pageUrl);
+    hreflangAlternates(path).forEach(([hreflang, href]) => addAlternate(hreflang, href));
 
     // og:locale:alternate should list every supported locale except the active one.
     document.querySelectorAll('meta[property="og:locale:alternate"]').forEach((el) => el.remove());
