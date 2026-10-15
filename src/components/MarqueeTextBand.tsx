@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import './MarqueeTextBand.css';
 
 const defaultWords = [
@@ -18,7 +19,11 @@ interface MarqueeTextBandProps {
 }
 
 export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
-  const strip = buildStrip(words);
+  // ⚡ Bolt Optimization: Memoize the marquee string building.
+  // 💡 What: Used `useMemo` to cache the `buildStrip(words)` result.
+  // 🎯 Why: String concatenation and array creation in `buildStrip` is relatively expensive and runs on every re-render unconditionally.
+  // 📊 Impact: Eliminates redundant CPU cycles and string garbage generation across component renders when `words` array is static.
+  const strip = useMemo(() => buildStrip(words), [words]);
 
   return (
     <div className="marquee-band">
