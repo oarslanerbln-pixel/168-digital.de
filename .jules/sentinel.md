@@ -12,3 +12,8 @@
 **Incident:** After the Web3Forms key was moved to `VITE_WEB3FORMS_KEY`, the variable was never set in Vercel. Vite inlines `VITE_*` at build time, so the minifier compiled `sendLead()` down to "warn and return false" and the request vanished from the bundle. Production deployed green while the contact form — the site's only conversion path — dropped every inquiry for about nine weeks.
 **Learning:** A Web3Forms access key is public by design: any `VITE_*` value ends up in the client bundle anyway, so moving it to an env var hides nothing. Treat it as configuration, not a secret, and never change a configuration contract without making the deploy fail when the configuration is missing.
 **Prevention:** `vite.config.ts` fails the Vercel production build without the key, and the contact form offers WhatsApp/email with the visitor's text whenever delivery fails.
+
+## 2024-10-14 - Lack of Timeout on External API Calls
+**Vulnerability:** The `fetch` call to Web3Forms for lead delivery lacked an explicit timeout limit, exposing the application to potential resource exhaustion and hanging UI elements if the remote server takes too long to respond.
+**Learning:** `fetch` requests without explicit timeouts can hang indefinitely, especially during network issues or external API outages. This is particularly problematic on serverless architectures or client-side UI threads.
+**Prevention:** Always implement `AbortController` and `setTimeout` alongside `fetch` calls to enforce external API timeouts gracefully, mitigating the risk of long-running operations degrading the user experience.
