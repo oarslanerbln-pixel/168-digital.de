@@ -82,6 +82,9 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
     return false;
   }
 
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 10000); // 10s timeout
+
   try {
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
@@ -98,12 +101,19 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
         message: payload.message || '(no message provided)',
         source: payload.source || 'Website',
       }),
+      signal: controller.signal,
     });
 
+    clearTimeout(timeoutId);
     const data = await response.json();
     return response.ok && data.success === true;
   } catch (error) {
-    console.error('[leads] Failed to deliver lead:', error);
+    clearTimeout(timeoutId);
+    if (error instanceof Error && error.name === 'AbortError') {
+      console.error('[leads] Lead delivery timed out after 10 seconds');
+    } else {
+      console.error('[leads] Failed to deliver lead:', error);
+    }
     return false;
   }
 }
