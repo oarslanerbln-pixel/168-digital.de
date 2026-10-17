@@ -48,6 +48,7 @@ export default function Reel() {
   const [source] = useState(pickReelSource);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const rectRef = useRef<{ left: number; top: number; width: number; height: number } | null>(null);
 
   // Motion values for smooth 3D tilt effect
   const x = useMotionValue(0);
@@ -76,13 +77,33 @@ export default function Reel() {
     }
   }, [inView, source]);
 
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      // ⚡ Bolt: Cache bounding client rect on mouse enter to prevent
+      // synchronous layout thrashing (forced reflows) during high-frequency
+      // mousemove events. We cache absolute page coordinates to ensure the
+      // calculations remain accurate even if the user scrolls while hovering.
+      const rect = cardRef.current.getBoundingClientRect();
+      rectRef.current = {
+        left: rect.left + window.scrollX,
+        top: rect.top + window.scrollY,
+        width: rect.width,
+        height: rect.height,
+      };
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
+    // Fallback: if mousemove fires without mouseenter (e.g. element mounted under cursor)
+    // we can either return or calculate it. We'll return for safety.
+    if (!rectRef.current) return;
+    const { left: pageLeft, top: pageTop, width, height } = rectRef.current;
+
+    const rectLeft = pageLeft - window.scrollX;
+    const rectTop = pageTop - window.scrollY;
+
+    const mouseX = e.clientX - rectLeft - width / 2;
+    const mouseY = e.clientY - rectTop - height / 2;
     x.set(mouseX / width);
     y.set(mouseY / height);
   };
@@ -90,6 +111,7 @@ export default function Reel() {
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    rectRef.current = null;
   };
 
   return (
@@ -108,6 +130,7 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
