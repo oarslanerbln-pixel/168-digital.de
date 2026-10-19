@@ -12,15 +12,37 @@ import { projects } from '../data/works';
  * Splits on spaces and hyphens, and also inside a name that runs two words
  * together in camel case — "MediSade" is M and S, not M and E.
  */
+const monogramCache = new Map<string, string>();
+const MAX_CACHE_SIZE = 100;
+
 function monogram(title: string): string {
+  if (monogramCache.has(title)) {
+    return monogramCache.get(title)!;
+  }
+
   const parts = title
     .trim()
     .split(/[\s-]+/)
     .flatMap(word => word.split(/(?<=[a-zà-ÿ])(?=[A-ZÀ-Þ])/))
     .filter(Boolean);
 
-  if (parts.length >= 2) return (parts[0][0] + parts[1][0]).toUpperCase();
-  return title.replace(/[^A-Za-zÀ-ÿ]/g, '').slice(0, 2).toUpperCase();
+  let result = '';
+  if (parts.length >= 2) {
+    result = (parts[0][0] + parts[1][0]).toUpperCase();
+  } else {
+    result = title.replace(/[^A-Za-zÀ-ÿ]/g, '').slice(0, 2).toUpperCase();
+  }
+
+  if (monogramCache.size >= MAX_CACHE_SIZE) {
+    // Basic LRU strategy: remove the first added item
+    const firstKey = monogramCache.keys().next().value;
+    if (firstKey !== undefined) {
+      monogramCache.delete(firstKey);
+    }
+  }
+  monogramCache.set(title, result);
+
+  return result;
 }
 
 export default function Works() {

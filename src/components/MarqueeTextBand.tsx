@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import './MarqueeTextBand.css';
 
 const defaultWords = [
@@ -18,7 +19,7 @@ interface MarqueeTextBandProps {
 }
 
 export default function MarqueeTextBand({ direction = 'left', words = defaultWords }: MarqueeTextBandProps) {
-  const strip = buildStrip(words);
+  const strip = useMemo(() => buildStrip(words), [words]);
 
   return (
     <div className="marquee-band">
