@@ -1,6 +1,3 @@
-## 2024-11-20 - Fast DOM query short-circuit
-**Learning:**  is an expensive synchronous layout/style read. When chaining with other DOM checks like , always put  at the end to leverage short-circuiting.
-**Action:** When handling frequent UI events (like `mousemove` or `mouseover`), arrange conditional checks so that fast methods (`closest`, `matches`) are evaluated before slow layout reads (`getComputedStyle`, `getBoundingClientRect`).
-## 2024-11-20 - Fast DOM query short-circuit
-**Learning:** `window.getComputedStyle(target)` is an expensive synchronous layout/style read. When chaining with other DOM checks like `target.closest()`, always put `getComputedStyle` at the end to leverage short-circuiting.
-**Action:** When handling frequent UI events (like `mousemove` or `mouseover`), arrange conditional checks so that fast methods (`closest`, `matches`) are evaluated before slow layout reads (`getComputedStyle`, `getBoundingClientRect`).
+## 2024-10-24 - Event Listeners Performance
+**Learning:** React components (like WhatsAppWidget) often attach global event listeners (like scroll or click) on mount. These run continuously, even when not needed (e.g., when a widget is closed), wasting CPU cycles and potentially causing unnecessary re-renders.
+**Action:** When working with components that need global event listeners for specific states (like 'expanded' or 'open'), conditionally attach the listeners only when the component is in that state. Ensure cleanup functions correctly remove them. Merge multiple `useEffect` hooks handling similar listeners into a single conditional hook.
