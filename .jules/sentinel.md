@@ -12,3 +12,8 @@
 **Incident:** After the Web3Forms key was moved to `VITE_WEB3FORMS_KEY`, the variable was never set in Vercel. Vite inlines `VITE_*` at build time, so the minifier compiled `sendLead()` down to "warn and return false" and the request vanished from the bundle. Production deployed green while the contact form — the site's only conversion path — dropped every inquiry for about nine weeks.
 **Learning:** A Web3Forms access key is public by design: any `VITE_*` value ends up in the client bundle anyway, so moving it to an env var hides nothing. Treat it as configuration, not a secret, and never change a configuration contract without making the deploy fail when the configuration is missing.
 **Prevention:** `vite.config.ts` fails the Vercel production build without the key, and the contact form offers WhatsApp/email with the visitor's text whenever delivery fails.
+
+## 2026-10-21 - [Added Content-Security-Policy header]
+**Vulnerability:** Missing Content-Security-Policy (CSP) header in `vercel.json`.
+**Learning:** Adding a CSP header provides an important layer of defense against Cross-Site Scripting (XSS) and data injection attacks by restricting the domains that can load resources (like scripts and images). The codebase includes external resources for Google Tag Manager, Facebook connect, Vercel analytics, and Web3Forms, all of which had to be explicitly whitelisted.
+**Prevention:** Implement a baseline CSP and explicitly whitelist required domains.
