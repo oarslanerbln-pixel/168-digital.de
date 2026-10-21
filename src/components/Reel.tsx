@@ -48,6 +48,7 @@ export default function Reel() {
   const [source] = useState(pickReelSource);
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const rectRef = useRef<DOMRect | null>(null);
 
   // Motion values for smooth 3D tilt effect
   const x = useMotionValue(0);
@@ -76,9 +77,32 @@ export default function Reel() {
     }
   }, [inView, source]);
 
+  // Invalidate cached rect on scroll or resize to prevent stale layout reads
+  useEffect(() => {
+    const invalidateRect = () => {
+      rectRef.current = null;
+    };
+    window.addEventListener('scroll', invalidateRect, { passive: true });
+    window.addEventListener('resize', invalidateRect, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', invalidateRect);
+      window.removeEventListener('resize', invalidateRect);
+    };
+  }, []);
+
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
+    if (!rectRef.current && cardRef.current) {
+      rectRef.current = cardRef.current.getBoundingClientRect();
+    }
+    if (!rectRef.current) return;
+
+    const rect = rectRef.current;
     const width = rect.width;
     const height = rect.height;
     const mouseX = e.clientX - rect.left - width / 2;
@@ -90,6 +114,7 @@ export default function Reel() {
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
+    rectRef.current = null;
   };
 
   return (
@@ -108,6 +133,7 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
