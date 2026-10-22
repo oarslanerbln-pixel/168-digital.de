@@ -49,6 +49,9 @@ export default function Reel() {
   const cardRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Cache for card dimensions to avoid getBoundingClientRect layout thrashing on every mousemove
+  const rectCache = useRef({ width: 0, height: 0, centerX: 0, centerY: 0 });
+
   // Motion values for smooth 3D tilt effect
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -76,13 +79,27 @@ export default function Reel() {
     }
   }, [inView, source]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseEnter = () => {
     if (!cardRef.current) return;
     const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left - width / 2;
-    const mouseY = e.clientY - rect.top - height / 2;
+    rectCache.current = {
+      width: rect.width,
+      height: rect.height,
+      // Calculate document-relative center once
+      centerX: rect.left + window.scrollX + rect.width / 2,
+      centerY: rect.top + window.scrollY + rect.height / 2
+    };
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    const { width, height, centerX, centerY } = rectCache.current;
+    if (width === 0) return;
+
+    // Use pageX/Y which are document-relative to match our cached center,
+    // avoiding synchronous layout reads during high-frequency events.
+    const mouseX = e.pageX - centerX;
+    const mouseY = e.pageY - centerY;
+
     x.set(mouseX / width);
     y.set(mouseY / height);
   };
@@ -108,6 +125,7 @@ export default function Reel() {
         viewport={{ once: true, margin: "0px" }}
         onViewportEnter={() => setInView(true)}
         transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+        onMouseEnter={handleMouseEnter}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
       >
