@@ -83,22 +83,31 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
   }
 
   try {
-    const response = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-      },
-      body: JSON.stringify({
-        access_key: WEB3FORMS_ACCESS_KEY,
-        subject: `New lead — 1618 Digital (${payload.source || 'Website'})`,
-        from_name: '1618 Digital Website',
-        name: payload.name || 'Website Visitor',
-        email: payload.email,
-        message: payload.message || '(no message provided)',
-        source: payload.source || 'Website',
-      }),
-    });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+    let response;
+    try {
+      response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `New lead — 1618 Digital (${payload.source || 'Website'})`,
+          from_name: '1618 Digital Website',
+          name: payload.name || 'Website Visitor',
+          email: payload.email,
+          message: payload.message || '(no message provided)',
+          source: payload.source || 'Website',
+        }),
+        signal: controller.signal,
+      });
+    } finally {
+      clearTimeout(timeoutId);
+    }
 
     const data = await response.json();
     return response.ok && data.success === true;
