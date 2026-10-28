@@ -43,9 +43,9 @@ export default function Contact({ withSteps = false }: ContactProps) {
 
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = String(data.get('name') || '').trim();
-    const email = String(data.get('email') || '').trim();
-    const typed = String(data.get('message') || '').trim();
+    const name = String(data.get('name') || '').trim().replace(/[<>]/g, '');
+    const email = String(data.get('email') || '').trim().replace(/[<>]/g, '');
+    const typed = String(data.get('message') || '').trim().replace(/[<>]/g, '');
     // The topic travels as a prefix in the message itself, so the inbox
     // shows it at a glance and the lead payload stays unchanged.
     const message = topic ? `[${t(`contact_topic_${topic}`)}] ${typed}` : typed;

@@ -12,3 +12,8 @@
 **Incident:** After the Web3Forms key was moved to `VITE_WEB3FORMS_KEY`, the variable was never set in Vercel. Vite inlines `VITE_*` at build time, so the minifier compiled `sendLead()` down to "warn and return false" and the request vanished from the bundle. Production deployed green while the contact form — the site's only conversion path — dropped every inquiry for about nine weeks.
 **Learning:** A Web3Forms access key is public by design: any `VITE_*` value ends up in the client bundle anyway, so moving it to an env var hides nothing. Treat it as configuration, not a secret, and never change a configuration contract without making the deploy fail when the configuration is missing.
 **Prevention:** `vite.config.ts` fails the Vercel production build without the key, and the contact form offers WhatsApp/email with the visitor's text whenever delivery fails.
+
+## 2025-02-18 - [Contact form XSS and fetch timeout vulnerabilities]
+**Vulnerability:** User inputs (name, email, message) from the contact form could be passed to downstream services (like email clients) without sanitization, exposing them to XSS attacks. The Web3Forms API call also had no timeout, leading to potential unclosed requests (DoS). In addition, error logs for lead delivery leaked raw error details.
+**Learning:** External API fetch calls should always have a timeout. User inputs need to be sanitized before sending to downstream services to prevent XSS. Catch blocks should not expose raw errors.
+**Prevention:** Add input sanitization (`.replace(/[<>]/g, '')`), add a timeout using `AbortController` in external fetches, and sanitize error messages in catch blocks.

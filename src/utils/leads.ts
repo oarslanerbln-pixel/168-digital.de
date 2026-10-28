@@ -83,12 +83,16 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
   }
 
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 seconds timeout
+
     const response = await fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         Accept: 'application/json',
       },
+      signal: controller.signal,
       body: JSON.stringify({
         access_key: WEB3FORMS_ACCESS_KEY,
         subject: `New lead — 1618 Digital (${payload.source || 'Website'})`,
@@ -101,9 +105,10 @@ export async function sendLead(payload: LeadPayload): Promise<boolean> {
     });
 
     const data = await response.json();
+    clearTimeout(timeoutId);
     return response.ok && data.success === true;
   } catch (error) {
-    console.error('[leads] Failed to deliver lead:', error);
+    console.error('[leads] Failed to deliver lead: Network or server error occurred');
     return false;
   }
 }
