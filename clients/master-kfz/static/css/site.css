@@ -872,3 +872,60 @@ html.js .reel__bar i { display: block; height: 100%; background: var(--red); box
 .ui-demo h2 { font-size: 22px; margin: 0 0 6px; }
 .ui-demo > p { color: var(--text-2); margin-bottom: 20px; max-width: 70ch; }
 .ui-demo__light { margin-top: 22px; padding: 22px; border-radius: 16px; background: var(--paper); }
+
+/* E · Carbon: racing slant on a carbon-weave surface, chevrons instead of arrows */
+.ui-carbon .btn { border-radius: 0; min-height: 52px; padding: 0 26px; transform: skewX(-10deg); font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px; }
+.ui-carbon .btn > * { transform: skewX(10deg); }
+.ui-carbon .btn--red { background: var(--red); box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.35), 0 14px 30px -14px var(--red-glow); }
+.ui-carbon .btn--ghost, .ui-carbon .mbar { background: repeating-linear-gradient(45deg, #1b1b1e 0 4px, #141416 4px 8px), #141416; border: 1px solid rgba(255, 255, 255, 0.14); }
+.ui-carbon .btn--ghost { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08); }
+.ui-carbon .btn--light { background: linear-gradient(180deg, #fff, #d9d9de); }
+.ui-carbon .btn .i { display: none; }
+.ui-carbon .btn::after { content: '»'; font-size: 1.3em; font-style: normal; transform: skewX(10deg); transition: transform 0.35s var(--ease-out); }
+.ui-carbon .btn:hover::after { transform: skewX(10deg) translateX(4px); }
+.ui-carbon .btn--sm { min-height: 38px; padding: 0 16px; font-size: 12px; }
+.ui-carbon .lang { border: 0; padding: 0; gap: 3px; }
+.ui-carbon .lang a { border-radius: 0; transform: skewX(-10deg); background: repeating-linear-gradient(45deg, #1b1b1e 0 3px, #141416 3px 6px); font-style: italic; }
+.ui-carbon .lang a[aria-current] { background: var(--red); color: #fff; }
+.ui-carbon .mbar { border-radius: 0; }
+.ui-carbon .mbar__btn { border-radius: 0; font-style: italic; text-transform: uppercase; font-size: 13px; }
+.ui-carbon .mbar__btn--red { transform: skewX(-10deg); }
+.ui-carbon .mbar__btn--red > * { transform: skewX(10deg); }
+.ui-carbon .link { font-style: italic; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* F · Livery: calm slant with the double stripe of a GT livery on the left edge */
+.ui-livery .btn { position: relative; border-radius: 0; min-height: 52px; padding: 0 26px 0 36px; transform: skewX(-14deg); font-weight: 600; letter-spacing: 0.02em; box-shadow: none; }
+.ui-livery .btn > * { transform: skewX(14deg); }
+.ui-livery .btn::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 10px; background: linear-gradient(90deg, #fff 0 3px, transparent 3px 5px, var(--ink) 5px 10px); opacity: 0.9; }
+.ui-livery .btn--red { background: var(--red); }
+.ui-livery .btn--ghost { background: #1c1c1f; border: 0; }
+.ui-livery .btn--ghost::before { background: linear-gradient(90deg, var(--red) 0 3px, transparent 3px 5px, #fff 5px 7px); }
+.ui-livery .btn--light::before { background: linear-gradient(90deg, var(--red) 0 3px, transparent 3px 5px, var(--ink) 5px 7px); }
+.ui-livery .btn:hover { transform: skewX(-14deg) translateX(3px); }
+.ui-livery .btn--sm { min-height: 38px; padding: 0 16px 0 28px; }
+.ui-livery .btn--sm::before { left: 6px; width: 8px; }
+.ui-livery .lang { border: 0; padding: 0; gap: 2px; }
+.ui-livery .lang a { border-radius: 0; transform: skewX(-14deg); }
+.ui-livery .lang a[aria-current] { background: #fff; color: var(--ink); box-shadow: inset 3px 0 0 var(--red); }
+.ui-livery .mbar { border-radius: 0; }
+.ui-livery .mbar__btn { border-radius: 0; }
+.ui-livery .mbar__btn--red { transform: skewX(-14deg); box-shadow: inset 6px 0 0 #fff; }
+.ui-livery .mbar__btn--red > * { transform: skewX(14deg); }
+.ui-livery .link { letter-spacing: 0.02em; }
+
+/* G · Cockpit: chamfered corners and a thin red edge, like a HUD in the dashboard */
+.ui-cockpit .btn { border-radius: 0; min-height: 52px; padding: 0 26px; border: 0; --cut: 12px; clip-path: polygon(var(--cut) 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%, 0 var(--cut)); font: 600 13px/1 var(--mono); letter-spacing: 0.12em; text-transform: uppercase; box-shadow: none; }
+.ui-cockpit .btn--red { background: linear-gradient(90deg, var(--red), #b80f16); }
+.ui-cockpit .btn--red:hover { background: linear-gradient(90deg, var(--red-2), var(--red)); }
+.ui-cockpit .btn--ghost { background: linear-gradient(90deg, rgba(227, 20, 28, 0.9) 0 2px, rgba(255, 255, 255, 0.07) 2px); }
+.ui-cockpit .btn--ghost:hover { background: linear-gradient(90deg, var(--red) 0 4px, rgba(255, 255, 255, 0.12) 4px); }
+.ui-cockpit .btn--light { background: linear-gradient(90deg, var(--red) 0 2px, var(--paper) 2px); }
+.ui-cockpit .btn--sm { min-height: 38px; padding: 0 16px; --cut: 8px; font-size: 11px; }
+.ui-cockpit .lang { border: 0; padding: 0; gap: 4px; }
+.ui-cockpit .lang a { border-radius: 0; clip-path: polygon(6px 0, 100% 0, 100% calc(100% - 6px), calc(100% - 6px) 100%, 0 100%, 0 6px); background: rgba(255, 255, 255, 0.06); }
+.ui-cockpit .lang a[aria-current] { background: var(--red); color: #fff; }
+.ui-cockpit .mbar { border-radius: 0; clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px); }
+.ui-cockpit .mbar__btn { border-radius: 0; font: 600 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.ui-cockpit .mbar__btn--red { clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
+.ui-cockpit .link { font: 600 12px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
+.ui-cockpit .card__arrow { border-radius: 0; }

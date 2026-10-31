@@ -533,12 +533,15 @@ function uiBoard(c, p) {
     ['glass', 'B · Glas', 'Weiche Radien, mattiertes Glas, feine Lichtkante – Apple-artig, sehr hochwertig.'],
     ['racing', 'C · Racing', 'Schräge Formen, kursive Versalien, Rennstreifen im Hauptbutton – Motorsport-Charakter.'],
     ['swipe', 'D · Swipe', 'Konturbuttons, die sich beim Hover rot füllen, Pfeil im weißen Kreis – lebendig, interaktiv.'],
+    ['carbon', 'E · Racing Carbon', 'Racing-Schräge auf Carbon-Struktur, Doppelwinkel » statt Pfeil – sportlich und edel.'],
+    ['livery', 'F · Racing Livery', 'Ruhigere Schräge mit Doppelstreifen wie auf einem GT-Rennwagen – elegant, nicht laut.'],
+    ['cockpit', 'G · Cockpit', 'Abgeschrägte Ecken und feine rote Kante wie ein Head-up-Display – technisch-ästhetisch.'],
   ];
   const demo = ([k, t, d]) => `<section class="ui-demo ui-${k}"><h2>${t}</h2><p>${d}</p>
 <div class="ui-demo__bar"><span class="brand">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></span><div class="hdr__end">${langSwitch(p)}<a class="btn btn--red btn--sm" href="#"><span>${e(c.cta.book)}</span></a></div></div>
 <div class="ui-demo__row">${btn('#', c.cta.book)}${btn('#', c.cta.whatsapp, 'ghost', 'chat')}${btn('#', c.cta.route, 'light', 'pin')}<a class="link" href="#">${e(c.cta.allServices)}${icon('arrow')}</a></div>
 <nav class="mbar" aria-label="Demo"><a href="#" class="mbar__btn">${icon('phone')}<span>${e(c.cta.call)}</span></a><a href="#" class="mbar__btn">${icon('chat')}<span>WhatsApp</span></a><a href="#" class="mbar__btn mbar__btn--red">${icon('calendar')}<span>${e(c.nav.booking)}</span></a></nav></section>`;
-  return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Button-Stile</h1><p class="lead">Vier neue Richtungen für alle Buttons, die Sprachwahl und die mobile Leiste – das Hamburger-Menü bleibt. Mit der Maus über die Buttons fahren, um die Animation zu sehen.</p></div></section>
+  return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Button-Stile</h1><p class="lead">A–D: erste Runde. E–G: drei neue Richtungen aus deinem Favoriten C (Racing). Vier neue Richtungen für alle Buttons, die Sprachwahl und die mobile Leiste – das Hamburger-Menü bleibt. Mit der Maus über die Buttons fahren, um die Animation zu sehen.</p></div></section>
 <section class="section section--tight"><div class="wrap">${styles.map(demo).join('')}</div></section>`;
 }
 
