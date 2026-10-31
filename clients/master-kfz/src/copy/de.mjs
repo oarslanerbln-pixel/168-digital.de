@@ -10,7 +10,7 @@ export default {
   langToast: { text: 'Diese Seite gibt es auch auf Deutsch.', action: 'Auf Deutsch lesen', dismiss: 'Schließen' },
   footer: {
     tagline: 'Kfz-Meisterwerkstatt in Berlin-Neukölln. Alle Marken, Festpreis vor Auftrag.',
-    contact: 'Kontakt', legal: 'Rechtliches', imprint: 'Impressum', privacy: 'Datenschutz', explore: 'Entdecken',
+    contact: 'Kontakt', legal: 'Rechtliches', imprint: 'Impressum', privacy: 'Datenschutz', explore: 'Entdecken', aiTag: 'KI-generiertes Symbolbild',
     credit: 'Design & Entwicklung',
   },
   meta: {
@@ -37,7 +37,7 @@ export default {
     scanLead: 'Scrollen Sie durch Ihr Auto – und sehen Sie, wo wir ansetzen.',
     pricesKicker: 'Top-Angebote',
     pricesTitle: 'Faire Preise. Klar ausgeschildert.',
-    pricesLead: 'Die wichtigsten Arbeiten zum Ab-Preis. Den verbindlichen Festpreis für Ihr Fahrzeug nennen wir vor Arbeitsbeginn.',
+    pricesLead: 'Die wichtigsten Arbeiten zum Ab-Preis. Den verbindlichen Festpreis für Ihr Fahrzeug nennen wir vor Arbeitsbeginn. Alle Preise inkl. MwSt.',
     processKicker: 'So läuft’s',
     processTitle: 'Vier Schritte. Keine Umwege.',
     steps: [
@@ -82,7 +82,7 @@ export default {
     faq: 'Häufige Fragen',
     related: 'Passt dazu',
     priceLabel: 'Richtpreis',
-    priceNote: 'Verbindlicher Festpreis nach kurzem Check – vor Arbeitsbeginn.',
+    priceNote: 'Verbindlicher Festpreis nach kurzem Check – vor Arbeitsbeginn. Preise inkl. MwSt.',
     bookThis: 'Diese Leistung anfragen',
     crumbs: 'Brotkrumen',
   },

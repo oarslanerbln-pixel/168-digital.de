@@ -10,7 +10,7 @@ export default {
   langToast: { text: 'This page is also available in English.', action: 'Read in English', dismiss: 'Close' },
   footer: {
     tagline: 'Master-certified car garage in Berlin-Neukölln. All makes, fixed price before we start.',
-    contact: 'Contact', legal: 'Legal', imprint: 'Legal notice (Impressum)', privacy: 'Privacy (Datenschutz)', explore: 'Explore',
+    contact: 'Contact', legal: 'Legal', imprint: 'Legal notice (Impressum)', privacy: 'Privacy (Datenschutz)', explore: 'Explore', aiTag: 'AI-generated illustration',
     credit: 'Design & development',
   },
   meta: {
@@ -37,7 +37,7 @@ export default {
     scanLead: 'Scroll through your car – and see where we step in.',
     pricesKicker: 'Top offers',
     pricesTitle: 'Fair prices. Clearly posted.',
-    pricesLead: 'Starting prices for the most common jobs. We confirm the binding fixed price for your car before any work begins.',
+    pricesLead: 'Starting prices for the most common jobs. We confirm the binding fixed price for your car before any work begins. All prices include VAT.',
     processKicker: 'How it works',
     processTitle: 'Four steps. No detours.',
     steps: [
@@ -82,7 +82,7 @@ export default {
     faq: 'Frequently asked questions',
     related: 'Goes well with',
     priceLabel: 'Guide price',
-    priceNote: 'Binding fixed price after a short check – before work begins.',
+    priceNote: 'Binding fixed price after a short check – before work begins. Prices include VAT.',
     bookThis: 'Book this service',
     crumbs: 'Breadcrumb',
   },

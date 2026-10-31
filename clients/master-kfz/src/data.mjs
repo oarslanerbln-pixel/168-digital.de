@@ -10,6 +10,11 @@ export const LANGS = ['de', 'tr', 'en'];
 export const DEFAULT_LANG = 'de';
 /* Button style: 'pill' (current) · 'precision' · 'glass' · 'racing' · 'swipe' · 'carbon' · 'livery' · 'cockpit' – see /ui-stile/. */
 export const UI_STYLE = 'carbon';
+/* All photos and videos in static/media are AI-generated (Google Flow). While true, every
+   photo surface carries a visible label (EU AI Act Art. 50(4), in force since 2 Aug 2026;
+   also avoids implying the pictures show this workshop – § 5 UWG). Set to false only once
+   every file there is a real photo of the workshop. */
+export const MEDIA_IS_AI = true;
 
 export const business = {
   name: 'Master KFZ Werkstatt',

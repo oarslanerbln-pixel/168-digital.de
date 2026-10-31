@@ -10,7 +10,7 @@ export default {
   langToast: { text: 'Bu sayfa Türkçe olarak da mevcut.', action: 'Türkçe oku', dismiss: 'Kapat' },
   footer: {
     tagline: 'Berlin-Neukölln’de usta onaylı oto servis. Tüm markalar, işe başlamadan sabit fiyat.',
-    contact: 'İletişim', legal: 'Yasal', imprint: 'Künye (Impressum)', privacy: 'Gizlilik (Datenschutz)', explore: 'Keşfet',
+    contact: 'İletişim', legal: 'Yasal', imprint: 'Künye (Impressum)', privacy: 'Gizlilik (Datenschutz)', explore: 'Keşfet', aiTag: 'Yapay zekâ ile üretilmiş temsili görsel',
     credit: 'Tasarım & geliştirme',
   },
   meta: {
@@ -37,7 +37,7 @@ export default {
     scanLead: 'Aracınızın üzerinde kaydırın – nerede devreye girdiğimizi görün.',
     pricesKicker: 'Fırsatlar',
     pricesTitle: 'Adil fiyat. Açıkça yazılı.',
-    pricesLead: 'En sık yapılan işlerin başlangıç fiyatları. Aracınıza özel bağlayıcı sabit fiyatı işe başlamadan söylüyoruz.',
+    pricesLead: 'En sık yapılan işlerin başlangıç fiyatları. Aracınıza özel bağlayıcı sabit fiyatı işe başlamadan söylüyoruz. Tüm fiyatlara KDV dahildir.',
     processKicker: 'Nasıl işliyor',
     processTitle: 'Dört adım. Dolambaç yok.',
     steps: [
@@ -82,7 +82,7 @@ export default {
     faq: 'Sık sorulan sorular',
     related: 'Bunlar da ilginizi çekebilir',
     priceLabel: 'Başlangıç fiyatı',
-    priceNote: 'Kısa bir kontrolden sonra, işe başlamadan bağlayıcı sabit fiyat.',
+    priceNote: 'Kısa bir kontrolden sonra, işe başlamadan bağlayıcı sabit fiyat. Fiyatlara KDV dahildir.',
     bookThis: 'Bu hizmet için randevu al',
     crumbs: 'Sayfa yolu',
   },

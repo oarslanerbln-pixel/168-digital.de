@@ -1036,3 +1036,16 @@ html.js .duo__col.rv.is-in li { opacity: 1; transform: none; }
 .collage img:first-child { left: 0; top: 0; }
 .collage img:nth-child(2) { right: 0; bottom: 0; }
 .collage i { position: absolute; left: 47%; top: 8%; width: 4px; height: 84%; background: var(--red); transform: skewX(-9deg); box-shadow: 0 0 18px var(--red); }
+
+/* ---------- AI disclosure ----------
+ * Small camera-metadata style tag on every photo surface. The text comes from the
+ * copy (set as --ai-tag on <html>); without it the tag does not render at all.
+ */
+.hero--media .hero__bg::after, .phero--media::after, .flow--photo::after, .collage::after {
+  content: var(--ai-tag, none); position: absolute; z-index: 2; right: 12px; bottom: 10px; pointer-events: none;
+  padding: 5px 8px; border-radius: 4px; background: rgba(11, 12, 16, 0.5); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  font: 500 10px/1 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(244, 244, 240, 0.62);
+}
+.flow--photo { position: relative; }
+.phero--media::after { right: var(--pad); }
+.hero--media .hero__bg::after { top: calc(var(--hdr-h) + env(safe-area-inset-top) + 12px); bottom: auto; right: var(--pad); }
