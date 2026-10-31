@@ -6,7 +6,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl, UI_STYLE } from './data.mjs';
-import { icon, carSvg, carPremium, gearSvg, logoMark } from './svg.mjs';
+import { icon, iconPro, carSvg, carPremium, gearSvg, logoMark } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
 import { LOGO_STYLES, styleSvg } from './logos-r3.mjs';
@@ -211,7 +211,7 @@ function serviceCard(c, lang, s, i) {
   const t = c.services[s.id];
   const price = s.price == null ? c.cta.onRequest : priceText(lang, s.price, s.from);
   return `<a class="card rv" href="${servicePath(lang, s)}" style="--i:${i % 4}">
-<span class="card__icon">${icon(s.icon)}</span>
+<span class="card__icon">${iconPro(s.icon)}</span>
 <h3 class="card__title">${e(t.name)}</h3>
 <p class="card__text">${e(t.short)}</p>
 <span class="card__foot"><span class="card__price">${e(price)}</span><span class="card__arrow">${icon('arrow')}</span></span>
@@ -281,7 +281,7 @@ function home(c, lang) {
   const reel = reelIds.map((id, i) => {
     const s = svc(id);
     const img = media(`reel-${id}.webp`);
-    return `<a class="reel__card${img ? ' reel__card--img' : ''}" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="reel__art" aria-hidden="true">${gearSvg('gear reel__gear')}${icon(s.icon, 'i reel__icon')}</span>`}<span class="reel__n">0${i + 1}</span><span class="reel__cap"><b>${e(c.services[id].name)}</b><span>${e(c.services[id].short)}</span></span></a>`;
+    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span>`;
   }).join('');
   const tick = c.home.ticker.map((w) => `<span>${e(w)}</span><i>✦</i>`).join('');
   return `
@@ -306,12 +306,9 @@ ${kicker(c.home.kicker, 'hero__kicker')}
 <div class="wrap"><p class="statement__text">${words}</p></div>
 </section>
 
-<section class="reel" data-scroll="sticky" data-reel aria-labelledby="reel-title">
-<div class="reel__sticky">
-<header class="wrap shead shead--split"><div>${kicker(c.home.reelKicker)}<h2 class="h2" id="reel-title">${e(c.home.reelTitle)}</h2></div><p class="lead">${e(c.home.reelLead)}</p></header>
-<div class="reel__viewport"><div class="reel__track">${reel}</div></div>
-<div class="wrap reel__bar" aria-hidden="true"><i></i></div>
-</div>
+<section class="flowsec" aria-labelledby="reel-title">
+<header class="wrap shead shead--split"><div>${kicker(c.home.reelKicker, 'rv')}<h2 class="h2 rv" style="--i:1" id="reel-title">${e(c.home.reelTitle)}</h2></div><p class="lead rv" style="--i:2">${e(c.home.reelLead)}</p></header>
+<div class="flow"><div class="flow__track">${[0, 1, 2, 3].map((k) => `<div class="flow__set"${k ? ' aria-hidden="true"' : ''}>${reel.replaceAll('<a class=', k ? '<a tabindex="-1" class=' : '<a class=')}</div>`).join('')}</div></div>
 </section>
 
 <section class="section" id="services">

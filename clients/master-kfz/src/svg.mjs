@@ -193,3 +193,24 @@ ${lit ? XRAY : ''}
 <path d="M120 218C140 206 160 198 182 192C172 206 150 214 120 218Z" fill="#e3141c" opacity="${lit ? 1 : 0.5}"/>
 ${premiumWheel(300, lit)}${premiumWheel(920, lit)}</svg>`;
 }
+
+/*
+ * Detailed duotone service icons (48 grid) for the service cards. Base strokes
+ * take currentColor, `acc` parts carry the red accent; pathLength lets CSS
+ * redraw them on hover.
+ */
+const PRO = {
+  clipboard: '<rect x="11" y="9" width="26" height="33" rx="3"/><path d="M18 9V6h12v3"/><path d="M17 18h14M17 24h9"/><path class="acc" d="M17 32l4 4 9-9"/>',
+  drop: '<path d="M8 30h22l6-8h4"/><path d="M8 30v6h24l4-6"/><path d="M14 30v-7h12v7"/><path d="M26 23l6-5"/><path class="acc" d="M40 30c0 0-3 4-3 6a3 3 0 0 0 6 0c0-2-3-6-3-6z"/>',
+  disc: '<circle cx="22" cy="26" r="15"/><circle cx="22" cy="26" r="5"/><circle cx="22" cy="15" r="1"/><circle cx="31" cy="22" r="1"/><circle cx="13" cy="22" r="1"/><circle cx="16" cy="34" r="1"/><circle cx="28" cy="34" r="1"/><path class="acc" d="M30 8h6a4 4 0 0 1 4 4v12l-6-2V14l-4-1z"/>',
+  tyre: '<circle cx="24" cy="24" r="18"/><circle cx="24" cy="24" r="11"/><path d="M24 6v4M24 38v4M6 24h4M38 24h4M11 11l3 3M34 34l3 3M11 37l3-3M34 14l3-3"/><path d="M24 13v6M24 29v6M13 24h6M29 24h6"/><circle class="acc" cx="24" cy="24" r="3.5"/>',
+  snow: '<circle cx="24" cy="24" r="18"/><path d="M24 10v28M12 17l24 14M12 31l24-14"/><path d="M20 12l4 3 4-3M20 36l4-3 4 3"/><path class="acc" d="M24 20l3.5 2v4L24 28l-3.5-2v-4z"/>',
+  belt: '<circle cx="14" cy="32" r="8"/><circle cx="34" cy="14" r="8"/><path d="M8 27L28 9M20 37L40 19"/><path d="M12 25.5l-1.5-1.5M17 21l-1.5-1.5M22 16.5L20.5 15M26 13l-1.5-1.5"/><circle class="acc" cx="38" cy="34" r="4"/><path class="acc" d="M34 32l-4-2"/>',
+  shift: '<path d="M12 12v24M24 12v24M36 12v12H12"/><circle cx="12" cy="10" r="2"/><circle cx="24" cy="10" r="2"/><circle cx="36" cy="10" r="2"/><circle cx="12" cy="38" r="2"/><circle cx="24" cy="38" r="2"/><circle class="acc" cx="36" cy="30" r="5"/><path class="acc" d="M36 35v7"/>',
+  pulse: '<rect x="6" y="9" width="30" height="22" rx="3"/><path d="M14 38h14M21 31v7"/><path class="acc" d="M10 21h5l3-6 4 11 3-5h7"/><path d="M36 20h4a2 2 0 0 1 2 2v6h-6"/><path d="M42 24h3"/>',
+  plus: '<circle cx="24" cy="24" r="16"/><path class="acc" d="M24 16v16M16 24h16"/>',
+};
+export function iconPro(name, cls = 'ico') {
+  const body = PRO[name].replace(/<(path|circle|rect)\b/g, '<$1 pathLength="100"');
+  return `<svg class="${cls}" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
+}

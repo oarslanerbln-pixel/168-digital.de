@@ -103,16 +103,6 @@
   addEventListener('resize', request);
   frame();
 
-  /* ---------- Horizontal reel: vertical scroll drives the track ---------- */
-  const reels = [...d.querySelectorAll('[data-reel]')];
-  const measureReels = () => reels.forEach((r) => {
-    const track = r.querySelector('.reel__track');
-    const view = r.querySelector('.reel__viewport');
-    r.style.setProperty('--shift', `${Math.max(0, track.scrollWidth - view.clientWidth)}px`);
-  });
-  measureReels();
-  addEventListener('resize', measureReels);
-
   /* ---------- Hero film: scroll scrubs the clip on desktop, loops on phones ---------- */
   const film = d.querySelector('[data-scrub]');
   const scrub = film && !reduce && matchMedia('(hover: hover) and (pointer: fine) and (min-width: 960px)').matches;
