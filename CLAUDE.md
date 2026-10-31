@@ -50,6 +50,7 @@ lassen.**
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
 | Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
+| Leistungen als Bento-Grid mit Pointer-Licht / Zähler-Streifen | `src/components/Services.tsx`, `FactsStrip.tsx` |
 | Startseiten-Inhalte: Lösungen, Ablauf, FAQ (DE/EN/TR) + Produktfotos | `src/data/homeContent.ts` |
 | Produktfotos: Quellen `assets-src/solutions/`, WebP 640/1080 via `npm run optimize:images` | `public/solutions/` |
 | Alle Texte, 3 Sprachen (DE/EN/TR) | `src/i18n.ts` |
@@ -138,11 +139,14 @@ Bug, kein Platzhalter. Türkisch braucht `latin-ext` – deshalb hat die
 Font-Pipeline beide Subsets.
 
 ### 7. Design-System statt Einzelfallentscheidung
-Die Palette ist bewusst monochrom (Papierweiß, Tinte, Grau) mit **einem**
-Akzent; der blau-goldene Schimmer in der Hero-Headline ist der einzige
-Farbverlauf der Seite und bleibt es. Farben kommen aus den Tokens in
-`:root`, nicht aus Hex-Werten im Komponenten-CSS. Kein neuer Effekt, der
-mit dem Schimmer um Aufmerksamkeit konkurriert.
+Seit Oktober 2026 **Dark Tech**: tiefes Blauschwarz (`--bg-dark`), Glas-
+Flächen (`--bg-raised`), **ein** leuchtender Blau-Akzent (`--accent-cyan`,
+`--accent-glow`). Der blau-goldene Schimmer in der Hero-Headline bleibt der
+einzige Text-Farbverlauf. Farben kommen aus den Tokens in `:root`, nicht aus
+Hex-Werten im Komponenten-CSS. Für Linien und Tönungen mit Transparenz
+`rgba(var(--ink-rgb), α)` bzw. `rgba(var(--accent-cyan-rgb), α)` nutzen;
+Schatten bleiben schwarz. Animation: nur `transform`/`opacity`, immer mit
+`prefers-reduced-motion`-Ausweg, keine Endlosschleifen in JS.
 
 ## Arbeitsweise
 

@@ -12,41 +12,47 @@
    special. Nothing else animates its colour.
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  /* ── Neutral base — cool paper, not beige ── */
-  --bg-dark: #fbfbfa;          /* page ground (token name kept: 79 call sites) */
-  --bg-raised: #ffffff;        /* cards / raised surfaces */
-  --bg-sunken: #f4f4f2;        /* alternating band behind sections */
-  --text-main: #121211;        /* ink */
-  --text-muted: #6e6e6a;       /* neutral grey — AA on the ground above */
-  --text-faint: #9a9a95;       /* overlines, meta, disabled */
+  /* ── DARK TECH BASE (Oct 2026) ─────────────────────────────────
+     The studio sells software, so the site now looks like it runs on
+     a screen at night: a deep blue-black ground, raised glass panels
+     and one luminous blue accent that glows. Every component reads
+     these tokens, so the switch from paper to dark happened here, in
+     one place. --ink-rgb is the foreground as an RGB triple, for the
+     many hairlines and tints that need an alpha (rgba(var(--ink-rgb),
+     0.1)); shadows stay true black, light cannot cast light shadows. */
+  --bg-dark: #07090f;          /* page ground (token name kept: 79 call sites) */
+  --bg-raised: #0f131c;        /* cards / raised surfaces */
+  --bg-sunken: #0a0d14;        /* alternating band behind sections */
+  --text-main: #eef1f7;        /* foreground */
+  --text-muted: #9aa3b5;       /* secondary text — AA on the ground above */
+  --text-faint: #687186;       /* overlines, meta, disabled */
+  --ink-rgb: 238, 241, 247;
 
   /* ── Hairlines — one rule, used everywhere, so edges read as a system ── */
-  --line: rgba(18, 18, 17, 0.10);
-  --line-strong: rgba(18, 18, 17, 0.22);
+  --line: rgba(var(--ink-rgb), 0.09);
+  --line-strong: rgba(var(--ink-rgb), 0.2);
 
-  --glass-bg: rgba(255, 255, 255, 0.92);
+  --glass-bg: rgba(15, 19, 28, 0.82);
   --glass-border: var(--line);
 
-  /* ── The two shimmer colours, promoted to tokens ── */
-  --shimmer-blue: #2b4f9c;
-  --shimmer-blue-lit: #a9c8ff;
-  --shimmer-gold: #8a6a3f;
-  --shimmer-gold-lit: #f5d999;
+  /* ── The hero shimmer, tuned to read on dark ── */
+  --shimmer-blue: #5b8cff;
+  --shimmer-blue-lit: #d4e2ff;
+  --shimmer-gold: #c9a35f;
+  --shimmer-gold-lit: #ffe6ad;
 
-  /* ── Accents. Names kept from the old bronze palette so all 79
-     existing call sites re-colour at once instead of being rewritten. ── */
-  --accent-cyan: #1f3f86;      /* the single functional accent (from the blue sweep) */
-  --accent-purple: #5b5b57;    /* secondary / muted neutral */
-  --accent-silver: #121211;    /* .text-silver headings read as ink */
+  /* ── Accents. One luminous blue; --accent-glow is its light. ── */
+  --accent-cyan: #5b8cff;      /* the single functional accent */
+  --accent-cyan-rgb: 91, 140, 255;
+  --accent-purple: #9aa3b5;    /* secondary / muted neutral */
+  --accent-silver: #eef1f7;    /* .text-silver headings read as foreground */
   --accent-platinum: #ffffff;
 
-  /* ── Accent tints and depth — for the product mockups and the cards
-     around them. Tints of the one accent rather than new hues, so the
-     mockups read as "our UI" without adding a colour to the system. ── */
-  --accent-soft: rgba(31, 63, 134, 0.08);
-  --accent-line: rgba(31, 63, 134, 0.24);
-  --shadow-card: 0 1px 2px rgba(18, 18, 17, 0.04), 0 18px 40px -22px rgba(18, 18, 17, 0.18);
-  --shadow-float: 0 30px 70px -28px rgba(18, 18, 17, 0.35);
+  --accent-soft: rgba(var(--accent-cyan-rgb), 0.12);
+  --accent-line: rgba(var(--accent-cyan-rgb), 0.38);
+  --accent-glow: 0 0 0 1px rgba(var(--accent-cyan-rgb), 0.35), 0 0 42px -6px rgba(var(--accent-cyan-rgb), 0.55);
+  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 22px 50px -26px rgba(0, 0, 0, 0.8);
+  --shadow-float: 0 40px 90px -30px rgba(0, 0, 0, 0.85);
   --radius-card: 18px;
 
   /* ── Stacking order ──────────────────────────────────────────────
@@ -180,14 +186,14 @@ html, body {
 
 /* Premium Glassmorphism Utilities */
 .glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(251, 251, 250, 0.88) 100%);
+  background: linear-gradient(135deg, rgba(var(--ink-rgb), 0.06) 0%, rgba(var(--ink-rgb), 0.02) 100%);
   -webkit-backdrop-filter: blur(24px) saturate(1.2);
   backdrop-filter: blur(24px) saturate(1.2);
-  border: 1px solid rgba(18, 18, 17, 0.08);
-  border-top: 1px solid rgba(18, 18, 17, 0.1); /* Top edge definition */
-  border-left: 1px solid rgba(18, 18, 17, 0.06); /* Left edge definition */
+  border: 1px solid rgba(var(--ink-rgb), 0.08);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.1); /* Top edge definition */
+  border-left: 1px solid rgba(var(--ink-rgb), 0.06); /* Left edge definition */
   border-radius: 24px;
-  box-shadow: 0 30px 60px rgba(18, 18, 17, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: all 0.5s var(--ease-premium);
   position: relative;
   overflow: hidden;
@@ -197,7 +203,7 @@ html, body {
   content: '';
   position: absolute;
   top: 0; left: -100%; width: 50%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
   transform: skewX(-20deg);
   transition: left 0.7s var(--ease-premium);
 }
@@ -207,21 +213,21 @@ html, body {
 }
 
 .glass-panel-silver {
-  background: linear-gradient(145deg, #ffffff 0%, #f7f3ec 100%);
+  background: linear-gradient(145deg, var(--bg-raised) 0%, var(--bg-sunken) 100%);
   -webkit-backdrop-filter: blur(30px) saturate(1.3);
   backdrop-filter: blur(30px) saturate(1.3);
-  border: 1px solid rgba(18, 18, 17, 0.08);
-  border-top: 1px solid rgba(18, 18, 17, 0.1);
+  border: 1px solid rgba(var(--ink-rgb), 0.08);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.1);
   border-radius: 24px;
-  box-shadow: 0 16px 40px rgba(18, 18, 17, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.21), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: all 0.5s var(--ease-premium);
   position: relative;
 }
 
 .glass-panel-silver:hover {
   transform: translateY(-5px);
-  box-shadow: 0 24px 55px rgba(18, 18, 17, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1);
-  border-color: rgba(18, 18, 17, 0.16);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  border-color: rgba(var(--ink-rgb), 0.16);
 }
 
 /* Typography Utilities */
@@ -263,22 +269,22 @@ html, body {
 .premium-button-silver {
   background: var(--text-main);
   color: #fff;
-  box-shadow: 0 10px 25px rgba(18, 18, 17, 0.15);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
 }
 
 .premium-button-silver:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(18, 18, 17, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.75);
 }
 
 .premium-button-glass {
-  background: rgba(18, 18, 17, 0.04);
-  border: 1px solid rgba(18, 18, 17, 0.14);
+  background: rgba(var(--ink-rgb), 0.04);
+  border: 1px solid rgba(var(--ink-rgb), 0.14);
   color: var(--text-main);
 }
 
 .premium-button-glass:hover {
-  background: rgba(18, 18, 17, 0.08);
+  background: rgba(var(--ink-rgb), 0.08);
   border-color: var(--accent-cyan);
 }
 
@@ -290,11 +296,11 @@ html, body {
   background: var(--bg-dark);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(18, 18, 17, 0.15);
+  background: rgba(var(--ink-rgb), 0.15);
   border-radius: 8px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(18, 18, 17, 0.25);
+  background: rgba(var(--ink-rgb), 0.25);
 }
 
 /* ─── Marquee Band Hover ─── */
@@ -302,7 +308,7 @@ html, body {
   animation-duration: 80s !important; /* slow down on hover */
 }
 .marquee-band:hover span {
-  color: rgba(107, 68, 35, 0.35) !important;
+  color: rgba(var(--ink-rgb), 0.35) !important;
 }
 
 
@@ -351,12 +357,12 @@ html, body {
   max-width: 900px;
   max-height: 90vh;
   overflow-y: auto;
-  background: #fdfbf8;
-  border: 1px solid rgba(18, 18, 17, 0.1);
+  background: var(--bg-raised);
+  border: 1px solid rgba(var(--ink-rgb), 0.1);
   border-radius: 32px;
   position: relative;
   padding: 48px;
-  box-shadow: 0 40px 100px rgba(18, 18, 17, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Full-bleed live-site preview at the top of the project modal — breaks out
@@ -392,7 +398,7 @@ html, body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, transparent 55%, #fdfbf8 100%);
+  background: linear-gradient(180deg, transparent 55%, var(--bg-raised) 100%);
 }
 
 /* ─── Floating Label ─── */
@@ -405,7 +411,7 @@ html, body {
   top: 50%;
   transform: translateY(-50%);
   font-size: 1rem;
-  color: rgba(18, 18, 17, 0.4);
+  color: rgba(var(--ink-rgb), 0.4);
   pointer-events: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   text-transform: uppercase;
@@ -428,8 +434,8 @@ html, body {
 .floating-field input,
 .floating-field textarea {
   width: 100%;
-  background: rgba(18, 18, 17, 0.02);
-  border: 1px solid rgba(18, 18, 17, 0.12);
+  background: rgba(var(--ink-rgb), 0.02);
+  border: 1px solid rgba(var(--ink-rgb), 0.12);
   padding: 26px 24px 12px 24px;
   border-radius: 16px;
   color: var(--text-main);
@@ -464,7 +470,7 @@ html, body {
   grid-template-columns: repeat(4, 1fr);
   gap: 32px;
   padding: 48px 0;
-  border-top: 1px solid rgba(18, 18, 17, 0.08);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.08);
   margin-top: 64px;
 }
 @media (max-width: 768px) {
@@ -532,7 +538,7 @@ html, body {
 }
 
 .about-signature {
-  border-top: 1px solid rgba(18, 18, 17, 0.1);
+  border-top: 1px solid rgba(var(--ink-rgb), 0.1);
   padding-top: 32px;
   display: flex;
   align-items: center;
@@ -583,7 +589,7 @@ html, body {
 .stat-suffix {
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  color: rgba(18, 18, 17, 0.45);
+  color: rgba(var(--ink-rgb), 0.45);
 }
 
 .stat-label {
@@ -656,8 +662,8 @@ html, body {
   margin: 22px auto 64px;
   padding: 10px 22px;
   border-radius: 100px;
-  border: 1px solid rgba(18, 18, 17, 0.14);
-  background: rgba(18, 18, 17, 0.03);
+  border: 1px solid rgba(var(--ink-rgb), 0.14);
+  background: rgba(var(--ink-rgb), 0.03);
   color: var(--text-main);
   font-family: 'Outfit', sans-serif;
   font-size: 0.82rem;
@@ -669,7 +675,7 @@ html, body {
 
 .works-reel-link:hover {
   border-color: var(--accent-cyan);
-  background: rgba(18, 18, 17, 0.07);
+  background: rgba(var(--ink-rgb), 0.07);
   color: var(--accent-cyan);
   transform: translateY(-2px);
 }
@@ -707,7 +713,7 @@ html, body {
 .project-card:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: 0 18px 40px rgba(18, 18, 17, 0.09);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.27);
 }
 
 /* ─── Media ─── */
@@ -750,7 +756,7 @@ html, body {
     repeating-linear-gradient(
       -45deg,
       transparent 0 14px,
-      rgba(18, 18, 17, 0.022) 14px 28px
+      rgba(var(--ink-rgb), 0.022) 14px 28px
     ),
     var(--bg-sunken);
 }
@@ -857,7 +863,7 @@ html, body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--text-muted);
-  background: rgba(18, 18, 17, 0.05);
+  background: rgba(var(--ink-rgb), 0.05);
 }
 
 
@@ -896,8 +902,8 @@ html, body {
   color: var(--text-main);
   cursor: pointer;
   border-radius: 50%;
-  border: 1px solid rgba(18, 18, 17, 0.14);
-  background: rgba(18, 18, 17, 0.05);
+  border: 1px solid rgba(var(--ink-rgb), 0.14);
+  background: rgba(var(--ink-rgb), 0.05);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   transition: all 0.3s var(--ease-premium);
@@ -905,9 +911,9 @@ html, body {
 }
 
 .modal-close-btn:hover {
-  background: rgba(18, 18, 17, 0.1);
-  border-color: rgba(18, 18, 17, 0.25);
-  box-shadow: 0 0 20px rgba(18, 18, 17, 0.1);
+  background: rgba(var(--ink-rgb), 0.1);
+  border-color: rgba(var(--ink-rgb), 0.25);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   transform: rotate(90deg) scale(1.1);
 }
 
@@ -941,7 +947,7 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  border: 1px solid rgba(18, 18, 17, 0.08);
+  border: 1px solid rgba(var(--ink-rgb), 0.08);
 }
 
 .modal-metric-value {
@@ -961,280 +967,6 @@ html, body {
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
-}
-
-/* =========================================================================
-   SERVICES SECTION — LIGHT, MODERN COUNTERPOINT TO THE CINEMATIC DARK THEME
-   Deliberately distinct: light warm background, Plus Jakarta Sans typeface,
-   higher-contrast readable body text. Everything is scoped under
-   .services-light so it never leaks into the dark theme elsewhere.
-   ========================================================================= */
-
-.services-light {
-  --services-bg-1: var(--bg-dark);
-  --services-bg-2: var(--bg-sunken);
-  --services-ink: var(--text-main);
-  --services-ink-muted: var(--text-muted);
-  --services-card-bg: var(--bg-raised);
-  --services-card-border: var(--line);
-  --services-accent-1: var(--accent-cyan);
-  --services-accent-2: var(--accent-cyan);
-  --services-accent-text: var(--accent-cyan);
-
-  position: relative;
-  z-index: 10;
-  padding: 120px 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  color: var(--services-ink);
-}
-
-/* Full-bleed light band behind the centered content */
-.services-light::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  background: linear-gradient(180deg, var(--services-bg-1) 0%, var(--services-bg-2) 100%);
-  z-index: -1;
-}
-
-/* Base header rules — shared with WebDesignCatalog's section header.
-   (Restored: these were accidentally dropped when the light theme was
-   introduced, leaving no margin between the header and the card grid.) */
-.services-header {
-  text-align: center;
-  margin-bottom: 72px;
-}
-
-.services-overline {
-  display: block;
-  font-size: 0.75rem;
-  letter-spacing: 5px;
-  text-transform: uppercase;
-  color: var(--accent-cyan);
-  margin-bottom: 16px;
-  font-weight: 600;
-  opacity: 0.8;
-}
-
-.services-title {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
-  font-weight: 800;
-  line-height: 1.1;
-}
-
-.services-subtitle {
-  max-width: 640px;
-  margin: 18px auto 0;
-  font-size: clamp(0.98rem, 2vw, 1.15rem);
-  line-height: 1.6;
-  color: var(--text-muted);
-}
-
-.services-light .services-overline {
-  color: var(--accent-purple);
-  opacity: 1;
-}
-
-.services-light .services-title {
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--text-main);
-}
-
-.services-light .services-subtitle {
-  color: var(--services-ink-muted);
-}
-
-/* ─── Service groups — software / film. A small uppercase label with a
-   hairline running to the edge, so the two rows read as chapters of one
-   list rather than two separate sections. ─── */
-.services-group + .services-group {
-  margin-top: 64px;
-}
-
-.services-group-label {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--services-ink-muted);
-}
-
-.services-group-label::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--services-card-border);
-}
-
-/* Cards Grid — the column count follows the group's card count
-   (services-grid-2 / services-grid-3), so every row closes as a full,
-   symmetric matrix without a "featured" card padding out the gap. */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  align-items: stretch;
-}
-
-.services-grid-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-/* Grid cell wrapper — stretches to the row height set by CSS Grid so every
-   card in a row shares the same height, keeping titles/tags/CTAs aligned. */
-.service-card-cell {
-  display: flex;
-  height: 100%;
-}
-
-/* ─── Individual Card — angular, no rounded corners.
-   Interior is a slow, continuous grey / silver / orange gradient loop
-   instead of flat white, per feedback. ─── */
-.service-card-light {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  border-radius: 0;
-  padding: 40px 36px;
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  color: inherit;
-  background: var(--services-card-bg);
-  border: 1px solid var(--services-card-border);
-  box-shadow: none;
-  transition: transform 0.4s var(--ease-premium), box-shadow 0.4s var(--ease-premium), border-color 0.4s var(--ease-premium);
-}
-
-.service-card-light:hover {
-  transform: translateY(-4px);
-  border-color: var(--line-strong);
-  box-shadow: 0 18px 40px rgba(18, 18, 17, 0.07);
-}
-
-/* Real card content sits above the card's own animated background and
-   fills the card (so the flex-grown description still pushes tags/CTA
-   to the bottom). */
-.service-card-body-light {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-
-/* ─── Icon Wrapper — angular outline, no filled "app icon" badge.
-   Icon itself carries the orange gradient via SVG, not a solid tile. ─── */
-.service-icon-wrapper-light {
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0;
-  margin-bottom: 32px;
-  border: 1.5px solid color-mix(in srgb, var(--services-accent-2) 45%, transparent);
-  color: var(--services-accent-text);
-  background: transparent;
-  flex-shrink: 0;
-  transition: border-color 0.4s var(--ease-premium), background 0.4s var(--ease-premium);
-}
-
-.service-card-light:hover .service-icon-wrapper-light {
-  border-color: var(--services-accent-2);
-  background: color-mix(in srgb, var(--services-accent-1) 8%, transparent);
-}
-
-/* ─── Card Content ─── */
-.service-card-title-light {
-  font-size: 1.3rem;
-  font-weight: 700;
-  margin-bottom: 12px;
-  line-height: 1.25;
-  color: var(--services-ink);
-  letter-spacing: -0.01em;
-}
-
-.service-card-desc-light {
-  color: var(--services-ink-muted);
-  font-size: 0.98rem;
-  font-weight: 500;
-  line-height: 1.65;
-  flex: 1;
-}
-
-.service-card-tags-light {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-top: 28px;
-}
-
-.service-tag-light {
-  padding: 5px 14px;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  border-radius: 30px;
-  color: var(--services-ink-muted);
-  background: color-mix(in srgb, var(--services-ink) 5%, transparent);
-}
-
-.service-card-cta-light {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid var(--services-card-border);
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--services-accent-text);
-}
-
-/* ─── Responsive ─── */
-@media (max-width: 980px) {
-  .services-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  /* Three cards on two columns: the odd one spans the row instead of
-     leaving a hole beside it. */
-  .services-grid-3 > .service-card-cell:last-child {
-    grid-column: 1 / -1;
-  }
-}
-
-@media (max-width: 600px) {
-  .services-grid,
-  .services-grid-2 {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .services-group + .services-group {
-    margin-top: 48px;
-  }
-}
-
-@media (max-width: 768px) {
-  .services-light {
-    padding: 80px 20px;
-  }
-  .service-card-light {
-    padding: 32px 28px;
-  }
 }
 
 /* The 'SIGNAL DECODE' hero variant that used to live here (scanlines,
@@ -1476,8 +1208,8 @@ html, body {
 
 .premium-input {
   width: 100%;
-  background: rgba(18, 18, 17, 0.03);
-  border: 1px solid rgba(18, 18, 17, 0.12);
+  background: rgba(var(--ink-rgb), 0.03);
+  border: 1px solid rgba(var(--ink-rgb), 0.12);
   border-radius: 12px;
   padding: 24px 20px 12px 20px;
   color: var(--text-main);
@@ -1493,8 +1225,8 @@ html, body {
 }
 
 .premium-input:focus {
-  background: rgba(18, 18, 17, 0.05);
-  border-color: rgba(18, 18, 17, 0.25);
+  background: rgba(var(--ink-rgb), 0.05);
+  border-color: rgba(var(--ink-rgb), 0.25);
 }
 
 .premium-label {
@@ -1502,7 +1234,7 @@ html, body {
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  color: rgba(18, 18, 17, 0.45);
+  color: rgba(var(--ink-rgb), 0.45);
   font-size: 1.05rem;
   pointer-events: none;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1551,8 +1283,8 @@ html, body {
   align-items: flex-start;
   padding: 20px;
   border-radius: 16px;
-  background: rgba(18, 18, 17, 0.03);
-  border: 1px solid rgba(18, 18, 17, 0.08);
+  background: rgba(var(--ink-rgb), 0.03);
+  border: 1px solid rgba(var(--ink-rgb), 0.08);
   transition: all 0.3s ease;
 }
 
@@ -1621,9 +1353,9 @@ html, body {
   font-size: 1.15rem;
   font-weight: 700;
   letter-spacing: 1px;
-  border: 1px solid rgba(18, 18, 17, 0.08);
-  background: rgba(18, 18, 17, 0.03);
-  color: rgba(18, 18, 17, 0.35);
+  border: 1px solid rgba(var(--ink-rgb), 0.08);
+  background: rgba(var(--ink-rgb), 0.03);
+  color: rgba(var(--ink-rgb), 0.35);
   cursor: not-allowed;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   position: relative;
@@ -1641,13 +1373,13 @@ html, body {
   border: 1px solid var(--text-main);
   color: var(--bg-dark);
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(18, 18, 17, 0.14);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.42);
 }
 
 .submit-button.active:hover {
   background: var(--bg-dark);
   color: var(--text-main);
-  box-shadow: 0 14px 30px rgba(18, 18, 17, 0.16);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.48);
   transform: translateY(-2px);
 }
 

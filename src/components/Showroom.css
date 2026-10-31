@@ -52,7 +52,7 @@
 .showroom-card:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: 0 18px 40px rgba(18, 18, 17, 0.07);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.21);
 }
 
 .showroom-media {

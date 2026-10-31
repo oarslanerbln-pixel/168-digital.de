@@ -23,7 +23,7 @@
   color: var(--bg-dark);
   cursor: pointer;
   outline: none;
-  box-shadow: 0 6px 20px rgba(18, 18, 17, 0.16);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.48);
   transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium), transform 0.35s var(--ease-premium);
 }
 
