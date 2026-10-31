@@ -98,6 +98,25 @@
   measureReels();
   addEventListener('resize', measureReels);
 
+  /* ---------- Hero film: scroll scrubs the clip on desktop, loops on phones ---------- */
+  const film = d.querySelector('[data-scrub]');
+  const scrub = film && !reduce && matchMedia('(hover: hover) and (pointer: fine) and (min-width: 960px)').matches;
+  if (film && reduce) film.pause();
+  if (scrub) {
+    film.loop = false;
+    film.pause();
+    const hero = film.closest('.hero');
+    let last = -1;
+    const seek = () => {
+      if (!film.duration) return;
+      const r = hero.getBoundingClientRect();
+      const t = Math.min(1, Math.max(0, -r.top / (r.height * 0.85))) * (film.duration - 0.05);
+      if (Math.abs(t - last) > 0.03) { film.currentTime = t; last = t; }
+    };
+    film.addEventListener('loadedmetadata', seek);
+    addEventListener('scroll', () => requestAnimationFrame(seek), { passive: true });
+  }
+
   /* ---------- Hero light follows the pointer ---------- */
   const spot = d.querySelector('[data-spot]');
   if (spot && !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {

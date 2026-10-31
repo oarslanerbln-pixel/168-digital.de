@@ -275,7 +275,9 @@ function home(c, lang) {
     .join('');
   const heroImg = media('hero.webp');
   const heroVid = heroImg && media('hero.mp4');
-  const reelIds = ['diagnostics', 'brakes', 'tyres', 'oil', 'timingbelt'];
+  // With at least three photos the reel shows only photographed services; mixing photos and line art looks unfinished.
+  const photographed = ['inspection', 'diagnostics', 'brakes', 'oil', 'tyres', 'timingbelt', 'aircon', 'gearbox'].filter((id) => media(`reel-${id}.webp`));
+  const reelIds = photographed.length >= 3 ? photographed : ['diagnostics', 'brakes', 'tyres', 'oil', 'timingbelt'];
   const reel = reelIds.map((id, i) => {
     const s = svc(id);
     const img = media(`reel-${id}.webp`);
@@ -284,7 +286,7 @@ function home(c, lang) {
   const tick = c.home.ticker.map((w) => `<span>${e(w)}</span><i>✦</i>`).join('');
   return `
 <section class="hero${heroImg ? ' hero--media' : ''}" data-scroll="pass" data-spot>
-<div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video src="${heroVid}" poster="${heroImg}" autoplay muted loop playsinline preload="metadata"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__grid"></div><div class="hero__spot"></div></div>
+<div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video poster="${heroImg}" autoplay muted loop playsinline preload="auto" data-scrub>${media('hero-m.mp4') ? `<source src="/media/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">` : ''}<source src="${heroVid}" type="video/mp4"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__grid"></div><div class="hero__spot"></div></div>
 <div class="wrap hero__in">
 ${kicker(c.home.kicker, 'hero__kicker')}
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
