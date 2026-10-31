@@ -738,3 +738,7 @@ html.js .rv.is-in .ln > * { transform: none; }
 .pal-swatch { width: 26px; height: 14px; border-radius: 999px; background: linear-gradient(90deg, var(--sa) 50%, var(--sb) 50%); }
 .pal-swatch--0 { --sa: #e3141c; --sb: #2ee6a6; background: conic-gradient(#e3141c, #ff6a13, #ffcc00, #1f9d5c, #14a3ad, #2b7bff, #c2184b, #e3141c); }
 
+.l3-grid { display: grid; gap: 14px; margin-top: 40px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.l3-card { border: 1px solid var(--line); border-radius: var(--r); background: var(--bg-2); overflow: hidden; }
+.l3-stage { display: grid; place-items: center; aspect-ratio: 1; }
+.l3 { width: 88%; height: auto; }

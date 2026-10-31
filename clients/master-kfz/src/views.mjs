@@ -8,6 +8,7 @@ import { business, services, priceGroups, featuredPrices, brands, routes, servic
 import { icon, carSvg, gearSvg, logoMark, LOGO_VARIANTS } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
+import { LOGO_STYLES, styleSvg } from './logos-r3.mjs';
 
 export const e = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
@@ -496,7 +497,10 @@ function logoBoard() {
 <div class="lx-hero">${logoSetSvg(l)}${wordmark(l.wm)}</div>
 <div class="lx-mini"><span class="lx-light">${logoSetSvg(l)}</span><span class="lx-app">${logoSetSvg(l)}</span></div>
 <p class="lx-meta"><b>${String(i + 1).padStart(2, '0')}</b> ${e(l.name)}<span class="lx-pal">· ${e(LOGO_PALETTES[i % LOGO_PALETTES.length])}</span></p><p class="lx-note">${e(l.note)}</p>
-</article>`).join('')}</div></div></div></section>`;
+</article>`).join('')}</div></div></div></section>
+<section class="section section--tight"><div class="wrap">${kicker('Runde 3')}<h2 class="h2">${LOGO_STYLES.length} Stilrichtungen</h2>
+<p class="lead">Jede Karte ist ein eigener Charakter mit eigener Farbe und Typografie – erst den Stil wählen, dann die Form verfeinern. Schriften sind hier Systemschriften; die gewählte Richtung wird für den Druck in Pfade umgewandelt.</p>
+<div class="l3-grid">${LOGO_STYLES.map((st, i) => `<article class="l3-card"><div class="l3-stage" style="background:${st.bg}">${styleSvg(st)}</div><p class="lx-meta"><b>S${String(i + 1).padStart(2, '0')}</b> ${e(st.name)}</p><p class="lx-note">${e(st.note)}</p></article>`).join('')}</div></div></section>`;
 }
 
 /* ---------- Page registry ---------- */
