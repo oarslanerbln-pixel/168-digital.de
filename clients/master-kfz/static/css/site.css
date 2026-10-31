@@ -668,3 +668,42 @@ html.js .rv.is-in .ln > * { transform: none; }
   @view-transition { navigation: none; }
 }
 @media (max-width: 959px) { html.js .scan__sticky { padding-bottom: 84px; } }
+
+/* ---------- Logo round 2 (board only) ---------- */
+:root { --red-deep: #8f0b10; --graphite: #3a3a3c; }
+.lx-grid { display: grid; gap: 14px; margin-top: 40px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); }
+.lx-card { border: 1px solid var(--line); border-radius: var(--r); background: var(--bg-2); overflow: hidden; }
+.lx-hero { --tile: #000; display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 150px; padding: 24px; background: var(--tile); }
+.lx-hero .lx { width: 64px; height: 64px; flex: none; }
+.lx-mini { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--line); }
+.lx-mini > span { display: grid; place-items: center; padding: 14px; }
+.lx-mini .lx { width: 44px; height: 44px; }
+.lx-light { --tile: var(--paper); background: var(--tile); }
+.lx-app { --tile: #08080a; }
+.lx-app .lx { width: 56px; height: 56px; padding: 9px; border-radius: 14px; background: var(--tile); box-shadow: 0 0 0 1px var(--line-2); }
+.lx-meta { padding: 16px 18px 0; font-weight: 600; }
+.lx-meta b { font: 500 13px var(--mono); color: var(--red-2); margin-right: 6px; }
+.lx-note { padding: 4px 18px 18px; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+.lx .r { fill: var(--red); }
+.lx .rd { fill: var(--red-deep); }
+.lx .s { fill: var(--silver); }
+.lx .dim { fill: var(--silver); opacity: 0.18; }
+.lx .kf { fill: var(--tile); }
+.lx .sr, .lx .ss, .lx .cut { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.lx .sr { stroke: var(--red); }
+.lx .ss { stroke: var(--silver); }
+.lx .cut { stroke: var(--tile); stroke-linecap: butt; }
+.lx-light .s, .lx-light .dim { fill: var(--graphite); }
+.lx-light .ss { stroke: var(--graphite); }
+.wm { line-height: 1; white-space: nowrap; font-size: 20px; }
+.wm--italic { font-weight: 800; font-style: italic; }
+.wm--italic i, .wm--wide i, .wm--mono i { color: var(--red); margin-left: 0.25em; }
+.wm--wide { font-weight: 700; letter-spacing: 0.22em; font-size: 15px; }
+.wm--wide i { font-style: normal; }
+.wm--stack { display: grid; gap: 5px; }
+.wm--stack b { font-size: 22px; font-weight: 800; letter-spacing: 0.04em; }
+.wm--stack small { font: 500 9px var(--mono); letter-spacing: 0.3em; color: var(--red-2); }
+.wm--light span { font-weight: 300; letter-spacing: 0.02em; }
+.wm--light b { color: var(--red); margin-left: 0.2em; font-weight: 800; }
+.wm--mono { font: 600 17px var(--mono); letter-spacing: 0.04em; }
+.wm--mono i { font-style: normal; margin-left: 0; }
