@@ -132,11 +132,12 @@
     }, { passive: true });
   }
 
-  /* ---------- Vehicle check: keyframed camera tour with speed ramps ----------
-   * Scroll drives a virtual camera from stop to stop: it dwells on each
-   * hotspot (x-ray lens opens), then accelerates and decelerates to the next
-   * (easeInOutQuint plus a touch of motion blur at peak speed). Headlights
-   * ignite after the overview; the last stop pulls back with the car fully lit.
+  /* ---------- Vehicle check: cinematic camera tour ----------
+   * Scroll sets a *target* shot; a damped camera follows it every frame, so
+   * fast scrolling never produces a hard cut. Four zones instead of eight
+   * stops keep the moves few and readable: long dwell, slow ease in/out, the
+   * x-ray lens cross-fades in while the camera rests. Headlights ignite after
+   * the opening shot; the last shot pulls back to the fully lit car.
    */
   const tour = d.querySelector('[data-tour]');
   if (tour && !reduce) {
@@ -144,47 +145,54 @@
     const stage = tour.querySelector('.scan__stage');
     const lit = tour.querySelector('.scan__lit');
     const spots = [...tour.querySelectorAll('.hot')];
-    const order = JSON.parse(tour.dataset.tour);
-    const home = { x: 610, y: 215, z: 1, spot: -1 };
-    const zoom = () => (innerWidth < 760 ? 3.1 : 2.2);
-    const stops = () => [home, ...order.map((k) => ({ x: +spots[k].dataset.x, y: +spots[k].dataset.y, z: zoom(), spot: k })), { ...home, spot: 'all' }];
-    const ease = (t) => (t < 0.5 ? 16 * t ** 5 : 1 - (-2 * t + 2) ** 5 / 2);
+    const zones = JSON.parse(tour.dataset.tour);
+    const home = { x: 610, y: 215, z: 1, s: [] };
+    const shots = [home, ...zones, { ...home, all: true }];
+    const ease = (t) => (t < 0.5 ? 4 * t ** 3 : 1 - (-2 * t + 2) ** 3 / 2);
     const lerp = (a, b, t) => a + (b - a) * t;
+    const now = { x: home.x, y: home.y, z: 1 };
+    let target = { ...now }, shot = home, resting = true, last = performance.now(), raf = 0;
     tour.classList.add('is-tour');
-    const run = () => {
+
+    const aim = () => {
       const r = tour.getBoundingClientRect();
-      if (r.bottom < 0 || r.top > innerHeight) return;
-      const p = Math.min(1, Math.max(0, (-r.top / Math.max(1, r.height - innerHeight)) * 1.08));
-      const st = stops();
-      const seg = p * (st.length - 1);
-      const i = Math.min(st.length - 2, Math.floor(seg));
-      const f = seg - i;
-      const t = Math.min(1, Math.max(0, (f - 0.4) / 0.6));
-      const k = ease(t);
-      const a = st[i], b = st[i + 1];
-      const x = lerp(a.x, b.x, k), y = lerp(a.y, b.y, k), z = lerp(a.z, b.z, k);
+      const p = Math.min(1, Math.max(0, (-r.top / Math.max(1, r.height - innerHeight)) * 1.05));
+      const seg = p * (shots.length - 1);
+      const i = Math.min(shots.length - 2, Math.floor(seg));
+      const t = Math.min(1, Math.max(0, (seg - i - 0.45) / 0.55));
+      const k = ease(t), a = shots[i], b = shots[i + 1];
+      const m = innerWidth < 760 ? 1.35 : 1;
+      target = { x: lerp(a.x, b.x, k), y: lerp(a.y, b.y, k), z: lerp(a.z === 1 ? 1 : a.z * m, b.z === 1 ? 1 : b.z * m, k) };
+      shot = t < 0.5 ? a : b;
+      resting = t === 0 || t === 1;
+      tour.classList.toggle('lights', p > 0.05);
+      if (!raf) { last = performance.now(); raf = requestAnimationFrame(step); }
+    };
+    function step(ts) {
+      const dt = Math.min(0.05, (ts - last) / 1000); last = ts;
+      const f = 1 - Math.exp(-dt * 5.5);
+      now.x += (target.x - now.x) * f; now.y += (target.y - now.y) * f; now.z += (target.z - now.z) * f;
       const W = cam.offsetWidth, H = cam.offsetHeight;
-      const tx = stage.clientWidth / 2 - (x / 1200) * W * z - cam.offsetLeft;
-      const ty = stage.clientHeight / 2 - (y / 400) * H * z - cam.offsetTop;
-      const blur = t > 0 && t < 1 && (a.x !== b.x || a.z !== b.z) ? Math.sin(Math.PI * t) * 1.6 : 0;
-      cam.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${z.toFixed(3)})`;
-      cam.style.filter = blur > 0.25 ? `blur(${blur.toFixed(2)}px)` : '';
-      const active = t < 0.5 ? a : b;
-      const dwell = t === 0 || t === 1;
-      lit.style.clipPath = active.spot === 'all' && dwell ? 'circle(150% at 50% 50%)' : typeof active.spot === 'number' && dwell ? `circle(14% at ${(active.x / 12).toFixed(2)}% ${(active.y / 4).toFixed(2)}%)` : `circle(0% at ${(x / 12).toFixed(2)}% ${(y / 4).toFixed(2)}%)`;
-      tour.classList.toggle('lights', p > 0.06);
-      const visited = order.slice(0, Math.max(0, i + (t >= 0.5 ? 1 : 0)));
+      const tx = stage.clientWidth / 2 - (now.x / 1200) * W * now.z - cam.offsetLeft;
+      const ty = stage.clientHeight / 2 - (now.y / 400) * H * now.z - cam.offsetTop;
+      cam.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) scale(${now.z.toFixed(4)})`;
+      const settled = Math.abs(target.x - now.x) < 2 && Math.abs(target.z - now.z) < 0.01;
+      lit.style.clipPath = shot.all && settled ? 'circle(150% at 50% 50%)'
+        : shot.s.length && resting && settled ? `circle(${(24 / Math.max(1, now.z)).toFixed(1)}% at ${(now.x / 12).toFixed(2)}% ${(now.y / 4).toFixed(2)}%)`
+        : `circle(0% at ${(now.x / 12).toFixed(2)}% ${(now.y / 4).toFixed(2)}%)`;
+      const seen = new Set(shots.slice(0, shots.indexOf(shot) + 1).flatMap((z) => z.s));
       spots.forEach((h, n) => {
-        const cur = active.spot === n;
-        const on = active.spot === 'all' || cur || visited.includes(n);
+        const cur = shot.s.includes(n) && settled;
+        const on = shot.all || seen.has(n);
         h.classList.toggle('on', on);
         h.classList.toggle('cur', cur);
-        h.style.scale = String((on ? 1 : 0.5) / z);
+        h.style.scale = String((on ? 1 : 0.5) / now.z);
       });
-    };
-    addEventListener('scroll', () => requestAnimationFrame(run), { passive: true });
-    addEventListener('resize', run);
-    run();
+      raf = settled && Math.abs(target.y - now.y) < 1 ? 0 : requestAnimationFrame(step);
+    }
+    addEventListener('scroll', aim, { passive: true });
+    addEventListener('resize', aim);
+    aim();
   }
 
   /* ---------- Pointer spotlight on cards ---------- */

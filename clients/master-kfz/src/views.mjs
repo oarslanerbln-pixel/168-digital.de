@@ -327,7 +327,12 @@ ${cards(c, lang, services, ' cards--compact')}
 </div>
 </section>
 
-<section class="scan" data-scroll="sticky" data-tour="${e(JSON.stringify(['oil', 'timingbelt', 'brakes', 'gearbox', 'diagnostics', 'aircon', 'inspection', 'tyres'].map((id) => services.findIndex((x) => x.id === id))))}" aria-labelledby="scan-title">
+<section class="scan" data-scroll="sticky" data-tour="${e(JSON.stringify([
+  { x: 1028, y: 214, z: 2, s: ['oil', 'timingbelt'] },
+  { x: 895, y: 270, z: 2.1, s: ['brakes', 'gearbox'] },
+  { x: 615, y: 180, z: 1.6, s: ['diagnostics', 'aircon', 'inspection'] },
+  { x: 305, y: 278, z: 2.1, s: ['tyres'] },
+].map((zn) => ({ ...zn, s: zn.s.map((id) => services.findIndex((x) => x.id === id)) }))))}" aria-labelledby="scan-title">
 <div class="scan__sticky">
 <header class="wrap shead shead--center">${kicker(c.home.scanKicker)}<h2 class="h2" id="scan-title">${e(c.home.scanTitle)}</h2><p class="lead">${e(c.home.scanLead)}</p></header>
 <div class="scan__stage"><div class="scan__car">

@@ -322,9 +322,9 @@ html.js .statement .w.on { opacity: 1; }
 .scan__stage { width: 100%; overflow: hidden; padding-block: 56px; }
 .scan__car { position: relative; width: 220%; aspect-ratio: 3 / 1; transform: translateX(calc(var(--p) * -54.5%)); }
 .scan.is-tour .scan__car { width: min(1100px, 100%); margin-inline: auto; transform-origin: 0 0; will-change: transform; }
-.scan.is-tour .scan__lit { clip-path: circle(0% at 50% 50%); transition: clip-path 0.55s var(--ease-out); }
+.scan.is-tour .scan__lit { clip-path: circle(0% at 50% 50%); transition: clip-path 1.1s var(--ease-out); }
 .scan.is-tour .hot { transition: opacity 0.45s; }
-.scan.is-tour .hot__label { opacity: 0; transition: opacity 0.35s; }
+.scan.is-tour .hot__label { opacity: 0; transition: opacity 0.6s ease 0.15s; }
 .scan.is-tour .hot.cur .hot__label { opacity: 1; }
 .scan.is-tour .hot.cur .hot__dot { background: #fff; color: var(--red); box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.18), 0 0 30px rgba(255, 255, 255, 0.6); }
 .pc__beam { opacity: 0; transition: opacity 0.8s; }
@@ -344,6 +344,7 @@ html.js .statement .w.on { opacity: 1; }
 .hot:hover .hot__dot { background: var(--red-2); box-shadow: 0 0 0 9px rgba(227, 20, 28, 0.25), 0 0 32px var(--red-glow); }
 .hot:hover .hot__label { border-color: var(--red); }
 html.js .scan { --p: 0; height: 280vh; padding: 0; }
+html.js .scan.is-tour { height: 460vh; }
 html.js .scan__sticky { position: sticky; top: 0; height: 100vh; height: 100svh; padding-top: var(--hdr-h); }
 html.js .hot { opacity: 0; scale: 0.5; }
 html.js .hot.on { opacity: 1; scale: 1; }
