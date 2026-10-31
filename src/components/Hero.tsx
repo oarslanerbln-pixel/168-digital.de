@@ -1,8 +1,10 @@
+import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
 import { playClick, playTick } from '../utils/audio';
 import { ArrowRight, Check } from 'lucide-react';
 import { heroImage, srcSet } from '../data/homeContent';
+import { useMagnetic } from '../hooks/useMagnetic';
+import { INTRO_DONE_EVENT } from '../utils/introEvent';
 import './Hero.css';
 
 /* ════════════════════════════════════════════════════════════════
@@ -28,50 +30,140 @@ import './Hero.css';
    The showreel moved down next to the film services, where it proves
    the film half of the business instead of competing with the software
    half for the first impression.
+
+   MOTION. The headline rises word by word out of a mask, then the
+   shimmer starts; copy, buttons and photo follow in one short cascade.
+   It is all CSS keyed on `.hero-play`, and that class is only set when
+   the reveal can actually be seen:
+   - never in the prerendered HTML, so crawlers, no-JS visitors and the
+     first paint get the finished hero (it used to ship at opacity 0
+     until JavaScript ran);
+   - not on the first mount over that prerendered hero either — React
+     replaces identical markup, and replaying the intro there would make
+     visible text vanish and come back;
+   - yes when the intro overlay lifts (the "1618:intro-done" event from
+     App) and when a visitor navigates to the homepage in the app.
    ════════════════════════════════════════════════════════════════ */
 
-const ease = [0.16, 1, 0.3, 1] as const;
+let mountedBefore = false;
 
-/** Staggered reveal — one shared definition instead of per-element delays. */
-const rise = (delay: number) => ({
-  initial: { opacity: 0, y: 18 },
-  animate: { opacity: 1, y: 0 },
-  transition: { delay, duration: 0.85, ease },
-});
+/** See MOTION above: play unless this mount replaces the prerendered hero. */
+function shouldPlayOnMount(): boolean {
+  if (typeof document === 'undefined') return false;
+  const replacingPrerender = !mountedBefore && !!document.querySelector('.hero-section');
+  mountedBefore = true;
+  return !replacingPrerender;
+}
+
+type Segment = { text: string; shimmer?: 'blue' | 'gold' };
+
+/**
+ * Splits the headline into masked words for the reveal. Punctuation glued
+ * to a word ("getiren," in Turkish) stays in that word's mask, so it can
+ * never wrap onto a line of its own; the shimmer words keep their class.
+ */
+function headlineWords(parts: Segment[]): Segment[][] {
+  const words: Segment[][] = [];
+  let glue = false;
+  for (const part of parts) {
+    for (const token of part.text.split(/(\s+)/)) {
+      if (!token) continue;
+      if (/^\s+$/.test(token)) {
+        glue = false;
+        continue;
+      }
+      const segment = { text: token, shimmer: part.shimmer };
+      if (glue && words.length) words[words.length - 1].push(segment);
+      else words.push([segment]);
+      glue = true;
+    }
+  }
+  return words;
+}
 
 const trustKeys = ['hero_trust_1', 'hero_trust_2', 'hero_trust_3'];
 
 export default function Hero() {
   const { t } = useTranslation();
+  const [play, setPlay] = useState(shouldPlayOnMount);
+  const [replay, setReplay] = useState(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const ctaRef = useMagnetic<HTMLButtonElement>();
+  const whatsappRef = useMagnetic<HTMLAnchorElement>();
+
+  useEffect(() => {
+    const onIntroDone = () => {
+      setPlay(true);
+      setReplay((n) => n + 1);
+    };
+    window.addEventListener(INTRO_DONE_EVENT, onIntroDone);
+    return () => window.removeEventListener(INTRO_DONE_EVENT, onIntroDone);
+  }, []);
+
+  // A soft light that follows the mouse across the hero (CSS reads the
+  // two custom properties). Set directly on the element: no re-render.
+  const trackPointer = (e: PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse' || !sectionRef.current) return;
+    const r = sectionRef.current.getBoundingClientRect();
+    sectionRef.current.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    sectionRef.current.style.setProperty('--my', `${e.clientY - r.top}px`);
+  };
 
   const scrollToContact = () => {
     playClick();
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const words = headlineWords([
+    { text: t('hero_title_pre') },
+    { text: t('hero_title_word1'), shimmer: 'blue' },
+    { text: t('hero_title_mid') },
+    { text: t('hero_title_word2'), shimmer: 'gold' },
+    { text: t('hero_title_post') },
+  ]);
+
   return (
-    <section id="hero" className="hero-section">
-      <div className="hero-inner">
+    <section
+      id="hero"
+      ref={sectionRef}
+      className={`hero-section${play ? ' hero-play' : ''}`}
+      onPointerMove={trackPointer}
+    >
+      <div className="hero-inner" key={replay}>
         <div className="hero-main">
-          <motion.span className="hero-eyebrow" {...rise(0.05)}>
+          <span className="hero-eyebrow hero-rise" style={{ '--d': '0s' } as CSSProperties}>
             <span className="hero-eyebrow-dot" aria-hidden="true" />
             {t('hero_eyebrow')}
-          </motion.span>
+          </span>
 
-          <motion.h1 className="hero-headline" {...rise(0.12)}>
-            {t('hero_title_pre')}
-            <span className="hero-title-word hero-title-word-blue">{t('hero_title_word1')}</span>
-            {t('hero_title_mid')}
-            <span className="hero-title-word hero-title-word-gold">{t('hero_title_word2')}</span>
-            {t('hero_title_post')}
-          </motion.h1>
+          <h1 className="hero-headline">
+            {words.map((word, i) => (
+              <span key={i}>
+                {i > 0 && ' '}
+                <span className="hero-word-mask">
+                  <span className="hero-word" style={{ '--d': `${0.1 + i * 0.045}s` } as CSSProperties}>
+                    {word.map((seg, j) =>
+                      seg.shimmer ? (
+                        <span key={j} className={`hero-title-word hero-title-word-${seg.shimmer}`}>
+                          {seg.text}
+                        </span>
+                      ) : (
+                        seg.text
+                      )
+                    )}
+                  </span>
+                </span>
+              </span>
+            ))}
+          </h1>
 
-          <motion.p className="hero-subtitle" {...rise(0.22)}>
+          <p className="hero-subtitle hero-rise" style={{ '--d': '0.45s' } as CSSProperties}>
             {t('hero_subtitle')}
-          </motion.p>
+          </p>
 
-          <motion.div className="hero-actions" {...rise(0.32)}>
+          <div className="hero-actions hero-rise" style={{ '--d': '0.55s' } as CSSProperties}>
             <button
+              ref={ctaRef}
               type="button"
               className="hero-cta"
               onMouseEnter={playTick}
@@ -82,6 +174,7 @@ export default function Hero() {
             </button>
 
             <a
+              ref={whatsappRef}
               className="hero-cta-ghost"
               href="https://wa.me/491787277867"
               target="_blank"
@@ -91,24 +184,19 @@ export default function Hero() {
             >
               {t('hero_whatsapp', 'WhatsApp')}
             </a>
-          </motion.div>
+          </div>
 
-          <motion.ul className="hero-trust" {...rise(0.4)}>
+          <ul className="hero-trust hero-rise" style={{ '--d': '0.65s' } as CSSProperties}>
             {trustKeys.map((key) => (
               <li key={key}>
                 <Check size={15} strokeWidth={2.2} aria-hidden="true" />
                 {t(key)}
               </li>
             ))}
-          </motion.ul>
+          </ul>
         </div>
 
-        <motion.div
-          className="hero-visual"
-          initial={{ opacity: 0, y: 28 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.35, duration: 1, ease }}
-        >
+        <div className="hero-visual hero-unveil" style={{ '--d': '0.3s' } as CSSProperties}>
           {/* The likely LCP element: eager, high priority, and sized by
               srcset so a phone takes the 640 px file (about 24 kB). The
               copy beside it says what it shows, hence the empty alt. */}
@@ -125,7 +213,7 @@ export default function Hero() {
             {...{ fetchpriority: 'high' }}
             decoding="async"
           />
-        </motion.div>
+        </div>
       </div>
     </section>
   );

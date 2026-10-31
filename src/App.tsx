@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useRef, Suspense, lazy } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef, Suspense, lazy, type ComponentType } from 'react';
 import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
@@ -13,22 +13,70 @@ import LegalModal from './components/LegalModal';
 import CookieConsent from './components/CookieConsent';
 import WhatsAppWidget from './components/WhatsAppWidget';
 import { ReactLenis } from '@studio-freight/react-lenis';
+import { INTRO_DONE_EVENT } from './utils/introEvent';
+import RouteCurtain from './components/RouteCurtain';
 import { PREFIXED_LANGUAGES, getPathLanguage, hasLanguagePrefix, localizePath, stripLanguagePrefix, toLanguage } from './utils/localePath';
+
+/**
+ * A route-level chunk that can also be loaded ahead of rendering.
+ *
+ * main.tsx loads the current URL's page before React starts. The page is
+ * already on screen as prerendered HTML, and React replaces that markup
+ * on its first commit — if the page were still a pending lazy() chunk at
+ * that moment, the commit would show the Suspense fallback (nothing)
+ * and the visitor would see the page blink out until the chunk arrived.
+ * Once loaded, the page renders directly. Each mount picks its component
+ * once, so a page that started as the lazy wrapper is never swapped for
+ * the loaded one mid-life (that would remount it and lose its state).
+ */
+function lazyPage(load: () => Promise<{ default: ComponentType }>) {
+  let Loaded: ComponentType | null = null;
+  const loadAndKeep = () =>
+    load().then((module) => {
+      Loaded = module.default;
+      return module;
+    });
+  const Lazy = lazy(loadAndKeep);
+  function Page() {
+    const [Component] = useState<ComponentType>(() => Loaded ?? Lazy);
+    return <Component />;
+  }
+  Page.preload = loadAndKeep;
+  return Page;
+}
 
 // Route-level code splitting: each page ships its own chunk, so a visitor
 // landing directly on a service or legal page never downloads the Home
 // page's heavy hero/catalog code, and vice versa.
-const Home = lazy(() => import('./pages/Home'));
-const ServicePage = lazy(() => import('./components/ServicePage'));
-const LegalPage = lazy(() => import('./pages/LegalPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-const BlogPage = lazy(() => import('./pages/BlogPage'));
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const Home = lazyPage(() => import('./pages/Home'));
+const ServicePage = lazyPage(() => import('./components/ServicePage'));
+const LegalPage = lazyPage(() => import('./pages/LegalPage'));
+const ContactPage = lazyPage(() => import('./pages/ContactPage'));
+const BlogPage = lazyPage(() => import('./pages/BlogPage'));
+const BlogPostPage = lazyPage(() => import('./pages/BlogPostPage'));
 // Philosophy and the 50-concept design library used to render inside the
 // homepage; they now have their own routes and their own chunks.
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ConceptsPage = lazy(() => import('./pages/ConceptsPage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const AboutPage = lazyPage(() => import('./pages/AboutPage'));
+const ConceptsPage = lazyPage(() => import('./pages/ConceptsPage'));
+const NotFoundPage = lazyPage(() => import('./pages/NotFoundPage'));
+
+/** The page chunk for a URL, mirroring pageRoutes below. Used by main.tsx. */
+export function preloadRoute(pathname: string): Promise<unknown> {
+  const path = stripLanguagePrefix(pathname);
+  const exact: Record<string, { preload: () => Promise<unknown> }> = {
+    '/': Home,
+    '/impressum': LegalPage,
+    '/datenschutz': LegalPage,
+    '/contact': ContactPage,
+    '/about': AboutPage,
+    '/concepts': ConceptsPage,
+    '/blog': BlogPage,
+  };
+  const page =
+    exact[path] ??
+    (/^\/blog\/[^/]+$/.test(path) ? BlogPostPage : /^\/[^/]+$/.test(path) ? ServicePage : NotFoundPage);
+  return page.preload();
+}
 
 const INTRO_SEEN_KEY = '1618_intro_seen_at';
 const INTRO_TTL_MS = 24 * 60 * 60 * 1000; // show the intro at most once per 24h
@@ -131,6 +179,8 @@ function App() {
   const handlePreloaderComplete = () => {
     localStorage.setItem(INTRO_SEEN_KEY, String(Date.now()));
     setIsLoaded(true);
+    // The hero plays its entrance as the overlay lifts, not unseen beneath it.
+    window.dispatchEvent(new Event(INTRO_DONE_EVENT));
   };
 
   // Prevent scrolling while preloader is active
@@ -169,6 +219,7 @@ function App() {
   return (
     <ReactLenis root>
       <LanguageRouting />
+      <RouteCurtain path={neutralPath} />
       <AnimatePresence>
         {!isLoaded && <Preloader onComplete={handlePreloaderComplete} />}
       </AnimatePresence>
