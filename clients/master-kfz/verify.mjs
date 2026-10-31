@@ -39,6 +39,30 @@ async function walk(dir) {
   }
   return out;
 }
+/*
+ * Tag balance check. Browsers silently "repair" broken markup – an unclosed <a> once
+ * got re-opened around a section header and painted an empty box on the home page.
+ * Dependency-free on purpose: catches unclosed/stray tags and links inside links.
+ */
+const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'track', 'wbr']);
+function tagErrors(html) {
+  const out = [];
+  const stack = [];
+  const src = html.replace(/<!--[\s\S]*?-->/g, '').replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1>/g, '');
+  for (const [, close, name, selfClose] of src.matchAll(/<(\/?)([a-zA-Z][\w:-]*)\b(?:"[^"]*"|'[^']*'|[^'">])*?(\/?)>/g)) {
+    const t = name.toLowerCase();
+    if (!close) {
+      if (VOID.has(t) || selfClose) continue;
+      if (t === 'a' && stack.includes('a')) out.push('<a> inside <a>');
+      stack.push(t);
+    } else if (stack.at(-1) === t) stack.pop();
+    else if (stack.includes(t)) { out.push(`<${stack.at(-1)}> not closed before </${t}>`); while (stack.pop() !== t); }
+    else out.push(`stray </${t}>`);
+  }
+  if (stack.length) out.push(`unclosed at end: ${stack.join(' > ')}`);
+  return [...new Set(out)];
+}
+
 const exists = async (p) => stat(p).then(() => true, () => false);
 const files = await walk(dist);
 const titles = new Map();
@@ -49,6 +73,7 @@ for (const file of files) {
   const noindex = html.includes('name="robots" content="noindex"');
   const title = html.match(/<title>([^<]*)<\/title>/)?.[1];
   const desc = html.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  for (const m of tagErrors(html)) fail(`${rel}: markup – ${m}`);
   if (!title) fail(`${rel}: no <title>`);
   if (!desc) fail(`${rel}: no meta description`);
   if ((html.match(/<h1[\s>]/g) || []).length !== 1) fail(`${rel}: needs exactly one <h1>`);

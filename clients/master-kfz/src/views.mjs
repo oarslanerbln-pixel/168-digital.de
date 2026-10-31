@@ -200,7 +200,7 @@ function flowItems(c, lang) {
   return reelIds.map((id, i) => {
     const s = svc(id);
     const img = media(`reel-${id}.webp`);
-    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span>`;
+    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span></a>`;
   }).join('');
 }
 
@@ -410,7 +410,7 @@ ${steps(c, true)}
 <div class="wrap faq__grid"><h2 class="h2 rv">${e(c.service.faq)}</h2>${faqList(t.faq)}</div>
 </section>
 <section class="section section--tight">
-<div class="wrap"><h2 class="h3 rv">${e(c.service.related)}</h2>${cards(c, lang, related)}</div>
+<div class="wrap"><h2 class="h3 rv">${e(c.service.related)}</h2>${cards(c, lang, related, ' cards--trio')}</div>
 </section>
 ${finalCta(c, lang)}`;
 }
@@ -532,7 +532,7 @@ function logoBoard() {
 <div class="l3-grid">${LOGO_STYLES.map((st, i) => `<article class="l3-card"><div class="l3-stage" style="background:${st.bg}">${styleSvg(st)}</div><p class="lx-meta"><b>S${String(i + 1).padStart(2, '0')}</b> ${e(st.name)}</p><p class="lx-note">${e(st.note)}</p></article>`).join('')}</div></div></section>
 <section class="section section--tight"><div class="wrap">${kicker('Runde 4 · Auswahl verfeinert')}<h2 class="h2">${LOGO_R4.length} Varianten aus 27, 28 und S-Modellen</h2>
 <p class="lead">Ausgearbeitet aus deiner Vorauswahl: Wappen (27), Flügel (28) und die Stilrichtungen ohne S03–S05 – je mit Wortmarke, in Premium-Farbwelten (Gold, Marine, Heritage, Monochrom).</p>
-<div class="l3-grid">${LOGO_R4.map((l, i) => `<article class="l3-card"><div class="l3-stage" style="background:${l.bg}">${r4Svg(l, i)}</div><p class="lx-meta"><b>V${String(i + 1).padStart(2, '0')}</b> ${e(l.name)}<span class="lx-pal">· Basis ${e(l.base)}</span></p></article>`).join('')}</div></div></div></section>`;
+<div class="l3-grid">${LOGO_R4.map((l, i) => `<article class="l3-card"><div class="l3-stage" style="background:${l.bg}">${r4Svg(l, i)}</div><p class="lx-meta"><b>V${String(i + 1).padStart(2, '0')}</b> ${e(l.name)}<span class="lx-pal">· Basis ${e(l.base)}</span></p></article>`).join('')}</div></div></section>`;
 }
 
 /* Button style comparison for the client — noindex, not linked. */

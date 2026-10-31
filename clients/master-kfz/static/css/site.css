@@ -315,7 +315,11 @@ html.js .statement .w.on { opacity: 1; }
 .shead--center .lead { margin-inline: auto; }
 
 /* ---------- Service cards ---------- */
-.cards { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr)); }
+.cards { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
+/* Eight services: 1 → 2 → 4 columns, never 3 – an auto-fill grid left an empty cell at tablet widths. */
+@media (min-width: 600px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1080px) { .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .cards--trio { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 .card {
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; gap: 12px;
@@ -651,12 +655,7 @@ body { padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
 .lc__row { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); }
 .lc__tile { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 200px; padding: 28px; border-radius: var(--r); border: 1px solid var(--line); }
 .lc__tile--dark { background: #000; }
-.lc__tile--light { background: var(--paper); color: var(--ink); }
-.lc__tile--light .logo__bar, .lc__tile--light .logo__ring { fill: #3a3a3c; }
-.lc__tile--light .logo__frame { stroke: #3a3a3c; }
-.lc__tile--app .logo { width: 120px; height: 120px; padding: 26px; border-radius: 28px; background: #08080a; box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.8); }
 .lc__tile--wide { grid-column: 1 / -1; }
-.lc__mark { height: 54px; width: auto; }
 .lc__tile .brand__word { font-size: 26px; }
 
 /* ---------- Scroll reveal ---------- */
@@ -877,7 +876,6 @@ html.js .rv.is-in .ln > * { transform: none; }
 .ui-demo .mbar { position: relative; left: auto; right: auto; bottom: auto; display: grid; max-width: 380px; margin-top: 22px; view-transition-name: none; }
 .ui-demo h2 { font-size: 22px; margin: 0 0 6px; }
 .ui-demo > p { color: var(--text-2); margin-bottom: 20px; max-width: 70ch; }
-.ui-demo__light { margin-top: 22px; padding: 22px; border-radius: 16px; background: var(--paper); }
 
 /* E · Carbon: racing slant on a carbon-weave surface, chevrons instead of arrows */
 .ui-carbon .btn { border-radius: 0; min-height: 52px; padding: 0 26px; transform: skewX(-10deg); font-weight: 700; font-style: italic; text-transform: uppercase; letter-spacing: 0.06em; font-size: 15px; }
