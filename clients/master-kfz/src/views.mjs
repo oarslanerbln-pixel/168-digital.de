@@ -155,7 +155,7 @@ export function layout(p, allCopy) {
 ${p.noindex ? '<meta name="robots" content="noindex">' : `<link rel="canonical" href="${SITE_URL}${p.path}">`}
 ${p.noindex ? '' : alts.map(([l, href]) => `<link rel="alternate" hreflang="${l}" href="${SITE_URL}${href}">`).join('\n')}
 ${!p.noindex && p.alternates.de ? `<link rel="alternate" hreflang="x-default" href="${SITE_URL}${p.alternates.de}">` : ''}
-<meta name="theme-color" content="#060607">
+<meta name="theme-color" content="#0b0c10">
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
 <meta name="geo.region" content="${business.region}">

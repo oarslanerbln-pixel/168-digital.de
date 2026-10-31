@@ -97,8 +97,8 @@ await writeFile(
     short_name: 'Master KFZ',
     start_url: '/',
     display: 'standalone',
-    background_color: '#060607',
-    theme_color: '#060607',
+    background_color: '#0b0c10',
+    theme_color: '#0b0c10',
     icons: [
       { src: '/img/icon-192.png', sizes: '192x192', type: 'image/png' },
       { src: '/img/icon-512.png', sizes: '512x512', type: 'image/png' },
