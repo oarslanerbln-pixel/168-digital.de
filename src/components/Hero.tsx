@@ -209,6 +209,18 @@ export default function Hero() {
         </div>
 
         <div className="hero-visual hero-unveil" style={{ '--d': '0.3s' } as CSSProperties}>
+          {/* Two small status cards float over the photo — the kind of
+              message the systems we build send to an owner. They make the
+              still photo read as a live product; decorative, so hidden
+              from assistive tech (the copy beside it says the same). */}
+          <span className="hero-chip hero-chip-a" aria-hidden="true">
+            <span className="hero-chip-dot" />
+            {t('hero_chip_1')}
+          </span>
+          <span className="hero-chip hero-chip-b" aria-hidden="true">
+            <Check size={14} strokeWidth={2.4} />
+            {t('hero_chip_2')}
+          </span>
           {/* The likely LCP element: eager, high priority, and sized by
               srcset so a phone takes the 640 px file (about 24 kB). The
               copy beside it says what it shows, hence the empty alt. */}

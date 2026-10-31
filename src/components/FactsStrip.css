@@ -36,10 +36,8 @@
   line-height: 1;
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-  background: linear-gradient(180deg, var(--text-main) 30%, var(--accent-cyan));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* Solid on purpose: the hero shimmer stays the only text gradient. */
+  color: var(--text-main);
 }
 
 .fact-label {

@@ -1,21 +1,18 @@
 /* ═══════════════════════════════════════════════════════════════
-   SERVICES — dark bento grid with pointer light.
+   SERVICES — dark bento grid, quiet and editorial.
 
    Grid: six columns. Software tiles span three each (two per row),
    film tiles span two each (three per row), so both rows close flush
    without empty cells. minmax(0, …) tracks keep a long translated word
    from widening the page (CLAUDE.md rule 2).
 
-   --svc-hue is the per-service glow colour from services.ts; it only
-   tints the icon ring and the pointer light, never text, so the page
-   still reads as one accent with five quiet variations.
+   The tiles deliberately avoid the "game card" look: no spinning neon
+   border, no per-service colour glow, no tilt. Feedback is what a
+   well-made printed piece would do — the surface lifts a little, the
+   hairline border firms up, a thin accent rule draws in along the top
+   and a faint neutral light follows the pointer. One accent, used
+   sparingly, reads as premium; five competing glows read as a toy.
    ═══════════════════════════════════════════════════════════════ */
-
-@property --svc-angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
-}
 
 .svc-section {
   position: relative;
@@ -23,21 +20,6 @@
   max-width: 1240px;
   margin: 0 auto;
   padding: 120px 32px 112px;
-}
-
-/* A faint blueprint grid behind the tiles, fading out at the edges. */
-.svc-section::before {
-  content: '';
-  position: absolute;
-  inset: 40px 0 0;
-  z-index: -1;
-  background-image:
-    linear-gradient(rgba(var(--ink-rgb), 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--ink-rgb), 0.045) 1px, transparent 1px);
-  background-size: 56px 56px;
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%);
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%);
-  pointer-events: none;
 }
 
 .svc-heading {
@@ -69,56 +51,49 @@
   flex-direction: column;
   height: 100%;
   min-height: 300px;
-  padding: 32px 30px 28px;
+  padding: 34px 32px 30px;
   overflow: hidden;
-  border-radius: 22px;
+  border-radius: var(--radius-card);
   background:
-    radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--svc-hue) 14%, transparent), transparent 60%),
-    linear-gradient(180deg, rgba(var(--ink-rgb), 0.045), rgba(var(--ink-rgb), 0.015)),
+    radial-gradient(480px circle at var(--mx) var(--my), rgba(var(--ink-rgb), 0.05), transparent 60%),
+    linear-gradient(180deg, rgba(var(--ink-rgb), 0.035), rgba(var(--ink-rgb), 0.01)),
     var(--bg-raised);
   border: 1px solid var(--line);
   box-shadow: var(--shadow-card);
   color: var(--text-main);
   text-decoration: none;
-  transition: transform 0.5s var(--ease-premium), border-color 0.4s, box-shadow 0.5s var(--ease-premium);
+  transition: transform 0.6s var(--ease-premium), border-color 0.5s var(--ease-premium),
+    box-shadow 0.6s var(--ease-premium);
 }
 
 .svc-cell-software .svc-tile {
   min-height: 340px;
 }
 
-/* Rotating light along the border: a conic gradient masked to a 1px
-   ring. Invisible until hover, then it sweeps once around the tile. */
+/* A thin accent rule that draws in from the left along the top edge. */
 .svc-tile::before {
   content: '';
   position: absolute;
-  inset: 0;
-  z-index: -1;
-  padding: 1px;
-  border-radius: inherit;
-  background: conic-gradient(from var(--svc-angle), transparent 0deg, var(--accent-cyan) 60deg, var(--svc-hue) 110deg, transparent 170deg, transparent 360deg);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: 0;
-  transition: opacity 0.4s;
+  top: 0;
+  left: 32px;
+  right: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), rgba(var(--accent-cyan-rgb), 0));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s var(--ease-premium);
 }
 
 .svc-tile:hover,
 .svc-tile:focus-visible {
-  transform: translateY(-6px);
-  border-color: transparent;
-  box-shadow: var(--shadow-float), 0 0 60px -20px color-mix(in srgb, var(--svc-hue) 60%, transparent);
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-float);
 }
 
 .svc-tile:hover::before,
 .svc-tile:focus-visible::before {
-  opacity: 1;
-  animation: svc-sweep 2.4s linear infinite;
-}
-
-@keyframes svc-sweep {
-  to { --svc-angle: 360deg; }
+  transform: scaleX(1);
 }
 
 .svc-num {
@@ -135,20 +110,19 @@
 .svc-icon {
   display: grid;
   place-items: center;
-  width: 56px;
-  height: 56px;
-  margin-bottom: 28px;
-  border-radius: 16px;
-  color: var(--text-main);
-  background: color-mix(in srgb, var(--svc-hue) 14%, var(--bg-raised));
-  border: 1px solid color-mix(in srgb, var(--svc-hue) 40%, transparent);
-  box-shadow: 0 0 0 0 transparent;
-  transition: box-shadow 0.5s var(--ease-premium), transform 0.5s var(--ease-premium);
+  width: 52px;
+  height: 52px;
+  margin-bottom: 30px;
+  border-radius: 14px;
+  color: var(--accent-cyan);
+  background: rgba(var(--ink-rgb), 0.03);
+  border: 1px solid var(--line);
+  transition: border-color 0.5s var(--ease-premium), background 0.5s var(--ease-premium);
 }
 
 .svc-tile:hover .svc-icon {
-  transform: scale(1.06);
-  box-shadow: 0 0 34px -4px color-mix(in srgb, var(--svc-hue) 70%, transparent);
+  border-color: var(--accent-line);
+  background: var(--accent-soft);
 }
 
 .svc-title {
@@ -202,26 +176,15 @@
   transform: translate(3px, -3px);
 }
 
-/* Touch has no hover and no pointer to follow: show the lit state. */
-@media (hover: none) {
-  .svc-tile {
-    border-color: color-mix(in srgb, var(--svc-hue) 30%, var(--line));
-  }
-  .svc-icon {
-    box-shadow: 0 0 26px -8px color-mix(in srgb, var(--svc-hue) 70%, transparent);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .svc-tile,
+  .svc-tile::before,
   .svc-icon {
     transition: none;
   }
-  .svc-tile:hover {
+  .svc-tile:hover,
+  .svc-tile:focus-visible {
     transform: none;
-  }
-  .svc-tile:hover::before {
-    animation: none;
   }
 }
 

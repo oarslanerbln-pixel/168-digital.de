@@ -1,4 +1,4 @@
-import type { CSSProperties, PointerEvent } from 'react';
+import type { PointerEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -19,13 +19,14 @@ import './Services.css';
 
    Motion, in order of what it tells the visitor:
    - tiles rise in one after another as the grid enters the screen;
-   - a soft light follows the pointer across a tile and its border
-     lights up in the accent — "this is clickable" without a label;
-   - the icon ring glows on hover.
+   - on hover the tile lifts slightly, its hairline border firms up and
+     a thin accent rule draws in along the top — "this is clickable"
+     without a label, and without the neon of a game card;
+   - a faint neutral light follows the pointer across the surface.
    Everything is CSS-driven from two custom properties (--mx/--my) set
    on pointer move, so there is no animation loop and nothing runs while
-   the visitor is not touching a tile. Touch devices and reduced motion
-   get the static tile with the glow already on.
+   the visitor is not touching a tile. Reduced motion keeps the colour
+   change and drops the movement.
 
    Cards come straight from src/data/services.ts, so a service is added
    in one place and lands here, in the nav and on its own page.
@@ -54,7 +55,6 @@ function ServiceTile({ service, index }: { service: ServiceMeta; index: number }
         className="svc-tile"
         onPointerMove={trackPointer}
         onMouseEnter={playTick}
-        style={{ '--svc-hue': service.glowColor } as CSSProperties}
       >
         <span className="svc-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
         <span className="svc-icon" aria-hidden="true">
