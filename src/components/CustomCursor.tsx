@@ -68,13 +68,19 @@ export default function CustomCursor() {
 
   return (
     <>
+      {/*
+        ⚡ Bolt Performance Optimization:
+        Animating layout properties like width, height, or margin forces the browser
+        to trigger costly style recalculations and layout reflows on every single frame
+        (dozens of times per second as the mouse moves).
+        By switching to a fixed size and animating the CSS 'scale' transform instead,
+        the animation runs entirely on the GPU (composite-only), eliminating main-thread
+        blocking layout thrashing and making hover transitions significantly smoother.
+      */}
       <motion.div
         className="custom-cursor"
         animate={{
-          width: isHovered ? 32 : 6,
-          height: isHovered ? 32 : 6,
-          marginLeft: isHovered ? -16 : -3,
-          marginTop: isHovered ? -16 : -3,
+          scale: isHovered ? 1 : 0.1875,
           backgroundColor: isHovered ? 'rgba(255, 255, 255, 0)' : 'rgba(255, 255, 255, 1)',
           border: isHovered ? '1px solid rgba(255, 255, 255, 0.4)' : '0px solid rgba(255, 255, 255, 0)'
         }}
@@ -83,12 +89,17 @@ export default function CustomCursor() {
           position: 'fixed',
           top: 0,
           left: 0,
+          width: 32,
+          height: 32,
+          marginLeft: -16,
+          marginTop: -16,
           x: springX,
           y: springY,
           borderRadius: '50%',
           pointerEvents: 'none',
           zIndex: 99999,
-          mixBlendMode: 'difference'
+          mixBlendMode: 'difference',
+          transformOrigin: 'center center'
         }}
       />
     </>
