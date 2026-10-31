@@ -143,3 +143,53 @@ export function logoMark(cls = 'logo', variant = LOGO_VARIANT) {
 }
 
 export const LOGO_VARIANTS = Object.keys(MARKS);
+
+/*
+ * Premium car for the "Ein Blick. Jedes System." scan: shaded body, glass,
+ * detailed rims with brake discs, a soft floor reflection — and, on the lit
+ * layer only, an x-ray of the systems the hotspots point to (engine, timing
+ * belt, gearbox, exhaust, ECU, A/C), revealed as the scan beam passes.
+ */
+const BODY = 'M92 298C86 266 94 236 122 216C176 190 252 168 332 150C420 112 518 92 612 90C694 90 762 106 824 142C902 160 1010 172 1082 192C1114 200 1130 224 1126 254C1124 276 1114 292 1094 298L996 300A76 76 0 0 0 844 300L376 300A76 76 0 0 0 224 300Z';
+const GLASS = 'M360 166C444 128 532 110 608 108C676 108 732 122 790 150C700 160 520 166 360 166Z';
+function premiumWheel(cx, lit) {
+  const spokes = Array.from({ length: 10 }, (_, i) => {
+    const a = ((i * 36 - 90) * Math.PI) / 180, b = a + 0.12;
+    const p = (r, ang) => `${(cx + r * Math.cos(ang)).toFixed(1)} ${(300 + r * Math.sin(ang)).toFixed(1)}`;
+    return `M${p(11, a)}L${p(39, a)}L${p(39, b)}L${p(11, b)}Z`;
+  }).join('');
+  const holes = Array.from({ length: 12 }, (_, i) => { const a = (i * 30 * Math.PI) / 180; return `<circle cx="${(cx + 22 * Math.cos(a)).toFixed(1)}" cy="${(300 + 22 * Math.sin(a)).toFixed(1)}" r="1.6" fill="#0b0b0c"/>`; }).join('');
+  return `<g class="pc__wheel"><circle cx="${cx}" cy="300" r="60" fill="#0d0d0f" stroke="${lit ? 'rgba(255,255,255,.55)' : 'rgba(255,255,255,.14)'}" stroke-width="2"/>
+<circle cx="${cx}" cy="300" r="44" fill="url(#pcRim)"/><circle cx="${cx}" cy="300" r="31" fill="${lit ? '#6b6f75' : '#2a2b2e'}"/>${lit ? holes : ''}
+<path d="M${cx + 10} 266A34 34 0 0 1 ${cx + 33} 290" stroke="#e3141c" stroke-width="9" fill="none" stroke-linecap="round"/>
+<path d="${spokes}" fill="${lit ? '#d9dce0' : '#3a3b3f'}"/><circle cx="${cx}" cy="300" r="9" fill="${lit ? '#e8eaed' : '#3a3b3f'}"/></g>`;
+}
+const XRAY = `<g class="pc__xray" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<rect x="958" y="196" width="104" height="58" rx="6" stroke="#ff3138"/>${[978, 1002, 1026, 1050].map((x) => `<circle cx="${x - 4}" cy="214" r="7" stroke="#ff3138"/>`).join('')}
+<path d="M968 262H1052L1046 280H974Z" stroke="#ffd166"/>
+<circle cx="1086" cy="214" r="9" stroke="#fff"/><circle cx="1090" cy="252" r="11" stroke="#fff"/><path d="M1095 214L1099 252M1077 214L1081 252" stroke="#fff"/>
+<rect x="1104" y="222" width="10" height="44" rx="2" stroke="#7dd3fc"/><path d="M1104 236C980 230 860 160 780 150" stroke="#7dd3fc" stroke-dasharray="4 4"/>
+<path d="M958 236H900V270H958" stroke="#ff3138"/><path d="M900 252L880 254C780 262 600 270 420 276L320 282" stroke="#c7c7cc"/>
+<path d="M1000 282C900 292 600 294 330 294C250 294 190 292 150 286" stroke="#8e9398" stroke-dasharray="2 5"/><ellipse cx="198" cy="288" rx="26" ry="7" stroke="#8e9398"/>
+<rect x="688" y="180" width="30" height="22" rx="3" stroke="#22d3ee"/><path d="M703 180V166M688 191H676M718 191H730M703 202V214" stroke="#22d3ee"/>
+<rect x="1018" y="168" width="26" height="18" rx="2" stroke="#a3e635"/></g>`;
+
+export function carPremium(cls, lit = false) {
+  return `<svg class="${cls}" viewBox="0 0 1200 400" aria-hidden="true" focusable="false">
+<defs><linearGradient id="pcBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${lit ? '#3b3d42' : '#1c1d20'}"/><stop offset=".55" stop-color="${lit ? '#16171a' : '#0d0d0f'}"/><stop offset="1" stop-color="#050506"/></linearGradient>
+<linearGradient id="pcGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${lit ? '#5d6f86' : '#1d2129'}"/><stop offset=".6" stop-color="#0b0d12"/><stop offset="1" stop-color="#20242c"/></linearGradient>
+<radialGradient id="pcRim" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="${lit ? '#f2f3f5' : '#3d3e42'}"/><stop offset="1" stop-color="${lit ? '#6b6f75' : '#141416'}"/></radialGradient>
+<linearGradient id="pcFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<mask id="pcMask"><rect x="0" y="362" width="1200" height="120" fill="url(#pcFade)"/></mask></defs>
+<ellipse cx="610" cy="364" rx="520" ry="14" fill="${lit ? 'rgba(227,20,28,.35)' : 'rgba(0,0,0,.6)'}"/>
+<g mask="url(#pcMask)"><g transform="translate(0 724) scale(1 -1)"><path d="${BODY}" fill="url(#pcBody)"/></g></g>
+<path d="${BODY}" fill="url(#pcBody)" stroke="${lit ? 'rgba(255,255,255,.75)' : 'rgba(255,255,255,.16)'}" stroke-width="2"/>
+<path d="M132 232C380 214 780 206 1104 214" stroke="${lit ? 'rgba(255,255,255,.45)' : 'rgba(255,255,255,.08)'}" stroke-width="2" fill="none"/>
+<path d="M340 150C450 118 560 104 640 104" stroke="rgba(255,255,255,${lit ? '.55' : '.12'})" stroke-width="3" fill="none" stroke-linecap="round"/>
+<path d="${GLASS}" fill="url(#pcGlass)" stroke="${lit ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.1)'}" stroke-width="1.5"/>
+<path d="M604 108L592 164M592 164C590 210 590 256 594 298M806 156C818 200 822 250 816 298" stroke="rgba(255,255,255,${lit ? '.35' : '.07'})" stroke-width="1.5" fill="none"/>
+${lit ? XRAY : ''}
+<path d="M1050 196C1080 200 1104 210 1116 226C1090 224 1066 216 1050 196Z" fill="${lit ? '#fff' : '#3a3b3f'}"/>
+<path d="M120 218C140 206 160 198 182 192C172 206 150 214 120 218Z" fill="#e3141c" opacity="${lit ? 1 : 0.5}"/>
+${premiumWheel(300, lit)}${premiumWheel(920, lit)}</svg>`;
+}

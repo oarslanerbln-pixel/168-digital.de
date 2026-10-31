@@ -49,14 +49,14 @@ export const mapsUrl =
  * TODO(confirm): prices incl. VAT, and that diagnostics are offered.
  */
 export const services = [
-  { id: 'inspection', slug: { de: 'inspektion', tr: 'bakim', en: 'inspection' }, price: 129, from: true, icon: 'clipboard', hotspot: [600, 236] },
+  { id: 'inspection', slug: { de: 'inspektion', tr: 'bakim', en: 'inspection' }, price: 129, from: true, icon: 'clipboard', hotspot: [480, 236] },
   { id: 'oil', slug: { de: 'oelwechsel', tr: 'yag-degisimi', en: 'oil-change' }, price: 64, from: true, icon: 'drop', hotspot: [968, 180] },
   { id: 'brakes', slug: { de: 'bremsen', tr: 'fren', en: 'brakes' }, price: 69, from: true, icon: 'disc', hotspot: [920, 300] },
   { id: 'tyres', slug: { de: 'reifenwechsel', tr: 'lastik-degisimi', en: 'tyre-change' }, price: 19, from: true, icon: 'tyre', hotspot: [300, 300] },
   { id: 'aircon', slug: { de: 'klimaservice', tr: 'klima-bakimi', en: 'air-conditioning' }, price: 89, from: false, icon: 'snow', hotspot: [760, 130] },
   { id: 'timingbelt', slug: { de: 'zahnriemen', tr: 'triger-kayisi', en: 'timing-belt' }, price: 399, from: true, icon: 'belt', hotspot: [1096, 252] },
-  { id: 'gearbox', slug: { de: 'getriebeoel', tr: 'sanziman-yagi', en: 'transmission-oil' }, price: 199, from: true, icon: 'shift', hotspot: [470, 280] },
-  { id: 'diagnostics', slug: { de: 'diagnose', tr: 'ariza-tespiti', en: 'diagnostics' }, price: null, from: false, icon: 'pulse', hotspot: [520, 140] },
+  { id: 'gearbox', slug: { de: 'getriebeoel', tr: 'sanziman-yagi', en: 'transmission-oil' }, price: 199, from: true, icon: 'shift', hotspot: [880, 262] },
+  { id: 'diagnostics', slug: { de: 'diagnose', tr: 'ariza-tespiti', en: 'diagnostics' }, price: null, from: false, icon: 'pulse', hotspot: [703, 191] },
 ];
 
 /* Price list. `service` links a row to its service page. */

@@ -6,7 +6,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl, UI_STYLE } from './data.mjs';
-import { icon, carSvg, gearSvg, logoMark } from './svg.mjs';
+import { icon, carSvg, carPremium, gearSvg, logoMark } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
 import { LOGO_STYLES, styleSvg } from './logos-r3.mjs';
@@ -286,7 +286,7 @@ function home(c, lang) {
   const tick = c.home.ticker.map((w) => `<span>${e(w)}</span><i>✦</i>`).join('');
   return `
 <section class="hero${heroImg ? ' hero--media' : ''}" data-scroll="pass" data-spot>
-<div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video poster="${heroImg}" autoplay muted loop playsinline preload="auto" data-scrub>${media('hero-m.mp4') ? `<source src="/media/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">` : ''}<source src="${heroVid}" type="video/mp4"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__grid"></div><div class="hero__spot"></div></div>
+<div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video poster="${heroImg}" autoplay muted loop playsinline preload="auto" data-scrub>${media('hero-m.mp4') ? `<source src="/media/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">` : ''}<source src="${heroVid}" type="video/mp4"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__spot"></div></div>
 <div class="wrap hero__in">
 ${kicker(c.home.kicker, 'hero__kicker')}
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
@@ -326,8 +326,8 @@ ${cards(c, lang, services, ' cards--compact')}
 <div class="scan__sticky">
 <header class="wrap shead shead--center">${kicker(c.home.scanKicker)}<h2 class="h2" id="scan-title">${e(c.home.scanTitle)}</h2><p class="lead">${e(c.home.scanLead)}</p></header>
 <div class="scan__stage"><div class="scan__car">
-${carSvg('car car--base')}
-<div class="scan__lit" aria-hidden="true">${carSvg('car car--lit')}</div>
+${carPremium('pc pc--base')}
+<div class="scan__lit" aria-hidden="true">${carPremium('pc pc--lit', true)}</div>
 <i class="scan__beam" aria-hidden="true"></i>
 ${scanSpots}
 </div></div>
@@ -340,7 +340,7 @@ ${scanSpots}
 <div><p class="lead rv" style="--i:2">${e(c.home.pricesLead)}</p><a class="link rv" style="--i:3" href="${routes.prices[lang]}">${e(c.cta.allPrices)}${icon('arrow')}</a></div></header>
 <div class="tiles">${featuredPrices.map((id, i) => {
     const s = svc(id);
-    return `<a class="tile rv" style="--i:${i}" href="${servicePath(lang, s)}"><span class="tile__name">${e(c.services[id].name)}</span><span class="tile__price">${priceBig(lang, s.price, s.from)}</span><span class="tile__note">${e(c.services[id].short)}</span>${icon('arrow')}</a>`;
+    return `<a class="tile rv" style="--i:${i}" href="${servicePath(lang, s)}"><span class="tile__name">${e(c.services[id].name)}</span><span class="tile__price" data-count="${s.price}">${priceBig(lang, s.price, s.from)}</span><span class="tile__note">${e(c.services[id].short)}</span>${icon('arrow')}</a>`;
   }).join('')}</div>
 </div>
 </section>

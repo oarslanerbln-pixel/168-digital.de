@@ -44,11 +44,26 @@
     matchMedia('(min-width: 960px)').addEventListener('change', (e) => { if (e.matches && isOpen()) setMenu(false, false); });
   }
 
+  /* ---------- Price count-up (runs once, when the tile is revealed) ---------- */
+  function countUp(el) {
+    const b = el.querySelector('[data-count] b');
+    if (!b) return;
+    const to = +el.querySelector('[data-count]').dataset.count;
+    const t0 = performance.now();
+    const step = (t) => {
+      const k = Math.min(1, (t - t0) / 1300);
+      b.textContent = Math.round(to * (1 - Math.pow(1 - k, 3)));
+      if (k < 1) requestAnimationFrame(step);
+    };
+    b.textContent = '0';
+    setTimeout(() => requestAnimationFrame(step), 350);
+  }
+
   /* ---------- Reveal on scroll ---------- */
   const reveal = d.querySelectorAll('.rv');
   if ('IntersectionObserver' in window && !reduce) {
     const io = new IntersectionObserver((entries) => {
-      for (const en of entries) if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      for (const en of entries) if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); countUp(en.target); }
     }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
     reveal.forEach((el) => io.observe(el));
   } else reveal.forEach((el) => el.classList.add('is-in'));
