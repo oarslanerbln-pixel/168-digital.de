@@ -5,7 +5,7 @@
  */
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl } from './data.mjs';
+import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl, UI_STYLE } from './data.mjs';
 import { icon, carSvg, gearSvg, logoMark } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
@@ -178,7 +178,7 @@ ${!p.noindex && p.alternates.de ? `<link rel="alternate" hreflang="x-default" hr
 <script src="/js/site.js?v=${assetVersion}" defer></script>
 ${p.schema ? `<script type="application/ld+json">${JSON.stringify(p.schema).replace(/</g, '\\u003c')}</script>` : ''}
 </head>
-<body class="${p.bodyClass ?? ''}">
+<body class="ui-${p.ui ?? UI_STYLE} ${p.bodyClass ?? ''}">
 <a class="skip" href="#main">${e(c.nav.skip)}</a>
 ${p.intro ? intro() : ''}
 ${header(p)}
@@ -525,6 +525,23 @@ function logoBoard() {
 <div class="l3-grid">${LOGO_R4.map((l, i) => `<article class="l3-card"><div class="l3-stage" style="background:${l.bg}">${r4Svg(l, i)}</div><p class="lx-meta"><b>V${String(i + 1).padStart(2, '0')}</b> ${e(l.name)}<span class="lx-pal">· Basis ${e(l.base)}</span></p></article>`).join('')}</div></div></div></section>`;
 }
 
+/* Button style comparison for the client — noindex, not linked. */
+function uiBoard(c, p) {
+  const styles = [
+    ['pill', 'Aktuell · Pille', 'Runde Pillen mit rotem Schein – freundlich, modern.'],
+    ['precision', 'A · Präzision', 'Scharfe Kanten, Versalien in Monospace, Pfeil in eigener Zelle – technisch, wie ein Messgerät.'],
+    ['glass', 'B · Glas', 'Weiche Radien, mattiertes Glas, feine Lichtkante – Apple-artig, sehr hochwertig.'],
+    ['racing', 'C · Racing', 'Schräge Formen, kursive Versalien, Rennstreifen im Hauptbutton – Motorsport-Charakter.'],
+    ['swipe', 'D · Swipe', 'Konturbuttons, die sich beim Hover rot füllen, Pfeil im weißen Kreis – lebendig, interaktiv.'],
+  ];
+  const demo = ([k, t, d]) => `<section class="ui-demo ui-${k}"><h2>${t}</h2><p>${d}</p>
+<div class="ui-demo__bar"><span class="brand">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></span><div class="hdr__end">${langSwitch(p)}<a class="btn btn--red btn--sm" href="#"><span>${e(c.cta.book)}</span></a></div></div>
+<div class="ui-demo__row">${btn('#', c.cta.book)}${btn('#', c.cta.whatsapp, 'ghost', 'chat')}${btn('#', c.cta.route, 'light', 'pin')}<a class="link" href="#">${e(c.cta.allServices)}${icon('arrow')}</a></div>
+<nav class="mbar" aria-label="Demo"><a href="#" class="mbar__btn">${icon('phone')}<span>${e(c.cta.call)}</span></a><a href="#" class="mbar__btn">${icon('chat')}<span>WhatsApp</span></a><a href="#" class="mbar__btn mbar__btn--red">${icon('calendar')}<span>${e(c.nav.booking)}</span></a></nav></section>`;
+  return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Button-Stile</h1><p class="lead">Vier neue Richtungen für alle Buttons, die Sprachwahl und die mobile Leiste – das Hamburger-Menü bleibt. Mit der Maus über die Buttons fahren, um die Animation zu sehen.</p></div></section>
+<section class="section section--tight"><div class="wrap">${styles.map(demo).join('')}</div></section>`;
+}
+
 /* ---------- Page registry ---------- */
 
 const alternatesFor = (key) => ({ ...routes[key] });
@@ -576,6 +593,10 @@ export function buildPages(copy, formCfg, legalHtml) {
   pages.push({
     lang: 'de', c: de, path: '/404.html', file: '404.html', alternates: {}, noindex: true, nav: null,
     title: de.meta.notFound.title, description: de.meta.notFound.description, body: notFound(de, 'de'),
+  });
+  pages.push({
+    lang: 'de', c: de, path: '/ui-stile/', alternates: {}, noindex: true, nav: null,
+    title: 'Button-Stile | Master KFZ', description: 'Interne Entwurfsseite.', body: uiBoard(de, { c: de, lang: 'de', alternates: {} }),
   });
   pages.push({
     lang: 'de', c: de, path: '/logo-konzepte/', alternates: {}, noindex: true, nav: null,

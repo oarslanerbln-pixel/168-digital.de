@@ -789,3 +789,86 @@ html.js .reel__bar i { display: block; height: 100%; background: var(--red); box
   html.js .reel__viewport { overflow-x: auto; }
   html.js .reel__track { transform: none; }
 }
+
+/* ---------- Button style directions (body.ui-*) ----------
+ * One markup, four treatments; the active one is UI_STYLE in src/data.mjs.
+ * pill = current. The burger menu is intentionally shared by all styles.
+ */
+/* A · Präzision: sharp corners, mono caps, arrow in its own cell */
+.ui-precision .btn { border-radius: 2px; min-height: 50px; padding: 0 0 0 22px; gap: 18px; font: 600 12px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; box-shadow: none; }
+.ui-precision .btn .i { width: 50px; height: 50px; padding: 16px; margin-left: auto; border-left: 1px solid rgba(255, 255, 255, 0.25); }
+.ui-precision .btn:hover .i { transform: none; background: rgba(0, 0, 0, 0.18); }
+.ui-precision .btn:not(:has(.i)) { padding-right: 22px; }
+.ui-precision .btn--ghost { background: transparent; border-color: rgba(255, 255, 255, 0.35); }
+.ui-precision .btn--ghost .i, .ui-precision .btn--light .i { border-left-color: currentColor; opacity: 0.6; }
+.ui-precision .btn--sm { min-height: 38px; font-size: 11px; padding: 0 16px; }
+.ui-precision .lang { border: 0; padding: 0; gap: 2px; }
+.ui-precision .lang a { border-radius: 0; min-width: 0; padding: 6px 8px; border-bottom: 2px solid transparent; }
+.ui-precision .lang a[aria-current] { background: none; color: var(--text); border-bottom-color: var(--red); }
+.ui-precision .mbar { border-radius: 4px; }
+.ui-precision .mbar__btn { border-radius: 2px; font: 600 11px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; }
+.ui-precision .link { font: 600 12px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; }
+.ui-precision .card__arrow { border-radius: 2px; }
+
+/* B · Glas: soft radius, frosted surfaces, light edge highlight */
+.ui-glass .btn { border-radius: 16px; min-height: 54px; padding: 0 26px; -webkit-backdrop-filter: blur(16px) saturate(160%); backdrop-filter: blur(16px) saturate(160%); }
+.ui-glass .btn--red { background: rgba(227, 20, 28, 0.86); border-color: rgba(255, 255, 255, 0.28); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 18px 40px -16px var(--red-glow); }
+.ui-glass .btn--ghost { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.22); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18); }
+.ui-glass .btn--light { background: rgba(255, 255, 255, 0.9); box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.1); }
+.ui-glass .btn:hover { transform: translateY(-2px); }
+.ui-glass .btn--sm { border-radius: 12px; min-height: 40px; }
+.ui-glass .lang { border-radius: 14px; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.14); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); }
+.ui-glass .lang a { border-radius: 10px; }
+.ui-glass .lang a[aria-current] { background: rgba(255, 255, 255, 0.92); }
+.ui-glass .mbar { border-radius: 24px; background: rgba(30, 30, 34, 0.55); }
+.ui-glass .mbar__btn { border-radius: 18px; }
+.ui-glass .mbar__btn--red { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35); }
+.ui-glass .card__arrow { border-radius: 12px; }
+
+/* C · Racing: slanted shapes, italic caps, a stripe on the primary */
+.ui-racing .btn { border-radius: 0; min-height: 52px; padding: 0 28px; transform: skewX(-12deg); font-weight: 800; font-style: italic; text-transform: uppercase; letter-spacing: 0.04em; }
+.ui-racing .btn > * { transform: skewX(12deg); }
+.ui-racing .btn:active { transform: skewX(-12deg) scale(0.97); }
+.ui-racing .btn--red { padding-right: 44px; background: linear-gradient(100deg, var(--red) 0 calc(100% - 26px), #fff calc(100% - 26px) calc(100% - 20px), var(--red) calc(100% - 20px)); box-shadow: 6px 6px 0 rgba(227, 20, 28, 0.25); }
+.ui-racing .btn--sm.btn--red { padding-right: 36px; }
+.ui-racing .btn--red:hover { box-shadow: 9px 9px 0 rgba(227, 20, 28, 0.3); }
+.ui-racing .btn--ghost { border: 2px solid rgba(255, 255, 255, 0.5); background: transparent; }
+.ui-racing .btn--sm { min-height: 38px; padding: 0 18px; }
+.ui-racing .lang { border: 0; padding: 0; gap: 4px; }
+.ui-racing .lang a { border-radius: 0; transform: skewX(-12deg); background: rgba(255, 255, 255, 0.06); font-style: italic; }
+.ui-racing .lang a[aria-current] { background: var(--red); color: #fff; }
+.ui-racing .mbar { border-radius: 0; }
+.ui-racing .mbar__btn { border-radius: 0; font-style: italic; text-transform: uppercase; font-weight: 800; }
+.ui-racing .mbar__btn--red { transform: skewX(-10deg); }
+.ui-racing .mbar__btn--red > * { transform: skewX(10deg); }
+.ui-racing .link { font-style: italic; text-transform: uppercase; font-weight: 800; letter-spacing: 0.04em; }
+.ui-racing .card__arrow { border-radius: 0; transform: skewX(-12deg); }
+
+/* D · Swipe: outlined until hover, then red fills in from the left */
+.ui-swipe .btn { position: relative; overflow: hidden; isolation: isolate; border-radius: 999px; min-height: 54px; padding: 0 8px 0 26px; gap: 16px; background: transparent; border: 1.5px solid var(--red); color: var(--text); box-shadow: none; }
+.ui-swipe .btn::before { content: ''; position: absolute; inset: 0; z-index: -1; background: var(--red); transform: scaleX(0); transform-origin: left; transition: transform 0.55s var(--ease-out); }
+.ui-swipe .btn:hover::before, .ui-swipe .btn--red::before { transform: scaleX(1); }
+.ui-swipe .btn--red:hover::before { transform-origin: right; transform: scaleX(0.04); }
+.ui-swipe .btn .i { width: 38px; height: 38px; padding: 10px; border-radius: 50%; background: #fff; color: var(--ink); transition: transform 0.45s var(--ease-out); }
+.ui-swipe .btn:hover .i { transform: rotate(-45deg); }
+.ui-swipe .btn:not(:has(.i)) { padding-right: 26px; }
+.ui-swipe .btn--ghost { border-color: rgba(255, 255, 255, 0.4); }
+.ui-swipe .btn--light { border-color: var(--paper); color: var(--paper); }
+.ui-swipe .btn--light::before { background: var(--paper); }
+.ui-swipe .btn--light:hover { color: var(--ink); }
+.ui-swipe .btn--sm { min-height: 40px; padding: 0 18px; }
+.ui-swipe .lang { border-color: rgba(255, 255, 255, 0.25); }
+.ui-swipe .lang a[aria-current] { background: var(--red); color: #fff; }
+.ui-swipe .mbar__btn--red { border-radius: 999px; }
+.ui-swipe .link { background: linear-gradient(var(--red), var(--red)) left bottom / 0 1.5px no-repeat; padding-bottom: 3px; transition: background-size 0.45s var(--ease-out); color: var(--text); }
+.ui-swipe .link:hover { background-size: 100% 1.5px; }
+
+/* Comparison board */
+.ui-demo { border: 1px solid var(--line); border-radius: var(--r); padding: clamp(22px, 3vw, 36px); background: var(--bg-2); }
+.ui-demo + .ui-demo { margin-top: 18px; }
+.ui-demo__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.ui-demo__row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 22px; }
+.ui-demo .mbar { position: relative; left: auto; right: auto; bottom: auto; display: grid; max-width: 380px; margin-top: 22px; view-transition-name: none; }
+.ui-demo h2 { font-size: 22px; margin: 0 0 6px; }
+.ui-demo > p { color: var(--text-2); margin-bottom: 20px; max-width: 70ch; }
+.ui-demo__light { margin-top: 22px; padding: 22px; border-radius: 16px; background: var(--paper); }

@@ -8,6 +8,8 @@
 export const SITE_URL = 'https://www.kfz-master.com';
 export const LANGS = ['de', 'tr', 'en'];
 export const DEFAULT_LANG = 'de';
+/* Button style: 'pill' (current) · 'precision' · 'glass' · 'racing' · 'swipe' – see /ui-stile/. */
+export const UI_STYLE = 'pill';
 
 export const business = {
   name: 'Master KFZ Werkstatt',

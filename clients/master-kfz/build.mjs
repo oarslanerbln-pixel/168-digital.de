@@ -60,7 +60,7 @@ ${indexable
 `;
 await writeFile(join(dist, 'sitemap.xml'), sitemap);
 
-await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /logo-konzepte/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /logo-konzepte/\nDisallow: /ui-stile/\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
 
 /* llms.txt — a plain-text fact sheet for AI answer engines (GEO). */
 const hours = business.hours.map((h) => `${h.days.join(', ')}: ${h.opens}–${h.closes}`).join('; ');
