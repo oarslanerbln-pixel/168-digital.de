@@ -132,6 +132,61 @@
     }, { passive: true });
   }
 
+  /* ---------- Vehicle check: keyframed camera tour with speed ramps ----------
+   * Scroll drives a virtual camera from stop to stop: it dwells on each
+   * hotspot (x-ray lens opens), then accelerates and decelerates to the next
+   * (easeInOutQuint plus a touch of motion blur at peak speed). Headlights
+   * ignite after the overview; the last stop pulls back with the car fully lit.
+   */
+  const tour = d.querySelector('[data-tour]');
+  if (tour && !reduce) {
+    const cam = tour.querySelector('.scan__car');
+    const stage = tour.querySelector('.scan__stage');
+    const lit = tour.querySelector('.scan__lit');
+    const spots = [...tour.querySelectorAll('.hot')];
+    const order = JSON.parse(tour.dataset.tour);
+    const home = { x: 610, y: 215, z: 1, spot: -1 };
+    const zoom = () => (innerWidth < 760 ? 3.1 : 2.2);
+    const stops = () => [home, ...order.map((k) => ({ x: +spots[k].dataset.x, y: +spots[k].dataset.y, z: zoom(), spot: k })), { ...home, spot: 'all' }];
+    const ease = (t) => (t < 0.5 ? 16 * t ** 5 : 1 - (-2 * t + 2) ** 5 / 2);
+    const lerp = (a, b, t) => a + (b - a) * t;
+    tour.classList.add('is-tour');
+    const run = () => {
+      const r = tour.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      const p = Math.min(1, Math.max(0, (-r.top / Math.max(1, r.height - innerHeight)) * 1.08));
+      const st = stops();
+      const seg = p * (st.length - 1);
+      const i = Math.min(st.length - 2, Math.floor(seg));
+      const f = seg - i;
+      const t = Math.min(1, Math.max(0, (f - 0.4) / 0.6));
+      const k = ease(t);
+      const a = st[i], b = st[i + 1];
+      const x = lerp(a.x, b.x, k), y = lerp(a.y, b.y, k), z = lerp(a.z, b.z, k);
+      const W = cam.offsetWidth, H = cam.offsetHeight;
+      const tx = stage.clientWidth / 2 - (x / 1200) * W * z - cam.offsetLeft;
+      const ty = stage.clientHeight / 2 - (y / 400) * H * z - cam.offsetTop;
+      const blur = t > 0 && t < 1 && (a.x !== b.x || a.z !== b.z) ? Math.sin(Math.PI * t) * 1.6 : 0;
+      cam.style.transform = `translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${z.toFixed(3)})`;
+      cam.style.filter = blur > 0.25 ? `blur(${blur.toFixed(2)}px)` : '';
+      const active = t < 0.5 ? a : b;
+      const dwell = t === 0 || t === 1;
+      lit.style.clipPath = active.spot === 'all' && dwell ? 'circle(150% at 50% 50%)' : typeof active.spot === 'number' && dwell ? `circle(14% at ${(active.x / 12).toFixed(2)}% ${(active.y / 4).toFixed(2)}%)` : `circle(0% at ${(x / 12).toFixed(2)}% ${(y / 4).toFixed(2)}%)`;
+      tour.classList.toggle('lights', p > 0.06);
+      const visited = order.slice(0, Math.max(0, i + (t >= 0.5 ? 1 : 0)));
+      spots.forEach((h, n) => {
+        const cur = active.spot === n;
+        const on = active.spot === 'all' || cur || visited.includes(n);
+        h.classList.toggle('on', on);
+        h.classList.toggle('cur', cur);
+        h.style.scale = String((on ? 1 : 0.5) / z);
+      });
+    };
+    addEventListener('scroll', () => requestAnimationFrame(run), { passive: true });
+    addEventListener('resize', run);
+    run();
+  }
+
   /* ---------- Pointer spotlight on cards ---------- */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     d.addEventListener('pointermove', (e) => {

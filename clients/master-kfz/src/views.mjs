@@ -270,7 +270,7 @@ function home(c, lang) {
   const scanSpots = services
     .map((s, i) => {
       const [x, y] = s.hotspot;
-      return `<a class="hot${y > 250 ? ' hot--below' : ''}" href="${servicePath(lang, s)}" style="--x:${((x / 1200) * 100).toFixed(2)}%;--y:${((y / 400) * 100).toFixed(2)}%" data-at="${(x / 1200).toFixed(3)}"><span class="hot__dot">${i + 1}</span><span class="hot__label">${e(c.services[s.id].name)}</span></a>`;
+      return `<a class="hot${y > 250 ? ' hot--below' : ''}" href="${servicePath(lang, s)}" style="--x:${((x / 1200) * 100).toFixed(2)}%;--y:${((y / 400) * 100).toFixed(2)}%" data-x="${x}" data-y="${y}" data-at="${(x / 1200).toFixed(3)}"><span class="hot__dot">${i + 1}</span><span class="hot__label">${e(c.services[s.id].name)}</span></a>`;
     })
     .join('');
   const heroImg = media('hero.webp');
@@ -319,13 +319,12 @@ ${cards(c, lang, services, ' cards--compact')}
 </div>
 </section>
 
-<section class="scan" data-scroll="sticky" aria-labelledby="scan-title">
+<section class="scan" data-scroll="sticky" data-tour="${e(JSON.stringify(['oil', 'timingbelt', 'brakes', 'gearbox', 'diagnostics', 'aircon', 'inspection', 'tyres'].map((id) => services.findIndex((x) => x.id === id))))}" aria-labelledby="scan-title">
 <div class="scan__sticky">
 <header class="wrap shead shead--center">${kicker(c.home.scanKicker)}<h2 class="h2" id="scan-title">${e(c.home.scanTitle)}</h2><p class="lead">${e(c.home.scanLead)}</p></header>
 <div class="scan__stage"><div class="scan__car">
 ${carPremium('pc pc--base')}
 <div class="scan__lit" aria-hidden="true">${carPremium('pc pc--lit', true)}</div>
-<i class="scan__beam" aria-hidden="true"></i>
 ${scanSpots}
 </div></div>
 </div>

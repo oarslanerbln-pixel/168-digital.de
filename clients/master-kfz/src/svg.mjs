@@ -180,6 +180,7 @@ export function carPremium(cls, lit = false) {
 <linearGradient id="pcGlass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="${lit ? '#5d6f86' : '#1d2129'}"/><stop offset=".6" stop-color="#0b0d12"/><stop offset="1" stop-color="#20242c"/></linearGradient>
 <radialGradient id="pcRim" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="${lit ? '#f2f3f5' : '#3d3e42'}"/><stop offset="1" stop-color="${lit ? '#6b6f75' : '#141416'}"/></radialGradient>
 <linearGradient id="pcFade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="pcBeam" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
 <mask id="pcMask"><rect x="0" y="362" width="1200" height="120" fill="url(#pcFade)"/></mask></defs>
 <ellipse cx="610" cy="364" rx="520" ry="14" fill="${lit ? 'rgba(227,20,28,.35)' : 'rgba(0,0,0,.6)'}"/>
 <g mask="url(#pcMask)"><g transform="translate(0 724) scale(1 -1)"><path d="${BODY}" fill="url(#pcBody)"/></g></g>
@@ -189,7 +190,8 @@ export function carPremium(cls, lit = false) {
 <path d="${GLASS}" fill="url(#pcGlass)" stroke="${lit ? 'rgba(255,255,255,.5)' : 'rgba(255,255,255,.1)'}" stroke-width="1.5"/>
 <path d="M604 108L592 164M592 164C590 210 590 256 594 298M806 156C818 200 822 250 816 298" stroke="rgba(255,255,255,${lit ? '.35' : '.07'})" stroke-width="1.5" fill="none"/>
 ${lit ? XRAY : ''}
-<path d="M1050 196C1080 200 1104 210 1116 226C1090 224 1066 216 1050 196Z" fill="${lit ? '#fff' : '#3a3b3f'}"/>
+<path class="pc__beam" d="M1112 214L1360 150V300L1112 226Z" fill="url(#pcBeam)"/>
+<path class="pc__head" d="M1050 196C1080 200 1104 210 1116 226C1090 224 1066 216 1050 196Z" fill="${lit ? '#fff' : '#3a3b3f'}"/>
 <path d="M120 218C140 206 160 198 182 192C172 206 150 214 120 218Z" fill="#e3141c" opacity="${lit ? 1 : 0.5}"/>
 ${premiumWheel(300, lit)}${premiumWheel(920, lit)}</svg>`;
 }

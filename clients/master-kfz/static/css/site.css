@@ -321,13 +321,22 @@ html.js .statement .w.on { opacity: 1; }
 .scan .shead { margin-bottom: 0; }
 .scan__stage { width: 100%; overflow: hidden; padding-block: 56px; }
 .scan__car { position: relative; width: 220%; aspect-ratio: 3 / 1; transform: translateX(calc(var(--p) * -54.5%)); }
+.scan.is-tour .scan__car { width: min(1100px, 100%); margin-inline: auto; transform-origin: 0 0; will-change: transform; }
+.scan.is-tour .scan__lit { clip-path: circle(0% at 50% 50%); transition: clip-path 0.55s var(--ease-out); }
+.scan.is-tour .hot { transition: opacity 0.45s; }
+.scan.is-tour .hot__label { opacity: 0; transition: opacity 0.35s; }
+.scan.is-tour .hot.cur .hot__label { opacity: 1; }
+.scan.is-tour .hot.cur .hot__dot { background: #fff; color: var(--red); box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.18), 0 0 30px rgba(255, 255, 255, 0.6); }
+.pc__beam { opacity: 0; transition: opacity 0.8s; }
+.scan.lights .pc__beam { opacity: 1; animation: lampOn 1.1s steps(1) both; }
+.scan.lights .pc--base .pc__head { fill: #fff; filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 22px rgba(255, 255, 255, 0.7)); animation: lampOn 1.1s steps(1) both; }
+@keyframes lampOn { 0% { opacity: 0.2; } 12% { opacity: 1; } 22% { opacity: 0.3; } 34% { opacity: 1; } 46% { opacity: 0.5; } 58%, 100% { opacity: 1; } }
 .scan__car .pc, .scan__lit { position: absolute; inset: 0; width: 100%; height: 100%; }
 .scan__lit .pc { position: absolute; inset: 0; width: 100%; height: 100%; }
 .pc { overflow: visible; }
 .pc--lit { filter: drop-shadow(0 0 10px rgba(227, 20, 28, 0.45)); }
 .pc__xray { stroke-width: 1.8; filter: drop-shadow(0 0 4px rgba(255, 49, 56, 0.9)); }
 .scan__lit { clip-path: inset(-10% calc((1 - var(--p)) * 100%) -10% 0); }
-.scan__beam { position: absolute; top: -14%; bottom: -14%; left: calc(var(--p) * 100%); width: 2px; translate: -1px 0; background: linear-gradient(transparent, var(--red-2) 30%, var(--red-2) 70%, transparent); box-shadow: 0 0 28px 6px var(--red-glow); opacity: calc(1 - var(--p) * var(--p) * var(--p)); }
 .hot { position: absolute; left: var(--x); top: var(--y); z-index: var(--z-raised); translate: -50% -50%; transition: opacity 0.45s, scale 0.55s var(--ease-out); }
 .hot__dot { display: block; width: 30px; height: 30px; border-radius: 50%; background: var(--red); color: #fff; font: 600 12px/30px var(--mono); text-align: center; box-shadow: 0 0 0 6px rgba(227, 20, 28, 0.2), 0 0 26px var(--red-glow); transition: background-color 0.25s, box-shadow 0.25s; }
 .hot__label { position: absolute; left: 50%; bottom: calc(100% + 10px); translate: -50% 0; white-space: nowrap; padding: 6px 12px; border-radius: 999px; font-size: 13px; font-weight: 500; background: rgba(23, 23, 26, 0.86); border: 1px solid var(--line-2); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: border-color 0.25s; }
@@ -966,3 +975,7 @@ html.js .step.rv.is-in > * { opacity: 1; transform: none; }
 html.js .card.rv::after { content: ''; position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, var(--red), #ff5a5f); transform: scaleX(1); transform-origin: right; transition: transform 1s var(--ease-out) calc(var(--i, 0) * 120ms + 0.25s); pointer-events: none; }
 html.js .card.rv.is-in::after { transform: scaleX(0); }
 @media (max-width: 639px) { .cards--compact .card__icon { width: 48px; height: 48px; } .cards--compact .card__icon .ico { width: 28px; height: 28px; } }
+/* Tour stage: positioned so the camera math measures the car relative to it */
+.scan.is-tour .scan__stage { position: relative; display: flex; align-items: center; height: clamp(280px, 54svh, 620px); padding-block: 0; }
+@media (max-width: 759px) { .scan.is-tour .scan__stage { height: 48svh; } }
+@media (max-width: 759px) { .scan.is-tour .hot__dot { width: 22px; height: 22px; font-size: 10px; line-height: 22px; } }
