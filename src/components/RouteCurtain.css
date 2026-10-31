@@ -1,0 +1,40 @@
+/* The curtain starts fully closed (the new page is already rendered
+   behind it) and lifts away upwards; the wordmark fades out a beat
+   earlier so it never rides up with the edge. fill-mode both keeps it
+   out of view once done, until the next navigation remounts it. */
+.route-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-curtain);
+  display: grid;
+  place-items: center;
+  background: var(--text-main);
+  pointer-events: none;
+  transform-origin: top;
+  animation: route-curtain-lift 0.75s var(--ease-premium) 0.12s both;
+}
+
+.route-curtain-mark {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.32em;
+  color: var(--bg-dark);
+  animation: route-curtain-mark 0.4s ease-out both;
+}
+
+@keyframes route-curtain-lift {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0); }
+}
+
+@keyframes route-curtain-mark {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-curtain {
+    display: none;
+  }
+}

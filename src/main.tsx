@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import App from './App.tsx'
+import App, { preloadRoute } from './App.tsx'
 import './index.css'
 import './i18n'
 import { Analytics } from '@vercel/analytics/react'
@@ -15,11 +15,19 @@ if (isAnalyticsAllowed()) {
   initThirdPartyAnalytics()
 }
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-    {isAnalyticsAllowed() && <Analytics />}
-  </React.StrictMode>,
-)
+// Load this URL's page chunk first: the prerendered page stays on screen
+// meanwhile, and React's first commit can then swap in the same page
+// instead of an empty Suspense fallback (see lazyPage in App.tsx). A
+// failed preload just falls back to the normal lazy load.
+preloadRoute(window.location.pathname)
+  .catch(() => undefined)
+  .then(() => {
+    ReactDOM.createRoot(document.getElementById('root')!).render(
+      <React.StrictMode>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+        {isAnalyticsAllowed() && <Analytics />}
+      </React.StrictMode>,
+    )
+  })

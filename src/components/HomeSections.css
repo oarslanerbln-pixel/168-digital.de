@@ -48,48 +48,152 @@
   text-wrap: pretty;
 }
 
-/* ─── Solutions ─── */
-.solutions-grid {
+/* ─── Solutions: pinned scroll story (see Solutions.tsx) ─── */
+.solutions-story {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: 72px;
+  align-items: start;
 }
 
-.solution-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+/* Pinned roughly in the vertical middle; `clip` on html/body (not
+   `hidden`) is what keeps sticky working here. */
+.solutions-stage {
+  position: sticky;
+  top: max(96px, calc(50vh - 250px));
+}
+
+.solutions-frame {
   overflow: hidden;
   background: var(--bg-raised);
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
-  box-shadow: var(--shadow-card);
+  box-shadow: var(--shadow-float);
 }
 
-.solution-visual {
-  aspect-ratio: 16 / 10;
-  overflow: hidden;
-  background: var(--bg-sunken);
+/* Decorative window chrome: three dots, monochrome. */
+.solutions-frame-bar {
+  display: flex;
+  gap: 6px;
+  padding: 12px 14px;
   border-bottom: 1px solid var(--line);
 }
 
-.solution-visual img {
+.solutions-frame-bar span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+
+.solutions-frame-screen {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: var(--bg-sunken);
+}
+
+/* The incoming screen wipes up over the outgoing one; the outgoing one
+   stays put underneath and only switches off once it is covered. */
+.solutions-shot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  clip-path: inset(100% 0 0 0);
+  transition: opacity 0s 0.9s, clip-path 0s 0.9s;
+}
+
+.solutions-shot.is-active {
+  z-index: 1;
+  opacity: 1;
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 0.9s var(--ease-premium);
+}
+
+.solutions-shot img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.8s var(--ease-premium);
+  transform: scale(1.06);
+  transition: transform 1.4s var(--ease-premium);
 }
 
-.solution-card:hover .solution-visual img {
-  transform: scale(1.03);
+.solutions-shot.is-active img {
+  transform: none;
 }
 
-.solution-body {
+.solutions-progress {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 22px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-faint);
+}
+
+.solutions-count {
+  color: var(--text-main);
+}
+
+.solutions-track {
+  position: relative;
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.solutions-track span {
+  position: absolute;
+  inset: 0;
+  background: var(--text-main);
+  transform-origin: left;
+  transition: transform 0.7s var(--ease-premium);
+}
+
+/* Each step gets most of a screen of scroll, so the frame has time to
+   show it; the inactive ones step back without leaving the page. */
+.solution-step {
   display: flex;
   flex-direction: column;
-  flex: 1;
-  padding: 30px 32px 32px;
+  justify-content: center;
+  min-width: 0;
+  min-height: 74vh;
+  opacity: 0.28;
+  transition: opacity 0.5s var(--ease-premium);
+}
+
+.solution-step:last-child {
+  min-height: 60vh;
+}
+
+.solution-step.is-active {
+  opacity: 1;
+}
+
+.solution-step-media {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solutions-shot,
+  .solutions-shot.is-active,
+  .solutions-shot img,
+  .solutions-track span,
+  .solution-step {
+    transition: none;
+  }
+}
+
+.solution-step-index {
+  margin-bottom: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--accent-cyan);
 }
 
 .solution-title {
@@ -147,7 +251,6 @@
   align-items: center;
   gap: 8px;
   align-self: flex-start;
-  margin-top: auto;
   padding: 0;
   border: 0;
   background: none;
@@ -401,11 +504,42 @@
   }
 }
 
-@media (max-width: 860px) {
-  .solutions-grid {
+@media (max-width: 900px) {
+  .solutions-story {
     grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 
+  .solutions-stage {
+    display: none;
+  }
+
+  .solution-step,
+  .solution-step:last-child {
+    min-height: 0;
+    opacity: 1;
+    padding: 0 0 56px;
+  }
+
+  .solution-step-media {
+    display: block;
+    overflow: hidden;
+    margin-bottom: 24px;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-sunken);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-card);
+  }
+
+  .solution-step-media img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 860px) {
   .cta-band {
     flex-direction: column;
     align-items: flex-start;
@@ -419,11 +553,6 @@
 
   .home-section-header {
     margin-bottom: 44px;
-  }
-
-
-  .solution-body {
-    padding: 24px 22px 26px;
   }
 
   .process-steps,

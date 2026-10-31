@@ -67,6 +67,7 @@
   --z-cursor: 1000;      /* custom cursor, never interactive */
   --z-nav-panel: 2000;   /* full-screen navigation overlay */
   --z-nav-toggle: 2100;  /* its close button — must outrank the panel */
+  --z-curtain: 2500;     /* route-change curtain: covers the closing menu, never a modal */
   --z-modal: 3000;       /* legal, offer and project modals */
   --z-consent: 4000;     /* cookie banner: blocks consent-gated UI */
   --z-devconsole: 5000;  /* owner-only tooling */
@@ -103,7 +104,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-dark);
   color: var(--text-main);
+  /* clip, not hidden: `hidden` makes <body> a scroll container, and then
+     nothing inside can be position: sticky (the pinned Solutions frame
+     simply scrolled away). `hidden` stays as the fallback. */
   overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
 }
 
