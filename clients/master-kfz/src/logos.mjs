@@ -103,3 +103,6 @@ const WORDMARKS = {
 export const logoSetSvg = (concept, cls = 'lx') =>
   `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true" focusable="false">${concept.svg()}</svg>`;
 export const wordmark = (v) => WORDMARKS[v];
+
+/* Colourways shown on the board; values live in site.css (.pal-N). */
+export const LOGO_PALETTES = ["Rot / Silber", "Signalorange / Anthrazit", "Petrol / Kupfer", "Racing-Grün / Gold", "Werkstatt-Blau / Silber", "Warngelb / Graphit", "Bordeaux / Creme", "E-Mint / Weiß"];

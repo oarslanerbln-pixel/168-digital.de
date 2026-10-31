@@ -7,7 +7,7 @@ import { createHash } from 'node:crypto';
 import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl } from './data.mjs';
 import { icon, carSvg, gearSvg, logoMark, LOGO_VARIANTS } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
-import { LOGO_SET, logoSetSvg, wordmark } from './logos.mjs';
+import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
 
 export const e = (s) =>
   String(s ?? '').replace(/[&<>"']/g, (ch) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[ch]);
@@ -490,12 +490,13 @@ function logoBoard() {
 <p>Detailreich (Chrom, Schlagschatten, Zahnrad, Schraubenschlüssel) – stark auf Schildern, aber in kleinen Größen (Favicon, Navigation) kaum lesbar und nur als Rastergrafik vorhanden.</p></article>
 </div></section>
 <section class="section section--tight"><div class="wrap">${kicker('Runde 2')}<h2 class="h2">${LOGO_SET.length} weitere Richtungen</h2>
-<p class="lead">Monogramme, Werkstatt-Objekte, Embleme und typografische Marken – jeweils auf Dunkel, auf Hell und als App-Icon. Nummer nennen genügt, dann wird daraus das Hauptlogo.</p>
-<div class="lx-grid">${LOGO_SET.map((l, i) => `<article class="lx-card">
+<p class="lead">Monogramme, Werkstatt-Objekte, Embleme und typografische Marken – jeweils auf Dunkel, auf Hell und als App-Icon, in acht Farbwelten. Die Leiste schaltet alle Logos auf eine Palette um. Nummer + Farbe nennen genügt.</p>
+<div class="lx-board"><div class="pal-bar" role="radiogroup" aria-label="Farbwelt">${['Gemischt', ...LOGO_PALETTES].map((p, k) => `<label><input type="radio" name="pal" id="pal-${k}"${k ? '' : ' checked'}><span class="pal-swatch pal-swatch--${k}"></span>${e(p)}</label>`).join('')}</div>
+<div class="lx-grid">${LOGO_SET.map((l, i) => `<article class="lx-card pal-${(i % LOGO_PALETTES.length) + 1}">
 <div class="lx-hero">${logoSetSvg(l)}${wordmark(l.wm)}</div>
 <div class="lx-mini"><span class="lx-light">${logoSetSvg(l)}</span><span class="lx-app">${logoSetSvg(l)}</span></div>
-<p class="lx-meta"><b>${String(i + 1).padStart(2, '0')}</b> ${e(l.name)}</p><p class="lx-note">${e(l.note)}</p>
-</article>`).join('')}</div></div></section>`;
+<p class="lx-meta"><b>${String(i + 1).padStart(2, '0')}</b> ${e(l.name)}<span class="lx-pal">· ${e(LOGO_PALETTES[i % LOGO_PALETTES.length])}</span></p><p class="lx-note">${e(l.note)}</p>
+</article>`).join('')}</div></div></div></section>`;
 }
 
 /* ---------- Page registry ---------- */
