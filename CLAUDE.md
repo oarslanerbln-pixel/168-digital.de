@@ -66,6 +66,7 @@ lassen.**
 | Lead-Versand (Web3Forms) + WhatsApp/E-Mail-Fallback | `src/utils/leads.ts` |
 | 404-Seite (noindex) für jede unbekannte URL | `src/pages/NotFoundPage.tsx` |
 | Sprachpfade (`/`, `/de/…`, `/tr/…`): Canonical, hreflang, interne Links | `src/utils/localePath.ts` |
+| Kundenprojekte (eigenständig, eigenes Vercel-Projekt mit Root Directory) | `clients/<kunde>/` – z. B. `clients/master-kfz/README.md` |
 
 **Inhalte gehören nach `src/data/` oder `src/i18n.ts`, niemals hart in JSX.**
 Ein neuer Service heißt: Eintrag in `services.ts` + Texte in
@@ -164,6 +165,26 @@ Schatten bleiben schwarz. Animation: nur `transform`/`opacity`, immer mit
   werden – wer dort arbeitet, räumt sie mit auf.
 - **Git:** Entwicklung auf einem `claude/*`-Branch, nie direkt auf `main`.
   PRs als Draft öffnen. Commit-Messages englisch, Imperativ, mit Grund.
+
+## Arbeitsprinzip: Qualität zuerst, Tokens sparsam
+
+Qualität ist nicht verhandelbar (375-px-Check, drei Sprachen, DSGVO,
+Barrierefreiheit, `build`/`verify` grün). Gespart wird am Weg dorthin:
+
+- **Erst planen, dann bündeln:** Anfrage komplett verstehen, alle Änderungen
+  in wenigen großen Schritten umsetzen statt vieler kleiner Runden.
+- **Gezielt lesen:** `grep`/`sed -n` auf die relevanten Zeilen statt ganzer
+  Dateien; bereits Gelesenes nicht erneut lesen.
+- **Patchen statt neu schreiben:** Edit/kleine Skripte, keine kompletten
+  Dateien wiederholen.
+- **Prüfen am Ende, einmal:** Build + Verify + *ein* verkleinerter
+  Screenshot (Desktop und 375 px) pro Änderungsblock, nur der betroffene Ausschnitt.
+- **Keine Dauer-Abos:** Keine PR-Benachrichtigungen abonnieren, kein Polling;
+  CI nur gezielt prüfen. Vorschau-Artifacts nur mit geänderten Dateien aktualisieren.
+- **Kurz antworten:** Ergebnis, Link, offene Entscheidung – keine Wiederholung
+  von bereits Gesagtem.
+- **Lange Sitzungen beenden:** Wird der Verlauf groß, `HANDOFF.md` des Projekts
+  aktualisieren und eine neue Sitzung empfehlen.
 
 ## Bekannte offene Punkte
 
