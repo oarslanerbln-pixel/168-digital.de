@@ -6,7 +6,7 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl } from './data.mjs';
-import { icon, carSvg, gearSvg, logoMark, LOGO_VARIANTS } from './svg.mjs';
+import { icon, carSvg, gearSvg, logoMark } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
 import { LOGO_STYLES, styleSvg } from './logos-r3.mjs';
@@ -502,19 +502,8 @@ function legal(title, html) {
 
 /* Logo concept board for the client — noindex, not linked from the site. */
 function logoBoard() {
-  const variants = LOGO_VARIANTS.map(
-    (v, i) => `<article class="lc">
-<header><p class="kicker">Konzept ${String.fromCharCode(65 + i)}${i === 0 ? ' · auf der Website aktiv' : ''}</p><h2 class="h3">${{ velocity: 'Velocity M', gear: 'Zahnrad M', badge: 'Plakette' }[v]}</h2></header>
-<div class="lc__row">
-<div class="lc__tile lc__tile--dark">${logoMark('logo lc__mark', v)}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></div>
-<div class="lc__tile lc__tile--light">${logoMark('logo lc__mark', v)}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></div>
-<div class="lc__tile lc__tile--app">${logoMark('logo lc__app', v)}</div>
-</div>
-<p>${{ velocity: 'Kursives M mit drei Geschwindigkeitslinien aus dem Bestandslogo. Reduziert, schnell, funktioniert ab 16 px – passt zum Apple/Tesla-Stil der Seite.', gear: 'Klassischer Werkstatt-Bezug: Zahnradring um ein aufrechtes M. Nah am Bestandslogo, aber als sauberer Vektor.', badge: 'Automobil-Plakette mit M und Unterstrich – wirkt wie ein Emblem auf der Motorhaube, stark für Schilder und Arbeitskleidung.' }[v]}</p>
-</article>`,
-  ).join('');
-  return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Logo-Konzepte</h1><p class="lead">Drei vektorielle Neuentwürfe für Master KFZ – plus das Bestandslogo zum Vergleich. Die Website nutzt Konzept A; der Wechsel ist eine Zeile in <code>src/svg.mjs</code> (<code>LOGO_VARIANT</code>).</p></div></section>
-<section class="section section--tight"><div class="wrap lc-grid">${variants}
+  return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Logo-Konzepte</h1><p class="lead">Logo-Entwürfe für Master KFZ in drei Runden – plus das Bestandslogo zum Vergleich. Bis zur Entscheidung zeigt die Website ein vorläufiges Zeichen.</p></div></section>
+<section class="section section--tight"><div class="wrap lc-grid">
 <article class="lc"><header><p class="kicker">Bestand</p><h2 class="h3">Aktuelles Logo</h2></header><div class="lc__row"><div class="lc__tile lc__tile--dark lc__tile--wide"><img src="/img/logo.webp" width="1000" height="425" alt="Bestandslogo Master KFZ Werkstatt" loading="lazy"></div></div>
 <p>Detailreich (Chrom, Schlagschatten, Zahnrad, Schraubenschlüssel) – stark auf Schildern, aber in kleinen Größen (Favicon, Navigation) kaum lesbar und nur als Rastergrafik vorhanden.</p></article>
 </div></section>
