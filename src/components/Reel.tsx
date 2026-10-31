@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
 import './Reel.css';
 
 const words = [
@@ -50,6 +50,14 @@ export default function Reel() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Motion values for smooth 3D tilt effect
+  // The panel grows from a framed card to its full width as it rises
+  // to the middle of the screen — the film opening up, which is the
+  // promise of this section. Static for reduced motion.
+  const containerRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
+  const { scrollYProgress: approach } = useScroll({ target: containerRef, offset: ['start end', 'center center'] });
+  const openUp = useTransform(approach, [0, 1], [reduceMotion ? 1 : 0.84, 1]);
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
@@ -93,7 +101,7 @@ export default function Reel() {
   };
 
   return (
-    <div id="reel-card" className="reel-card-container">
+    <motion.div id="reel-card" ref={containerRef} className="reel-card-container" style={{ scale: openUp }}>
       <motion.div
         ref={cardRef}
         className="glass-panel glow-card reel-glass-panel"
@@ -156,6 +164,6 @@ export default function Reel() {
           </AnimatePresence>
         </div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }

@@ -1,0 +1,90 @@
+/* ═══════════════════════════════════════════════════════════════
+   WORKS — swipe rail by default, camera pan on wide screens.
+   See the block comment in Works.tsx for why.
+   ═══════════════════════════════════════════════════════════════ */
+
+.works-section {
+  position: relative;
+  z-index: var(--z-content);
+}
+
+.works-intro {
+  padding-bottom: 40px;
+}
+
+/* ─── Default: native swipe rail in its own scroll container ─── */
+.works-track {
+  display: flex;
+  gap: 24px;
+  padding: 8px max(20px, calc((100vw - 1240px) / 2 + 32px)) 32px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: max(20px, calc((100vw - 1240px) / 2 + 32px));
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.works-track::-webkit-scrollbar {
+  display: none;
+}
+
+.works-track .project-card {
+  flex: 0 0 min(82vw, 440px);
+  scroll-snap-align: start;
+}
+
+/* Button content must be phrasing elements, so the card's parts are
+   spans; these give them back their block layout. */
+.project-card-media,
+.project-card-content,
+.project-card-title,
+.project-card-desc {
+  display: block;
+}
+
+/* ─── Wide screens with motion: pinned, scroll-driven pan ─── */
+.works-scroller.is-panning .works-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.works-scroller.is-panning .works-track {
+  width: max-content;
+  overflow: visible;
+  scroll-snap-type: none;
+  will-change: transform;
+}
+
+.works-scroller.is-panning .project-card {
+  flex-basis: min(36vw, 500px);
+}
+
+/* The photo drifts against the pan (--drift from Works.tsx). Transform
+   is driven per frame, so only the colour change keeps a transition. */
+.works-scroller.is-panning .project-card-media-img {
+  transform: scale(1.14) translateX(var(--drift, 0%));
+  transition: filter 0.5s var(--ease-premium);
+}
+
+.works-scroller.is-panning .project-card:hover .project-card-media-img {
+  transform: scale(1.18) translateX(var(--drift, 0%));
+}
+
+.works-progress {
+  position: relative;
+  height: 1px;
+  margin: 8px max(20px, calc((100vw - 1240px) / 2 + 32px)) 0;
+  background: var(--line);
+}
+
+.works-progress span {
+  position: absolute;
+  inset: 0;
+  background: var(--text-main);
+  transform-origin: left;
+}
