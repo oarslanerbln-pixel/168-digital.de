@@ -1,5 +1,6 @@
+import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { motion } from 'framer-motion';
+import { motion, useScroll } from 'framer-motion';
 import { ArrowRight, MessagesSquare, FileText, ShieldCheck, Smartphone } from 'lucide-react';
 import { playTick, playClick } from '../utils/audio';
 import { getHomeContent } from '../data/homeContent';
@@ -15,6 +16,12 @@ import './HomeSections.css';
    that before it becomes a reason not to write. The section ends in
    the page's mid-point call to action, so a visitor who is convinced
    here does not have to scroll through the rest to act on it.
+
+   On wide screens a hairline above the four steps draws itself as the
+   steps scroll through the screen — the project moving from first
+   message to launch while the visitor reads it. It is tied to scroll
+   position, so it never runs ahead of the reader (hidden in CSS below
+   four columns and for reduced motion).
    ════════════════════════════════════════════════════════════════ */
 
 const PROMISE_ICONS = [MessagesSquare, FileText, ShieldCheck, Smartphone];
@@ -22,6 +29,8 @@ const PROMISE_ICONS = [MessagesSquare, FileText, ShieldCheck, Smartphone];
 export default function Process() {
   const { t, i18n } = useTranslation();
   const { process, promises } = getHomeContent(i18n.language);
+  const stepsRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress: drawn } = useScroll({ target: stepsRef, offset: ['start 85%', 'end 55%'] });
 
   return (
     <section id="process" className="home-section process-section">
@@ -37,23 +46,26 @@ export default function Process() {
         <p className="home-subtitle">{t('process_subtitle')}</p>
       </motion.header>
 
-      <ol className="process-steps">
-        {process.map((step, i) => (
-          <motion.li
-            key={step.title}
-            className="process-step"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
-            transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <span className="process-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-            <span className="process-time">{step.time}</span>
-            <h3 className="process-step-title">{step.title}</h3>
-            <p className="process-step-desc">{step.desc}</p>
-          </motion.li>
-        ))}
-      </ol>
+      <div ref={stepsRef} className="process-track">
+        <motion.span className="process-line" style={{ scaleX: drawn }} aria-hidden="true" />
+        <ol className="process-steps">
+          {process.map((step, i) => (
+            <motion.li
+              key={step.title}
+              className="process-step"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <span className="process-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              <span className="process-time">{step.time}</span>
+              <h3 className="process-step-title">{step.title}</h3>
+              <p className="process-step-desc">{step.desc}</p>
+            </motion.li>
+          ))}
+        </ol>
+      </div>
 
       <div className="promises">
         <h3 className="promises-title">{t('process_promises_title')}</h3>

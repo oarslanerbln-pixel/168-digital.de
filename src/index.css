@@ -674,18 +674,6 @@ html, body {
   transform: translateY(-2px);
 }
 
-.works-grid {
-  display: grid;
-  /* minmax(0, …) so a long title can never force the grid wider than the
-     viewport. Five cards in three columns used to leave a hole in the
-     second row; the first card now spans two columns, which closes the
-     grid (2+1 / 1+1+1) and gives the section a hierarchy — the same
-     pattern the Services grid uses, so the two read as one system. */
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 24px;
-  align-items: stretch;
-}
-
 /* ─── Project card ───
 
    Was a dark card washed in the project's own brand colour, one per
@@ -708,6 +696,8 @@ html, body {
   overflow: hidden;
   cursor: pointer;
   text-align: left;
+  font: inherit;
+  color: inherit;
   background: var(--bg-raised);
   border: 1px solid var(--line);
   box-shadow: none;
@@ -720,10 +710,6 @@ html, body {
   box-shadow: 0 18px 40px rgba(18, 18, 17, 0.09);
 }
 
-.project-card-featured {
-  grid-column: span 2;
-}
-
 /* ─── Media ─── */
 .project-card-media {
   position: relative;
@@ -731,12 +717,6 @@ html, body {
   overflow: hidden;
   background: var(--bg-sunken);
   border-bottom: 1px solid var(--line);
-}
-
-/* The featured card is twice as wide, so a letterbox crop keeps its
-   height in proportion with the cards beside it. */
-.project-card-featured .project-card-media {
-  aspect-ratio: 16 / 7;
 }
 
 .project-card-media-img {
@@ -849,10 +829,6 @@ html, body {
   color: var(--text-muted);
 }
 
-.project-card-featured .project-card-title {
-  font-size: 1.5rem;
-}
-
 .project-card-desc {
   font-size: 0.92rem;
   line-height: 1.6;
@@ -884,32 +860,6 @@ html, body {
   background: rgba(18, 18, 17, 0.05);
 }
 
-@media (max-width: 980px) {
-  .works-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 640px) {
-  .works-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 20px;
-  }
-
-  .project-card-featured {
-    grid-column: span 1;
-  }
-
-  /* At one column the featured card is no wider than the rest, so it
-     goes back to the same crop and type size. */
-  .project-card-featured .project-card-media {
-    aspect-ratio: 16 / 10;
-  }
-
-  .project-card-featured .project-card-title {
-    font-size: 1.25rem;
-  }
-}
 
 .service-card-link {
   text-decoration: none;
