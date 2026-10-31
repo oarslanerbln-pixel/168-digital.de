@@ -193,9 +193,24 @@ ${footer(p)}
 
 /* ---------- Shared sections ---------- */
 
-function pageHero(k, title, lead, extra = '') {
-  return `<section class="phero">
-<div class="phero__glow" aria-hidden="true"></div>
+function flowItems(c, lang) {
+  // With at least three photos the reel shows only photographed services; mixing photos and line art looks unfinished.
+  const photographed = ['inspection', 'diagnostics', 'brakes', 'oil', 'tyres', 'timingbelt', 'aircon', 'gearbox'].filter((id) => media(`reel-${id}.webp`));
+  const reelIds = photographed.length >= 3 ? photographed : ['diagnostics', 'brakes', 'tyres', 'oil', 'timingbelt'];
+  return reelIds.map((id, i) => {
+    const s = svc(id);
+    const img = media(`reel-${id}.webp`);
+    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span>`;
+  }).join('');
+}
+
+const flowBanner = (reel) => `<div class="flow"><div class="flow__track">${[0, 1, 2, 3].map((k) => `<div class="flow__set"${k ? ' aria-hidden="true"' : ''}>${reel.replaceAll('<a class=', k ? '<a tabindex="-1" class=' : '<a class=')}</div>`).join('')}</div></div>`;
+
+const pheroMedia = (file) => { const src = file && media(file); return src ? `<div class="phero__media" aria-hidden="true"><img src="${src}" alt="" fetchpriority="high" decoding="async"></div>` : ''; };
+
+function pageHero(k, title, lead, extra = '', photo = null) {
+  return `<section class="phero${photo ? ' phero--media' : ''}">
+<div class="phero__glow" aria-hidden="true"></div>${pheroMedia(photo)}
 <div class="wrap">${kicker(k, 'rv')}<h1 class="h1 rv" style="--i:1">${twoLine(title)}</h1>
 ${lead ? `<p class="lead rv" style="--i:2">${e(lead)}</p>` : ''}${extra}</div>
 </section>`;
@@ -275,14 +290,7 @@ function home(c, lang) {
     .join('');
   const heroImg = media('hero.webp');
   const heroVid = heroImg && media('hero.mp4');
-  // With at least three photos the reel shows only photographed services; mixing photos and line art looks unfinished.
-  const photographed = ['inspection', 'diagnostics', 'brakes', 'oil', 'tyres', 'timingbelt', 'aircon', 'gearbox'].filter((id) => media(`reel-${id}.webp`));
-  const reelIds = photographed.length >= 3 ? photographed : ['diagnostics', 'brakes', 'tyres', 'oil', 'timingbelt'];
-  const reel = reelIds.map((id, i) => {
-    const s = svc(id);
-    const img = media(`reel-${id}.webp`);
-    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span>`;
-  }).join('');
+  const reel = flowItems(c, lang);
   const tick = c.home.ticker.map((w) => `<span>${e(w)}</span><i>✦</i>`).join('');
   return `
 <section class="hero${heroImg ? ' hero--media' : ''}" data-scroll="pass" data-spot>
@@ -308,7 +316,7 @@ ${kicker(c.home.kicker, 'hero__kicker')}
 
 <section class="flowsec" aria-labelledby="reel-title">
 <header class="wrap shead shead--split"><div>${kicker(c.home.reelKicker, 'rv')}<h2 class="h2 rv" style="--i:1" id="reel-title">${e(c.home.reelTitle)}</h2></div><p class="lead rv" style="--i:2">${e(c.home.reelLead)}</p></header>
-<div class="flow"><div class="flow__track">${[0, 1, 2, 3].map((k) => `<div class="flow__set"${k ? ' aria-hidden="true"' : ''}>${reel.replaceAll('<a class=', k ? '<a tabindex="-1" class=' : '<a class=')}</div>`).join('')}</div></div>
+${flowBanner(reel)}
 </section>
 
 <section class="section" id="services">
@@ -361,8 +369,9 @@ ${finalCta(c, lang)}`;
 }
 
 function servicesIndex(c, lang) {
-  return `${pageHero(c.servicesPage.kicker, c.servicesPage.title, c.servicesPage.lead)}
+  return `${pageHero(c.servicesPage.kicker, c.servicesPage.title, c.servicesPage.lead, '', 'hero.webp')}
 <section class="section section--tight"><div class="wrap">${cards(c, lang, services)}</div></section>
+<section class="flowsec flowsec--plain" aria-label="${e(c.home.reelTitle)}">${flowBanner(flowItems(c, lang))}</section>
 ${steps(c)}
 ${finalCta(c, lang)}`;
 }
@@ -374,8 +383,8 @@ function serviceDetail(c, lang, s) {
   const related = [1, 2, 3].map((k) => others[(start + k - 1) % others.length]);
   const book = `${routes.booking[lang]}?s=${s.id}`;
   const price = s.price == null ? `<b class="pbox__req">${e(c.cta.onRequest)}</b>` : priceBig(lang, s.price, s.from);
-  return `<section class="phero phero--service">
-<div class="phero__glow" aria-hidden="true"></div>
+  return `<section class="phero phero--service phero--media">
+<div class="phero__glow" aria-hidden="true"></div>${pheroMedia(media(`reel-${s.id}.webp`) ? `reel-${s.id}.webp` : 'hero.webp')}
 ${crumbs(c, lang, [[c.nav.home, routes.home[lang]], [c.nav.services, routes.services[lang]], [t.name, null]])}
 <div class="wrap phero__split">
 <div><p class="kicker rv"><span class="kicker__icon">${icon(s.icon)}</span>${e(c.nav.services)}</p>
@@ -387,8 +396,8 @@ ${crumbs(c, lang, [[c.nav.home, routes.home[lang]], [c.nav.services, routes.serv
 </section>
 <section class="section section--tight">
 <div class="wrap duo">
-<div class="duo__col rv"><h2 class="h3">${e(c.service.includes)}</h2><ul class="checks">${t.includes.map((x) => `<li>${icon('check')}${e(x)}</li>`).join('')}</ul></div>
-<div class="duo__col rv" style="--i:1"><h2 class="h3">${e(c.service.signs)}</h2><ul class="signs">${t.signs.map((x) => `<li>${e(x)}</li>`).join('')}</ul></div>
+<div class="duo__col wipe rv"><h2 class="h3">${e(c.service.includes)}</h2><ul class="checks">${t.includes.map((x, n) => `<li style="--n:${n}">${icon('check')}${e(x)}</li>`).join('')}</ul></div>
+<div class="duo__col wipe rv" style="--i:1"><h2 class="h3">${e(c.service.signs)}</h2><ul class="signs">${t.signs.map((x, n) => `<li style="--n:${n}">${e(x)}</li>`).join('')}</ul></div>
 </div>
 </section>
 ${steps(c, true)}
@@ -403,12 +412,12 @@ ${finalCta(c, lang)}`;
 
 function prices(c, lang) {
   const P = c.pricesPage;
-  return `${pageHero(P.kicker, P.title, P.lead)}
+  return `${pageHero(P.kicker, P.title, P.lead, '', 'reel-oil.webp')}
 <section class="section section--tight">
 <div class="wrap ptable">
 ${priceGroups
   .map(
-    (g, gi) => `<section class="pgroup rv" style="--i:${gi % 3}"><h2 class="pgroup__h">${e(P.groups[g.id])}</h2><ul>${g.items
+    (g, gi) => `<section class="pgroup wipe rv" style="--i:${gi % 3}"><h2 class="pgroup__h">${e(P.groups[g.id])}</h2><ul>${g.items
       .map((it) => {
         const s = svc(it.service ?? g.service);
         const val = it.price == null ? c.cta.onRequest : priceText(lang, it.price, it.from);
@@ -425,18 +434,18 @@ ${finalCta(c, lang)}`;
 
 function about(c, lang) {
   const A = c.about;
-  return `${pageHero(A.kicker, A.title, A.lead)}
+  return `${pageHero(A.kicker, A.title, A.lead, '', 'reel-inspection.webp')}
 <section class="section section--tight">
 <div class="wrap story">
 <div class="story__text">${A.story.map((s, i) => `<p class="rv" style="--i:${i}">${e(s)}</p>`).join('')}
 <div class="owner rv" style="--i:2"><span class="owner__badge" aria-hidden="true">ÖA</span><p><b>${e(business.owner)}</b><span>${e(A.ownerRole)}</span></p></div></div>
-<div class="story__visual rv" style="--i:1" aria-hidden="true">${gearSvg('gear story__gear')}${logoMark('logo story__mark')}</div>
+${media('reel-brakes.webp') && media('reel-inspection.webp') ? `<div class="collage rv" style="--i:1" aria-hidden="true"><img src="/media/reel-inspection.webp" alt="" loading="lazy"><img src="/media/reel-brakes.webp" alt="" loading="lazy"><i></i></div>` : `<div class="story__visual rv" style="--i:1" aria-hidden="true">${gearSvg('gear story__gear')}${logoMark('logo story__mark')}</div>`}
 </div>
 </section>
 <section class="facts"><div class="wrap facts__row">${A.facts.map((f, i) => `<p class="fact rv" style="--i:${i}"><b>${e(f.value)}</b><span>${e(f.label)}</span></p>`).join('')}</div></section>
 <section class="section">
 <div class="wrap"><header class="shead">${kicker(A.kicker, 'rv')}<h2 class="h2 rv" style="--i:1">${e(A.valuesTitle)}</h2></header>
-<ul class="values values--grid">${A.values.map((v, i) => `<li class="rv" style="--i:${i}"><span class="values__n">0${i + 1}</span><h3>${e(v.title)}</h3><p>${e(v.text)}</p></li>`).join('')}</ul></div>
+<ul class="values values--grid">${A.values.map((v, i) => `<li class="wipe rv" style="--i:${i}"><span class="values__n">0${i + 1}</span><h3>${e(v.title)}</h3><p>${e(v.text)}</p></li>`).join('')}</ul></div>
 </section>
 ${visit(c, lang)}
 ${finalCta(c, lang)}`;
@@ -448,7 +457,7 @@ function booking(c, lang, formCfg) {
     `<label class="fld"><span class="fld__l">${e(label)}${optional ? ` <small>${e(B.optional)}</small>` : ''}</span><input type="${type}" name="${name}" data-label="${e(label)}" ${attrs}${optional ? '' : ' required'}></label>`;
   const i18n = { sending: B.sending, submit: formCfg.key ? B.submit : B.submitWhatsapp, pickOne: B.pickOne, successTitle: B.successTitle, successText: B.successText, errorTitle: B.errorTitle, errorText: B.errorText, whatsappOpened: B.whatsappOpened, greeting: B.greeting, services: B.steps[0], vehicle: B.steps[1], date: B.date, time: B.time, name: B.name, phone: B.phone, email: B.email, message: B.message, whatsapp: c.cta.whatsapp };
   const names = Object.fromEntries([...services.map((s) => [s.id, c.services[s.id].name]), ['other', B.other]]);
-  return `${pageHero(B.kicker, B.title, B.lead)}
+  return `${pageHero(B.kicker, B.title, B.lead, '', 'reel-diagnostics.webp')}
 <section class="section section--tight">
 <div class="wrap bk-grid">
 <form class="bk rv" data-booking method="post" action="${formCfg.key ? 'https://api.web3forms.com/submit' : '#'}" data-mode="${formCfg.key ? 'web3forms' : 'whatsapp'}" data-wa="${business.whatsapp}" data-tel="${business.phoneIntl}" data-i18n='${e(JSON.stringify(i18n))}' data-names='${e(JSON.stringify(names))}'>
@@ -479,7 +488,7 @@ ${field('name', B.name, 'autocomplete="name" maxlength="80"')}${field('phone', B
 <p class="sr" role="status" aria-live="polite" data-status></p>
 <noscript><p class="bk__noscript">${e(B.noscript)}</p></noscript>
 </form>
-<aside class="bk-aside rv" style="--i:1">
+<aside class="bk-aside wipe rv" style="--i:1">
 <h2 class="h3">${e(B.directTitle)}</h2><p>${e(B.directText)}</p>
 <div class="btns btns--stack">${btn(tel, business.phoneDisplay, 'light', 'phone')}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
 <div class="bk-aside__block"><h3 class="visit__h">${icon('pin')}${e(business.street)}</h3><p>${business.zip} Berlin-${e(business.district)}</p><a class="link" href="${mapsUrl}" ${ext}>${e(c.cta.route)}${icon('arrow')}</a></div>
