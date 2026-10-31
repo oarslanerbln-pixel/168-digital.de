@@ -929,3 +929,6 @@ html.js .reel__bar i { display: block; height: 100%; background: var(--red); box
 .ui-cockpit .mbar__btn--red { clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px); }
 .ui-cockpit .link { font: 600 12px var(--mono); letter-spacing: 0.12em; text-transform: uppercase; }
 .ui-cockpit .card__arrow { border-radius: 0; }
+.ui-carbon [data-back]::after { content: '«'; order: -1; }
+.ui-carbon [data-back]:hover::after { transform: skewX(10deg) translateX(-4px); }
+.ui-carbon .hdr__cta::after { font-size: 1.1em; }
