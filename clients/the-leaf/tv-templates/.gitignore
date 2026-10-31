@@ -1,0 +1,5 @@
+node_modules
+out
+# Raw footage is large and belongs on the shared drive, not in git.
+footage/*
+!footage/.gitkeep
