@@ -88,6 +88,26 @@
   addEventListener('resize', request);
   frame();
 
+  /* ---------- Horizontal reel: vertical scroll drives the track ---------- */
+  const reels = [...d.querySelectorAll('[data-reel]')];
+  const measureReels = () => reels.forEach((r) => {
+    const track = r.querySelector('.reel__track');
+    const view = r.querySelector('.reel__viewport');
+    r.style.setProperty('--shift', `${Math.max(0, track.scrollWidth - view.clientWidth)}px`);
+  });
+  measureReels();
+  addEventListener('resize', measureReels);
+
+  /* ---------- Hero light follows the pointer ---------- */
+  const spot = d.querySelector('[data-spot]');
+  if (spot && !reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    spot.addEventListener('pointermove', (e) => {
+      const r = spot.getBoundingClientRect();
+      spot.style.setProperty('--sx', `${e.clientX - r.left}px`);
+      spot.style.setProperty('--sy', `${e.clientY - r.top}px`);
+    }, { passive: true });
+  }
+
   /* ---------- Pointer spotlight on cards ---------- */
   if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
     d.addEventListener('pointermove', (e) => {

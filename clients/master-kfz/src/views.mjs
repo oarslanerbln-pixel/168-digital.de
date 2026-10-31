@@ -4,6 +4,7 @@
  * site.js only adds motion and the booking wizard on top.
  */
 import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
 import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl } from './data.mjs';
 import { icon, carSvg, gearSvg, logoMark, LOGO_VARIANTS } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
@@ -28,6 +29,14 @@ const CSP = [
 ].join('; ');
 
 let assetVersion = 'dev';
+
+/*
+ * Optional photography/video (e.g. generated in Flow, see FLOW-PROMPTS.md).
+ * A slot renders only when its file exists in static/media/, so the site
+ * never shows a broken image — without files it falls back to line art.
+ */
+const MEDIA_DIR = new URL('../static/media/', import.meta.url);
+const media = (name) => (existsSync(new URL(name, MEDIA_DIR)) ? `/media/${name}` : null);
 export const setAssetVersion = (v) => (assetVersion = v);
 
 const tel = `tel:${business.phoneIntl}`;
@@ -263,9 +272,18 @@ function home(c, lang) {
       return `<a class="hot${y > 250 ? ' hot--below' : ''}" href="${servicePath(lang, s)}" style="--x:${((x / 1200) * 100).toFixed(2)}%;--y:${((y / 400) * 100).toFixed(2)}%" data-at="${(x / 1200).toFixed(3)}"><span class="hot__dot">${i + 1}</span><span class="hot__label">${e(c.services[s.id].name)}</span></a>`;
     })
     .join('');
+  const heroImg = media('hero.webp');
+  const heroVid = heroImg && media('hero.mp4');
+  const reelIds = ['diagnostics', 'brakes', 'tyres', 'oil', 'timingbelt'];
+  const reel = reelIds.map((id, i) => {
+    const s = svc(id);
+    const img = media(`reel-${id}.webp`);
+    return `<a class="reel__card${img ? ' reel__card--img' : ''}" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="reel__art" aria-hidden="true">${gearSvg('gear reel__gear')}${icon(s.icon, 'i reel__icon')}</span>`}<span class="reel__n">0${i + 1}</span><span class="reel__cap"><b>${e(c.services[id].name)}</b><span>${e(c.services[id].short)}</span></span></a>`;
+  }).join('');
+  const tick = c.home.ticker.map((w) => `<span>${e(w)}</span><i>✦</i>`).join('');
   return `
-<section class="hero">
-<div class="hero__bg" aria-hidden="true"><div class="hero__glow"></div><div class="hero__grid"></div></div>
+<section class="hero${heroImg ? ' hero--media' : ''}" data-scroll="pass" data-spot>
+<div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video src="${heroVid}" poster="${heroImg}" autoplay muted loop playsinline preload="metadata"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__grid"></div><div class="hero__spot"></div></div>
 <div class="wrap hero__in">
 ${kicker(c.home.kicker, 'hero__kicker')}
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
@@ -283,6 +301,14 @@ ${kicker(c.home.kicker, 'hero__kicker')}
 
 <section class="statement" data-scroll="pass" data-words>
 <div class="wrap"><p class="statement__text">${words}</p></div>
+</section>
+
+<section class="reel" data-scroll="sticky" data-reel aria-labelledby="reel-title">
+<div class="reel__sticky">
+<header class="wrap shead shead--split"><div>${kicker(c.home.reelKicker)}<h2 class="h2" id="reel-title">${e(c.home.reelTitle)}</h2></div><p class="lead">${e(c.home.reelLead)}</p></header>
+<div class="reel__viewport"><div class="reel__track">${reel}</div></div>
+<div class="wrap reel__bar" aria-hidden="true"><i></i></div>
+</div>
 </section>
 
 <section class="section" id="services">
@@ -331,6 +357,7 @@ ${steps(c)}
 </section>
 
 ${visit(c, lang)}
+<section class="ticker" data-scroll="pass" aria-hidden="true"><div class="ticker__row">${tick.repeat(3)}</div><div class="ticker__row ticker__row--alt">${tick.repeat(3)}</div></section>
 ${finalCta(c, lang)}`;
 }
 

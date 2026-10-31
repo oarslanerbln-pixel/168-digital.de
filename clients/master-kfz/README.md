@@ -54,7 +54,7 @@ unsicheren Angaben mit `TODO(confirm)` markiert.
 - [ ] Preise inkl. MwSt.? Inhalt der Inspektion ab 129 €? (Quelle: Instagram-Flyer)
 - [ ] Wird Fehlerdiagnose angeboten? Wird Englisch gesprochen?
 - [ ] Logo-Entscheidung: Konzept A/B/C oder Bestandslogo (`/logo-konzepte/`)
-- [ ] Echte Werkstattfotos (optional) – das Design funktioniert ohne
+- [ ] Bilder/Video für Hero und Galerie (optional): Prompts und Dateinamen in `FLOW-PROMPTS.md`
 
 Hinweis: Das mitgeschickte Handelsregister-Schreiben betrifft die
 *Nura Luxe Beauty UG* (HRB 283896 B), nicht Master KFZ – es wurde nicht verwendet.
