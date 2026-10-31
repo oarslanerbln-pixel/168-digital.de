@@ -65,6 +65,7 @@ lassen.**
 | Lead-Versand (Web3Forms) + WhatsApp/E-Mail-Fallback | `src/utils/leads.ts` |
 | 404-Seite (noindex) für jede unbekannte URL | `src/pages/NotFoundPage.tsx` |
 | Sprachpfade (`/`, `/de/…`, `/tr/…`): Canonical, hreflang, interne Links | `src/utils/localePath.ts` |
+| Kundenprojekte (eigenständig, eigenes Vercel-Projekt mit Root Directory) | `clients/<kunde>/` – z. B. `clients/master-kfz/README.md` |
 
 **Inhalte gehören nach `src/data/` oder `src/i18n.ts`, niemals hart in JSX.**
 Ein neuer Service heißt: Eintrag in `services.ts` + Texte in
