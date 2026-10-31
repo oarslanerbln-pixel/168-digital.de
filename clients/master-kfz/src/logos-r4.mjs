@@ -185,3 +185,6 @@ export const LOGO_R4 = [
 ];
 
 export const r4Svg = (l, i, cls = 'l3') => `<svg class="${cls}" viewBox="0 0 200 200" role="img" aria-label="${l.name}">${l.svg(`r4v${i}`)}</svg>`;
+
+/* Shared with round 5 (shortlist alternatives). */
+export { T, M, wm, poly, pt, n, shield, shieldPaths, wings, halftone, origami, neon, chromeDefs, RED, GOLD, CREAM, NAVY, SILV, INK, BLK, WHITE, SANS, SERIF, MONO };
