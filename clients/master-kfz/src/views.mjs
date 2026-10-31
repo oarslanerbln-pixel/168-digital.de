@@ -126,7 +126,7 @@ ${langSwitch(p, 'lang lang--footer')}
 </footer>
 <nav class="mbar" aria-label="${e(c.footer.contact)}">
 <a href="${tel}" class="mbar__btn">${icon('phone')}<span>${e(c.cta.call)}</span></a>
-<a href="${wa(c)}" class="mbar__btn" ${ext}>${icon('chat')}<span>WhatsApp</span></a>
+<a href="${wa(c)}" class="mbar__btn mbar__btn--wa" ${ext}>${icon('chat')}<span>WhatsApp</span></a>
 <a href="${routes.booking[lang]}" class="mbar__btn mbar__btn--red">${icon('calendar')}<span>${e(c.nav.booking)}</span></a>
 </nav>`;
 }
@@ -243,7 +243,7 @@ ${gearSvg('gear final__gear')}
 <div class="wrap">
 <h2 class="final__title rv">${twoLine(c.home.finalTitle)}</h2>
 <p class="lead rv" style="--i:1">${e(c.home.finalText)}</p>
-<div class="btns rv" style="--i:2">${btn(routes.booking[lang], c.cta.book)}${btn(wa(c), c.cta.whatsapp, 'ghost', 'chat', ext)}</div>
+<div class="btns rv" style="--i:2">${btn(routes.booking[lang], c.cta.book)}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
 </div>
 </section>`;
 }
@@ -291,7 +291,7 @@ function home(c, lang) {
 ${kicker(c.home.kicker, 'hero__kicker')}
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
 <p class="hero__lead">${e(c.home.lead)}</p>
-<div class="btns hero__cta">${btn(routes.booking[lang], c.cta.book)}${btn(wa(c), c.cta.whatsapp, 'ghost', 'chat', ext)}</div>
+<div class="btns hero__cta">${btn(routes.booking[lang], c.cta.book)}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
 </div>
 <div class="hero__car" aria-hidden="true">${carSvg('car car--hero')}<i class="hero__sweep"></i></div>
 <ul class="hero__trust wrap">${c.home.trust.map((t) => `<li>${icon('check')}${e(t)}</li>`).join('')}</ul>
@@ -385,7 +385,7 @@ ${crumbs(c, lang, [[c.nav.home, routes.home[lang]], [c.nav.services, routes.serv
 <div><p class="kicker rv"><span class="kicker__icon">${icon(s.icon)}</span>${e(c.nav.services)}</p>
 <h1 class="h1 rv" style="--i:1">${e(t.name)}</h1>
 <p class="lead rv" style="--i:2">${e(t.lead)}</p>
-<div class="btns rv" style="--i:3">${btn(book, c.service.bookThis)}${btn(wa(c), c.cta.whatsapp, 'ghost', 'chat', ext)}</div></div>
+<div class="btns rv" style="--i:3">${btn(book, c.service.bookThis)}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div></div>
 <aside class="pbox rv" style="--i:2"><p class="pbox__label">${e(c.service.priceLabel)}</p><p class="pbox__price">${price}</p><p class="pbox__note">${e(c.service.priceNote)}</p></aside>
 </div>
 </section>
@@ -485,7 +485,7 @@ ${field('name', B.name, 'autocomplete="name" maxlength="80"')}${field('phone', B
 </form>
 <aside class="bk-aside rv" style="--i:1">
 <h2 class="h3">${e(B.directTitle)}</h2><p>${e(B.directText)}</p>
-<div class="btns btns--stack">${btn(tel, business.phoneDisplay, 'light', 'phone')}${btn(wa(c), c.cta.whatsapp, 'ghost', 'chat', ext)}</div>
+<div class="btns btns--stack">${btn(tel, business.phoneDisplay, 'light', 'phone')}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
 <div class="bk-aside__block"><h3 class="visit__h">${icon('pin')}${e(business.street)}</h3><p>${business.zip} Berlin-${e(business.district)}</p><a class="link" href="${mapsUrl}" ${ext}>${e(c.cta.route)}${icon('arrow')}</a></div>
 <div class="bk-aside__block"><h3 class="visit__h">${icon('clock')}${e(c.hours.title)}</h3>${hoursList(c)}</div>
 </aside>
@@ -539,7 +539,7 @@ function uiBoard(c, p) {
   ];
   const demo = ([k, t, d]) => `<section class="ui-demo ui-${k}"><h2>${t}</h2><p>${d}</p>
 <div class="ui-demo__bar"><span class="brand">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></span><div class="hdr__end">${langSwitch(p)}<a class="btn btn--red btn--sm" href="#"><span>${e(c.cta.book)}</span></a></div></div>
-<div class="ui-demo__row">${btn('#', c.cta.book)}${btn('#', c.cta.whatsapp, 'ghost', 'chat')}${btn('#', c.cta.route, 'light', 'pin')}<a class="link" href="#">${e(c.cta.allServices)}${icon('arrow')}</a></div>
+<div class="ui-demo__row">${btn('#', c.cta.book)}${btn('#', c.cta.whatsapp, 'ghost btn--wa', 'chat')}${btn('#', c.cta.route, 'light', 'pin')}<a class="link" href="#">${e(c.cta.allServices)}${icon('arrow')}</a></div>
 <nav class="mbar" aria-label="Demo"><a href="#" class="mbar__btn">${icon('phone')}<span>${e(c.cta.call)}</span></a><a href="#" class="mbar__btn">${icon('chat')}<span>WhatsApp</span></a><a href="#" class="mbar__btn mbar__btn--red">${icon('calendar')}<span>${e(c.nav.booking)}</span></a></nav></section>`;
   return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Button-Stile</h1><p class="lead">A–D: erste Runde. E–G: drei neue Richtungen aus deinem Favoriten C (Racing). Vier neue Richtungen für alle Buttons, die Sprachwahl und die mobile Leiste – das Hamburger-Menü bleibt. Mit der Maus über die Buttons fahren, um die Animation zu sehen.</p></div></section>
 <section class="section section--tight"><div class="wrap">${styles.map(demo).join('')}</div></section>`;

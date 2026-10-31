@@ -942,3 +942,18 @@ html.js .step.rv > * { opacity: 0; transform: translateY(12px); transition: opac
 html.js .step.rv.is-in > * { opacity: 1; transform: none; }
 .step.is-in .step__n { animation: stepGlow 1.4s ease calc(var(--i, 0) * 170ms + 0.6s) both; }
 @keyframes stepGlow { 0% { text-shadow: none; } 40% { text-shadow: 0 0 14px var(--red-2); } 100% { text-shadow: none; } }
+
+/* Hero headline: the italic j/g descenders need more room than the line mask gives body copy */
+.hero__title .ln { padding-bottom: 0.2em; margin-bottom: -0.2em; }
+
+/* Signature colour motion for the two lead actions (Racing Carbon) */
+.ui-carbon .btn { position: relative; overflow: hidden; isolation: isolate; }
+.ui-carbon .btn--red { background-color: var(--red); background-image: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.32) 50%, transparent 62%), linear-gradient(90deg, var(--red), #ff3b30 60%, #c40f16); background-size: 260% 100%, 100% 100%; background-repeat: no-repeat; animation: btnSheen 5.5s ease-in-out infinite; transition: background-size 0.6s var(--ease-out), box-shadow 0.4s; }
+.ui-carbon .btn--red:hover { background-image: linear-gradient(110deg, transparent 38%, rgba(255, 255, 255, 0.4) 50%, transparent 62%), linear-gradient(90deg, #ff3b30, #e3141c 45%, #8f0b10); animation-duration: 1.6s; box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.35), 0 18px 40px -14px rgba(255, 59, 48, 0.75); }
+.ui-carbon .btn--wa { background-image: linear-gradient(110deg, transparent 40%, rgba(37, 211, 102, 0.28) 50%, transparent 60%), repeating-linear-gradient(45deg, #1b1b1e 0 4px, #141416 4px 8px); background-size: 260% 100%, auto; background-repeat: no-repeat, repeat; animation: btnSheen 6.5s ease-in-out 1.2s infinite; transition: border-color 0.45s, color 0.45s, box-shadow 0.45s; }
+.ui-carbon .btn--wa::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #128c7e, #25d366); transform: scaleX(0); transform-origin: left; transition: transform 0.6s var(--ease-out); }
+.ui-carbon .btn--wa:hover { border-color: #25d366; box-shadow: 0 14px 34px -14px rgba(37, 211, 102, 0.7); }
+.ui-carbon .btn--wa:hover::before { transform: scaleX(1); }
+.mbar__btn--wa .i { color: #25d366; }
+.mbar__btn--wa:active { background: rgba(37, 211, 102, 0.18); }
+@keyframes btnSheen { 0%, 55% { background-position: 130% 0, 0 0; } 100% { background-position: -30% 0, 0 0; } }
