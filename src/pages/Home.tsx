@@ -6,6 +6,7 @@ import Solutions from '../components/Solutions';
 import Works from '../components/Works';
 import Process from '../components/Process';
 import Services from '../components/Services';
+import FactsStrip from '../components/FactsStrip';
 import Reel from '../components/Reel';
 import Showroom from '../components/Showroom';
 import HomeFAQ from '../components/HomeFAQ';
@@ -19,14 +20,16 @@ import { getHomeContent } from '../data/homeContent';
 
    1. Hero        what you get + the ask (form / WhatsApp)
    2. Clients     who already trusts us
-   3. Solutions   the systems we build, as mockups, each with its own ask
-   4. Works       real projects
-   5. Process     how it runs, what it costs to start, mid-page ask
-   6. Services    the full list, incl. the film half of the business
-   7. Showreel    proof for the film services directly above it
-   8. Showroom    proof of craft
-   9. FAQ         last objections (also FAQPage JSON-LD)
-  10. Contact     form with "what happens next"
+   3. Facts       four numbers we can back up, counting up
+   4. Services    everything we offer, as the page's anchor — moved up
+                  from position 6 so "what do you do?" is answered first
+   5. Solutions   the systems we build, in use, each with its own ask
+   6. Works       real projects
+   7. Process     how it runs, what it costs to start, mid-page ask
+   8. Showreel    proof for the film services
+   9. Showroom    proof of craft
+  10. FAQ         last objections (also FAQPage JSON-LD)
+  11. Contact     form with "what happens next"
 
    Every section between the hero and the form either removes a doubt
    or carries its own button to the form, so a visitor never has to
@@ -64,10 +67,11 @@ export default function Home() {
       <SEOHead path="/" jsonLd={faqJsonLd} />
       <Hero />
       <MarqueeTextBand direction="left" words={clientNames} />
+      <FactsStrip />
+      <Services />
       <Solutions />
       <Works />
       <Process />
-      <Services />
       {/* The showreel sits right under the film services it proves.
           Reel lazy-loads its video only once it scrolls into view. */}
       <section className="reel-section home-reel" aria-labelledby="home-reel-title">

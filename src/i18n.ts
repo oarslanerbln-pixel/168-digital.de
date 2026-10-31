@@ -5,6 +5,11 @@ import { getPathLanguage, hasLanguagePrefix, isLanguage, toLanguage, type Langua
 const resources = {
   en: {
     translation: {
+      "facts_label": "1618 Digital in numbers",
+      "facts_services": "Services from one team",
+      "facts_projects": "Projects in our portfolio",
+      "facts_languages": "Languages we work in",
+      "facts_reply": "Reply time",
       "hero_whatsapp": "Message on WhatsApp",
       "hero_trust_1": "Reply within 24 hours",
       "hero_trust_2": "Written quote before we start",
@@ -188,6 +193,11 @@ const resources = {
   },
   de: {
     translation: {
+      "facts_label": "1618 Digital in Zahlen",
+      "facts_services": "Leistungen aus einer Hand",
+      "facts_projects": "Projekte im Portfolio",
+      "facts_languages": "Sprachen, in denen wir arbeiten",
+      "facts_reply": "Antwortzeit",
       "hero_whatsapp": "WhatsApp schreiben",
       "hero_trust_1": "Antwort innerhalb von 24 Stunden",
       "hero_trust_2": "Schriftliches Angebot vor Projektstart",
@@ -371,6 +381,11 @@ const resources = {
   },
   tr: {
     translation: {
+      "facts_label": "Rakamlarla 1618 Digital",
+      "facts_services": "Tek ekipten hizmet",
+      "facts_projects": "Portföydeki proje",
+      "facts_languages": "Çalıştığımız dil",
+      "facts_reply": "Yanıt süresi",
       "hero_whatsapp": "WhatsApp'tan yazın",
       "hero_trust_1": "24 saat içinde yanıt",
       "hero_trust_2": "Başlamadan önce yazılı teklif",

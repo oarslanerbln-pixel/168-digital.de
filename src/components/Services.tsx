@@ -1,81 +1,77 @@
+import type { CSSProperties, PointerEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight } from 'lucide-react';
 import { playTick } from '../utils/audio';
-import { services, type ServiceGroup, type ServiceMeta } from '../data/services';
-import { useLocalizedPath } from '../utils/localePath';
+import { services, type ServiceMeta } from '../data/services';
+import './Services.css';
 
 /* ════════════════════════════════════════════════════════════════
-   SERVICES — light, modern counterpoint section directly under Hero.
-   Each card links to its dedicated, SEO-optimized service page.
+   SERVICES — the five things the studio sells, as the page's anchor.
 
-   The cards are split into the two halves of the business — software
-   (websites, digital menus) and film (weddings, drone, social) — each
-   under a quiet label. A flat grid of every offer read as a list of
-   unrelated things; two labelled rows let a café owner and a couple
-   planning a wedding each find their row at a glance and skip the
-   other. Cards come straight from src/data/services.ts, so a service
-   is added in one place and lands here, in the nav and on its page.
+   Services used to sit two-thirds down the page as quiet light cards;
+   a visitor had to read hero, solutions, work and process before
+   learning what the studio actually offers. They now come straight
+   after the client marquee, as a bento grid of large dark tiles: the
+   two software services wide on the first row (the business the site
+   leads with), the three film services below.
+
+   Motion, in order of what it tells the visitor:
+   - tiles rise in one after another as the grid enters the screen;
+   - a soft light follows the pointer across a tile and its border
+     lights up in the accent — "this is clickable" without a label;
+   - the icon ring glows on hover.
+   Everything is CSS-driven from two custom properties (--mx/--my) set
+   on pointer move, so there is no animation loop and nothing runs while
+   the visitor is not touching a tile. Touch devices and reduced motion
+   get the static tile with the glow already on.
+
+   Cards come straight from src/data/services.ts, so a service is added
+   in one place and lands here, in the nav and on its own page.
    ════════════════════════════════════════════════════════════════ */
 
-const groups: { id: ServiceGroup; labelKey: string }[] = [
-  { id: 'software', labelKey: 'services_group_software' },
-  { id: 'film', labelKey: 'services_group_film' },
-];
+function trackPointer(e: PointerEvent<HTMLAnchorElement>) {
+  const r = e.currentTarget.getBoundingClientRect();
+  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
+  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
+}
 
-function ServiceCard({ service, index }: { service: ServiceMeta; index: number }) {
+function ServiceTile({ service, index }: { service: ServiceMeta; index: number }) {
   const { t } = useTranslation();
-  const { localize } = useLocalizedPath();
   const Icon = service.icon;
 
-  /* A card used to have its opacity, y and scale driven continuously by
-     scroll position (useScroll + useTransform, offset ["0 1", "1.2 1"]).
-     That meant a card was only fully opaque while the page sat inside a
-     narrow scroll window: land past it, restore a scroll position, or
-     scroll faster than the smooth-scroll wrapper settles, and the card
-     stayed at opacity 0 — visibly a blank gap where the service grid
-     should be.
-
-     A one-shot `whileInView` reveal latches on first sight and then stays
-     put, which is both sturdier and quieter. */
   return (
-    <motion.div
-      className="service-card-cell"
-      initial={{ opacity: 0, y: 24 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15, margin: '0px 0px -40px 0px' }}
-      transition={{ duration: 0.6, delay: Math.min(index, 3) * 0.07, ease: [0.16, 1, 0.3, 1] }}
+    <motion.li
+      className={`svc-cell svc-cell-${service.group}`}
+      initial={{ opacity: 0, y: 36, scale: 0.97 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
       <Link
-        to={localize(`/${service.slug}`)}
+        to={`/${service.slug}`}
+        className="svc-tile"
+        onPointerMove={trackPointer}
         onMouseEnter={playTick}
-        className="service-card-light"
+        style={{ '--svc-hue': service.glowColor } as CSSProperties}
       >
-        <div className="service-card-body-light">
-          <div className="service-icon-wrapper-light">
-            <Icon size={24} strokeWidth={1.6} />
-          </div>
-
-          <h4 className="service-card-title-light">
-            {t(service.titleKey)}
-          </h4>
-          <p className="service-card-desc-light">
-            {t(service.descKey)}
-          </p>
-
-          <div className="service-card-tags-light">
-            {service.tags.map((tag) => (
-              <span key={tag} className="service-tag-light">{tag}</span>
-            ))}
-          </div>
-
-          <span className="service-card-cta-light">
-            {t('svc_view_details')} <ArrowUpRight size={14} />
-          </span>
-        </div>
+        <span className="svc-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        <span className="svc-icon" aria-hidden="true">
+          <Icon size={26} strokeWidth={1.6} />
+        </span>
+        <h3 className="svc-title">{t(service.titleKey)}</h3>
+        <p className="svc-desc">{t(service.descKey)}</p>
+        <span className="svc-tags">
+          {service.tags.map((tag) => (
+            <span key={tag} className="svc-tag">{tag}</span>
+          ))}
+        </span>
+        <span className="svc-cta">
+          {t('svc_view_details')} <ArrowUpRight size={16} aria-hidden="true" />
+        </span>
       </Link>
-    </motion.div>
+    </motion.li>
   );
 }
 
@@ -83,34 +79,24 @@ export default function Services() {
   const { t } = useTranslation();
 
   return (
-    <section id="services" className="services-section services-light">
-      <motion.div
-        className="services-header"
+    <section id="services" className="svc-section">
+      <motion.header
+        className="home-section-header"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-60px' }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
-        <span className="services-overline">{t('services_overline')}</span>
-        <h2 className="services-title">
-          {t('services_title')}
-        </h2>
-        <p className="services-subtitle">{t('services_subtitle')}</p>
-      </motion.div>
+        <span className="home-overline">{t('services_overline')}</span>
+        <h2 className="home-title svc-heading">{t('services_title')}</h2>
+        <p className="home-subtitle">{t('services_subtitle')}</p>
+      </motion.header>
 
-      {groups.map((group) => {
-        const items = services.filter((s) => s.group === group.id);
-        return (
-          <div key={group.id} className="services-group">
-            <h3 className="services-group-label">{t(group.labelKey)}</h3>
-            <div className={`services-grid services-grid-${items.length}`}>
-              {items.map((service, i) => (
-                <ServiceCard key={service.slug} service={service} index={i} />
-              ))}
-            </div>
-          </div>
-        );
-      })}
+      <ul className="svc-grid">
+        {services.map((service, i) => (
+          <ServiceTile key={service.slug} service={service} index={i} />
+        ))}
+      </ul>
     </section>
   );
 }

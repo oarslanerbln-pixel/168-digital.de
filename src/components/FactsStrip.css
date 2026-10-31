@@ -1,0 +1,69 @@
+/* Four numbers between the client marquee and the services. Value above
+   label visually (column-reverse) while the DOM keeps dt before dd. */
+.facts-strip {
+  position: relative;
+  z-index: var(--z-content);
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 56px 32px 0;
+}
+
+.facts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(var(--ink-rgb), 0.04), rgba(var(--ink-rgb), 0.01));
+  overflow: hidden;
+}
+
+.fact {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end; /* reversed axis: keeps the numbers top-aligned */
+  gap: 6px;
+  padding: 28px 30px;
+  min-width: 0;
+}
+
+.fact + .fact {
+  border-left: 1px solid var(--line);
+}
+
+.fact-value {
+  font-size: clamp(2.2rem, 4.4vw, 3.4rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  background: linear-gradient(180deg, var(--text-main) 30%, var(--accent-cyan));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fact-label {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+@media (max-width: 760px) {
+  .facts-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .fact:nth-child(3) {
+    border-left: 0;
+  }
+  .fact:nth-child(n + 3) {
+    border-top: 1px solid var(--line);
+  }
+}
+
+@media (max-width: 600px) {
+  .facts-strip {
+    padding: 40px 20px 0;
+  }
+  .fact {
+    padding: 20px 18px;
+  }
+}

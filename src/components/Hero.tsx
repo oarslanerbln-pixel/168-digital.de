@@ -129,6 +129,18 @@ export default function Hero() {
       className={`hero-section${play ? ' hero-play' : ''}`}
       onPointerMove={trackPointer}
     >
+      {/* Backdrop: a perspective grid with light pulses running along
+          it and two slow glow orbs — the "screen at night" the dark
+          theme is built around. Pure CSS, decorative, frozen for
+          reduced motion. */}
+      <div className="hero-backdrop" aria-hidden="true">
+        <span className="hero-grid" />
+        <span className="hero-beam hero-beam-1" />
+        <span className="hero-beam hero-beam-2" />
+        <span className="hero-beam hero-beam-3" />
+        <span className="hero-orb hero-orb-a" />
+        <span className="hero-orb hero-orb-b" />
+      </div>
       <div className="hero-inner" key={replay}>
         <div className="hero-main">
           <span className="hero-eyebrow hero-rise" style={{ '--d': '0s' } as CSSProperties}>
