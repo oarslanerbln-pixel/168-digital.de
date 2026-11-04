@@ -227,12 +227,15 @@ function serviceCard(c, lang, s, i) {
   const price = s.price == null ? c.cta.onRequest : priceText(lang, s.price, s.from);
   return `<a class="card rv" href="${servicePath(lang, s)}" style="--i:${i % 4}">
 <span class="card__icon">${iconPro(s.icon)}</span>
-<h3 class="card__title">${e(t.name)}</h3>
+<h3 class="card__title">${shy(e(t.name))}</h3>
 <p class="card__text">${e(t.short)}</p>
 <span class="card__foot"><span class="card__price">${e(price)}</span><span class="card__arrow">${icon('arrow')}</span></span>
 </a>`;
 }
 
+/* Soft hyphen at the compound joint of long German service names, so a narrow heading
+   breaks as „Zahnriemen-wechsel“, not „Zahnrie-menwechsel“. Headings only – never in meta. */
+const shy = (s) => s.replace(/(Zahnriemen|Getriebeöl|Reifen|Klima|Fehler)(?=\p{Ll}{4,})/u, '$1\u00AD');
 const cards = (c, lang, list, mod = '') => `<div class="cards${mod}">${list.map((s, i) => serviceCard(c, lang, s, i)).join('')}</div>`;
 
 function faqList(items) {
@@ -393,7 +396,7 @@ function serviceDetail(c, lang, s) {
 ${crumbs(c, lang, [[c.nav.home, routes.home[lang]], [c.nav.services, routes.services[lang]], [t.name, null]])}
 <div class="wrap phero__split">
 <div><p class="kicker rv"><span class="kicker__icon">${icon(s.icon)}</span>${e(c.nav.services)}</p>
-<h1 class="h1 rv" style="--i:1">${e(t.name)}</h1>
+<h1 class="h1 rv" style="--i:1">${shy(e(t.name))}</h1>
 <p class="lead rv" style="--i:2">${e(t.lead)}</p>
 <div class="btns rv" style="--i:3">${btn(book, c.service.bookThis)}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div></div>
 <aside class="pbox rv" style="--i:2"><p class="pbox__label">${e(c.service.priceLabel)}</p><p class="pbox__price">${price}</p><p class="pbox__note">${e(c.service.priceNote)}</p></aside>
