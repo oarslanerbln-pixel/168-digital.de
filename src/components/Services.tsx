@@ -8,14 +8,14 @@ import { services, type ServiceMeta } from '../data/services';
 import './Services.css';
 
 /* ════════════════════════════════════════════════════════════════
-   SERVICES — the five things the studio sells, as the page's anchor.
+   SERVICES — the six things the studio sells, as the page's anchor.
 
    Services used to sit two-thirds down the page as quiet light cards;
    a visitor had to read hero, solutions, work and process before
    learning what the studio actually offers. They now come straight
    after the client marquee, as a bento grid of large dark tiles: the
    two software services wide on the first row (the business the site
-   leads with), the three film services below.
+   leads with), the four film services below.
 
    Motion, in order of what it tells the visitor:
    - tiles rise in one after another as the grid enters the screen;

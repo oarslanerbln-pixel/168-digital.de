@@ -514,4 +514,103 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       relatedWorkIds: [],
     },
   },
+
+  'travel-films-journals': {
+    en: {
+      metaTitle: '1618 Digital | Travel Films & Digital Travel Journals',
+      metaDescription:
+        'Cinematic travel films with drone footage, plus a QR-linked digital travel journal with route, map and highlights. For honeymoons, hotels and tour operators.',
+      overline: 'TRAVEL FILMS & JOURNALS',
+      h1: 'Travel Films & Digital Travel Journals',
+      intro: [
+        'A trip deserves more than a camera roll nobody opens again. We film your journey with the same craft as a commercial — golden-hour light, drone shots, one consistent colour grade and real sound — and edit it into a short film with a beginning, a turn and an ending.',
+        'Every film comes with a digital travel journal: an elegant page behind a QR code on a printed card, holding the route, the map, the best frames and the film itself. It is a keepsake you can hand to family, and a guide your guests or customers can actually follow.',
+      ],
+      features: [
+        { title: 'Cinematic Travel Film', desc: 'A 2–4 minute film shot in log, colour-graded in DaVinci Resolve and paced like a story, not a slideshow.' },
+        { title: 'Signature Visual Motif', desc: 'One recurring object or colour ties every scene together, so your films are recognisable as a series.' },
+        { title: 'Local Voices', desc: 'On request, a local — a fisherman, a café owner, a guide — tells the place in their own words. Documentary depth instead of postcard clichés.' },
+        { title: 'Drone & Aerial Reveals', desc: 'Aerial shots where the story needs scale, flown within local regulations.' },
+        { title: 'QR Travel Journal', desc: 'Route, map, highlights and film on one fast, mobile page, opened from a printed card. No app, no account.' },
+        { title: 'Social Cut-Downs', desc: 'Vertical 15–30 second edits for Instagram and TikTok, delivered with the main film.' },
+      ],
+      process: [
+        { title: 'Story Plan', desc: 'We agree on route, motif and key moments, and write a shot list so the trip is not spent filming.' },
+        { title: 'Shooting on Location', desc: 'Compact crew, golden-hour and blue-hour schedule, discreet enough that the trip still feels like a trip.' },
+        { title: 'Film, Journal & Card', desc: 'Edit, colour and sound design, then the journal page and the printed QR card — all delivered together.' },
+      ],
+      faq: [
+        { q: 'Do you travel with us abroad?', a: 'Yes. We film across Germany, Europe and Turkey; travel costs are quoted transparently up front.' },
+        { q: 'Who is this for?', a: 'Honeymoon couples, families on a special trip, boutique hotels and tour operators who want to show a destination at its best.' },
+        { q: 'How long does the journal stay online?', a: 'The journal page stays online for at least two years and can be extended. You also receive all files to keep.' },
+      ],
+      ctaTitle: 'Where are you going next?',
+      ctaText: 'Tell us the destination and dates, and we will send you a story idea and a quote.',
+      relatedWorkIds: [],
+    },
+    de: {
+      metaTitle: '1618 Digital | Reisefilme & digitale Reisetagebücher',
+      metaDescription:
+        'Kinoreife Reisefilme mit Drohnenaufnahmen und ein digitales Reisetagebuch per QR-Code mit Route, Karte und Highlights. Für Flitterwochen, Hotels und Reiseveranstalter.',
+      overline: 'REISEFILME & REISETAGEBÜCHER',
+      h1: 'Reisefilme & digitale Reisetagebücher',
+      intro: [
+        'Eine Reise verdient mehr als eine Kamerarolle, die niemand mehr öffnet. Wir filmen Ihre Reise mit dem Handwerk eines Werbefilms — Licht der goldenen Stunde, Drohnenaufnahmen, ein durchgehendes Color Grading und echter Ton — und schneiden daraus einen kurzen Film mit Anfang, Wendung und Ende.',
+        'Zu jedem Film gehört ein digitales Reisetagebuch: eine elegante Seite hinter einem QR-Code auf einer gedruckten Karte, mit Route, Karte, den besten Bildern und dem Film selbst. Ein Andenken für die Familie und ein Reiseführer, dem Ihre Gäste oder Kunden wirklich folgen können.',
+      ],
+      features: [
+        { title: 'Kinoreifer Reisefilm', desc: 'Ein 2–4-minütiger Film, in Log gedreht, in DaVinci Resolve gegradet und erzählt wie eine Geschichte, nicht wie eine Diashow.' },
+        { title: 'Visuelles Leitmotiv', desc: 'Ein wiederkehrendes Objekt oder eine Farbe verbindet alle Szenen, sodass Ihre Filme als Serie wiedererkennbar sind.' },
+        { title: 'Lokale Stimmen', desc: 'Auf Wunsch erzählt ein Einheimischer — ein Fischer, eine Café-Besitzerin, ein Guide — den Ort in eigenen Worten. Dokumentarische Tiefe statt Postkarten-Klischees.' },
+        { title: 'Drohnen- & Luftaufnahmen', desc: 'Luftbilder dort, wo die Geschichte Weite braucht, geflogen im Rahmen der lokalen Vorschriften.' },
+        { title: 'QR-Reisetagebuch', desc: 'Route, Karte, Highlights und Film auf einer schnellen, mobilen Seite, geöffnet über eine gedruckte Karte. Keine App, kein Konto.' },
+        { title: 'Social-Media-Schnitte', desc: 'Vertikale 15–30-Sekunden-Clips für Instagram und TikTok, zusammen mit dem Hauptfilm geliefert.' },
+      ],
+      process: [
+        { title: 'Story-Plan', desc: 'Wir legen Route, Motiv und Schlüsselmomente fest und schreiben eine Shotlist, damit die Reise nicht zum Dreh wird.' },
+        { title: 'Dreh vor Ort', desc: 'Kleines Team, Drehplan nach goldener und blauer Stunde, so diskret, dass sich die Reise noch wie eine Reise anfühlt.' },
+        { title: 'Film, Tagebuch & Karte', desc: 'Schnitt, Farbe und Sounddesign, danach die Tagebuch-Seite und die gedruckte QR-Karte — alles zusammen geliefert.' },
+      ],
+      faq: [
+        { q: 'Reisen Sie mit uns ins Ausland?', a: 'Ja. Wir drehen in Deutschland, Europa und der Türkei; Reisekosten nennen wir transparent im Voraus.' },
+        { q: 'Für wen ist das gedacht?', a: 'Für Paare auf Hochzeitsreise, Familien auf einer besonderen Reise, Boutique-Hotels und Reiseveranstalter, die ein Ziel von seiner besten Seite zeigen wollen.' },
+        { q: 'Wie lange bleibt das Reisetagebuch online?', a: 'Die Tagebuch-Seite bleibt mindestens zwei Jahre online und kann verlängert werden. Alle Dateien erhalten Sie zusätzlich zum Behalten.' },
+      ],
+      ctaTitle: 'Wohin geht Ihre nächste Reise?',
+      ctaText: 'Nennen Sie uns Ziel und Reisedaten — wir schicken Ihnen eine Story-Idee und ein Angebot.',
+      relatedWorkIds: [],
+    },
+    tr: {
+      metaTitle: '1618 Digital | Seyahat Filmleri & Dijital Gezi Defterleri',
+      metaDescription:
+        'Drone çekimli sinematik seyahat filmleri ve rota, harita ve öne çıkan anları içeren QR kodlu dijital gezi defteri. Balayı, oteller ve tur operatörleri için.',
+      overline: 'SEYAHAT FİLMLERİ & GEZİ DEFTERİ',
+      h1: 'Seyahat Filmleri & Dijital Gezi Defterleri',
+      intro: [
+        'Bir gezi, kimsenin tekrar açmadığı bir kamera rulosundan fazlasını hak ediyor. Yolculuğunuzu bir reklam filmi özeniyle çekiyoruz — altın saat ışığı, drone planları, tutarlı bir renk dili ve gerçek ses — ve başı, dönüşü ve sonu olan kısa bir filme dönüştürüyoruz.',
+        'Her filmle birlikte dijital bir gezi defteri geliyor: basılı bir kartın üzerindeki QR kodun arkasında rota, harita, en iyi kareler ve filmin kendisini barındıran zarif bir sayfa. Ailenize hediye edebileceğiniz bir hatıra ve misafirlerinizin ya da müşterilerinizin gerçekten takip edebileceği bir rehber.',
+      ],
+      features: [
+        { title: 'Sinematik Seyahat Filmi', desc: 'Log profilde çekilen, DaVinci Resolve\'da renklendirilen ve slayt gösterisi değil bir hikaye gibi kurgulanan 2-4 dakikalık film.' },
+        { title: 'İmza Görsel Motif', desc: 'Tekrar eden tek bir nesne ya da renk tüm sahneleri birbirine bağlar; filmleriniz bir seri olarak tanınır.' },
+        { title: 'Yerel Sesler', desc: 'İsteğe bağlı olarak bir yerel — bir balıkçı, bir kahveci, bir rehber — mekanı kendi sözleriyle anlatır. Kartpostal klişeleri yerine belgesel derinliği.' },
+        { title: 'Drone & Havadan Çekim', desc: 'Hikayenin genişliğe ihtiyaç duyduğu yerlerde, yerel kurallara uygun uçuşla havadan planlar.' },
+        { title: 'QR Gezi Defteri', desc: 'Rota, harita, öne çıkan anlar ve film tek bir hızlı mobil sayfada; basılı bir kartla açılır. Uygulama yok, hesap yok.' },
+        { title: 'Sosyal Medya Kurguları', desc: 'Instagram ve TikTok için 15-30 saniyelik dikey kurgular, ana filmle birlikte teslim edilir.' },
+      ],
+      process: [
+        { title: 'Hikaye Planı', desc: 'Rota, motif ve kilit anları birlikte belirliyor, bir çekim listesi hazırlıyoruz; böylece gezi bir çekim seansına dönüşmüyor.' },
+        { title: 'Mekanda Çekim', desc: 'Küçük ekip, altın ve mavi saate göre çekim planı; gezinin hâlâ bir gezi gibi hissettirmesi için sezdirmeden.' },
+        { title: 'Film, Defter & Kart', desc: 'Kurgu, renk ve ses tasarımı; ardından gezi defteri sayfası ve basılı QR kart — hepsi birlikte teslim edilir.' },
+      ],
+      faq: [
+        { q: 'Yurt dışına bizimle seyahat ediyor musunuz?', a: 'Evet. Almanya, Avrupa ve Türkiye\'de çekim yapıyoruz; seyahat masraflarını önceden şeffaf şekilde teklif ediyoruz.' },
+        { q: 'Bu hizmet kimler için?', a: 'Balayı çiftleri, özel bir geziye çıkan aileler, butik oteller ve bir destinasyonu en iyi haliyle göstermek isteyen tur operatörleri için.' },
+        { q: 'Gezi defteri ne kadar süre yayında kalır?', a: 'Defter sayfası en az iki yıl yayında kalır ve uzatılabilir. Tüm dosyalar ayrıca size teslim edilir.' },
+      ],
+      ctaTitle: 'Bir sonraki durak neresi?',
+      ctaText: 'Destinasyonu ve tarihleri paylaşın, size bir hikaye fikri ve teklif gönderelim.',
+      relatedWorkIds: [],
+    },
+  },
 };
