@@ -1,5 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
-import { Globe, QrCode, Video, Camera, Smartphone } from 'lucide-react';
+import { Globe, QrCode, Video, Camera, Smartphone, Plane } from 'lucide-react';
 
 /**
  * The two halves of the business. The homepage groups its service cards
@@ -70,6 +70,18 @@ export const services: ServiceMeta[] = [
     tags: ['Strategy', 'Content', 'Growth'],
     titleKey: 'service_social_title',
     descKey: 'service_social_desc',
+    group: 'film',
+  },
+  {
+    // Travel film plus a QR-linked journal page: the film studio's craft
+    // sold as a keepsake. Grouped with film because the shoot is the work;
+    // the journal page reuses the digital-menu QR stack.
+    slug: 'travel-films-journals',
+    icon: Plane,
+    glowColor: '#818cf8',
+    tags: ['Travel Films', 'QR Journal', 'Drone'],
+    titleKey: 'service_travel_title',
+    descKey: 'service_travel_desc',
     group: 'film',
   },
 ];
