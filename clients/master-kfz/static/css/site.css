@@ -9,6 +9,7 @@
 
 :root {
   /* Anthracite and off-white instead of pure black/white: softer contrast, reads as film, not as a screen. */
+  --bg-0: #08090c; /* footer */
   --bg: #0b0c10;
   --bg-2: #13141a;
   --bg-3: #1b1c23;
@@ -161,7 +162,7 @@ code { font-family: var(--mono); font-size: 0.9em; background: var(--bg-3); padd
 .brand { display: inline-flex; align-items: center; gap: 10px; flex: none; }
 .brand__mark { width: auto; height: 26px; }
 .brand__word { font-weight: 800; font-style: italic; font-size: 17px; letter-spacing: 0.01em; line-height: 1; white-space: nowrap; }
-.brand__word i { color: var(--red); margin-left: 0.28em; }
+.brand__word i { color: var(--red); margin-left: 0.02em; }
 
 /* ---------- Header ---------- */
 .hdr {
@@ -242,7 +243,7 @@ html.is-intro .intro {
 .intro__word { display: flex; gap: 0.3em; overflow: hidden; font-size: clamp(28px, 7vw, 46px); font-weight: 800; font-style: italic; letter-spacing: 0.02em; line-height: 1.1; }
 .intro__word > * { display: inline-block; transform: translateY(110%); animation: lineUp 0.8s var(--ease-out) 0.7s forwards; }
 .intro__word em { animation-delay: 0.8s; }
-.intro__sub { font: 500 11px var(--mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-3); opacity: 0; animation: fadeIn 0.6s ease 1.05s forwards; }
+.intro__sub { font: 500 11px var(--mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-2); opacity: 0; animation: fadeIn 0.6s ease 1.05s forwards; }
 .intro__bar { position: absolute; left: 50%; bottom: max(48px, 12vh); width: 120px; height: 2px; translate: -50% 0; background: var(--line); overflow: hidden; }
 .intro__bar::after { content: ''; position: absolute; inset: 0; background: var(--red); transform-origin: left; transform: scaleX(0); animation: grow 1.7s var(--ease) forwards; box-shadow: 0 0 12px var(--red); }
 
@@ -297,13 +298,13 @@ html.js .car--hero .car__tail { animation: tailOn 0.8s ease calc(var(--hd) + 2.4
 .marquee__track { display: flex; width: max-content; animation: marquee 48s linear infinite; }
 .marquee:hover .marquee__track { animation-play-state: paused; }
 .marquee ul { display: flex; gap: clamp(32px, 5vw, 64px); padding-right: clamp(32px, 5vw, 64px); }
-.marquee li { font-size: clamp(22px, 3vw, 36px); font-weight: 700; font-style: italic; letter-spacing: -0.03em; color: rgba(255, 255, 255, 0.3); white-space: nowrap; transition: color 0.3s; }
+.marquee li { font-size: clamp(22px, 3vw, 36px); font-weight: 700; font-style: italic; letter-spacing: -0.03em; color: rgba(255, 255, 255, 0.36); white-space: nowrap; transition: color 0.3s; }
 .marquee li:hover { color: var(--text); }
 
 /* ---------- Statement (words light up on scroll) ---------- */
 .statement { padding-block: clamp(110px, 18vw, 220px); }
 .statement__text { font-size: clamp(32px, 5.6vw, 80px); line-height: 1.08; letter-spacing: -0.042em; font-weight: 650; max-width: 22ch; text-wrap: balance; }
-html.js .statement .w { opacity: 0.16; transition: opacity 0.35s ease, color 0.35s; }
+html.js .statement .w { opacity: 0.36; transition: opacity 0.35s ease, color 0.35s; }
 html.js .statement .w.on { opacity: 1; }
 
 /* ---------- Section heads ---------- */
@@ -612,7 +613,9 @@ html.no-js .bk__nav [data-next], html.no-js .bk__nav [data-back] { display: none
 .todo { background: #ffd60a; color: #000; padding: 1px 6px; border-radius: 4px; }
 
 /* ---------- Footer ---------- */
-.ftr { position: relative; overflow: hidden; padding-top: clamp(64px, 9vw, 112px); border-top: 1px solid var(--line); background: #040405; }
+.ftr { position: relative; overflow: hidden; padding-top: clamp(64px, 9vw, 112px); border-top: 1px solid var(--line); background: var(--bg-0);
+  /* Small print on the darkest surface: lift the tertiary grey to WCAG AA (≥ 4.5 : 1). */
+  --text-3: #8a8a90; }
 .ftr__grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 .ftr__brand p { margin-top: 18px; max-width: 32ch; color: var(--text-2); font-size: 15px; }
 .ftr__social { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--text-2); transition: color 0.2s; }

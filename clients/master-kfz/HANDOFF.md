@@ -21,4 +21,7 @@ Siehe README „Vor dem Livegang“: Firmierung/HRB/USt-ID, Öffnungszeiten, MwS
 - Vorschau aktualisieren: `node tools/preview-export.mjs`, dann nur geänderte Dateien veröffentlichen
   (meist `index.html`, `css/site.css`, `js/site.js` – Unterseiten laden CSS/JS über denselben Pfad).
 - Logo-PDF neu: `node tools/logo-pdf.cjs`.
+- Neues Foto in `static/media/`: danach `python3 tools/images.py` (erzeugt die 600-px-Handyvariante, `srcset` greift automatisch).
+- CSS: Quelle `static/css/site.css` mit Kommentaren; der Build (`src/css.mjs`) entfernt Kommentare und die Regeln der internen Boards. Die Boards laden `boards.css` (komplett, Originalreihenfolge).
+- Performance (Lighthouse, Handy gedrosselt): Startseite 99, LCP 1,7 s, TBT 0, CLS 0. `serve.mjs` komprimiert wie Vercel, damit lokale Messungen stimmen.
 - Screenshots nur gezielt und verkleinert; keine PR-Benachrichtigungen abonnieren (Vercel-Bot erzeugt pro Push mehrere).

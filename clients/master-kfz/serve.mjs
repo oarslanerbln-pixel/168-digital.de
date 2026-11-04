@@ -2,10 +2,11 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { brotliCompressSync, gzipSync } from 'node:zlib';
 
 const root = join(import.meta.dirname, 'dist');
 const port = Number(process.env.PORT) || 4173;
-const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.webmanifest': 'application/manifest+json', '.mp4': 'video/mp4' };
+const types = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.xml': 'application/xml', '.txt': 'text/plain; charset=utf-8', '.webmanifest': 'application/manifest+json', '.mp4': 'video/mp4', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.json': 'application/json' };
 
 createServer(async (req, res) => {
   const path = normalize(decodeURIComponent(new URL(req.url, 'http://x').pathname)).replace(/^(\.\.[/\\])+/, '');
@@ -21,6 +22,12 @@ createServer(async (req, res) => {
       const end = range[2] ? Number(range[2]) : body.length - 1;
       res.writeHead(206, { 'Content-Type': type, 'Accept-Ranges': 'bytes', 'Content-Range': `bytes ${start}-${end}/${body.length}`, 'Content-Length': end - start + 1 });
       return res.end(body.subarray(start, end + 1));
+    }
+    // Text is compressed as on Vercel (brotli, else gzip) so local performance numbers match production.
+    const enc = req.headers['accept-encoding'] ?? '';
+    if (/^(text|application\/(json|xml|manifest))/.test(type)) {
+      if (enc.includes('br')) { res.writeHead(200, { 'Content-Type': type, 'Content-Encoding': 'br', Vary: 'Accept-Encoding' }); return res.end(brotliCompressSync(body)); }
+      if (enc.includes('gzip')) { res.writeHead(200, { 'Content-Type': type, 'Content-Encoding': 'gzip', Vary: 'Accept-Encoding' }); return res.end(gzipSync(body)); }
     }
     res.writeHead(200, { 'Content-Type': type, 'Accept-Ranges': 'bytes' });
     res.end(body);

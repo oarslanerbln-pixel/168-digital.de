@@ -8,6 +8,7 @@
  * key fails the build unless LEAD_FALLBACK_ONLY=true — a form that silently
  * drops leads behind a green deploy is the worst failure this site can have.
  */
+import { splitCss } from './src/css.mjs';
 import { cp, mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
@@ -32,7 +33,10 @@ await rm(dist, { recursive: true, force: true });
 await mkdir(dist, { recursive: true });
 await cp(join(root, 'static'), dist, { recursive: true });
 
-const assets = await Promise.all(['static/css/site.css', 'static/js/site.js'].map((f) => readFile(join(root, f))));
+const { main: mainCss, all: boardCss } = splitCss(await readFile(join(root, 'static/css/site.css'), 'utf8'));
+await writeFile(join(dist, 'css/site.css'), mainCss);
+await writeFile(join(dist, 'css/boards.css'), boardCss);
+const assets = [Buffer.from(mainCss + boardCss), await readFile(join(root, 'static/js/site.js'))];
 setAssetVersion(createHash('sha256').update(Buffer.concat(assets)).digest('hex').slice(0, 10));
 
 const pages = buildPages(copy, { key }, legal);

@@ -37,6 +37,9 @@ let assetVersion = 'dev';
  * never shows a broken image — without files it falls back to line art.
  */
 const MEDIA_DIR = new URL('../static/media/', import.meta.url);
+/* Small variant (…-600.webp, made by tools/images.py) for phones, original for wide screens. */
+const srcset = (name, big, sizes) => { const small = name.replace(/\.webp$/, '-600.webp'); return media(small) ? ` srcset="/media/${small} 600w, /media/${name} ${big}w" sizes="${sizes}"` : ''; };
+const FLOW_SIZES = '(min-width: 1563px) 500px, (min-width: 813px) 32vw, 260px';
 const media = (name) => (existsSync(new URL(name, MEDIA_DIR)) ? `/media/${name}` : null);
 export const setAssetVersion = (v) => (assetVersion = v);
 
@@ -89,7 +92,7 @@ function header(p) {
   const items = ['services', 'prices', 'about'];
   return `<header class="hdr" data-hdr>
 <div class="hdr__in">
-<a class="brand" href="${routes.home[lang]}" aria-label="${e(business.name)} – ${e(c.nav.home)}">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></a>
+<a class="brand" href="${routes.home[lang]}" aria-label="${e(business.name)} – ${e(c.nav.home)}">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b> <i>KFZ</i></span></a>
 <nav class="nav" aria-label="${e(c.nav.menu)}">${items.map((k) => `<a href="${routes[k][lang]}"${p.nav === k ? ' aria-current="page"' : ''}>${e(c.nav[k])}</a>`).join('')}</nav>
 <div class="hdr__end">${langSwitch(p)}<a class="btn btn--red btn--sm hdr__cta" href="${routes.booking[lang]}"${p.nav === 'booking' ? ' aria-current="page"' : ''}><span>${e(c.cta.book)}</span></a>
 <button class="burger" type="button" aria-expanded="false" aria-controls="menu" data-menu-btn><span class="sr">${e(c.nav.menu)}</span><i></i><i></i></button></div>
@@ -105,7 +108,7 @@ function footer(p) {
   const { c, lang } = p;
   return `<footer class="ftr">
 <div class="wrap ftr__grid">
-<div class="ftr__brand"><a class="brand" href="${routes.home[lang]}" aria-label="${e(business.name)}">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></a>
+<div class="ftr__brand"><a class="brand" href="${routes.home[lang]}" aria-label="${e(business.name)}">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b> <i>KFZ</i></span></a>
 <p>${e(c.footer.tagline)}</p>
 <a class="ftr__social" href="${business.instagram}" ${ext}>${icon('insta')}<span>@masterkfz</span></a></div>
 <div><h2 class="ftr__h">${e(c.footer.explore)}</h2><ul class="ftr__list">${['services', 'prices', 'about', 'booking'].map((k) => `<li><a href="${routes[k][lang]}">${e(c.nav[k])}</a></li>`).join('')}</ul></div>
@@ -173,7 +176,7 @@ ${!p.noindex && p.alternates.de ? `<link rel="alternate" hreflang="x-default" hr
 <link rel="icon" href="/img/favicon-32.png" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<link rel="stylesheet" href="/css/site.css?v=${assetVersion}">
+<link rel="stylesheet" href="/css/${p.boards ? 'boards' : 'site'}.css?v=${assetVersion}">${p.preload ? `\n<link rel="preload" as="image" href="${p.preload}" fetchpriority="high">` : ''}
 <script>${BOOT}</script>
 <script src="/js/site.js?v=${assetVersion}" defer></script>
 ${p.schema ? `<script type="application/ld+json">${JSON.stringify(p.schema).replace(/</g, '\\u003c')}</script>` : ''}
@@ -200,13 +203,13 @@ function flowItems(c, lang) {
   return reelIds.map((id, i) => {
     const s = svc(id);
     const img = media(`reel-${id}.webp`);
-    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}" alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span></a>`;
+    return `<a class="flow__item" href="${servicePath(lang, s)}">${img ? `<img src="${img}"${srcset(`reel-${id}.webp`, 960, FLOW_SIZES)} alt="${e(c.services[id].name)}" loading="lazy" decoding="async">` : `<span class="flow__art" aria-hidden="true">${iconPro(s.icon, 'ico flow__ico')}</span>`}<span class="flow__cap"><small>0${i + 1}</small><b>${e(c.services[id].name)}</b></span></a>`;
   }).join('');
 }
 
 const flowBanner = (reel) => `<div class="flow${reel.includes('<img') ? ' flow--photo' : ''}"><div class="flow__track">${[0, 1, 2, 3].map((k) => `<div class="flow__set"${k ? ' aria-hidden="true"' : ''}>${reel.replaceAll('<a class=', k ? '<a tabindex="-1" class=' : '<a class=')}</div>`).join('')}</div></div>`;
 
-const pheroMedia = (file) => { const src = file && media(file); return src ? `<div class="phero__media" aria-hidden="true"><img src="${src}" alt="" fetchpriority="high" decoding="async"></div>` : ''; };
+const pheroMedia = (file) => { const src = file && media(file); return src ? `<div class="phero__media" aria-hidden="true"><img src="${src}"${srcset(file, file === 'hero.webp' ? 1600 : 960, '(min-width: 1465px) 820px, (min-width: 760px) 56vw, 100vw')} alt="" fetchpriority="high" decoding="async"></div>` : ''; };
 
 function pageHero(k, title, lead, extra = '', photo = null) {
   return `<section class="phero${photo ? ' phero--media' : ''}">
@@ -447,7 +450,7 @@ function about(c, lang) {
 <div class="wrap story">
 <div class="story__text">${A.story.map((s, i) => `<p class="rv" style="--i:${i}">${e(s)}</p>`).join('')}
 <div class="owner rv" style="--i:2"><span class="owner__badge" aria-hidden="true">ÖA</span><p><b>${e(business.owner)}</b><span>${e(A.ownerRole)}</span></p></div></div>
-${media('reel-brakes.webp') && media('reel-inspection.webp') ? `<div class="collage rv" style="--i:1" aria-hidden="true"><img src="/media/reel-inspection.webp" alt="" loading="lazy"><img src="/media/reel-brakes.webp" alt="" loading="lazy"><i></i></div>` : `<div class="story__visual rv" style="--i:1" aria-hidden="true">${gearSvg('gear story__gear')}${logoMark('logo story__mark')}</div>`}
+${media('reel-brakes.webp') && media('reel-inspection.webp') ? `<div class="collage rv" style="--i:1" aria-hidden="true"><img src="/media/reel-inspection.webp"${srcset('reel-inspection.webp', 960, '(min-width: 960px) 340px, 60vw')} alt="" loading="lazy"><img src="/media/reel-brakes.webp"${srcset('reel-brakes.webp', 960, '(min-width: 960px) 340px, 60vw')} alt="" loading="lazy"><i></i></div>` : `<div class="story__visual rv" style="--i:1" aria-hidden="true">${gearSvg('gear story__gear')}${logoMark('logo story__mark')}</div>`}
 </div>
 </section>
 <section class="facts"><div class="wrap facts__row">${A.facts.map((f, i) => `<p class="fact rv" style="--i:${i}"><b>${e(f.value)}</b><span>${e(f.label)}</span></p>`).join('')}</div></section>
@@ -551,7 +554,7 @@ function uiBoard(c, p) {
     ['cockpit', 'G · Cockpit', 'Abgeschrägte Ecken und feine rote Kante wie ein Head-up-Display – technisch-ästhetisch.'],
   ];
   const demo = ([k, t, d]) => `<section class="ui-demo ui-${k}"><h2>${t}</h2><p>${d}</p>
-<div class="ui-demo__bar"><span class="brand">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b><i>KFZ</i></span></span><div class="hdr__end">${langSwitch(p)}<a class="btn btn--red btn--sm" href="#"><span>${e(c.cta.book)}</span></a></div></div>
+<div class="ui-demo__bar"><span class="brand">${logoMark('logo brand__mark')}<span class="brand__word"><b>MASTER</b> <i>KFZ</i></span></span><div class="hdr__end">${langSwitch(p)}<a class="btn btn--red btn--sm" href="#"><span>${e(c.cta.book)}</span></a></div></div>
 <div class="ui-demo__row">${btn('#', c.cta.book)}${btn('#', c.cta.whatsapp, 'ghost btn--wa', 'chat')}${btn('#', c.cta.route, 'light', 'pin')}<a class="link" href="#">${e(c.cta.allServices)}${icon('arrow')}</a></div>
 <nav class="mbar" aria-label="Demo"><a href="#" class="mbar__btn">${icon('phone')}<span>${e(c.cta.call)}</span></a><a href="#" class="mbar__btn">${icon('chat')}<span>WhatsApp</span></a><a href="#" class="mbar__btn mbar__btn--red">${icon('calendar')}<span>${e(c.nav.booking)}</span></a></nav></section>`;
   return `<section class="phero phero--legal"><div class="wrap">${kicker('Entwurf · nicht öffentlich verlinkt')}<h1 class="h1">Button-Stile</h1><p class="lead">A–D: erste Runde. E–G: drei neue Richtungen aus deinem Favoriten C (Racing). Vier neue Richtungen für alle Buttons, die Sprachwahl und die mobile Leiste – das Hamburger-Menü bleibt. Mit der Maus über die Buttons fahren, um die Animation zu sehen.</p></div></section>
@@ -577,7 +580,7 @@ export function buildPages(copy, formCfg, legalHtml) {
       body,
       ...extra,
     });
-    pages.push(std('home', home(c, lang), { intro: true, nav: null, bodyClass: 'is-home', faq: c.home.faq }));
+    pages.push(std('home', home(c, lang), { intro: true, nav: null, bodyClass: 'is-home', faq: c.home.faq, preload: media('hero.webp') }));
     pages.push(std('services', servicesIndex(c, lang)));
     for (const s of services) {
       const t = c.services[s.id];
@@ -612,11 +615,11 @@ export function buildPages(copy, formCfg, legalHtml) {
   });
   pages.push({
     lang: 'de', c: de, path: '/ui-stile/', alternates: {}, noindex: true, nav: null,
-    title: 'Button-Stile | Master KFZ', description: 'Interne Entwurfsseite.', body: uiBoard(de, { c: de, lang: 'de', alternates: {} }),
+    boards: true, title: 'Button-Stile | Master KFZ', description: 'Interne Entwurfsseite.', body: uiBoard(de, { c: de, lang: 'de', alternates: {} }),
   });
   pages.push({
     lang: 'de', c: de, path: '/logo-konzepte/', alternates: {}, noindex: true, nav: null,
-    title: 'Logo-Konzepte | Master KFZ', description: 'Interne Entwurfsseite.', body: logoBoard(), bodyClass: 'is-board',
+    boards: true, title: 'Logo-Konzepte | Master KFZ', description: 'Interne Entwurfsseite.', body: logoBoard(), bodyClass: 'is-board',
   });
   return pages;
 }
