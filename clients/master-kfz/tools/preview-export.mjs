@@ -15,7 +15,8 @@ for (const f of html) {
   const fix = (p) => { const [path, rest = ''] = p.split(/(?=[?#])/); const target = path.endsWith('/') ? path + 'index.html' : path; return (up === '.' ? '' : up + '/') + target.slice(1) + rest; };
   let h = await readFile(f, 'utf8');
   h = h.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n/, '')
-    .replace(/(href|src|poster)="(\/(?!\/)[^"]*)"/g, (m, a, p) => `${a}="${fix(p)}"`);
+    .replace(/(href|src|poster)="(\/(?!\/)[^"]*)"/g, (m, a, p) => `${a}="${fix(p)}"`)
+    .replace(/srcset="([^"]*)"/g, (m, list) => `srcset="${list.replace(/(^|,\s*)(\/(?!\/)[^\s,]+)/g, (_, sep, p) => sep + fix(p))}"`);
   await writeFile(f, h);
 }
 const list = [];
