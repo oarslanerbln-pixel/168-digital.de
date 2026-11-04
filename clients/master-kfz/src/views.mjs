@@ -270,7 +270,7 @@ function visit(c, lang, heading = 'h2') {
   return `<section class="section visit">
 <div class="wrap visit__grid">
 <div>${kicker(c.home.visitKicker, 'rv')}
-<${heading} class="visit__addr rv" style="--i:1">${e(business.street)}<span>${business.zip} Berlin-${e(business.district)}</span></${heading}>
+<${heading} class="visit__addr rv" style="--i:1">${e(business.street).replace(/ (\d+\w*)$/, '\u00A0$1')}<span>${business.zip} Berlin-${e(business.district)}</span></${heading}>
 <p class="lead rv" style="--i:2">${e(c.home.visitText)}</p>
 <div class="btns rv" style="--i:3">${btn(mapsUrl, c.cta.route, 'light', 'pin', ext)}${btn(tel, business.phoneDisplay, 'ghost', 'phone')}</div></div>
 <div class="visit__card rv" style="--i:2">

@@ -319,7 +319,8 @@ html.js .statement .w.on { opacity: 1; }
 /* Eight services: 1 → 2 → 4 columns, never 3 – an auto-fill grid left an empty cell at tablet widths. */
 @media (min-width: 600px) { .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 1080px) { .cards { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
-@media (min-width: 900px) { .cards--trio { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 700px) { .cards--trio { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 600px) and (max-width: 699px) { .cards--trio > :last-child { grid-column: 1 / -1; } }
 .card {
   position: relative; isolation: isolate; overflow: hidden;
   display: flex; flex-direction: column; gap: 12px;
@@ -392,7 +393,7 @@ html.js .hot.on { opacity: 1; scale: 1; }
 }
 
 /* ---------- Price tiles (light band) ---------- */
-.tiles { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); }
+.tiles { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
 .tile { position: relative; display: flex; flex-direction: column; gap: 10px; padding: 26px 24px; border-radius: var(--r); background: var(--paper); color: var(--ink); box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04); transition: transform 0.5s var(--ease-out), box-shadow 0.5s; }
 .tile:hover { transform: translateY(-4px); box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.25); }
 .tile__name { font-weight: 650; font-size: 16px; padding-right: 32px; }
@@ -409,7 +410,7 @@ html.js .hot.on { opacity: 1; scale: 1; }
 .steps__rail { height: 2px; margin-bottom: 24px; border-radius: 2px; background: var(--line); overflow: hidden; }
 .steps__rail i { display: block; height: 100%; background: var(--red); box-shadow: 0 0 12px var(--red); transform-origin: left; transform: scaleX(1); }
 html.js .steps__rail i { transform: scaleX(calc(var(--p, 0) * 1.7 - 0.25)); }
-.steps { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+.steps { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr); }
 .step { padding: 26px 24px 30px; border-radius: var(--r); background: var(--vf), var(--bg-2); border: 1px solid rgba(255, 255, 255, 0.1); }
 .step__n { font: 500 13px var(--mono); color: var(--red-2); }
 .step h3 { margin: 44px 0 10px; font-size: 24px; letter-spacing: -0.03em; font-weight: 650; }
@@ -1058,3 +1059,15 @@ html.js .duo__col.rv.is-in li { opacity: 1; transform: none; }
 /* Language switch: the pills stay small, the touch target does not (≈ 40 × 41 px). */
 .lang a { position: relative; }
 .lang a::after { content: ''; position: absolute; inset: -8px -1px; }
+
+/* ---------- Tablet ----------
+ * Four price tiles and four steps go 1 → 2 → 4 columns: auto-fit put three in a row
+ * at 1024 px and left the fourth alone.
+ */
+@media (min-width: 560px) { .tiles, .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 960px) { .tiles, .steps { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 960px) and (max-width: 1199px) { .tile__price { font-size: clamp(52px, 5.4vw, 64px); } }
+/* While the bottom action bar is shown, the hero ends above it – otherwise the trust row hides behind it. */
+@media (max-width: 959px) { .hero { min-height: calc(100svh - 84px - env(safe-area-inset-bottom)); } }
+/* Tall portrait tablets: anchor the copy low so the film fills the top instead of an empty band below. */
+@media (orientation: portrait) and (min-width: 600px) { .hero--media .hero__in { margin-top: auto; padding-bottom: 40px; } }
