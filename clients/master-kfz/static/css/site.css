@@ -1071,3 +1071,14 @@ html.js .duo__col.rv.is-in li { opacity: 1; transform: none; }
 @media (max-width: 959px) { .hero { min-height: calc(100svh - 84px - env(safe-area-inset-bottom)); } }
 /* Tall portrait tablets: anchor the copy low so the film fills the top instead of an empty band below. */
 @media (orientation: portrait) and (min-width: 600px) { .hero--media .hero__in { margin-top: auto; padding-bottom: 40px; } }
+
+/* ---------- Large screens ----------
+ * 1240 px of content on a 2560 px display reads as a phone layout floating in black.
+ * Widen the column in two steps, and on wide heroes keep the copy on a darker band so
+ * the red line never sits on the red car.
+ */
+@media (min-width: 1800px) {
+  :root { --max: 1440px; }
+  .hero__media::after { background: linear-gradient(to top, var(--bg) 3%, rgba(11, 12, 16, 0.2) 40%, rgba(11, 12, 16, 0.55)), linear-gradient(90deg, rgba(11, 12, 16, 0.92), rgba(11, 12, 16, 0.78) 42%, rgba(11, 12, 16, 0.3) 64%, transparent 84%); }
+}
+@media (min-width: 2400px) { :root { --max: 1600px; } }
