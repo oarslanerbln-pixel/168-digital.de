@@ -8,6 +8,7 @@ import Contact from './Contact';
 import { getServiceBySlug, services } from '../data/services';
 import { serviceContent, type Lang } from '../data/serviceContent';
 import { getProjectById } from '../data/works';
+import TvMenuDemo from './TvMenuDemo';
 import './ServicePage.css';
 import { SITE_URL, useLocalizedPath } from '../utils/localePath';
 
@@ -90,6 +91,10 @@ export default function ServicePage() {
             ))}
           </div>
         </motion.div>
+
+        {/* Menu boards are bought on sight: show the screen running before
+            listing what is included. */}
+        {service.slug === 'digital-menus' && <TvMenuDemo />}
 
         <h2 className="service-section-heading">{t('svc_features_heading')}</h2>
         <div className="service-features-grid">

@@ -17,10 +17,11 @@
   gap: 96px;
 }
 
-/* ─── Backdrop: grid, light beams, glow orbs ───
-   Full-bleed behind the centred hero. Beams are 1px lines with a
-   travelling highlight; orbs drift on a 20s loop. Both are transforms
-   and opacity only, so they stay on the compositor. */
+/* ─── Backdrop: one warm light ───
+   The grid and travelling beams of the dark-tech era read as "software
+   dashboard"; on gallery white they were noise. What stays is a single
+   soft gold light behind the mockup, drifting on a slow 24s loop —
+   transform/opacity only, so it stays on the compositor. */
 .hero-backdrop {
   position: absolute;
   top: 0;
@@ -33,69 +34,38 @@
   pointer-events: none;
 }
 
-.hero-grid {
-  position: absolute;
-  inset: -10% 0 0;
-  background-image:
-    linear-gradient(rgba(var(--accent-cyan-rgb), 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--accent-cyan-rgb), 0.07) 1px, transparent 1px);
-  background-size: 64px 64px;
-  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 20%, transparent 75%);
-  mask-image: radial-gradient(ellipse 80% 70% at 60% 40%, #000 20%, transparent 75%);
-}
-
+.hero-grid,
 .hero-beam {
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(var(--accent-cyan-rgb), 0.9) 50%, transparent 100%);
-  background-size: 30% 100%;
-  background-repeat: no-repeat;
-  opacity: 0.6;
-  animation: hero-beam 7s linear infinite;
-}
-
-.hero-beam-1 { top: 22%; }
-.hero-beam-2 { top: 58%; animation-delay: -2.4s; animation-duration: 9s; }
-.hero-beam-3 { top: 84%; animation-delay: -5s; animation-duration: 11s; opacity: 0.35; }
-
-@keyframes hero-beam {
-  from { background-position: -40% 0; }
-  to   { background-position: 140% 0; }
+  display: none;
 }
 
 .hero-orb {
   position: absolute;
-  width: 46vw;
-  max-width: 640px;
+  width: 52vw;
+  max-width: 720px;
   aspect-ratio: 1;
   border-radius: 50%;
-  filter: blur(80px);
-  opacity: 0.35;
-  animation: hero-orb 20s ease-in-out infinite alternate;
+  filter: blur(90px);
+  opacity: 0.5;
+  animation: hero-orb 24s ease-in-out infinite alternate;
 }
 
 .hero-orb-a {
-  top: -14%;
-  right: 4%;
-  background: radial-gradient(circle, rgba(var(--accent-cyan-rgb), 0.7), transparent 65%);
+  top: -18%;
+  right: 2%;
+  background: radial-gradient(circle, rgba(var(--accent-cyan-rgb), 0.28), transparent 65%);
 }
 
 .hero-orb-b {
-  bottom: -30%;
-  left: -6%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--shimmer-gold) 35%, transparent), transparent 65%);
-  animation-delay: -8s;
+  display: none;
 }
 
 @keyframes hero-orb {
   from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(-6%, 8%, 0) scale(1.12); }
+  to   { transform: translate3d(-5%, 6%, 0) scale(1.08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-beam,
   .hero-orb {
     animation: none;
   }
@@ -144,10 +114,10 @@
 /* ─── Headline ─── */
 .hero-headline {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(2.3rem, 4.1vw, 3.75rem);
-  font-weight: 700;
-  line-height: 1.03;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.4rem, 4.6vw, 4.25rem);
+  font-weight: 500;
+  line-height: 1.04;
+  letter-spacing: -0.045em;
   color: var(--text-main);
   margin: 0 0 28px;
   text-wrap: balance;
@@ -156,40 +126,42 @@
 
 /* ─── The one piece of colour on the page.
 
-   A slow gradient sweeps back and forth through "image" (blue) and
-   "code" (gold), like light moving across the letters. `alternate`
-   keeps it continuous — it eases to a stop and reverses rather than
-   snapping back to the start. Everything else on the site is
-   deliberately monochrome so this reads as the accent, not as one
-   effect among many. ─── */
+   The two key words switch voice: Playfair italic in gold, set against
+   the upright ink sans. The contrast of type does the work a glow used
+   to do; a slow light still passes through the gold (8s, alternate, so
+   it eases and reverses instead of snapping). Everything else on the
+   site stays ink, so this reads as the accent. ─── */
 .hero-title-word {
   display: inline-block;
   white-space: nowrap;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  /* Italic overhang would be clipped by background-clip: pad it, then
+     pull the following punctuation back so "sparen." stays one word. */
+  padding-right: 0.08em;
+  margin-right: -0.08em;
   background-repeat: no-repeat;
   background-size: 250% 100%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: hero-word-sweep 4s ease-in-out infinite alternate;
+  animation: hero-word-sweep 8s ease-in-out infinite alternate;
 }
 
-.hero-title-word-blue {
+.hero-title-word-blue,
+.hero-title-word-gold {
   background-image: linear-gradient(
     100deg,
-    var(--shimmer-blue) 0%, var(--shimmer-blue) 38%,
-    var(--shimmer-blue-lit) 50%,
-    var(--shimmer-blue) 62%, var(--shimmer-blue) 100%
+    var(--shimmer-blue) 0%, var(--shimmer-blue) 40%,
+    var(--shimmer-gold-lit) 50%,
+    var(--shimmer-blue) 60%, var(--shimmer-blue) 100%
   );
 }
 
 .hero-title-word-gold {
-  background-image: linear-gradient(
-    100deg,
-    var(--shimmer-gold) 0%, var(--shimmer-gold) 38%,
-    var(--shimmer-gold-lit) 50%,
-    var(--shimmer-gold) 62%, var(--shimmer-gold) 100%
-  );
-  animation-delay: 1.4s;
+  animation-delay: 2s;
 }
 
 @keyframes hero-word-sweep {

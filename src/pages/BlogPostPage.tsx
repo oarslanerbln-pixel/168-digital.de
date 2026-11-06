@@ -8,6 +8,9 @@ import Contact from '../components/Contact';
 import { getBlogPostBySlug } from '../data/blogContent';
 import type { Lang } from '../data/serviceContent';
 import { getServiceBySlug } from '../data/services';
+// Layout classes (.service-hero, .service-breadcrumb …) live in ServicePage.css;
+// without this import a visitor who lands on the blog first sees them unstyled.
+import '../components/ServicePage.css';
 import './BlogPage.css';
 import { SITE_URL, useLocalizedPath } from '../utils/localePath';
 

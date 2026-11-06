@@ -139,13 +139,18 @@ Bug, kein Platzhalter. Türkisch braucht `latin-ext` – deshalb hat die
 Font-Pipeline beide Subsets.
 
 ### 7. Design-System statt Einzelfallentscheidung
-Seit Oktober 2026 **Dark Tech**: tiefes Blauschwarz (`--bg-dark`), Glas-
-Flächen (`--bg-raised`), **ein** leuchtender Blau-Akzent (`--accent-cyan`,
-`--accent-glow`). Der blau-goldene Schimmer in der Hero-Headline bleibt der
-einzige Text-Farbverlauf. Farben kommen aus den Tokens in `:root`, nicht aus
-Hex-Werten im Komponenten-CSS. Für Linien und Tönungen mit Transparenz
-`rgba(var(--ink-rgb), α)` bzw. `rgba(var(--accent-cyan-rgb), α)` nutzen;
-Schatten bleiben schwarz. Animation: nur `transform`/`opacity`, immer mit
+Seit November 2026 **Galerie-Weiß**: warmer heller Grund (`--bg-dark`,
+Name historisch), Tinten-Typografie (`--text-main`) und **ein** Gold-Akzent
+(`--accent-cyan`, Name historisch – er *ist* das Gold; 1618 = Goldener
+Schnitt). Gold nur als Akzent (Schlüsselwörter, aktive Zustände, Punkte,
+Overlines), nie als große Fläche. Primärbuttons sind Tinte auf Hell.
+Überschriften Outfit 500–600 mit enger Laufweite; die zwei Schlüsselwörter
+der Hero-Headline in Playfair Italic Gold bleiben der einzige
+Text-Farbverlauf. Flächen, die immer dunkel bleiben (Film, Reel), nutzen
+`--surface-dark`/`--on-dark`. Farben kommen aus den Tokens in `:root`,
+nicht aus Hex-Werten im Komponenten-CSS. Für Linien und Tönungen mit
+Transparenz `rgba(var(--ink-rgb), α)` bzw. `rgba(var(--accent-cyan-rgb), α)`
+nutzen; Schatten über `--shadow-soft/-card/-float`. Animation: nur `transform`/`opacity`, immer mit
 `prefers-reduced-motion`-Ausweg, keine Endlosschleifen in JS.
 
 ## Arbeitsweise
