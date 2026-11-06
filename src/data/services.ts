@@ -18,6 +18,11 @@ export interface ServiceMeta {
   /** i18n key for the one-sentence homepage card description. */
   descKey: string;
   group: ServiceGroup;
+  /** Tile photo (public/). Software tiles use the product photos, film
+   *  tiles frames from the studio's own showreel — no stock. */
+  image: string;
+  /** 'phone': the photo is portrait and the tile frames it in a phone. */
+  imageFrame?: 'phone';
 }
 
 /**
@@ -35,6 +40,7 @@ export const services: ServiceMeta[] = [
     titleKey: 'service_web_title',
     descKey: 'service_web_desc',
     group: 'software',
+    image: '/solutions/dashboard-640.webp',
   },
   {
     slug: 'digital-menus',
@@ -44,6 +50,7 @@ export const services: ServiceMeta[] = [
     titleKey: 'service_menu_title',
     descKey: 'service_menu_desc',
     group: 'software',
+    image: '/solutions/ordering-640.webp',
   },
   {
     slug: 'wedding-event-films',
@@ -53,6 +60,7 @@ export const services: ServiceMeta[] = [
     titleKey: 'service_event_title',
     descKey: 'service_event_desc',
     group: 'film',
+    image: '/services/event.webp',
   },
   {
     slug: 'video-drone-production',
@@ -62,6 +70,7 @@ export const services: ServiceMeta[] = [
     titleKey: 'service_media_title',
     descKey: 'service_media_desc',
     group: 'film',
+    image: '/services/drone.webp',
   },
   {
     slug: 'social-media-marketing',
@@ -71,6 +80,8 @@ export const services: ServiceMeta[] = [
     titleKey: 'service_social_title',
     descKey: 'service_social_desc',
     group: 'film',
+    image: '/services/social.webp',
+    imageFrame: 'phone',
   },
   {
     // Travel film plus a QR-linked journal page: the film studio's craft
@@ -83,6 +94,7 @@ export const services: ServiceMeta[] = [
     titleKey: 'service_travel_title',
     descKey: 'service_travel_desc',
     group: 'film',
+    image: '/services/travel.webp',
   },
 ];
 
