@@ -7,6 +7,9 @@ export interface WorkProject {
   color: string;
   /** Omitted while a project has no live-site capture yet. */
   image?: string;
+  /** 1440px variant for high-density screens (srcset); only where the
+   *  source capture is wide enough to be genuinely sharper. */
+  imageHi?: string;
   /** Marks work that is published but not finished, labelled as such on the card. */
   beta?: boolean;
 }
@@ -20,6 +23,7 @@ export const projects: WorkProject[] = [
     tags: ['HTML/CSS/JS', 'QR Menu', 'UI/UX'],
     color: '#0ea5e9',
     image: '/works/taka.webp',
+    imageHi: '/works/taka-1440.webp',
   },
   {
     id: 'sera',
@@ -29,6 +33,7 @@ export const projects: WorkProject[] = [
     tags: ['React', 'Automation', 'Event-Tech'],
     color: '#8b5cf6',
     image: '/works/sera.webp',
+    imageHi: '/works/sera-1440.webp',
   },
   {
     id: 'boxx36',
@@ -38,6 +43,7 @@ export const projects: WorkProject[] = [
     tags: ['3D WebGL', 'React Three Fiber', 'E-Commerce'],
     color: '#ef4444',
     image: '/works/boxx36.webp',
+    imageHi: '/works/boxx36-1440.webp',
   },
   {
     id: 'donerbros',
@@ -56,6 +62,7 @@ export const projects: WorkProject[] = [
     tags: ['Vercel', 'Video', 'Branding'],
     color: '#f59e0b',
     image: '/works/impulse.webp',
+    imageHi: '/works/impulse-1440.webp',
   },
   {
     id: 'medisade',
