@@ -1,58 +1,65 @@
 @import './styles/premium-hud.css';
 
 /* ═══════════════════════════════════════════════════════════════
-   DESIGN TOKENS — quiet monochrome base, one accent.
+   DESIGN TOKENS — gallery white, ink type, one gold accent.
 
-   The whole page is neutral (paper white / ink / grey) so that the ONE
-   piece of colour on it — the blue-to-gold shimmer sweeping through
-   "image" and "code" in the hero headline — is the thing the eye lands
-   on. Those two shimmer colours are the brand palette; every other
-   accent on the site is derived from the blue half of that sweep, and
-   the gold half is reserved exclusively for the headline so it stays
-   special. Nothing else animates its colour.
+   1618 is the golden ratio, so the one colour on the page is gold. The
+   ground is a warm gallery white and the type is near-black ink: the
+   work (photos, films, live demos) brings the colour, the frame stays
+   quiet. Gold appears only where it carries meaning — the hero's key
+   words, the active state, a single dot or rule — never as a fill on
+   large areas, or it stops reading as an accent.
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  /* ── DARK TECH BASE (Oct 2026) ─────────────────────────────────
-     The studio sells software, so the site now looks like it runs on
-     a screen at night: a deep blue-black ground, raised glass panels
-     and one luminous blue accent that glows. Every component reads
-     these tokens, so the switch from paper to dark happened here, in
-     one place. --ink-rgb is the foreground as an RGB triple, for the
-     many hairlines and tints that need an alpha (rgba(var(--ink-rgb),
-     0.1)); shadows stay true black, light cannot cast light shadows. */
-  --bg-dark: #07090f;          /* page ground (token name kept: 79 call sites) */
-  --bg-raised: #0f131c;        /* cards / raised surfaces */
-  --bg-sunken: #0a0d14;        /* alternating band behind sections */
-  --text-main: #eef1f7;        /* foreground */
-  --text-muted: #9aa3b5;       /* secondary text — AA on the ground above */
-  --text-faint: #687186;       /* overlines, meta, disabled */
-  --ink-rgb: 238, 241, 247;
+  /* ── GALLERY BASE (Nov 2026) ───────────────────────────────────
+     Replaces the Oct 2026 "dark tech" ground. Visitors arrive from
+     Instagram on a phone in daylight; a light, calm page reads as
+     premium and lets client work carry the colour. Token names are kept
+     (--bg-dark has 79 call sites) so the switch happens here, in one
+     place. --ink-rgb is the foreground as an RGB triple for the hairlines
+     and tints that need an alpha: rgba(var(--ink-rgb), 0.1). */
+  --bg-dark: #f6f5f1;          /* page ground (name kept: 79 call sites) */
+  --bg-raised: #ffffff;        /* cards / raised surfaces */
+  --bg-sunken: #eeece6;        /* alternating band behind sections */
+  --text-main: #131312;        /* ink */
+  --text-muted: #57554f;       /* secondary text — AA (7:1) on the ground */
+  --text-faint: #75726a;       /* overlines, meta — AA (4.6:1) on the ground */
+  --ink-rgb: 19, 19, 18;
+
+  /* Surfaces that must stay dark whatever the theme: film frames, the
+     showreel, image overlays. Text on them uses --on-dark. */
+  --surface-dark: #121211;
+  --on-dark: #f6f5f1;
 
   /* ── Hairlines — one rule, used everywhere, so edges read as a system ── */
-  --line: rgba(var(--ink-rgb), 0.09);
-  --line-strong: rgba(var(--ink-rgb), 0.2);
+  --line: rgba(var(--ink-rgb), 0.1);
+  --line-strong: rgba(var(--ink-rgb), 0.22);
 
-  --glass-bg: rgba(15, 19, 28, 0.82);
+  --glass-bg: rgba(246, 245, 241, 0.82);
   --glass-border: var(--line);
 
-  /* ── The hero shimmer, tuned to read on dark ── */
-  --shimmer-blue: #5b8cff;
-  --shimmer-blue-lit: #d4e2ff;
-  --shimmer-gold: #c9a35f;
-  --shimmer-gold-lit: #ffe6ad;
+  /* ── The hero shimmer: ink into gold, the site's only text gradient ── */
+  --shimmer-blue: #8a6a32;     /* name kept; now the deep bronze half */
+  --shimmer-blue-lit: #c9a35f;
+  --shimmer-gold: #a8823f;
+  --shimmer-gold-lit: #e2c48a;
 
-  /* ── Accents. One luminous blue; --accent-glow is its light. ── */
-  --accent-cyan: #5b8cff;      /* the single functional accent */
-  --accent-cyan-rgb: 91, 140, 255;
-  --accent-purple: #9aa3b5;    /* secondary / muted neutral */
-  --accent-silver: #eef1f7;    /* .text-silver headings read as foreground */
-  --accent-platinum: #ffffff;
+  /* ── Accent. One gold; deep enough (4.9:1) to carry small text. ──
+     --accent-cyan keeps its name for its many call sites; it IS the gold. */
+  --accent-cyan: #8a6a32;
+  --accent-cyan-rgb: 138, 106, 50;
+  --accent-gold-soft: #c9a35f; /* decorative only: dots, rules, never text */
+  --accent-purple: #57554f;    /* secondary / muted neutral */
+  --accent-silver: #131312;    /* .text-silver headings read as ink */
+  --accent-platinum: #131312;
 
-  --accent-soft: rgba(var(--accent-cyan-rgb), 0.12);
-  --accent-line: rgba(var(--accent-cyan-rgb), 0.38);
-  --accent-glow: 0 0 0 1px rgba(var(--accent-cyan-rgb), 0.35), 0 0 42px -6px rgba(var(--accent-cyan-rgb), 0.55);
-  --shadow-card: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 22px 50px -26px rgba(0, 0, 0, 0.8);
-  --shadow-float: 0 40px 90px -30px rgba(0, 0, 0, 0.85);
+  --accent-soft: rgba(var(--accent-cyan-rgb), 0.08);
+  --accent-line: rgba(var(--accent-cyan-rgb), 0.35);
+  /* No glow on a light ground: "glow" is now a fine gold ring + soft lift. */
+  --accent-glow: 0 0 0 1px rgba(var(--accent-cyan-rgb), 0.3), 0 14px 34px -18px rgba(var(--accent-cyan-rgb), 0.45);
+  --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -16px rgba(0, 0, 0, 0.14);
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 40px -26px rgba(0, 0, 0, 0.22);
+  --shadow-float: 0 40px 80px -36px rgba(0, 0, 0, 0.28);
   --radius-card: 18px;
 
   /* ── Stacking order ──────────────────────────────────────────────
@@ -193,7 +200,7 @@ html, body {
   border-top: 1px solid rgba(var(--ink-rgb), 0.1); /* Top edge definition */
   border-left: 1px solid rgba(var(--ink-rgb), 0.06); /* Left edge definition */
   border-radius: 24px;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition: all 0.5s var(--ease-premium);
   position: relative;
   overflow: hidden;
@@ -219,14 +226,14 @@ html, body {
   border: 1px solid rgba(var(--ink-rgb), 0.08);
   border-top: 1px solid rgba(var(--ink-rgb), 0.1);
   border-radius: 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.21), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   transition: all 0.5s var(--ease-premium);
   position: relative;
 }
 
 .glass-panel-silver:hover {
   transform: translateY(-5px);
-  box-shadow: 0 24px 55px rgba(0, 0, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  box-shadow: var(--shadow-float), inset 0 1px 0 rgba(255, 255, 255, 0.6);
   border-color: rgba(var(--ink-rgb), 0.16);
 }
 
@@ -268,13 +275,13 @@ html, body {
 
 .premium-button-silver {
   background: var(--text-main);
-  color: #fff;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.45);
+  color: var(--bg-dark);
+  box-shadow: var(--shadow-soft);
 }
 
 .premium-button-silver:hover {
   transform: translateY(-3px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.75);
+  box-shadow: var(--shadow-card);
 }
 
 .premium-button-glass {
@@ -347,9 +354,9 @@ html, body {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(0, 0, 0, 0.85);
-  -webkit-backdrop-filter: blur(24px);
-  backdrop-filter: blur(24px);
+  background: rgba(var(--ink-rgb), 0.45);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .modal-content {
@@ -362,7 +369,7 @@ html, body {
   border-radius: 32px;
   position: relative;
   padding: 48px;
-  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  box-shadow: var(--shadow-float), inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 /* Full-bleed live-site preview at the top of the project modal — breaks out
@@ -374,7 +381,7 @@ html, body {
   aspect-ratio: 21 / 9;
   overflow: hidden;
   border-radius: 32px 32px 0 0;
-  background: #0d0c0a;
+  background: var(--surface-dark);
 }
 
 .modal-media-img {
@@ -525,7 +532,7 @@ html, body {
 .about-headline {
   font-size: clamp(2.2rem, 4.5vw, 3.4rem);
   margin-bottom: 32px;
-  font-weight: 800;
+  font-weight: 600;
   line-height: 1.1;
 }
 
@@ -582,13 +589,13 @@ html, body {
 
 .stat-number {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
-  font-weight: 800;
+  font-weight: 600;
   font-family: 'Outfit', sans-serif;
 }
 
 .stat-suffix {
   font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
+  font-weight: 600;
   color: rgba(var(--ink-rgb), 0.45);
 }
 
@@ -603,7 +610,7 @@ html, body {
 
 .stat-highlight-label {
   font-size: 1.8rem;
-  font-weight: 800;
+  font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
   font-family: 'Outfit', sans-serif;
@@ -634,14 +641,14 @@ html, body {
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--text-faint);
+  color: var(--accent-cyan);
 }
 
 .works-headline {
   font-size: clamp(2.2rem, 5vw, 3.5rem);
   margin-bottom: 0;
   text-align: center;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.1;
 }
@@ -713,7 +720,7 @@ html, body {
 .project-card:hover {
   transform: translateY(-4px);
   border-color: var(--line-strong);
-  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.27);
+  box-shadow: var(--shadow-card);
 }
 
 /* ─── Media ─── */
@@ -764,7 +771,7 @@ html, body {
 .project-card-monogram {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2.6rem, 5vw, 3.6rem);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 0.04em;
   color: var(--text-faint);
   opacity: 0.55;
@@ -913,7 +920,7 @@ html, body {
 .modal-close-btn:hover {
   background: rgba(var(--ink-rgb), 0.1);
   border-color: rgba(var(--ink-rgb), 0.25);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow-soft);
   transform: rotate(90deg) scale(1.1);
 }
 
@@ -923,7 +930,7 @@ html, body {
 
 .modal-title-text {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .modal-description {
@@ -952,7 +959,7 @@ html, body {
 
 .modal-metric-value {
   font-size: 2.5rem;
-  font-weight: 800;
+  font-weight: 600;
 }
 
 .modal-metric-label {
@@ -1027,7 +1034,7 @@ html, body {
 
 .contact-aside-title {
   font-size: clamp(1.8rem, 3.4vw, 2.5rem);
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: -0.025em;
   line-height: 1.1;
 }
@@ -1058,7 +1065,7 @@ html, body {
   background: var(--accent-soft);
   color: var(--accent-cyan);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .contact-direct {
@@ -1174,7 +1181,7 @@ html, body {
 .contact-title {
   font-size: clamp(1.7rem, 3.2vw, 2.4rem);
   text-wrap: balance;
-  font-weight: 700;
+  font-weight: 600;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
 }
@@ -1351,7 +1358,7 @@ html, body {
   height: 64px;
   border-radius: 16px;
   font-size: 1.15rem;
-  font-weight: 700;
+  font-weight: 600;
   letter-spacing: 1px;
   border: 1px solid rgba(var(--ink-rgb), 0.08);
   background: rgba(var(--ink-rgb), 0.03);
@@ -1373,13 +1380,13 @@ html, body {
   border: 1px solid var(--text-main);
   color: var(--bg-dark);
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.42);
+  box-shadow: var(--shadow-soft);
 }
 
 .submit-button.active:hover {
   background: var(--bg-dark);
   color: var(--text-main);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.48);
+  box-shadow: var(--shadow-card);
   transform: translateY(-2px);
 }
 

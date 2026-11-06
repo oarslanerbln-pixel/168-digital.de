@@ -5,6 +5,9 @@ import { ArrowUpRight } from 'lucide-react';
 import SEOHead from '../components/SEOHead';
 import { blogPosts } from '../data/blogContent';
 import type { Lang } from '../data/serviceContent';
+// Layout classes (.service-hero, .service-breadcrumb …) live in ServicePage.css;
+// without this import a visitor who lands on the blog first sees them unstyled.
+import '../components/ServicePage.css';
 import './BlogPage.css';
 import { useLocalizedPath } from '../utils/localePath';
 

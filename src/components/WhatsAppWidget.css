@@ -298,7 +298,20 @@
     height: var(--wa-bar-height);
     border-radius: 0;
     gap: 10px;
-    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.16);
+    /* A full-width slab of WhatsApp green was the loudest thing on the
+       gallery-white page. As a bar it is ink, like the primary button;
+       the green stays on the glyph, which is what people recognise. */
+    background: var(--text-main);
+    color: var(--bg-dark);
+    box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  .wa-floating-btn:hover {
+    transform: none;
+  }
+
+  .wa-floating-btn .wa-icon {
+    color: #25d366;
   }
 
   .wa-bar-label {
