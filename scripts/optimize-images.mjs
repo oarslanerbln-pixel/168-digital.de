@@ -41,6 +41,17 @@ const SHOWROOM_SOURCES = ['gischt', 'solenne', 'kivilcim', 'elara', 'arca', 'ori
   quality: 74,
 }));
 
+// Service tiles on the homepage. Frames pulled from the studio's own
+// showreel (public/reel-960.mp4) with ffmpeg, so every film tile shows
+// real footage rather than stock. `social` is cropped portrait because
+// the tile frames it in a phone.
+const SERVICE_SOURCES = [
+  { in: 'services/event.jpg', out: 'services/event.webp', w: 800, h: 520 },
+  { in: 'services/drone.jpg', out: 'services/drone.webp', w: 800, h: 520 },
+  { in: 'services/travel.jpg', out: 'services/travel.webp', w: 800, h: 520 },
+  { in: 'services/social.jpg', out: 'services/social.webp', w: 300, h: 540 },
+];
+
 const kb = (p) => (statSync(p).size / 1024).toFixed(0);
 
 for (const s of SOURCES) {
@@ -103,3 +114,12 @@ for (const s of SOLUTION_SOURCES) {
 }
 
 console.log('Done.');
+
+mkdirSync(join(pub, 'services'), { recursive: true });
+
+for (const s of SERVICE_SOURCES) {
+  const src = join(srcDir, s.in);
+  const dst = join(pub, s.out);
+  await sharp(src).resize(s.w, s.h, { fit: 'cover' }).webp({ quality: 74 }).toFile(dst);
+  console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
+}

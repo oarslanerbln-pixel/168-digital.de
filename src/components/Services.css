@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════════════════
-   SERVICES — dark bento grid, quiet and editorial.
+   SERVICES — a dark band with photo-led bento tiles.
 
    Grid: six columns. Software tiles span three each (two per row),
    film tiles span two each (three per row), so both rows close flush
@@ -14,16 +14,37 @@
    sparingly, reads as premium; five competing glows read as a toy.
    ═══════════════════════════════════════════════════════════════ */
 
-.svc-section {
+/* Full-bleed dark band; the grid inside keeps the page's 1240px column.
+   Text colours are set here, not inherited from the light page tokens. */
+.svc-band {
   position: relative;
   z-index: var(--z-content);
+  background:
+    radial-gradient(70% 50% at 50% 0%, rgba(var(--accent-cyan-rgb), 0.16), transparent 70%),
+    var(--surface-dark);
+  color: var(--on-dark);
+}
+
+.svc-band .home-title {
+  color: var(--on-dark);
+}
+
+.svc-band .home-subtitle {
+  color: rgba(var(--on-dark-rgb), 0.62);
+}
+
+.svc-band .home-overline {
+  color: var(--accent-gold-soft);
+}
+
+.svc-section {
   max-width: 1240px;
   margin: 0 auto;
-  padding: 120px 32px 112px;
+  padding: 128px 32px 120px;
 }
 
 .svc-heading {
-  font-size: clamp(2.4rem, 5.4vw, 4rem);
+  font-size: clamp(2.6rem, 6vw, 4.6rem);
 }
 
 .svc-grid {
@@ -32,6 +53,7 @@
   /* 12 columns: two wide software tiles on top, four film tiles below. */
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: 18px;
+  margin-top: 8px;
 }
 
 .svc-cell {
@@ -51,112 +73,146 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 300px;
-  padding: 34px 32px 30px;
   overflow: hidden;
   border-radius: var(--radius-card);
   background:
-    radial-gradient(480px circle at var(--mx) var(--my), rgba(var(--ink-rgb), 0.05), transparent 60%),
-    linear-gradient(180deg, rgba(var(--ink-rgb), 0.035), rgba(var(--ink-rgb), 0.01)),
-    var(--bg-raised);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-card);
-  color: var(--text-main);
+    radial-gradient(420px circle at var(--mx) var(--my), rgba(var(--on-dark-rgb), 0.06), transparent 60%),
+    rgba(var(--on-dark-rgb), 0.035);
+  border: 1px solid rgba(var(--on-dark-rgb), 0.09);
+  color: var(--on-dark);
   text-decoration: none;
-  transition: transform 0.6s var(--ease-premium), border-color 0.5s var(--ease-premium),
-    box-shadow 0.6s var(--ease-premium);
-}
-
-.svc-cell-software .svc-tile {
-  min-height: 340px;
-}
-
-/* A thin accent rule that draws in from the left along the top edge. */
-.svc-tile::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 32px;
-  right: 32px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent-cyan), rgba(var(--accent-cyan-rgb), 0));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.8s var(--ease-premium);
+  transition: transform 0.6s var(--ease-premium), border-color 0.5s var(--ease-premium);
 }
 
 .svc-tile:hover,
 .svc-tile:focus-visible {
   transform: translateY(-4px);
-  border-color: var(--line-strong);
-  box-shadow: var(--shadow-float);
+  border-color: rgba(var(--accent-cyan-rgb), 0.55);
 }
 
-.svc-tile:hover::before,
-.svc-tile:focus-visible::before {
-  transform: scaleX(1);
+/* ─── Photo ─── */
+.svc-media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: rgba(var(--on-dark-rgb), 0.04);
+}
+
+.svc-cell-software .svc-media {
+  aspect-ratio: 16 / 8;
+}
+
+/* Fades the photo into the tile, so text never sits on a hard edge. */
+.svc-media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 55%, rgba(var(--ink-rgb), 0.55));
+  pointer-events: none;
+}
+
+.svc-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transform: scale(1.02);
+  transition: transform 1.2s var(--ease-premium);
+}
+
+.svc-tile:hover .svc-img,
+.svc-tile:focus-visible .svc-img {
+  transform: scale(1.07);
+}
+
+/* Social: the portrait frame sits in a phone, on a warm glow. */
+.svc-media-phone {
+  display: grid;
+  place-items: center;
+  background: radial-gradient(60% 70% at 50% 60%, rgba(var(--accent-cyan-rgb), 0.28), transparent 70%),
+    rgba(var(--on-dark-rgb), 0.03);
+}
+
+.svc-media-phone::after {
+  display: none;
+}
+
+.svc-media-phone .svc-img {
+  /* Sized by width: a percentage height does not resolve inside the
+     aspect-ratio box, which left the "phone" lying on its side. */
+  width: 34%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-position: 50% 70%;
+  border-radius: 14px;
+  border: 4px solid var(--text-main);
+  outline: 1px solid rgba(var(--on-dark-rgb), 0.18);
+  box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.8);
+  transform: rotate(-4deg);
+}
+
+.svc-tile:hover .svc-media-phone .svc-img {
+  transform: rotate(0deg) scale(1.04);
+}
+
+/* ─── Text ─── */
+.svc-body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 26px 28px 26px;
+}
+
+.svc-cell-software .svc-body {
+  padding: 30px 34px 30px;
 }
 
 .svc-num {
-  position: absolute;
-  top: 26px;
-  right: 28px;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
-  color: var(--text-faint);
+  letter-spacing: 0.18em;
+  color: var(--accent-gold-soft);
   font-variant-numeric: tabular-nums;
-}
-
-.svc-icon {
-  display: grid;
-  place-items: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 30px;
-  border-radius: 14px;
-  color: var(--accent-cyan);
-  background: rgba(var(--ink-rgb), 0.03);
-  border: 1px solid var(--line);
-  transition: border-color 0.5s var(--ease-premium), background 0.5s var(--ease-premium);
-}
-
-.svc-tile:hover .svc-icon {
-  border-color: var(--accent-line);
-  background: var(--accent-soft);
+  margin-bottom: 10px;
 }
 
 .svc-title {
-  font-size: clamp(1.3rem, 2vw, 1.6rem);
-  font-weight: 600;
+  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
+  font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
+.svc-cell-software .svc-title {
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+}
+
 .svc-desc {
-  margin-top: 12px;
-  max-width: 46ch;
-  font-size: 0.98rem;
+  margin-top: 10px;
+  max-width: 52ch;
+  font-size: 0.94rem;
   line-height: 1.6;
-  color: var(--text-muted);
+  color: rgba(var(--on-dark-rgb), 0.66);
 }
 
 .svc-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 20px 0 22px;
+  margin: 18px 0 20px;
 }
 
 .svc-tag {
-  padding: 5px 10px;
+  padding: 4px 10px;
   border-radius: 999px;
-  border: 1px solid var(--line);
-  font-size: 0.72rem;
+  border: 1px solid rgba(var(--on-dark-rgb), 0.14);
+  font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: rgba(var(--on-dark-rgb), 0.6);
 }
 
 .svc-cta {
@@ -164,9 +220,9 @@
   align-items: center;
   gap: 6px;
   margin-top: auto;
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: var(--accent-cyan);
+  color: var(--accent-gold-soft);
 }
 
 .svc-cta svg {
@@ -179,12 +235,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .svc-tile,
-  .svc-tile::before,
-  .svc-icon {
+  .svc-img {
     transition: none;
   }
   .svc-tile:hover,
-  .svc-tile:focus-visible {
+  .svc-tile:focus-visible,
+  .svc-tile:hover .svc-img,
+  .svc-tile:hover .svc-media-phone .svc-img {
     transform: none;
   }
 }
@@ -208,9 +265,11 @@
   .svc-cell-software {
     grid-column: auto;
   }
-  .svc-tile,
-  .svc-cell-software .svc-tile {
-    min-height: 0;
-    padding: 26px 22px 24px;
+  .svc-body,
+  .svc-cell-software .svc-body {
+    padding: 22px 22px 22px;
+  }
+  .svc-cell-software .svc-media {
+    aspect-ratio: 16 / 10;
   }
 }
