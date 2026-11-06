@@ -30,6 +30,7 @@
      showreel, image overlays. Text on them uses --on-dark. */
   --surface-dark: #121211;
   --on-dark: #f6f5f1;
+  --on-dark-rgb: 246, 245, 241;
 
   /* ── Hairlines — one rule, used everywhere, so edges read as a system ── */
   --line: rgba(var(--ink-rgb), 0.1);

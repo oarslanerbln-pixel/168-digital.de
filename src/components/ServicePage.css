@@ -10,7 +10,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-family: var(--font-mono, monospace);
+  font-family: 'Outfit', sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -40,9 +40,13 @@
 
 .service-overline {
   display: inline-block;
-  font-family: var(--font-mono, monospace);
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  /* Was var(--font-mono), which no stylesheet defines: every visitor got
+     the browser's Courier. Overlines now match the homepage's. */
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: var(--accent-cyan);
   margin-bottom: 1rem;
 }
@@ -62,9 +66,10 @@
 }
 
 .service-section-heading {
-  font-family: var(--font-mono, monospace);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--text-muted);
   margin-bottom: 1.5rem;
@@ -108,7 +113,7 @@
   position: absolute;
   left: 0;
   top: -0.25rem;
-  font-family: var(--font-mono, monospace);
+  font-family: 'Outfit', sans-serif;
   font-size: 1.6rem;
   color: var(--accent-silver);
   opacity: 0.5;

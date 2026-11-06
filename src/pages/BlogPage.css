@@ -22,7 +22,7 @@
 }
 
 .blog-list-meta {
-  font-family: var(--font-mono, monospace);
+  font-family: 'Outfit', sans-serif;
   font-size: 0.75rem;
   letter-spacing: 0.06em;
   color: color-mix(in srgb, var(--card-glow) 70%, var(--text-muted));
