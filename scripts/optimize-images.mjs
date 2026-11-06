@@ -71,6 +71,18 @@ for (const s of WORKS_SOURCES) {
     .webp({ quality: s.quality })
     .toFile(dst);
   console.log(`${s.in} (${kb(src)} KB) -> ${s.out} (${kb(dst)} KB)`);
+
+  // Retina variant for the works cards (srcset), only where the source is
+  // wide enough to be sharper than the 960px file rather than upscaled.
+  const { width } = await sharp(src).metadata();
+  if (width >= 1280) {
+    const hi = dst.replace('.webp', '-1440.webp');
+    await sharp(src)
+      .resize(Math.min(1440, width), Math.round(Math.min(1440, width) / 1.6), { fit: 'cover', position: 'north' })
+      .webp({ quality: 80 })
+      .toFile(hi);
+    console.log(`  + ${hi.split('/public/')[1]} (${kb(hi)} KB)`);
+  }
 }
 
 mkdirSync(join(pub, 'showroom'), { recursive: true });

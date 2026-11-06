@@ -64,17 +64,6 @@
   flex-basis: min(36vw, 500px);
 }
 
-/* The photo drifts against the pan (--drift from Works.tsx). Transform
-   is driven per frame, so only the colour change keeps a transition. */
-.works-scroller.is-panning .project-card-media-img {
-  transform: scale(1.14) translateX(var(--drift, 0%));
-  transition: filter 0.5s var(--ease-premium);
-}
-
-.works-scroller.is-panning .project-card:hover .project-card-media-img {
-  transform: scale(1.18) translateX(var(--drift, 0%));
-}
-
 .works-progress {
   position: relative;
   height: 1px;
@@ -87,4 +76,206 @@
   inset: 0;
   background: var(--text-main);
   transform-origin: left;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CARD — a product shot, not a pasted screenshot (Nov 2026).
+
+   The capture sits in a browser window (bar + live domain) on a soft
+   light in the project's own colour (--card-tint, from works.ts), with
+   room around it like a studio backdrop. Pointer tilt reads --tx/--ty
+   (-1…1, set in Works.tsx); a gloss sweeps once across the glass on
+   hover. Transform/opacity only; reduced motion keeps the still card.
+   Selectors are scoped to .works-track so they win over the older
+   .project-card rules in index.css without !important.
+   ═══════════════════════════════════════════════════════════════ */
+.works-track .project-card {
+  --tx: 0;
+  --ty: 0;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  background: var(--bg-raised);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.6s var(--ease-premium), box-shadow 0.6s var(--ease-premium),
+    border-color 0.5s var(--ease-premium);
+}
+
+.works-track .project-card:hover,
+.works-track .project-card:focus-visible {
+  transform: translateY(-6px);
+  border-color: rgba(var(--accent-cyan-rgb), 0.45);
+  box-shadow: var(--shadow-float);
+}
+
+/* Backdrop: a pool of the project's colour behind the window. */
+.works-track .project-card-media {
+  position: relative;
+  aspect-ratio: 16 / 11;
+  padding: 9% 8% 0;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
+  background:
+    radial-gradient(80% 70% at 50% 100%, color-mix(in srgb, var(--card-tint, var(--accent-cyan)) 30%, transparent), transparent 70%),
+    linear-gradient(180deg, var(--bg-sunken), color-mix(in srgb, var(--bg-sunken) 85%, var(--card-tint, var(--accent-cyan))));
+  perspective: 900px;
+}
+
+.project-browser {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  background: var(--bg-raised);
+  box-shadow:
+    0 0 0 1px rgba(var(--ink-rgb), 0.08),
+    0 30px 60px -28px rgba(0, 0, 0, 0.45);
+  transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translateY(6%);
+  transform-origin: 50% 100%;
+  transition: transform 0.7s var(--ease-premium);
+}
+
+.works-track .project-card:hover .project-browser {
+  transform: rotateX(calc(var(--ty) * -4deg)) rotateY(calc(var(--tx) * 5deg)) translateY(2%);
+  transition-duration: 0.25s;
+}
+
+.project-browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-dark);
+}
+
+.project-browser-dots {
+  display: flex;
+  gap: 5px;
+}
+
+.project-browser-dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(var(--ink-rgb), 0.16);
+}
+
+.project-browser-url {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 3px 10px;
+  border-radius: 99px;
+  background: rgba(var(--ink-rgb), 0.05);
+  font-size: 0.66rem;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.project-browser-view {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.works-track .project-card-media-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: none;
+  transform: scale(1.001);
+  transition: transform 1.2s var(--ease-premium);
+}
+
+.works-track .project-card:hover .project-card-media-img {
+  transform: scale(1.05);
+  filter: none;
+}
+
+/* One pass of light across the glass when the pointer arrives. */
+.project-browser-gloss {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.38) 50%, transparent 65%);
+  transform: translateX(-110%);
+  pointer-events: none;
+}
+
+.works-track .project-card:hover .project-browser-gloss {
+  transform: translateX(110%);
+  transition: transform 1.1s var(--ease-premium);
+}
+
+/* "View details" pill, rising in over the window. */
+.project-card-cta {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 99px;
+  /* Light pill: captures range from near-black to white, and a white
+     pill with a shadow reads on both; an ink one vanished on dark sites. */
+  background: var(--bg-raised);
+  color: var(--text-main);
+  box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  transition: opacity 0.4s var(--ease-premium), transform 0.5s var(--ease-premium);
+  pointer-events: none;
+}
+
+.works-track .project-card:hover .project-card-cta,
+.works-track .project-card:focus-visible .project-card-cta {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.works-track .project-card-number {
+  color: var(--accent-cyan);
+}
+
+.works-track .project-card-title {
+  font-size: 1.35rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+@media (hover: none) {
+  /* Touch: no pointer to follow, show the call to action at rest. */
+  .project-card-cta {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .works-track .project-card,
+  .project-browser,
+  .works-track .project-card-media-img,
+  .project-card-cta {
+    transition: none;
+  }
+  .project-browser,
+  .works-track .project-card:hover .project-browser {
+    transform: translateY(4%);
+  }
+  .project-browser-gloss {
+    display: none;
+  }
+  .works-track .project-card:hover,
+  .works-track .project-card:hover .project-card-media-img {
+    transform: none;
+  }
 }
