@@ -35,7 +35,7 @@ gilt `package.json`, nicht das README.
 npm install         # einmalig
 npm run dev         # Dev-Server
 npm run build       # tsc → vite build → SSR-Build → Prerender (scripts/prerender.mjs) – muss fehlerfrei sein
-npm test            # vitest (28 Tests, 7 Dateien)
+npm test            # vitest (29 Tests, 7 Dateien)
 npx tsc --noEmit    # reine Typprüfung
 node download-fonts.mjs  # Schriften neu holen + index.html/catalog.css regenerieren
 ```
@@ -51,6 +51,8 @@ lassen.**
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
 | Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
 | Leistungen als Bento-Grid mit Pointer-Licht / Zähler-Streifen | `src/components/Services.tsx`, `FactsStrip.tsx` |
+| Intro (Phi-Raster, Öffnung am Goldenen Schnitt) / Statement mit Scroll-Tinte | `src/components/Preloader.tsx`, `Statement.tsx` |
+| Gemeinsame CTA-Buttons + Vertrauenszeilen (Hero, Service-Seiten, Statement) | `src/styles/cta.css` |
 | Startseiten-Inhalte: Lösungen, Ablauf, FAQ (DE/EN/TR) + Produktfotos | `src/data/homeContent.ts` |
 | Produktfotos: Quellen `assets-src/solutions/`, WebP 640/1080 via `npm run optimize:images` | `public/solutions/` |
 | Alle Texte, 3 Sprachen (DE/EN/TR) | `src/i18n.ts` |
@@ -194,6 +196,6 @@ nutzen; Schatten über `--shadow-soft/-card/-float`. Animation: nur `transform`/
 - `src/i18n.ts` ist ein 500-Zeilen-Objekt für drei Sprachen; ab dem
   nächsten größeren Textzuwachs nach `src/locales/{en,de,tr}.json` teilen.
 - Strategie, Zielgruppe und SEO/GEO-Fahrplan: `docs/redesign-2026-10.md`.
-- Tests decken Preloader, Cursor, SEOHead, ServicePage/404 und das
+- Tests decken Preloader, Cursor, SEOHead, ServicePage/404 samt Themen-CTA und das
   Kontaktformular samt Fallback und Themenwahl ab – nicht aber Navigation, Cookie-Banner
   und die Einwilligungs-Reihenfolge der Analytics.

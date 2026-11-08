@@ -1,105 +1,225 @@
-/* ─── Preloader — calm, minimal, matches the site's light palette ─── */
+/* ─── Intro — the golden section, drawn and then opened ───
+   See the block comment in Preloader.tsx for the idea. The overlay itself
+   is transparent: the two panels are the opaque ground, so when they part
+   the page underneath is revealed along the 61.8 % line. */
 .preloader-overlay-p {
   position: fixed;
   inset: 0;
   z-index: var(--z-preloader);
-  background: var(--bg-dark);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
+  cursor: pointer;
 }
 
-/* Cinematic shutters (top & bottom) — same tone as the overlay so the
-   reveal reads as a curtain opening, not a light flash. */
-.pl-shutter-top,
-.pl-shutter-bottom {
+/* ─── The two halves ─── */
+.pl-panel {
   position: absolute;
   left: 0;
   width: 100%;
-  height: 50%;
   background: var(--bg-dark);
-  z-index: 4;
+  z-index: 1;
+  will-change: transform;
+}
+
+/* +1px so the two halves overlap instead of leaving a sub-pixel slit. */
+.pl-panel-top {
+  top: 0;
+  height: calc(61.8% + 1px);
+}
+
+.pl-panel-bottom {
+  bottom: 0;
+  height: 38.2%;
+}
+
+/* The cut edge carries a gold hairline while the halves part. */
+.pl-panel::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-gold-soft);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.pl-panel-top::after { bottom: 0; }
+.pl-panel-bottom::after { top: 0; }
+.is-open .pl-panel::after { opacity: 1; }
+
+/* ─── Phi grid ─── */
+.pl-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
   pointer-events: none;
 }
-.pl-shutter-top { top: 0; }
-.pl-shutter-bottom { bottom: 0; }
 
-/* Central content stage */
+.pl-line {
+  position: absolute;
+  display: block;
+  animation-duration: 0.95s;
+  animation-timing-function: var(--ease-premium);
+  animation-delay: var(--d, 0s);
+  animation-fill-mode: both;
+}
+
+.pl-line-h {
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(var(--ink-rgb), 0.12);
+  transform-origin: left center;
+  animation-name: pl-draw-x;
+}
+
+.pl-line-h1 { top: 38.2%; }
+.pl-line-h2 { top: 61.8%; }
+
+/* Vertical lines open a gap where the wordmark sits, so no hairline ever
+   runs through a letter. */
+.pl-line-v {
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(var(--ink-rgb), 0.12) 0%,
+    rgba(var(--ink-rgb), 0.12) 40%,
+    transparent 44%,
+    transparent 56%,
+    rgba(var(--ink-rgb), 0.12) 60%,
+    rgba(var(--ink-rgb), 0.12) 100%
+  );
+  transform-origin: center top;
+  animation-name: pl-draw-y;
+}
+
+.pl-line-v1 { left: 38.2%; }
+.pl-line-v2 { left: 61.8%; }
+
+/* The lower line ignites in gold from the grid point outward — the line
+   the screen will open along. */
+.pl-seam {
+  position: absolute;
+  top: 61.8%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--accent-gold-soft);
+  transform-origin: 61.8% center;
+  animation: pl-draw-x 0.8s var(--ease-premium) 1.1s both;
+}
+
+.pl-point {
+  position: absolute;
+  top: 61.8%;
+  left: 61.8%;
+  width: 7px;
+  height: 7px;
+  margin: -3px 0 0 -3px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 0 5px rgba(var(--accent-cyan-rgb), 0.12);
+  animation: pl-pop 0.6s var(--ease-premium) 0.95s both;
+}
+
+@keyframes pl-draw-x {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+@keyframes pl-draw-y {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+@keyframes pl-pop {
+  0%   { transform: scale(0); opacity: 0; }
+  60%  { transform: scale(1.35); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ─── Wordmark ─── */
 .pl-stage {
-  position: relative;
-  z-index: 5;
+  position: absolute;
+  inset: 0;
+  z-index: 3;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
-  padding: 0 20px;
+  padding: 0 16px;
+  pointer-events: none;
 }
 
-/* ─── Golden spiral, single clean stroke ─── */
-.pl-spiral-wrap {
-  position: relative;
-  width: min(440px, 82vw);
-  height: min(440px, 82vw);
-}
-
-.pl-svg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-/* ─── Brand wordmark ─── */
-.pl-brand-block {
-  position: absolute;
+.pl-wordmark {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.pl-brand-name {
-  font-family: 'Outfit', sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.44em;
-  margin-right: -0.44em;
-  font-size: clamp(1.75rem, 7.4vw, 3.25rem);
-  text-align: center;
+  align-items: baseline;
+  gap: 0.22em;
+  font-size: clamp(2.75rem, 13vw, 7.25rem);
+  line-height: 1;
   white-space: nowrap;
   color: var(--text-main);
 }
 
-.pl-brand-line {
-  width: 210px;
-  height: 1px;
-  margin-top: 18px;
-  transform-origin: center;
-  background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
-}
-
-.pl-brand-sub {
-  margin-top: 13px;
+.pl-digits {
+  display: inline-flex;
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(0.56rem, 1.6vw, 0.7rem);
   font-weight: 500;
-  letter-spacing: 0.52em;
-  margin-right: -0.52em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
 }
 
-/* Skip affordance — small, discoverable, doesn't compete with the wordmark */
+/* Each glyph rises out of its own mask. The padding/negative margin pair
+   gives descenders and the italic overhang room without moving layout. */
+.pl-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding: 0.08em 0.03em 0.16em;
+  margin: -0.08em -0.03em -0.16em;
+}
+
+.pl-mask-word {
+  padding-right: 0.12em;
+  margin-right: -0.12em;
+}
+
+.pl-digit,
+.pl-word {
+  display: inline-block;
+  will-change: transform;
+}
+
+.pl-word {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--accent-cyan);
+}
+
+.pl-tagline {
+  margin-top: 26px;
+  margin-right: -0.42em; /* optically re-centre the tracked caps */
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(0.6rem, 1.7vw, 0.72rem);
+  font-weight: 500;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+/* ─── Skip ─── */
 .pl-skip-btn {
   position: absolute;
-  bottom: 28px;
   right: 28px;
-  z-index: 6;
+  bottom: 28px;
+  z-index: 4;
   padding: 8px 18px;
-  background: transparent;
-  border: 1px solid var(--glass-border);
+  background: var(--bg-dark);
+  border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--text-muted);
   font-family: 'Outfit', sans-serif;
@@ -108,23 +228,30 @@
   letter-spacing: 0.18em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, color 0.3s ease, opacity 0.3s ease;
 }
+
+.is-open .pl-skip-btn { opacity: 0; }
 
 .pl-skip-btn:hover,
 .pl-skip-btn:focus-visible {
   border-color: var(--accent-cyan);
   color: var(--accent-cyan);
-  background: rgba(163, 118, 60, 0.08);
 }
 
 @media (max-width: 480px) {
-  .pl-spiral-wrap {
-    transform: scale(0.78);
-  }
-
   .pl-skip-btn {
+    right: 16px;
     bottom: 20px;
-    right: 20px;
+  }
+}
+
+/* App.tsx never mounts the intro for reduced motion; this is the guard
+   should that gating ever change. */
+@media (prefers-reduced-motion: reduce) {
+  .pl-line,
+  .pl-seam,
+  .pl-point {
+    animation: none;
   }
 }

@@ -1,34 +1,60 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { buildGoldenSpiral } from '../utils/goldenSpiral';
+import { useState, useEffect, type CSSProperties } from 'react';
+import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 import './Preloader.css';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-const SIZE = 440;
-const SPIRAL = buildGoldenSpiral(SIZE, 195, 3.75, 280);
-const DRAW_DURATION = 1.3;
-const DRAW_EASE = [0.5, 0, 0.3, 1] as const;
+/* ════════════════════════════════════════════════════════════════
+   INTRO — "the golden section", drawn once, then opened.
+
+   The studio is named after φ ≈ 1.618, so the intro does not show a
+   logo animation, it shows the proportion itself:
+
+   1. a phi grid draws in — four hairlines at 38.2 % and 61.8 % of the
+      screen, the composition grid photographers frame with, which is
+      the film half of the business in one gesture;
+   2. the four digits 1·6·1·8 rise out of their masks one after another,
+      "Digital" follows in Playfair italic gold — the same voice the
+      hero's key words use, so the intro and the first screen read as
+      one piece;
+   3. the lower hairline turns gold from the grid point outward, and the
+      screen opens along exactly that line: the upper 61.8 % lifts, the
+      lower 38.2 % drops. The page is revealed along the golden section.
+
+   The previous intro (pen-drawn spiral, wordmark, two equal shutters)
+   relied on blur filters and took ~3 s. This one animates transform and
+   opacity only (CLAUDE.md rule 7), is done in ~2.4 s and stays
+   skippable: click/tap anywhere, Escape, or the button. App.tsx keeps
+   the gating (once per 24 h, never for reduced motion, never in the
+   prerendered HTML), so this component only has to play.
+   ════════════════════════════════════════════════════════════════ */
+
+const DIGITS = ['1', '6', '1', '8'];
+const EASE = [0.16, 1, 0.3, 1] as const;
+const EASE_OPEN = [0.76, 0, 0.24, 1] as const;
+
+/** When the screen starts to open, and when the page takes over. */
+const OPEN_AT_MS = 1750;
+const COMPLETE_AT_MS = 2350;
 
 export default function Preloader({ onComplete }: PreloaderProps) {
-  const [phase, setPhase] = useState(0);
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const t1 = setTimeout(() => setPhase(1), 1450); // reveal wordmark
-    const t2 = setTimeout(() => setPhase(2), 2350); // open shutters
-    const t3 = setTimeout(() => onComplete(), 2950); // unmount
-
+    const t1 = setTimeout(() => setOpen(true), OPEN_AT_MS);
+    // The hero starts its entrance while the panels are still parting,
+    // so the reveal and the headline read as one movement.
+    const t2 = setTimeout(() => onComplete(), COMPLETE_AT_MS);
     return () => {
       clearTimeout(t1);
       clearTimeout(t2);
-      clearTimeout(t3);
     };
   }, [onComplete]);
 
-  // Let visitors skip the intro instead of being captive for its full
-  // duration — click/tap anywhere, press Escape, or use the explicit button.
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onComplete();
@@ -37,112 +63,99 @@ export default function Preloader({ onComplete }: PreloaderProps) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onComplete]);
 
-  const isLoaded = phase >= 2;
-  const showSpiral = phase <= 1;
-  const showBrand = phase === 1;
-
   return (
     <motion.div
       key="preloader-wrapper"
+      className={`preloader-overlay-p${open ? ' is-open' : ''}`}
       initial={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 0.8, ease: 'easeInOut' }}
-      style={{ pointerEvents: isLoaded ? 'none' : 'all' }}
-      className="preloader-overlay-p"
+      transition={{ duration: 0.45, ease: 'easeOut' }}
+      style={{ pointerEvents: open ? 'none' : 'auto' }}
       onClick={onComplete}
     >
+      {/* The two halves of the screen, cut at the golden section. */}
+      <motion.div
+        className="pl-panel pl-panel-top"
+        aria-hidden="true"
+        initial={{ y: '0%' }}
+        animate={{ y: open ? '-101%' : '0%' }}
+        transition={{ duration: 0.95, ease: EASE_OPEN }}
+      />
+      <motion.div
+        className="pl-panel pl-panel-bottom"
+        aria-hidden="true"
+        initial={{ y: '0%' }}
+        animate={{ y: open ? '101%' : '0%' }}
+        transition={{ duration: 0.95, ease: EASE_OPEN }}
+      />
+
+      {/* Phi grid: hairlines drawn by scaling, never by layout. */}
+      <motion.div
+        className="pl-grid"
+        aria-hidden="true"
+        animate={{ opacity: open ? 0 : 1 }}
+        transition={{ duration: 0.3 }}
+      >
+        <span className="pl-line pl-line-h pl-line-h1" style={{ '--d': '0s' } as CSSProperties} />
+        <span className="pl-line pl-line-h pl-line-h2" style={{ '--d': '0.08s' } as CSSProperties} />
+        <span className="pl-line pl-line-v pl-line-v1" style={{ '--d': '0.16s' } as CSSProperties} />
+        <span className="pl-line pl-line-v pl-line-v2" style={{ '--d': '0.24s' } as CSSProperties} />
+        <span className="pl-seam" />
+        <span className="pl-point" />
+      </motion.div>
+
+      <motion.div
+        className="pl-stage"
+        aria-hidden="true"
+        animate={{ opacity: open ? 0 : 1, y: open ? -14 : 0 }}
+        transition={{ duration: 0.35, ease: 'easeIn' }}
+      >
+        <div className="pl-wordmark">
+          <span className="pl-digits">
+            {DIGITS.map((digit, i) => (
+              <span key={i} className="pl-mask">
+                <motion.span
+                  className="pl-digit"
+                  initial={{ y: '105%' }}
+                  animate={{ y: '0%' }}
+                  transition={{ duration: 0.8, delay: 0.3 + i * 0.07, ease: EASE }}
+                >
+                  {digit}
+                </motion.span>
+              </span>
+            ))}
+          </span>
+          <span className="pl-mask pl-mask-word">
+            <motion.span
+              className="pl-word"
+              initial={{ y: '105%' }}
+              animate={{ y: '0%' }}
+              transition={{ duration: 0.85, delay: 0.62, ease: EASE }}
+            >
+              Digital
+            </motion.span>
+          </span>
+        </div>
+        <motion.span
+          className="pl-tagline"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 1.0, ease: EASE }}
+        >
+          {t('intro_tagline')}
+        </motion.span>
+      </motion.div>
+
       <button
         type="button"
         className="pl-skip-btn"
-        aria-label="Skip intro"
-        onClick={(e) => { e.stopPropagation(); onComplete(); }}
-      >
-        Skip
-      </button>
-
-      {/* ── Cinematic shutters ── */}
-      <motion.div
-        className="pl-shutter-top"
-        initial={{ scaleY: 1 }}
-        animate={{ scaleY: isLoaded ? 0 : 1 }}
-        style={{ transformOrigin: 'top' }}
-        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      />
-      <motion.div
-        className="pl-shutter-bottom"
-        initial={{ scaleY: 1 }}
-        animate={{ scaleY: isLoaded ? 0 : 1 }}
-        style={{ transformOrigin: 'bottom' }}
-        transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      />
-
-      {/* ── Stage ── */}
-      <motion.div
-        className="pl-stage"
-        animate={{
-          opacity: isLoaded ? 0 : 1,
-          scale: isLoaded ? 1.06 : 1,
-          filter: isLoaded ? 'blur(10px)' : 'blur(0px)',
+        onClick={(e) => {
+          e.stopPropagation();
+          onComplete();
         }}
-        transition={{ duration: 0.8, ease: 'easeIn' }}
       >
-        {/* Pen-drawn golden spiral */}
-        <motion.div
-          className="pl-spiral-wrap"
-          animate={{
-            opacity: showSpiral ? 1 : 0,
-            scale: showBrand ? 1.08 : 1,
-            rotate: showBrand ? 6 : 0,
-            filter: showBrand ? 'blur(2px)' : 'blur(0px)',
-          }}
-          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-          style={{ opacity: showBrand ? 0.25 : 1 }}
-        >
-          {/* Pen-drawn spiral, single clean stroke */}
-          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="pl-svg pl-svg-core" aria-hidden="true">
-            <motion.path
-              d={SPIRAL}
-              fill="none"
-              stroke="var(--accent-cyan)"
-              strokeWidth={2.5}
-              strokeLinecap="round"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: 1 }}
-              transition={{ duration: DRAW_DURATION, ease: DRAW_EASE }}
-            />
-          </svg>
-        </motion.div>
-
-        {/* Brand wordmark (centered over the fading spiral) */}
-        <AnimatePresence>
-          {showBrand && (
-            <motion.div
-              key="brand"
-              className="pl-brand-block"
-              initial={{ scale: 0.9, opacity: 0, filter: 'blur(16px)' }}
-              animate={{ scale: 1, opacity: 1, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, scale: 1.12, filter: 'blur(10px)' }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="pl-brand-name">1618 DIGITAL</div>
-              <motion.div
-                className="pl-brand-line"
-                initial={{ scaleX: 0, opacity: 0 }}
-                animate={{ scaleX: 1, opacity: 1 }}
-                transition={{ delay: 0.4, duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
-              />
-              <motion.div
-                className="pl-brand-sub"
-                initial={{ opacity: 0, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7, duration: 0.7 }}
-              >
-                DIGITAL STUDIO · BERLIN
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
+        {t('intro_skip')}
+      </button>
     </motion.div>
   );
 }

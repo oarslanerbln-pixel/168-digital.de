@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import MarqueeTextBand from '../components/MarqueeTextBand';
 import Solutions from '../components/Solutions';
 import Works from '../components/Works';
+import Statement from '../components/Statement';
 import Process from '../components/Process';
 import Services from '../components/Services';
 import FactsStrip from '../components/FactsStrip';
@@ -25,11 +26,12 @@ import { getHomeContent } from '../data/homeContent';
                   from position 6 so "what do you do?" is answered first
    5. Solutions   the systems we build, in use, each with its own ask
    6. Works       real projects
-   7. Process     how it runs, what it costs to start, mid-page ask
-   8. Showreel    proof for the film services
-   9. Showroom    proof of craft
-  10. FAQ         last objections (also FAQPage JSON-LD)
-  11. Contact     form with "what happens next"
+   7. Statement   what all of it is for, inked in word by word, + the ask
+   8. Process     how it runs, what it costs to start, mid-page ask
+   9. Showreel    proof for the film services
+  10. Showroom    proof of craft
+  11. FAQ         last objections (also FAQPage JSON-LD)
+  12. Contact     form with "what happens next"
 
    Every section between the hero and the form either removes a doubt
    or carries its own button to the form, so a visitor never has to
@@ -71,6 +73,7 @@ export default function Home() {
       <Services />
       <Solutions />
       <Works />
+      <Statement />
       <Process />
       {/* The showreel sits right under the film services it proves.
           Reel lazy-loads its video only once it scrolls into view. */}

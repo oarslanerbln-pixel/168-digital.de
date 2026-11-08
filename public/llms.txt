@@ -2,15 +2,26 @@
 
 > Berlin web and software studio. We build websites and custom software for restaurants, cafés, event businesses and local companies (SMEs) in Berlin and across Germany — online booking and reservation systems, digital QR menus and TV menu boards, customer portals and business dashboards, and lead/process automation — plus film, drone and social media content from the same team. We work in German, English and Turkish.
 
-The site is a client-rendered app; the pages below carry the full content.
+Every page below is served as complete, prerendered HTML in three languages: English at the bare URL, German under `/de/`, Turkish under `/tr/` (for example https://1618-digital.de/de/digital-menus). Each service page carries its own FAQ, also as FAQPage structured data.
+
+## Key facts
+
+- Who: 1618 Digital, a web, software and film studio based in Berlin (Wirmerzeile 4, 13627 Berlin, Germany). Founder: Ömer Arslaner.
+- For whom: mostly restaurants, cafés, event businesses and local service providers — from sole traders to mid-sized companies. Many clients want a team that speaks German, English and Turkish.
+- Where: in person in Berlin; websites and software for clients across Germany via video call, phone and WhatsApp.
+- Cost: depends on scope. After a free intro call, clients receive a written quote with fixed scope and price before any work begins.
+- Timelines: a focused landing page typically takes 2–3 weeks; a business platform or custom system 6–10 weeks.
+- Privacy: tracking only starts after consent, fonts are self-hosted, and only services the purpose needs are used (GDPR / DSGVO).
+- Content ownership: menus, prices, appointments and texts can be set up so clients maintain them themselves, or 1618 Digital maintains them.
 
 ## Services
 
-- [Web Design & SaaS Development](https://1618-digital.de/web-saas-development): websites, web apps, booking systems, customer portals and SaaS MVPs. Landing pages typically take 2–3 weeks; business platforms 6–10 weeks.
-- [QR Code Menus & Digital Menu Boards](https://1618-digital.de/digital-menus): QR menus guests open at the table and animated TV menu boards, both from one menu source, in several languages.
-- [Wedding & Event Films](https://1618-digital.de/wedding-event-films)
-- [Video & Drone Production](https://1618-digital.de/video-drone-production)
-- [Social Media Marketing & Content](https://1618-digital.de/social-media-marketing)
+- [Web Design & SaaS Development](https://1618-digital.de/web-saas-development): custom websites, web apps, booking systems, customer portals and SaaS platforms. Landing pages typically take 2–3 weeks; business platforms 6–10 weeks.
+- [QR Code Menus & Digital Menu Boards](https://1618-digital.de/digital-menus): QR menus guests open at the table and animated TV menu boards for cafés and restaurants — multilingual, with allergens, updated everywhere from one source.
+- [Wedding & Event Films](https://1618-digital.de/wedding-event-films): wedding and event films in Berlin with full-day coverage, drone shots and film-quality editing.
+- [Video & Drone Production](https://1618-digital.de/video-drone-production): video production, aerial drone footage and DaVinci Resolve colour grading for brands and businesses — trailers, ads and storytelling.
+- [Social Media Marketing & Content](https://1618-digital.de/social-media-marketing): content strategy, short-form video and growth packages for Instagram and TikTok.
+- [Travel Films & Digital Travel Journals](https://1618-digital.de/travel-films-journals): travel films with drone footage plus a QR-linked digital travel journal with route, map and highlights — for honeymoons, hotels and tour operators.
 
 ## How a project runs
 
@@ -30,5 +41,6 @@ The site is a client-rendered app; the pages below carry the full content.
 
 - [Selected work](https://1618-digital.de/#works)
 - [About the studio](https://1618-digital.de/about)
+- [Web design concepts](https://1618-digital.de/concepts)
 - [Blog](https://1618-digital.de/blog)
 - [Impressum](https://1618-digital.de/impressum)

@@ -1,7 +1,7 @@
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { ChevronRight, ArrowUpRight } from 'lucide-react';
+import { ChevronRight, ArrowUpRight, ArrowRight, Check } from 'lucide-react';
 import SEOHead from './SEOHead';
 import NotFoundPage from '../pages/NotFoundPage';
 import Contact from './Contact';
@@ -9,8 +9,42 @@ import { getServiceBySlug, services } from '../data/services';
 import { serviceContent, type Lang } from '../data/serviceContent';
 import { getProjectById } from '../data/works';
 import TvMenuDemo from './TvMenuDemo';
+import '../styles/cta.css';
 import './ServicePage.css';
 import { SITE_URL, useLocalizedPath } from '../utils/localePath';
+import { requestContactTopic } from '../utils/contactTopic';
+import { LEAD_WHATSAPP_NUMBER } from '../utils/leads';
+import { playClick, playTick } from '../utils/audio';
+
+/* ════════════════════════════════════════════════════════════════
+   SERVICE PAGE — one landing page per service line.
+
+   The hero used to be text only, with the inquiry form two screens of
+   features, process and FAQ further down. A visitor arriving from a
+   search for "Hochzeitsfilm Berlin" saw neither the work nor a way to
+   ask. Now the first screen carries both:
+
+   - the service's photo (the same one its homepage tile uses), revealed
+     by a curtain sliding off it while the image settles from a slight
+     zoom — transform only, nothing runs once it has played;
+   - a primary button that scrolls to the form with this service's topic
+     already selected, and a WhatsApp link whose message already names
+     the service, so the lead arrives sorted either way;
+   - the three trust lines from the homepage hero.
+
+   The photo also goes into the Service JSON-LD (`image`), with a real
+   alt text, so image search and AI answers can show the service with a
+   picture of it.
+   ════════════════════════════════════════════════════════════════ */
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+const trustKeys = ['hero_trust_1', 'hero_trust_2', 'hero_trust_3'];
+
+/** Product photos ship as -640/-1080 pairs; showreel stills as one file. */
+function imageSrcSet(src: string): string | undefined {
+  if (!src.endsWith('-640.webp')) return undefined;
+  return `${src} 640w, ${src.replace('-640.webp', '-1080.webp')} 1080w`;
+}
 
 
 export default function ServicePage() {
@@ -37,9 +71,19 @@ export default function ServicePage() {
       '@context': 'https://schema.org',
       '@type': 'Service',
       name: content.h1,
+      serviceType: t(service.titleKey),
       description: content.metaDescription,
       provider: { '@id': `${SITE_URL}/#business` },
-      areaServed: { '@type': 'City', name: 'Berlin' },
+      // Berlin in person, Germany remotely — as the homepage FAQ says.
+      areaServed: [
+        { '@type': 'City', name: 'Berlin' },
+        { '@type': 'Country', name: 'Germany' },
+      ],
+      image: {
+        '@type': 'ImageObject',
+        url: `${SITE_URL}${service.image}`,
+        caption: t(service.imageAltKey),
+      },
       url: absolute(`/${service.slug}`),
     },
     {
@@ -77,20 +121,91 @@ export default function ServicePage() {
           <span className="current">{t(service.titleKey)}</span>
         </nav>
 
-        <motion.div
-          className="service-hero"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-        >
-          <span className="service-overline">{content.overline}</span>
-          <h1 className="service-h1 text-silver">{content.h1}</h1>
-          <div className="service-intro">
-            {content.intro.map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
-        </motion.div>
+        <div className="service-hero">
+          <motion.div
+            className="service-hero-copy"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: EASE }}
+          >
+            <span className="service-overline">{content.overline}</span>
+            <h1 className="service-h1 text-silver">{content.h1}</h1>
+            <div className="service-intro">
+              {content.intro.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+
+            <div className="service-hero-actions">
+              <button
+                type="button"
+                className="hero-cta"
+                onMouseEnter={playTick}
+                onClick={() => {
+                  playClick();
+                  requestContactTopic(service.contactTopic);
+                }}
+              >
+                {t('hero_button')}
+                <ArrowRight size={16} strokeWidth={2} aria-hidden="true" />
+              </button>
+              <a
+                className="hero-cta-ghost"
+                href={`https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(
+                  t('svc_whatsapp_text', { service: t(service.titleKey) })
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                onMouseEnter={playTick}
+                onClick={playClick}
+              >
+                {t('hero_whatsapp')}
+              </a>
+            </div>
+
+            <ul className="hero-trust">
+              {trustKeys.map((key) => (
+                <li key={key}>
+                  <Check size={15} strokeWidth={2.2} aria-hidden="true" />
+                  {t(key)}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+
+          <motion.figure
+            className={`service-visual${service.imageFrame === 'phone' ? ' service-visual-phone' : ''}`}
+            initial={{ opacity: 0, y: 32 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
+          >
+            <span className="service-visual-frame">
+              <motion.img
+                className="service-visual-img"
+                src={service.image}
+                srcSet={imageSrcSet(service.image)}
+                sizes="(max-width: 900px) 92vw, 520px"
+                alt={t(service.imageAltKey)}
+                decoding="async"
+                initial={{ scale: 1.14 }}
+                animate={{ scale: 1 }}
+                transition={{ duration: 1.6, delay: 0.15, ease: EASE }}
+              />
+              <motion.span
+                className="service-visual-curtain"
+                aria-hidden="true"
+                initial={{ x: '0%' }}
+                animate={{ x: '101%' }}
+                transition={{ duration: 1.05, delay: 0.25, ease: [0.76, 0, 0.24, 1] }}
+              />
+            </span>
+            <span className="service-visual-tags" aria-hidden="true">
+              {service.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
+              ))}
+            </span>
+          </motion.figure>
+        </div>
 
         {/* Menu boards are bought on sight: show the screen running before
             listing what is included. */}
