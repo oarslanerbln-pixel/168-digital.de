@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import { Globe, QrCode, Video, Camera, Smartphone, Plane } from 'lucide-react';
+import type { ContactTopic } from '../utils/contactTopic';
 
 /**
  * The two halves of the business. The homepage groups its service cards
@@ -23,6 +24,14 @@ export interface ServiceMeta {
   image: string;
   /** 'phone': the photo is portrait and the tile frames it in a phone. */
   imageFrame?: 'phone';
+  /** i18n key for the photo's alt text. The tiles show the photo beside
+   *  their own title (alt=""), but the service page leads with it, so
+   *  there it has to say what it shows — for screen readers and for
+   *  image search. */
+  imageAltKey: string;
+  /** Inquiry-form topic preselected by this service page's CTA, so the
+   *  lead arrives already sorted. */
+  contactTopic: ContactTopic;
 }
 
 /**
@@ -41,6 +50,8 @@ export const services: ServiceMeta[] = [
     descKey: 'service_web_desc',
     group: 'software',
     image: '/solutions/dashboard-640.webp',
+    imageAltKey: 'service_web_img_alt',
+    contactTopic: 'website',
   },
   {
     slug: 'digital-menus',
@@ -51,6 +62,8 @@ export const services: ServiceMeta[] = [
     descKey: 'service_menu_desc',
     group: 'software',
     image: '/solutions/ordering-640.webp',
+    imageAltKey: 'service_menu_img_alt',
+    contactTopic: 'menu',
   },
   {
     slug: 'wedding-event-films',
@@ -61,6 +74,8 @@ export const services: ServiceMeta[] = [
     descKey: 'service_event_desc',
     group: 'film',
     image: '/services/event.webp',
+    imageAltKey: 'service_event_img_alt',
+    contactTopic: 'film',
   },
   {
     slug: 'video-drone-production',
@@ -71,6 +86,8 @@ export const services: ServiceMeta[] = [
     descKey: 'service_media_desc',
     group: 'film',
     image: '/services/drone.webp',
+    imageAltKey: 'service_media_img_alt',
+    contactTopic: 'film',
   },
   {
     slug: 'social-media-marketing',
@@ -82,6 +99,8 @@ export const services: ServiceMeta[] = [
     group: 'film',
     image: '/services/social.webp',
     imageFrame: 'phone',
+    imageAltKey: 'service_social_img_alt',
+    contactTopic: 'other',
   },
   {
     // Travel film plus a QR-linked journal page: the film studio's craft
@@ -95,6 +114,8 @@ export const services: ServiceMeta[] = [
     descKey: 'service_travel_desc',
     group: 'film',
     image: '/services/travel.webp',
+    imageAltKey: 'service_travel_img_alt',
+    contactTopic: 'film',
   },
 ];
 

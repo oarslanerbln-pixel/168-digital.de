@@ -1,0 +1,65 @@
+/* ─── Statement: one sentence, inked in by scrolling (see Statement.tsx) ─── */
+.stmt-section {
+  position: relative;
+  overflow: hidden; /* the spiral watermark is larger than the band */
+  padding: clamp(96px, 14vw, 176px) 16px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+/* Watermark: the golden spiral, a single hairline in faint gold. Sized
+   and centred without transform, because Motion owns the transform. */
+.stmt-spiral {
+  --size: min(680px, 115vw);
+  position: absolute;
+  top: calc(50% - var(--size) / 2);
+  right: calc(var(--size) / -4);
+  width: var(--size);
+  height: var(--size);
+  color: rgba(var(--accent-cyan-rgb), 0.22);
+  pointer-events: none;
+}
+
+.stmt-inner {
+  position: relative;
+  max-width: 980px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.stmt-text {
+  margin: 0 auto;
+  font-size: clamp(1.7rem, 4.3vw, 3.35rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--text-main);
+  text-wrap: balance;
+}
+
+.stmt-word {
+  display: inline;
+}
+
+.stmt-key {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  color: var(--accent-cyan);
+}
+
+.stmt-cta {
+  margin-top: clamp(36px, 5vw, 52px);
+}
+
+@media (max-width: 600px) {
+  .stmt-inner {
+    text-align: left;
+  }
+
+  .stmt-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}

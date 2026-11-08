@@ -5,6 +5,7 @@ import { ArrowRight, Check } from 'lucide-react';
 import { heroImage, srcSet } from '../data/homeContent';
 import { useMagnetic } from '../hooks/useMagnetic';
 import { INTRO_DONE_EVENT } from '../utils/introEvent';
+import '../styles/cta.css';
 import './Hero.css';
 
 /* ════════════════════════════════════════════════════════════════

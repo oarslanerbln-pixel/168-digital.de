@@ -1,7 +1,7 @@
 /* Golden ratio (φ = 1.618) logarithmic spiral as an SVG path.
    Built in a 1-unit-per-pixel space and centered on its own bounding box,
    so an SVG stroke and a CSS offset-path can share identical geometry.
-   Shared by the intro Preloader and the Hero emblem. */
+   Drawn as the turning watermark behind the homepage Statement. */
 export function buildGoldenSpiral(
   size = 360,
   maxR = 150,
