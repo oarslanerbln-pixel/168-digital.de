@@ -46,8 +46,11 @@ export default function Showroom() {
               rel="noopener noreferrer"
               className="showroom-card"
               onMouseEnter={playTick}
-              aria-label={`${demo.name} — ${t(demo.categoryKey)} · ${t('showroom_live')}`}
             >
+              {/* No aria-label: the card's visible text (badge, name,
+                  category, "live demo") is its name. An override that
+                  differed from what is on screen broke voice control
+                  ("click Origo") and failed WCAG 2.5.3. */}
               <span className="showroom-media">
                 <img
                   src={demo.image}

@@ -372,7 +372,7 @@ const resources = {
       "svc_related_services_heading": "Weitere Leistungen",
       "svc_related_work_heading": "Verwandte Projekte",
       "svc_visit_project": "Projekt ansehen",
-      "svc_breadcrumb_home": "Start",
+      "svc_breadcrumb_home": "Startseite",
       "not_found_title": "Seite nicht gefunden",
       "not_found_text": "Diese Seite gibt es nicht — vielleicht ist der Link veraltet.",
       "not_found_cta": "Zur Startseite",

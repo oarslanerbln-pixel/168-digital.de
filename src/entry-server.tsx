@@ -27,6 +27,8 @@ import { blogPosts } from './data/blogContent';
 // The prerender script builds URLs and sitemap entries with the same
 // helpers the app uses, so the two cannot drift apart.
 export { SITE_URL, SUPPORTED_LANGUAGES, OG_LOCALES, localizePath, absoluteUrl, hreflangAlternates } from './utils/localePath';
+// Which page (and so which build chunk's CSS) a URL renders.
+export { pageForPath } from './App';
 
 /**
  * Every indexable page, language-neutral. The prerender renders each one

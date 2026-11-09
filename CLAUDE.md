@@ -35,7 +35,7 @@ gilt `package.json`, nicht das README.
 npm install         # einmalig
 npm run dev         # Dev-Server
 npm run build       # tsc → vite build → SSR-Build → Prerender (scripts/prerender.mjs) – muss fehlerfrei sein
-npm test            # vitest (29 Tests, 7 Dateien)
+npm test            # vitest (32 Tests, 8 Dateien)
 npx tsc --noEmit    # reine Typprüfung
 node download-fonts.mjs  # Schriften neu holen + index.html/catalog.css regenerieren
 ```
@@ -66,6 +66,9 @@ lassen.**
 | Meta-Tags pro Route | `src/components/SEOHead.tsx` |
 | Build-Prerender: Routenliste + SSR-Einstieg | `src/entry-server.tsx`, `scripts/prerender.mjs` |
 | Lead-Versand (Web3Forms) + WhatsApp/E-Mail-Fallback | `src/utils/leads.ts` |
+| Anfragen als Conversions (GA4 `generate_lead`/`contact`, Meta `Lead`/`Contact`, nur nach Einwilligung) | `src/utils/thirdPartyAnalytics.ts` |
+| WhatsApp-Button weicht, solange ein Hero-WhatsApp-Link sichtbar ist | `src/utils/inlineWhatsApp.ts` |
+| Einstiegsanimation nur bei Client-Navigation, nie über vorgerendertem HTML | `src/utils/entranceGate.ts` |
 | 404-Seite (noindex) für jede unbekannte URL | `src/pages/NotFoundPage.tsx` |
 | Sprachpfade (`/`, `/de/…`, `/tr/…`): Canonical, hreflang, interne Links | `src/utils/localePath.ts` |
 
@@ -182,7 +185,11 @@ nutzen; Schatten über `--shadow-soft/-card/-float`. Animation: nur `transform`/
   der Prerender erweitert ihn auf alle Sprachen und bricht ab, wenn Liste und
   Routen auseinanderlaufen. Code, der beim Rendern (nicht im
   Effect) `window`/`localStorage` anfasst, bricht den Build – mit
-  `typeof window === 'undefined'` absichern. Unbekannte URLs bekommen
+  `typeof window === 'undefined'` absichern. Das CSS der jeweiligen Seite
+  verlinkt der Prerender direkt im `<head>` (Vite-Manifest + `pageForPath` aus
+  `App.tsx`) – vorher kam es erst per JavaScript, und die Startseite hatte
+  CLS ≈ 1. Neue Seite in `pages` in `App.tsx` eintragen, sonst bricht der
+  Build. Unbekannte URLs bekommen
   `dist/404.html` (SPA-Hülle) mit echtem 404-Status – es gibt bewusst keine
   Catch-all-Rewrite mehr in `vercel.json`.
 - Die Sprache steht im Pfad: Englisch ohne Präfix, Deutsch/Türkisch unter
@@ -196,6 +203,6 @@ nutzen; Schatten über `--shadow-soft/-card/-float`. Animation: nur `transform`/
 - `src/i18n.ts` ist ein 500-Zeilen-Objekt für drei Sprachen; ab dem
   nächsten größeren Textzuwachs nach `src/locales/{en,de,tr}.json` teilen.
 - Strategie, Zielgruppe und SEO/GEO-Fahrplan: `docs/redesign-2026-10.md`.
-- Tests decken Preloader, Cursor, SEOHead, ServicePage/404 samt Themen-CTA und das
-  Kontaktformular samt Fallback und Themenwahl ab – nicht aber Navigation, Cookie-Banner
+- Tests decken Preloader, Cursor, SEOHead, ServicePage/404 samt Themen-CTA, das
+  Lead-Tracking und das Kontaktformular samt Fallback und Themenwahl ab – nicht aber Navigation, Cookie-Banner
   und die Einwilligungs-Reihenfolge der Analytics.

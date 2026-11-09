@@ -23,7 +23,8 @@
   --bg-sunken: #eeece6;        /* alternating band behind sections */
   --text-main: #131312;        /* ink */
   --text-muted: #57554f;       /* secondary text — AA (7:1) on the ground */
-  --text-faint: #75726a;       /* overlines, meta — AA (4.6:1) on the ground */
+  --text-faint: #6a675f;       /* overlines, meta — AA on every ground: 5.2:1 page, 4.8:1 sunken band
+                                  (was #75726a, 4.4:1: failed AA, flagged by Lighthouse) */
   --ink-rgb: 19, 19, 18;
 
   /* Surfaces that must stay dark whatever the theme: film frames, the

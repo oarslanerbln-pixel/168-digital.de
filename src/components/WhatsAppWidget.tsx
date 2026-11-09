@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, Check, ArrowUpRight } from 'lucide-react';
 import { playClick, playTick } from '../utils/audio';
+import { useInlineWhatsAppVisible } from '../utils/inlineWhatsApp';
 import './WhatsAppWidget.css';
 
 /* Below this width the button becomes a full-width bottom bar instead of a
@@ -14,6 +15,9 @@ export default function WhatsAppWidget() {
   const { t } = useTranslation();
   const [isExpanded, setIsExpanded] = useState(false);
   const [phoneCopied, setPhoneCopied] = useState(false);
+  // Steps aside while a hero's own WhatsApp link is on screen (see
+  // utils/inlineWhatsApp.ts) — never while its own panel is open.
+  const yielding = useInlineWhatsAppVisible() && !isExpanded;
   const [isMobileBar, setIsMobileBar] = useState(
     () => typeof window !== 'undefined' && window.matchMedia(MOBILE_BAR_QUERY).matches
   );
@@ -87,7 +91,7 @@ export default function WhatsAppWidget() {
   };
 
   return (
-    <div className="wa-widget-wrapper">
+    <div className={`wa-widget-wrapper${yielding ? ' is-yielding' : ''}`}>
       {/* Floating Action Button */}
       <motion.button
         className="wa-floating-btn"

@@ -60,22 +60,46 @@ const AboutPage = lazyPage(() => import('./pages/AboutPage'));
 const ConceptsPage = lazyPage(() => import('./pages/ConceptsPage'));
 const NotFoundPage = lazyPage(() => import('./pages/NotFoundPage'));
 
-/** The page chunk for a URL, mirroring pageRoutes below. Used by main.tsx. */
-export function preloadRoute(pathname: string): Promise<unknown> {
+const pages = {
+  Home,
+  ServicePage,
+  LegalPage,
+  ContactPage,
+  BlogPage,
+  BlogPostPage,
+  AboutPage,
+  ConceptsPage,
+  NotFoundPage,
+};
+
+/**
+ * The page that renders a URL, mirroring pageRoutes below. Each name is
+ * also its build chunk's name (Vite names a lazy chunk after its file), so
+ * the prerender uses this to link that chunk's CSS into the page's static
+ * HTML — the one source of truth for "which page is this URL".
+ */
+export type PageName = keyof typeof pages;
+
+export function pageForPath(pathname: string): PageName {
   const path = stripLanguagePrefix(pathname);
-  const exact: Record<string, { preload: () => Promise<unknown> }> = {
-    '/': Home,
-    '/impressum': LegalPage,
-    '/datenschutz': LegalPage,
-    '/contact': ContactPage,
-    '/about': AboutPage,
-    '/concepts': ConceptsPage,
-    '/blog': BlogPage,
+  const exact: Record<string, PageName> = {
+    '/': 'Home',
+    '/impressum': 'LegalPage',
+    '/datenschutz': 'LegalPage',
+    '/contact': 'ContactPage',
+    '/about': 'AboutPage',
+    '/concepts': 'ConceptsPage',
+    '/blog': 'BlogPage',
   };
-  const page =
+  return (
     exact[path] ??
-    (/^\/blog\/[^/]+$/.test(path) ? BlogPostPage : /^\/[^/]+$/.test(path) ? ServicePage : NotFoundPage);
-  return page.preload();
+    (/^\/blog\/[^/]+$/.test(path) ? 'BlogPostPage' : /^\/[^/]+$/.test(path) ? 'ServicePage' : 'NotFoundPage')
+  );
+}
+
+/** Loads the page chunk for a URL before React starts. Used by main.tsx. */
+export function preloadRoute(pathname: string): Promise<unknown> {
+  return pages[pageForPath(pathname)].preload();
 }
 
 const INTRO_SEEN_KEY = '1618_intro_seen_at';

@@ -290,6 +290,108 @@ export const blogPosts: BlogPost[] = [
       },
     },
   },
+  {
+    // Decision question a café or restaurant owner asks before buying a
+    // digital menu. Deliberately even-handed (where paper still wins) and
+    // free of prices or statistics the studio cannot back up: the claims
+    // are the ones /digital-menus already makes.
+    slug: 'qr-speisekarte-oder-gedruckte-karte',
+    publishedAt: '2026-11-09',
+    relatedServiceSlug: 'digital-menus',
+    glowColor: '#22c55e',
+    content: {
+      de: {
+        metaTitle: 'QR-Speisekarte oder gedruckte Karte? Ein ehrlicher Vergleich für Restaurants',
+        metaDescription: 'QR-Code-Speisekarte oder gedruckte Karte: Was ist für Ihr Café oder Restaurant besser? Vor- und Nachteile, Mythen und warum die beste Lösung oft beides ist.',
+        title: 'QR-Speisekarte oder gedruckte Karte? Ein ehrlicher Vergleich',
+        excerpt: 'Die kurze Antwort: Für Preise, Sprachen und Allergene ist die QR-Karte klar im Vorteil – ganz ersetzen sollte sie die gedruckte Karte aber selten. Was wofür spricht.',
+        readingTime: '5 Min. Lesezeit',
+        body: [
+          { type: 'p', text: 'Die kurze Antwort: Eine QR-Code-Speisekarte ist der gedruckten Karte überall dort überlegen, wo sich etwas ändert – Preise, Tagesgerichte, Sprachen, Allergene. Ganz ersetzen sollte sie die gedruckte Karte in den meisten Restaurants trotzdem nicht. Die beste Lösung ist fast immer: digital als Hauptkarte, ein paar gedruckte Exemplare für Gäste, die lieber blättern.' },
+          { type: 'h2', text: 'Wo die QR-Speisekarte gewinnt' },
+          { type: 'list', items: [
+            'Immer aktuell: Ein neuer Preis oder ein ausverkauftes Gericht wird einmal geändert und ist sofort auf jedem Tisch sichtbar – ohne Neudruck.',
+            'Mehrsprachig: Gäste wechseln mit einem Tipp zwischen Deutsch, Englisch, Türkisch oder weiteren Sprachen.',
+            'Allergene am Gericht: Die Kennzeichnung steht direkt beim Gericht statt auf einem separaten Zettel, den niemand findet.',
+            'Fotos verkaufen: Ein gutes Bild zeigt, was eine Beschreibung nur behaupten kann.',
+            'Eine Quelle für alles: Dieselben Daten können auch TV-Menüboards an der Wand speisen.',
+          ] },
+          { type: 'h2', text: 'Wo die gedruckte Karte weiterhin punktet' },
+          { type: 'p', text: 'Nicht jeder Gast möchte zum Essen das Handy herausholen – manche haben keinen Akku, kein Netz oder schlicht keine Lust. Eine schön gestaltete gedruckte Karte ist außerdem Teil des Erlebnisses, besonders im gehobenen Restaurant. Und sie funktioniert immer, auch wenn das WLAN ausfällt.' },
+          { type: 'h2', text: 'Drei Mythen über QR-Menüs' },
+          { type: 'list', items: [
+            '„Gäste müssen eine App installieren.“ – Nein. Der QR-Code öffnet eine normale Webseite im Browser, auf jedem aktuellen Smartphone.',
+            '„Das ist nur etwas für junge Gäste.“ – Gerade Touristen und ältere Gäste profitieren von größerer Schrift und der eigenen Sprache.',
+            '„Dann bestellt niemand mehr beim Personal.“ – Die Karte ersetzt den Service nicht, sie beantwortet nur die Fragen, die sonst den Service aufhalten.',
+          ] },
+          { type: 'h2', text: 'Worauf Sie bei einer QR-Speisekarte achten sollten' },
+          { type: 'p', text: 'Die Karte muss in einer Sekunde laden, auch im Mobilfunknetz. Sie sollte ohne App, Login und Tracking-Cookies auskommen, Ihr eigenes Design tragen statt das eines Plattformanbieters, und Sie müssen Preise selbst ändern können – oder jemanden haben, der das zuverlässig für Sie übernimmt. Gedruckte QR-Aufsteller gehören dazu: Ein Code, den niemand sieht, wird nicht gescannt.' },
+          { type: 'h2', text: 'Wie 1618 Digital das löst' },
+          { type: 'p', text: 'Wir bauen QR-Code-Speisekarten und animierte TV-Menüboards aus einer gemeinsamen Quelle: Eine Änderung erscheint gleichzeitig am Tisch und auf jedem Bildschirm, mehrsprachig und mit Allergenen. Tischaufsteller und Sticker gestalten wir passend zu Ihrer Marke – und auf Wunsch die gedruckte Karte gleich mit.' },
+        ],
+      },
+      en: {
+        metaTitle: 'QR Code Menu or Printed Menu? An Honest Comparison for Restaurants',
+        metaDescription: 'QR code menu or printed menu: which is better for your café or restaurant? Pros, cons, common myths and why the best answer is often both.',
+        title: 'QR Code Menu or Printed Menu? An Honest Comparison',
+        excerpt: 'The short answer: for prices, languages and allergens a QR menu clearly wins — but it should rarely replace the printed menu completely. Here is what speaks for each.',
+        readingTime: '5 min read',
+        body: [
+          { type: 'p', text: 'The short answer: a QR code menu beats a printed menu wherever things change — prices, daily specials, languages, allergens. In most restaurants it still should not replace the printed menu entirely. The best setup is almost always digital as the main menu, plus a few printed copies for guests who prefer to turn pages.' },
+          { type: 'h2', text: 'Where the QR menu wins' },
+          { type: 'list', items: [
+            'Always current: a new price or a sold-out dish is changed once and shows on every table straight away — no reprint.',
+            'Multilingual: guests switch between German, English, Turkish or other languages with one tap.',
+            'Allergens at the dish: labelling sits right next to each dish instead of on a separate sheet nobody finds.',
+            'Photos sell: a good picture shows what a description can only claim.',
+            'One source for everything: the same data can also drive TV menu boards on the wall.',
+          ] },
+          { type: 'h2', text: 'Where the printed menu still scores' },
+          { type: 'p', text: 'Not every guest wants to take out their phone to eat — some have no battery, no signal or simply no wish to. A beautifully designed printed menu is also part of the experience, especially in fine dining. And it always works, even when the Wi-Fi does not.' },
+          { type: 'h2', text: 'Three myths about QR menus' },
+          { type: 'list', items: [
+            '“Guests have to install an app.” — No. The QR code opens an ordinary web page in the browser, on any current smartphone.',
+            '“It is only for young guests.” — Tourists and older guests in particular benefit from larger text and their own language.',
+            '“Then nobody talks to the staff any more.” — The menu does not replace service; it answers the questions that would otherwise hold service up.',
+          ] },
+          { type: 'h2', text: 'What to look for in a QR menu' },
+          { type: 'p', text: 'It has to load in a second, even on mobile data. It should work without an app, a login or tracking cookies, carry your own design rather than a platform\'s, and you must be able to change prices yourself — or have someone who reliably does it for you. Printed QR stands are part of it: a code nobody sees is a code nobody scans.' },
+          { type: 'h2', text: 'How 1618 Digital does it' },
+          { type: 'p', text: 'We build QR code menus and animated TV menu boards from one shared source: a change appears on the table and on every screen at the same time, multilingual and with allergens. We design the table stands and stickers to match your brand — and, if you like, the printed menu as well.' },
+        ],
+      },
+      tr: {
+        metaTitle: 'QR Kod Menü mü, Basılı Menü mü? Restoranlar İçin Dürüst Bir Karşılaştırma',
+        metaDescription: 'QR kod menü mü basılı menü mü: Kafeniz veya restoranınız için hangisi daha iyi? Artıları, eksileri, yaygın yanılgılar ve en iyi cevabın neden çoğu zaman ikisi olduğu.',
+        title: 'QR Kod Menü mü, Basılı Menü mü? Dürüst Bir Karşılaştırma',
+        excerpt: 'Kısa cevap: Fiyatlar, diller ve alerjenler söz konusu olduğunda QR menü açıkça önde – ama basılı menünün yerini tamamen alması nadiren doğru. Hangisi neden tercih edilmeli.',
+        readingTime: '5 dk okuma',
+        body: [
+          { type: 'p', text: 'Kısa cevap: QR kod menü, bir şeyin değiştiği her yerde basılı menüden üstündür – fiyatlar, günün yemekleri, diller, alerjenler. Yine de çoğu restoranda basılı menünün yerini tamamen almamalı. En iyi çözüm neredeyse her zaman şu: ana menü dijital, sayfa çevirmeyi seven misafirler için birkaç basılı menü.' },
+          { type: 'h2', text: 'QR menünün öne çıktığı yerler' },
+          { type: 'list', items: [
+            'Her zaman güncel: Yeni bir fiyat ya da tükenen bir yemek bir kez değiştirilir ve anında her masada görünür – yeniden baskıya gerek kalmaz.',
+            'Çok dilli: Misafirler tek dokunuşla Almanca, İngilizce, Türkçe veya başka diller arasında geçiş yapar.',
+            'Alerjenler yemeğin yanında: Etiketler, kimsenin bulamadığı ayrı bir kâğıtta değil, doğrudan yemeğin yanında yer alır.',
+            'Fotoğraflar satar: İyi bir fotoğraf, bir açıklamanın yalnızca iddia edebildiğini gösterir.',
+            'Her şey için tek kaynak: Aynı veriler duvardaki TV menü panolarını da besleyebilir.',
+          ] },
+          { type: 'h2', text: 'Basılı menünün hâlâ avantajlı olduğu yerler' },
+          { type: 'p', text: 'Her misafir yemek için telefonunu çıkarmak istemez – kiminin şarjı biter, kiminin çekmez, kimi de sadece istemez. Güzel tasarlanmış basılı bir menü, özellikle üst segment restoranlarda deneyimin bir parçasıdır. Ve Wi-Fi çöktüğünde bile her zaman çalışır.' },
+          { type: 'h2', text: 'QR menüler hakkında üç yanılgı' },
+          { type: 'list', items: [
+            '“Misafirlerin bir uygulama yüklemesi gerekir.” – Hayır. QR kod, her güncel akıllı telefonda tarayıcıda normal bir web sayfası açar.',
+            '“Bu sadece genç misafirler için.” – Özellikle turistler ve yaşlı misafirler daha büyük yazıdan ve kendi dillerinden faydalanır.',
+            '“O zaman kimse personelle konuşmaz.” – Menü servisin yerini almaz; sadece servisi meşgul eden soruları yanıtlar.',
+          ] },
+          { type: 'h2', text: 'Bir QR menüde nelere dikkat etmeli' },
+          { type: 'p', text: 'Mobil veride bile bir saniyede yüklenmeli. Uygulama, giriş veya takip çerezi olmadan çalışmalı, bir platformun değil sizin tasarımınızı taşımalı ve fiyatları kendiniz değiştirebilmelisiniz – ya da bunu güvenilir şekilde sizin için yapan biri olmalı. Basılı QR standları da işin parçası: Kimsenin görmediği bir kod taranmaz.' },
+          { type: 'h2', text: '1618 Digital bunu nasıl çözüyor' },
+          { type: 'p', text: 'QR kod menüleri ve animasyonlu TV menü panolarını ortak bir kaynaktan üretiyoruz: Bir değişiklik masada ve her ekranda aynı anda, çok dilli ve alerjenlerle birlikte görünür. Masa standlarını ve etiketleri markanıza uygun tasarlıyoruz – isterseniz basılı menüyü de.' },
+        ],
+      },
+    },
+  },
 ];
 
 export const getBlogPostBySlug = (slug: string) => blogPosts.find((p) => p.slug === slug);

@@ -104,7 +104,44 @@ if (!template.includes('<div id="root"></div>')) {
 await fs.writeFile(path.join(DIST, '404.html'), template);
 
 const ssr = await import(pathToFileURL(path.join(SSR_DIR, 'entry-server.js')).href);
-const { render, routes, SITE_URL, SUPPORTED_LANGUAGES, OG_LOCALES, localizePath, absoluteUrl, hreflangAlternates } = ssr;
+const { render, routes, pageForPath, SITE_URL, SUPPORTED_LANGUAGES, OG_LOCALES, localizePath, absoluteUrl, hreflangAlternates } = ssr;
+
+/*
+ * Page CSS in the static HTML.
+ *
+ * index.html links only the entry stylesheet; each page's own CSS (Hero,
+ * Services, the service page…) lives in its lazy chunk and used to arrive
+ * only once JavaScript requested it. Until then the prerendered page
+ * painted unstyled and then jumped into place: a cumulative layout shift
+ * of ~1.0 on the homepage (the worst possible score) and a visible flash
+ * on slow mobile connections. Every page now links its chunk's CSS — and
+ * that of the chunks it imports — in <head>. Vite's runtime loader skips
+ * stylesheets that are already linked, so nothing loads twice.
+ */
+const MANIFEST_DIR = path.join(DIST, '.vite');
+const manifest = JSON.parse(await fs.readFile(path.join(MANIFEST_DIR, 'manifest.json'), 'utf8'));
+const entryCss = new Set(Object.values(manifest).filter((c) => c.isEntry).flatMap((c) => c.css ?? []));
+
+function pageCss(pageName) {
+  const key = Object.keys(manifest).find((k) => manifest[k].isDynamicEntry && manifest[k].name === pageName);
+  if (!key) throw new Error(`prerender: no build chunk named "${pageName}" in the Vite manifest`);
+  const files = new Set();
+  const visit = (k, seen = new Set()) => {
+    if (seen.has(k) || !manifest[k]) return;
+    seen.add(k);
+    for (const css of manifest[k].css ?? []) if (!entryCss.has(css)) files.add(css);
+    for (const dep of manifest[k].imports ?? []) visit(dep, seen);
+  };
+  visit(key);
+  return [...files];
+}
+
+function linkPageCss(html, route) {
+  const links = pageCss(pageForPath(route))
+    .map((file) => `    <link rel="stylesheet" crossorigin href="/${file}">\n`)
+    .join('');
+  return html.replace('</head>', `${links}  </head>`);
+}
 
 for (const route of SUPPORTED_LANGUAGES.flatMap((lang) => routes.map((r) => localizePath(r, lang)))) {
   const { html, seo } = await render(route);
@@ -116,7 +153,10 @@ for (const route of SUPPORTED_LANGUAGES.flatMap((lang) => routes.map((r) => loca
     throw new Error(`prerender: ${route} rendered ${seo.lang} with canonical ${seo.canonical}`);
   }
 
-  const page = applySeo(template, seo, OG_LOCALES).replace('<div id="root"></div>', `<div id="root">${html}</div>`);
+  const page = linkPageCss(applySeo(template, seo, OG_LOCALES), route).replace(
+    '<div id="root"></div>',
+    `<div id="root">${html}</div>`
+  );
   const file = route === '/' ? 'index.html' : `${route.slice(1)}.html`;
   await fs.mkdir(path.dirname(path.join(DIST, file)), { recursive: true });
   await fs.writeFile(path.join(DIST, file), page);
@@ -160,3 +200,5 @@ await fs.writeFile(
 console.log(`sitemap: ${urls.length} URLs → dist/sitemap.xml`);
 
 await fs.rm(SSR_DIR, { recursive: true, force: true });
+// Build-time input only (see "Page CSS in the static HTML"): not deployed.
+await fs.rm(MANIFEST_DIR, { recursive: true, force: true });
