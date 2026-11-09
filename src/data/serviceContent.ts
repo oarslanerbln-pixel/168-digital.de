@@ -330,7 +330,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       features: [
         { title: 'Full-Day Wedding Coverage', desc: 'From preparation to the final send-off, filmed discreetly so the day feels natural, not staged.' },
-        { title: 'Wedding Highlight Films', desc: 'A 3–6 minute edit that captures the emotional arc of your day, set to music and paced like a film.' },
+        { title: 'Wedding Highlight Films', desc: 'An edit that captures the emotional arc of your day, set to music and paced like a film.' },
         { title: 'Aerial & Venue Shots', desc: 'Drone footage of your venue and location, woven into the story where it fits.' },
         { title: 'Corporate Event Filming', desc: 'Conferences, launches and celebrations captured and edited into a shareable recap.' },
         { title: 'Multi-Camera Coverage', desc: 'Multiple angles ensure no key moment — vows, speeches, reactions — is ever missed.' },
@@ -362,7 +362,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       features: [
         { title: 'Ganztägige Hochzeitsbegleitung', desc: 'Von der Vorbereitung bis zur letzten Verabschiedung, diskret gefilmt, damit sich der Tag natürlich anfühlt, nicht gestellt.' },
-        { title: 'Hochzeits-Höhepunktfilme', desc: 'Ein 3–6-minütiger Schnitt, der den emotionalen Bogen Ihres Tages einfängt, vertont und im Tempo eines Films.' },
+        { title: 'Hochzeits-Höhepunktfilme', desc: 'Ein Schnitt, der den emotionalen Bogen Ihres Tages einfängt, vertont und im Tempo eines Films.' },
         { title: 'Luft- & Location-Aufnahmen', desc: 'Drohnenaufnahmen Ihrer Location, dort in die Geschichte eingewoben, wo sie passen.' },
         { title: 'Firmenevent-Filmproduktion', desc: 'Konferenzen, Launches und Feiern, festgehalten und zu einem teilbaren Recap geschnitten.' },
         { title: 'Mehrkamera-Abdeckung', desc: 'Mehrere Kamerawinkel stellen sicher, dass kein wichtiger Moment — Gelübde, Reden, Reaktionen — verpasst wird.' },
@@ -394,7 +394,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       features: [
         { title: 'Tüm Gün Düğün Çekimi', desc: 'Hazırlıktan son uğurlamaya kadar, günün doğal hissettirmesi için sezdirmeden çekiliyor.' },
-        { title: 'Düğün Özet Filmleri', desc: 'Gününüzün duygusal akışını yakalayan, müzikli ve bir film temposunda 3-6 dakikalık kurgu.' },
+        { title: 'Düğün Özet Filmleri', desc: 'Gününüzün duygusal akışını yakalayan, müzikli ve bir film temposunda kurgu.' },
         { title: 'Havadan & Mekan Görüntüleri', desc: 'Mekanınızın drone görüntüleri, hikayeye uygun yerlerde işleniyor.' },
         { title: 'Kurumsal Etkinlik Çekimi', desc: 'Konferanslar, lansmanlar ve kutlamalar çekilip paylaşılabilir bir özet videoya dönüştürülüyor.' },
         { title: 'Çoklu Kamera Çekimi', desc: 'Birden fazla açı, yeminler, konuşmalar, tepkiler gibi kritik anların asla kaçırılmamasını sağlar.' },
