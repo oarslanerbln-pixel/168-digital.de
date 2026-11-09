@@ -35,6 +35,10 @@ export default function HomeLogo() {
         onMouseEnter={playTick}
         className="home-logo-link"
         aria-label="1618 Digital — back to homepage"
+        // Hidden from screen readers on the homepage (see above), so it must
+        // leave the tab order too: a focusable element inside aria-hidden
+        // is announced as nothing.
+        tabIndex={isHome ? -1 : undefined}
       >
         <span className="home-logo-mark">1618</span>
         <span className="home-logo-label">DIGITAL</span>

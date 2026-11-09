@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Send, CheckSquare, Square, Sparkles, Loader2, MessageCircle, Mail, Check } from 'lucide-react';
 import { sendLead, leadFallbackLinks, LEAD_EMAIL, LEAD_WHATSAPP_NUMBER } from '../utils/leads';
 import { CONTACT_TOPICS, CONTACT_TOPIC_EVENT, type ContactTopic } from '../utils/contactTopic';
+import { trackLead } from '../utils/thirdPartyAnalytics';
 
 /* Field limits. Well above any real inquiry, but they bound what a script
    can push through the form, and they keep the fallback links below
@@ -54,6 +55,9 @@ export default function Contact({ withSteps = false }: ContactProps) {
     const delivered = await sendLead({ name, email, message, source: 'Contact Form' });
 
     if (delivered) {
+      // Counted only once the backend has the message: a failed send is
+      // not a lead (its WhatsApp/e-mail fallback is counted on click).
+      trackLead('form', topic ?? undefined);
       setStatus('success');
       setFallback(null);
       form.reset();

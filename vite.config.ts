@@ -53,6 +53,11 @@ export default defineConfig(({ mode, isSsrBuild }) => {
       strictPort: true,
     },
     build: {
+      // The client manifest tells scripts/prerender.mjs which CSS files each
+      // page chunk needs, so the static HTML links them up front instead of
+      // painting unstyled until JavaScript loads them. The prerender deletes
+      // it afterwards; it is never deployed.
+      manifest: !isSsrBuild,
       rollupOptions: {
         output: {
           // Split heavy vendors into their own long-cacheable chunks so the

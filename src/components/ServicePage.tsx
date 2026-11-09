@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
@@ -14,6 +15,8 @@ import './ServicePage.css';
 import { SITE_URL, useLocalizedPath } from '../utils/localePath';
 import { requestContactTopic } from '../utils/contactTopic';
 import { LEAD_WHATSAPP_NUMBER } from '../utils/leads';
+import { useInlineWhatsApp } from '../utils/inlineWhatsApp';
+import { entranceGate } from '../utils/entranceGate';
 import { playClick, playTick } from '../utils/audio';
 
 /* ════════════════════════════════════════════════════════════════
@@ -38,6 +41,12 @@ import { playClick, playTick } from '../utils/audio';
    ════════════════════════════════════════════════════════════════ */
 
 const EASE = [0.16, 1, 0.3, 1] as const;
+
+/* The hero (copy, photo curtain) used to start at opacity 0 in the
+   prerendered HTML too, so a visitor on a slow connection saw an empty
+   first screen until the script arrived. It now ships finished and only
+   animates on client-side navigation (see utils/entranceGate.ts). */
+const shouldAnimateHero = entranceGate('.service-hero');
 const trustKeys = ['hero_trust_1', 'hero_trust_2', 'hero_trust_3'];
 
 /** Product photos ship as -640/-1080 pairs; showreel stills as one file. */
@@ -52,6 +61,8 @@ export default function ServicePage() {
   const { t, i18n } = useTranslation();
   const { localize, absolute } = useLocalizedPath();
   const lang = i18n.language.substring(0, 2).toLowerCase() as Lang;
+  const actionsRef = useInlineWhatsApp<HTMLDivElement>();
+  const [animateHero] = useState(shouldAnimateHero);
 
   const service = slug ? getServiceBySlug(slug) : undefined;
   const content = slug ? serviceContent[slug]?.[lang] ?? serviceContent[slug]?.en : undefined;
@@ -124,7 +135,7 @@ export default function ServicePage() {
         <div className="service-hero">
           <motion.div
             className="service-hero-copy"
-            initial={{ opacity: 0, y: 24 }}
+            initial={animateHero ? { opacity: 0, y: 24 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, ease: EASE }}
           >
@@ -136,7 +147,7 @@ export default function ServicePage() {
               ))}
             </div>
 
-            <div className="service-hero-actions">
+            <div ref={actionsRef} className="service-hero-actions">
               <button
                 type="button"
                 className="hero-cta"
@@ -175,7 +186,7 @@ export default function ServicePage() {
 
           <motion.figure
             className={`service-visual${service.imageFrame === 'phone' ? ' service-visual-phone' : ''}`}
-            initial={{ opacity: 0, y: 32 }}
+            initial={animateHero ? { opacity: 0, y: 32 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.15, ease: EASE }}
           >
@@ -187,14 +198,14 @@ export default function ServicePage() {
                 sizes="(max-width: 900px) 92vw, 520px"
                 alt={t(service.imageAltKey)}
                 decoding="async"
-                initial={{ scale: 1.14 }}
+                initial={animateHero ? { scale: 1.14 } : false}
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.6, delay: 0.15, ease: EASE }}
               />
               <motion.span
                 className="service-visual-curtain"
                 aria-hidden="true"
-                initial={{ x: '0%' }}
+                initial={animateHero ? { x: '0%' } : false}
                 animate={{ x: '101%' }}
                 transition={{ duration: 1.05, delay: 0.25, ease: [0.76, 0, 0.24, 1] }}
               />

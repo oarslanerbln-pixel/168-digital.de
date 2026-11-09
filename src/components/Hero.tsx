@@ -4,7 +4,10 @@ import { playClick, playTick } from '../utils/audio';
 import { ArrowRight, Check } from 'lucide-react';
 import { heroImage, srcSet } from '../data/homeContent';
 import { useMagnetic } from '../hooks/useMagnetic';
+import { useInlineWhatsApp } from '../utils/inlineWhatsApp';
+import { LEAD_WHATSAPP_NUMBER } from '../utils/leads';
 import { INTRO_DONE_EVENT } from '../utils/introEvent';
+import { entranceGate } from '../utils/entranceGate';
 import '../styles/cta.css';
 import './Hero.css';
 
@@ -46,15 +49,8 @@ import './Hero.css';
      App) and when a visitor navigates to the homepage in the app.
    ════════════════════════════════════════════════════════════════ */
 
-let mountedBefore = false;
-
 /** See MOTION above: play unless this mount replaces the prerendered hero. */
-function shouldPlayOnMount(): boolean {
-  if (typeof document === 'undefined') return false;
-  const replacingPrerender = !mountedBefore && !!document.querySelector('.hero-section');
-  mountedBefore = true;
-  return !replacingPrerender;
-}
+const shouldPlayOnMount = entranceGate('.hero-section');
 
 type Segment = { text: string; shimmer?: 'blue' | 'gold' };
 
@@ -91,6 +87,7 @@ export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
   const ctaRef = useMagnetic<HTMLButtonElement>();
   const whatsappRef = useMagnetic<HTMLAnchorElement>();
+  const actionsRef = useInlineWhatsApp<HTMLDivElement>();
 
   useEffect(() => {
     const onIntroDone = () => {
@@ -174,7 +171,7 @@ export default function Hero() {
             {t('hero_subtitle')}
           </p>
 
-          <div className="hero-actions hero-rise" style={{ '--d': '0.55s' } as CSSProperties}>
+          <div ref={actionsRef} className="hero-actions hero-rise" style={{ '--d': '0.55s' } as CSSProperties}>
             <button
               ref={ctaRef}
               type="button"
@@ -189,7 +186,9 @@ export default function Hero() {
             <a
               ref={whatsappRef}
               className="hero-cta-ghost"
-              href="https://wa.me/491787277867"
+              // The opening line is already typed: the visitor only has to
+              // press send, instead of facing an empty chat.
+              href={`https://wa.me/${LEAD_WHATSAPP_NUMBER}?text=${encodeURIComponent(t('wa_message'))}`}
               target="_blank"
               rel="noopener noreferrer"
               onMouseEnter={playTick}

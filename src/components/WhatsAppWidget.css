@@ -327,3 +327,33 @@
     display: none;
   }
 }
+
+/* Steps aside while a hero's own WhatsApp link is on screen (see
+   utils/inlineWhatsApp.ts). visibility follows the fade, so the hidden
+   button also leaves the tab order and the accessibility tree. */
+.wa-widget-wrapper {
+  transition: opacity 0.35s var(--ease-premium), transform 0.45s var(--ease-premium),
+    visibility 0s linear 0s;
+}
+
+.wa-widget-wrapper.is-yielding {
+  opacity: 0;
+  transform: translateY(16px);
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.35s var(--ease-premium), transform 0.45s var(--ease-premium),
+    visibility 0s linear 0.45s;
+}
+
+@media (max-width: 640px) {
+  .wa-widget-wrapper.is-yielding {
+    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wa-widget-wrapper,
+  .wa-widget-wrapper.is-yielding {
+    transition: none;
+  }
+}
