@@ -47,11 +47,11 @@ export const blogPosts: BlogPost[] = [
         body: [
           { type: 'p', text: 'Kaum eine Entscheidung rund um die Hochzeit wird so oft aufgeschoben wie die Wahl des Videografen — meist, weil die Preise auf den ersten Blick schwer vergleichbar sind. Ein Anbieter verlangt 800 €, der nächste 4.500 €, und beide nennen sich „Hochzeitsfilmer". Hier ist, worauf der Unterschied tatsächlich beruht.' },
           { type: 'h2', text: 'Was ein Hochzeitsvideo in Berlin kostet' },
-          { type: 'p', text: 'Realistisch bewegen sich seriöse Angebote in Berlin zwischen 1.200 € für ein kompaktes Highlight-Video (3–5 Minuten, ein Filmer, halber Tag) und 3.500–5.000 € für eine vollständige Produktion mit zwei Kamerateams, Drohnenaufnahmen, Langfassung und professionellem Color Grading. Preise deutlich unter 1.000 € bedeuten fast immer: keine Zweitkamera, keine Farbkorrektur, oft nur ein automatisch geschnittenes Rohmaterial ohne dramaturgischen Aufbau.' },
+          { type: 'p', text: 'Realistisch bewegen sich seriöse Angebote in Berlin zwischen 1.200 € für ein kompaktes Highlight-Video (ein Filmer, halber Tag) und 3.500–5.000 € für eine vollständige Produktion mit zwei Kamerateams, Drohnenaufnahmen, Langfassung und professionellem Color Grading. Preise deutlich unter 1.000 € bedeuten fast immer: keine Zweitkamera, keine Farbkorrektur, oft nur ein automatisch geschnittenes Rohmaterial ohne dramaturgischen Aufbau.' },
           { type: 'list', items: [
             'Anzahl der Kamerateams (1 vs. 2 — entscheidend für Trauung + Party gleichzeitig)',
             'Drohnenaufnahmen (benötigen eine gültige EU-Drohnenlizenz, siehe unten)',
-            'Schnittlänge: Highlight-Reel (3–6 Min.) vs. Langversion (20–45 Min.)',
+            'Schnittlänge: kompaktes Highlight-Reel vs. ausführliche Langversion',
             'Color Grading in DaVinci Resolve statt automatischer Filter',
             'Lizenzierte Musik statt urheberrechtlich riskanter Trends',
           ] },
@@ -72,11 +72,11 @@ export const blogPosts: BlogPost[] = [
         body: [
           { type: 'p', text: 'Few wedding decisions get put off as long as booking a videographer — mostly because prices are hard to compare at first glance. One studio quotes €800, another €4,500, and both call it a "wedding film". Here is what actually drives the difference.' },
           { type: 'h2', text: 'What wedding videography costs in Berlin' },
-          { type: 'p', text: 'Realistically, credible offers in Berlin range from around €1,200 for a compact highlight video (3–5 minutes, one filmer, half-day coverage) up to €3,500–5,000 for a full production with two camera operators, drone footage, a full-length cut, and professional color grading. Anything well under €1,000 usually means: no second camera, no color correction, and often just auto-edited raw footage with no real story structure.' },
+          { type: 'p', text: 'Realistically, credible offers in Berlin range from around €1,200 for a compact highlight video (one filmer, half-day coverage) up to €3,500–5,000 for a full production with two camera operators, drone footage, a full-length cut, and professional color grading. Anything well under €1,000 usually means: no second camera, no color correction, and often just auto-edited raw footage with no real story structure.' },
           { type: 'list', items: [
             'Number of camera operators (1 vs. 2 — critical for covering the ceremony and reception at once)',
             'Drone footage (requires a valid EU drone operator license — see below)',
-            'Cut length: highlight reel (3–6 min) vs. full-length film (20–45 min)',
+            'Cut length: compact highlight reel vs. full-length film',
             'Color grading in DaVinci Resolve rather than automatic filters',
             'Licensed music instead of copyright-risky trending audio',
           ] },
@@ -97,11 +97,11 @@ export const blogPosts: BlogPost[] = [
         body: [
           { type: 'p', text: 'Düğün hazırlıklarında en çok ertelenen kararlardan biri videograf seçimidir — çünkü fiyatları ilk bakışta karşılaştırmak zor. Bir stüdyo 800 €, diğeri 4.500 € istiyor ve ikisi de kendine "düğün filmi" diyor. İşte bu farkın gerçekte nereden geldiği.' },
           { type: 'h2', text: 'Berlin\'de düğün video çekimi ne kadar tutar' },
-          { type: 'p', text: 'Gerçekçi olarak Berlin\'de güvenilir teklifler, kompakt bir highlight videosu (3-5 dakika, tek kameraman, yarım gün) için ~1.200 €\'dan; iki kameraman, drone çekimi, uzun versiyon ve profesyonel renk düzenlemesi içeren tam prodüksiyon için 3.500-5.000 €\'ya kadar değişir. 1.000 €\'nun oldukça altındaki fiyatlar genelde şu anlama gelir: ikinci kamera yok, renk düzeltmesi yok, çoğu zaman kurgusuz otomatik kesilmiş ham görüntü.' },
+          { type: 'p', text: 'Gerçekçi olarak Berlin\'de güvenilir teklifler, kompakt bir highlight videosu (tek kameraman, yarım gün) için ~1.200 €\'dan; iki kameraman, drone çekimi, uzun versiyon ve profesyonel renk düzenlemesi içeren tam prodüksiyon için 3.500-5.000 €\'ya kadar değişir. 1.000 €\'nun oldukça altındaki fiyatlar genelde şu anlama gelir: ikinci kamera yok, renk düzeltmesi yok, çoğu zaman kurgusuz otomatik kesilmiş ham görüntü.' },
           { type: 'list', items: [
             'Kameraman sayısı (1\'e karşı 2 — nikah ve eğlenceyi aynı anda çekebilmek için kritik)',
             'Drone çekimi (geçerli bir AB drone lisansı gerektirir — aşağıya bakın)',
-            'Kurgu uzunluğu: highlight video (3-6 dk) ile tam uzunluk film (20-45 dk) arasındaki fark',
+            'Kurgu uzunluğu: kompakt highlight video ile tam uzunluk film arasındaki fark',
             'DaVinci Resolve ile profesyonel renk düzenlemesi, otomatik filtreler değil',
             'Telif haklarına takılma riski olan trend seslerin yerine lisanslı müzik',
           ] },
