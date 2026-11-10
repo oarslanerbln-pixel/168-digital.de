@@ -5,7 +5,7 @@
  */
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
-import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl, UI_STYLE, MEDIA_IS_AI } from './data.mjs';
+import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl, UI_STYLE, MEDIA_IS_AI, THEME } from './data.mjs';
 import { icon, iconPro, carSvg, carPremium, gearSvg, logoMark } from './svg.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
@@ -148,7 +148,7 @@ export function layout(p, allCopy) {
   const alts = Object.entries(p.alternates);
   const toast = Object.fromEntries(LANGS.map((l) => [l, allCopy[l].langToast]));
   return `<!doctype html>
-<html lang="${lang}" class="no-js"${MEDIA_IS_AI ? ` style="--ai-tag:${e(JSON.stringify(c.footer.aiTag))}"` : ''}${p.intro ? ' data-intro' : ''}>
+<html lang="${lang}" class="no-js"${THEME !== 'red' ? ` data-theme="${THEME}"` : ''}${MEDIA_IS_AI ? ` style="--ai-tag:${e(JSON.stringify(c.footer.aiTag))}"` : ''}${p.intro ? ' data-intro' : ''}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
