@@ -103,23 +103,22 @@
   addEventListener('resize', request);
   frame();
 
-  /* ---------- Hero film: scroll scrubs the clip on desktop, loops on phones ---------- */
+  /* ---------- Hero film: plays on its own, everywhere ----------
+   * The client wants a living opening, so the earlier scroll-scrub (frozen at the top on
+   * desktop) is gone: muted autoplay loop, paused while off screen to save battery, and a
+   * play() retry on the first touch for phones that hold autoplay back (e.g. low-power mode).
+   */
   const film = d.querySelector('[data-scrub]');
-  const scrub = film && !reduce && matchMedia('(hover: hover) and (pointer: fine) and (min-width: 960px)').matches;
   if (film && reduce) film.pause();
-  if (scrub) {
-    film.loop = false;
-    film.pause();
-    const hero = film.closest('.hero');
-    let last = -1;
-    const seek = () => {
-      if (!film.duration) return;
-      const r = hero.getBoundingClientRect();
-      const t = Math.min(1, Math.max(0, -r.top / (r.height * 0.85))) * (film.duration - 0.05);
-      if (Math.abs(t - last) > 0.03) { film.currentTime = t; last = t; }
-    };
-    film.addEventListener('loadedmetadata', seek);
-    addEventListener('scroll', () => requestAnimationFrame(seek), { passive: true });
+  else if (film) {
+    film.muted = true; film.loop = true;
+    const play = () => { const p = film.play(); if (p) p.catch(() => {}); };
+    play();
+    addEventListener('pointerdown', play, { once: true, passive: true });
+    addEventListener('touchstart', play, { once: true, passive: true });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([en]) => (en.isIntersecting ? play() : film.pause())).observe(film);
+    }
   }
 
   /* ---------- Hero light follows the pointer ---------- */
