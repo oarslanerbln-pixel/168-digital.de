@@ -166,3 +166,16 @@ Sobald die Dateien da sind, baue ich die 360°-Sektion: Video an den Scroll
 gekoppelt, die fünf Punkte zu den Sekunden eingeblendet, in denen das Bauteil
 sichtbar ist, mit Fallback auf das Linien-Auto bei langsamer Verbindung oder
 „Bewegung reduzieren“.
+
+## Leistungskarten – fehlende Bilder (4:5 Hochformat, 1080×1350 oder größer)
+
+Gleicher Look wie die vorhandenen Karten-Fotos: dunkle Premium-Werkstatt, rotes Akzentlicht,
+filmisch, geringe Schärfentiefe, keine Gesichter, keine echten Markenlogos, kein Text im Bild.
+Speichern als WebP oder JPG unter `static/media/reel-<id>.webp`, danach `python3 tools/images.py`.
+
+| Datei | Prompt |
+|---|---|
+| `reel-tyres.webp` | Ultra-realistic cinematic close-up of a mechanic's gloved hands mounting a performance tyre on a dark alloy wheel with a pneumatic impact wrench, premium dark car workshop, glossy black floor, single red accent light raking across the tread, tiny rubber dust particles in the air, shallow depth of field, 35mm lens, moody contrast, vertical 4:5, no faces, no logos, no text |
+| `reel-aircon.webp` | Ultra-realistic cinematic close-up of an automotive air-conditioning service station connected to a car engine bay with blue and red hoses and pressure gauges, cold vapour drifting from a low-pressure port, dark premium workshop, cool blue rim light with one red accent, shallow depth of field, 50mm macro look, vertical 4:5, no faces, no logos, no text |
+| `reel-timingbelt.webp` | Ultra-realistic cinematic macro shot of a new timing belt with toothed pulleys and tensioner inside an open engine front, gloved hand guiding the belt onto the cam sprocket, oil sheen on metal, dark premium workshop, red accent light from the side, shallow depth of field, vertical 4:5, no faces, no logos, no text |
+| `reel-gearbox.webp` | Ultra-realistic cinematic close-up of fresh amber transmission fluid pouring through a funnel into an automatic gearbox under a car on a lift, droplets catching a red accent light, polished aluminium gearbox housing, dark premium workshop, shallow depth of field, vertical 4:5, no faces, no logos, no text |

@@ -1253,3 +1253,25 @@ html.js .hero__tag i { transform: scaleX(0); transform-origin: left; animation: 
 @keyframes heroDrift { to { transform: scale(calc(1.05 + (var(--p, 0.5) - 0.5) * 0.04)) translate(-0.6%, -0.4%); } }
 @media (max-width: 767px) { .hero__media video { object-position: 50% 50%; } }
 @media (prefers-reduced-motion: reduce) { .hero__media video, .hero__media img { animation: none; transform: none; } }
+
+/* ---------- Service cards with a picture ----------
+ * Each card opens with its service: a photo (cropped 16:10 from the 4:5 Flow stills) or,
+ * until one exists, the service's line art on a dark field. The small icon tile sits on
+ * the picture's lower edge, so the cards read as one family either way.
+ */
+.card { --cpx: 24px; }
+.card--visual { padding-top: 0; }
+.card__media { position: relative; display: block; margin: 0 calc(-1 * var(--cpx)) -6px; aspect-ratio: 16 / 10; overflow: hidden; background: radial-gradient(120% 90% at 70% 0%, rgba(var(--accent-rgb), 0.18), transparent 60%), var(--bg-3); border-bottom: 1px solid var(--line); }
+.card__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 45%; transform: scale(1.02); transition: transform 0.9s var(--ease-out), filter 0.5s; filter: saturate(1.05) contrast(1.03); }
+.card__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--bg-2) 0%, rgba(19, 20, 26, 0.25) 45%, transparent 75%); pointer-events: none; }
+.card:hover .card__media img { transform: scale(1.07); }
+.card__media--art { display: grid; place-items: center; }
+.card__art { width: 46%; height: auto; max-height: 72%; color: var(--text-2); opacity: 0.85; }
+.card--visual .card__icon { position: relative; z-index: 1; margin-top: -26px; background: rgba(19, 20, 26, 0.78); border: 1px solid rgba(var(--accent-rgb), 0.35); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+.cards__ai { margin-top: 12px; text-align: right; font: 500 10px/1.4 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+@media (max-width: 639px) {
+  .cards--compact .card { --cpx: 16px; }
+  .cards--compact .card--visual { padding-top: 0; }
+  .cards--compact .card__media { aspect-ratio: 4 / 3; }
+  .cards--compact .card--visual .card__icon { margin-top: -22px; }
+}

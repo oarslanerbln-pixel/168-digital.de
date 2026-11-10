@@ -228,7 +228,14 @@ function crumbs(c, lang, trail) {
 function serviceCard(c, lang, s, i) {
   const t = c.services[s.id];
   const price = s.price == null ? c.cta.onRequest : priceText(lang, s.price, s.from);
-  return `<a class="card rv" href="${servicePath(lang, s)}" style="--i:${i % 4}">
+  const img = media(`reel-${s.id}.webp`);
+  // Photo when one exists (static/media/reel-<id>.webp), otherwise the service's line art –
+  // every card keeps the same structure, so a grid with some photos still lines up.
+  const visual = img
+    ? `<span class="card__media"><img src="${img}"${srcset(`reel-${s.id}.webp`, 960, '(min-width: 1080px) 340px, 50vw')} alt="" loading="lazy" decoding="async"></span>`
+    : `<span class="card__media card__media--art" aria-hidden="true">${iconPro(s.icon, 'ico card__art')}</span>`;
+  return `<a class="card card--visual rv" href="${servicePath(lang, s)}" style="--i:${i % 4}">
+${visual}
 <span class="card__icon">${iconPro(s.icon)}</span>
 <h3 class="card__title">${shy(e(t.name))}</h3>
 <p class="card__text">${e(t.short)}</p>
@@ -239,7 +246,7 @@ function serviceCard(c, lang, s, i) {
 /* Soft hyphen at the compound joint of long German service names, so a narrow heading
    breaks as „Zahnriemen-wechsel“, not „Zahnrie-menwechsel“. Headings only – never in meta. */
 const shy = (s) => s.replace(/(Zahnriemen|Getriebeöl|Reifen|Klima|Fehler)(?=\p{Ll}{4,})/u, '$1\u00AD');
-const cards = (c, lang, list, mod = '') => `<div class="cards${mod}">${list.map((s, i) => serviceCard(c, lang, s, i)).join('')}</div>`;
+const cards = (c, lang, list, mod = '') => `<div class="cards${mod}">${list.map((s, i) => serviceCard(c, lang, s, i)).join('')}</div>${MEDIA_IS_AI && list.some((s) => media(`reel-${s.id}.webp`)) ? `<p class="cards__ai">${e(c.footer.aiTag)}</p>` : ''}`;
 
 function faqList(items) {
   return `<div class="faq__list">${items
