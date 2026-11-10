@@ -305,6 +305,8 @@ function home(c, lang) {
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
 <p class="hero__tag"><i aria-hidden="true"></i>${e(c.home.heroTag)}<span>Berlin-Neukölln</span></p>
 </div>
+<div class="hero__hud" aria-hidden="true"><span class="hero__geo">52.49° N · 13.44° E</span><span class="hero__scroll"><i></i></span>
+</div>
 <div class="hero__car" aria-hidden="true">${carSvg('car car--hero')}<i class="hero__sweep"></i></div>
 </section>
 
