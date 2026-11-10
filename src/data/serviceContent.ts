@@ -527,7 +527,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
         'Every film comes with a digital travel journal: an elegant page behind a QR code on a printed card, holding the route, the map, the best frames and the film itself. It is a keepsake you can hand to family, and a guide your guests or customers can actually follow.',
       ],
       features: [
-        { title: 'Cinematic Travel Film', desc: 'A 2–4 minute film shot in log, colour-graded in DaVinci Resolve and paced like a story, not a slideshow.' },
+        { title: 'Cinematic Travel Film', desc: 'A 10–30 minute film shot in log, colour-graded in DaVinci Resolve and paced like a story, not a slideshow.' },
         { title: 'Signature Visual Motif', desc: 'One recurring object or colour ties every scene together, so your films are recognisable as a series.' },
         { title: 'Local Voices', desc: 'On request, a local — a fisherman, a café owner, a guide — tells the place in their own words. Documentary depth instead of postcard clichés.' },
         { title: 'Drone & Aerial Reveals', desc: 'Aerial shots where the story needs scale, flown within local regulations.' },
@@ -559,7 +559,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
         'Zu jedem Film gehört ein digitales Reisetagebuch: eine elegante Seite hinter einem QR-Code auf einer gedruckten Karte, mit Route, Karte, den besten Bildern und dem Film selbst. Ein Andenken für die Familie und ein Reiseführer, dem Ihre Gäste oder Kunden wirklich folgen können.',
       ],
       features: [
-        { title: 'Kinoreifer Reisefilm', desc: 'Ein 2–4-minütiger Film, in Log gedreht, in DaVinci Resolve gegradet und erzählt wie eine Geschichte, nicht wie eine Diashow.' },
+        { title: 'Kinoreifer Reisefilm', desc: 'Ein 10–30-minütiger Film, in Log gedreht, in DaVinci Resolve gegradet und erzählt wie eine Geschichte, nicht wie eine Diashow.' },
         { title: 'Visuelles Leitmotiv', desc: 'Ein wiederkehrendes Objekt oder eine Farbe verbindet alle Szenen, sodass Ihre Filme als Serie wiedererkennbar sind.' },
         { title: 'Lokale Stimmen', desc: 'Auf Wunsch erzählt ein Einheimischer — ein Fischer, eine Café-Besitzerin, ein Guide — den Ort in eigenen Worten. Dokumentarische Tiefe statt Postkarten-Klischees.' },
         { title: 'Drohnen- & Luftaufnahmen', desc: 'Luftbilder dort, wo die Geschichte Weite braucht, geflogen im Rahmen der lokalen Vorschriften.' },
@@ -591,7 +591,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
         'Her filmle birlikte dijital bir gezi defteri geliyor: basılı bir kartın üzerindeki QR kodun arkasında rota, harita, en iyi kareler ve filmin kendisini barındıran zarif bir sayfa. Ailenize hediye edebileceğiniz bir hatıra ve misafirlerinizin ya da müşterilerinizin gerçekten takip edebileceği bir rehber.',
       ],
       features: [
-        { title: 'Sinematik Seyahat Filmi', desc: 'Log profilde çekilen, DaVinci Resolve\'da renklendirilen ve slayt gösterisi değil bir hikaye gibi kurgulanan 2-4 dakikalık film.' },
+        { title: 'Sinematik Seyahat Filmi', desc: 'Log profilde çekilen, DaVinci Resolve\'da renklendirilen ve slayt gösterisi değil bir hikaye gibi kurgulanan 10-30 dakikalık film.' },
         { title: 'İmza Görsel Motif', desc: 'Tekrar eden tek bir nesne ya da renk tüm sahneleri birbirine bağlar; filmleriniz bir seri olarak tanınır.' },
         { title: 'Yerel Sesler', desc: 'İsteğe bağlı olarak bir yerel — bir balıkçı, bir kahveci, bir rehber — mekanı kendi sözleriyle anlatır. Kartpostal klişeleri yerine belgesel derinliği.' },
         { title: 'Drone & Havadan Çekim', desc: 'Hikayenin genişliğe ihtiyaç duyduğu yerlerde, yerel kurallara uygun uçuşla havadan planlar.' },
