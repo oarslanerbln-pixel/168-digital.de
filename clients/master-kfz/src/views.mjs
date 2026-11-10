@@ -498,6 +498,7 @@ ${formCfg.key ? `<input type="hidden" name="access_key" value="${e(formCfg.key)}
 ${field('name', B.name, 'autocomplete="name" maxlength="80"')}${field('phone', B.phone, 'autocomplete="tel" minlength="6" maxlength="30"', false, 'tel')}${field('email', B.email, 'autocomplete="email" maxlength="120"', true, 'email')}
 <label class="fld fld--wide"><span class="fld__l">${e(B.message)} <small>${e(B.optional)}</small></span><textarea name="message" rows="4" maxlength="1500" placeholder="${e(B.messagePlaceholder)}" data-label="${e(B.message)}"></textarea></label></div>
 <label class="consent"><input type="checkbox" name="consent" required><span>${e(B.consent)} <a href="${routes.privacy.de}" hreflang="de" ${ext}>${e(B.privacyLink)}</a>.</span></label>
+<p class="bk__note">${e(B.formNote)}</p>
 <div class="bk__nav"><button class="btn btn--ghost" type="button" data-back><span>${e(B.back)}</span></button><button class="btn btn--red" type="submit" data-submit><span>${e(i18n.submit)}</span>${icon(formCfg.key ? 'arrow' : 'chat')}</button></div>
 </fieldset>
 <div class="bk__done" data-done hidden tabindex="-1"></div>

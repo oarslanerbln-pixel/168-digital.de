@@ -1122,3 +1122,6 @@ html[data-theme="blue"] :is(.hero__media video, .hero__media img, .phero__media 
   .lede__in > .kicker, .lede .hero__trust { grid-column: 1 / -1; }
   .lede__cta { margin-bottom: 6px; }
 }
+
+/* Art. 13 GDPR notice at the point of collection, under the privacy checkbox. */
+.bk__note { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--text-3); max-width: 62ch; }

@@ -40,7 +40,7 @@ ${todo('Betriebsleiter/Meister und Handwerksrollen-Nr. prüfen')}</p>
     title: 'Datenschutzerklärung',
     description: `Datenschutzerklärung der ${business.name}: keine Cookies, kein Tracking, Terminanfragen per Formular, WhatsApp, Telefon oder E-Mail.`,
     html: `
-<p>Stand: Oktober 2026</p>
+<p>Stand: November 2026</p>
 <h2>1. Verantwortlicher</h2>
 <p>${addr}<br>Telefon: ${business.phoneDisplay}<br>E-Mail: <a href="mailto:${business.email}">${business.email}</a></p>
 <h2>2. Das Wichtigste in Kürze</h2>
