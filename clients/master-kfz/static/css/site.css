@@ -1245,3 +1245,11 @@ html.js .hero__tag i { transform: scaleX(0); transform-origin: left; animation: 
 }
 @keyframes scrollCue { to { top: 100%; } }
 @media (prefers-reduced-motion: reduce) { .hero__scroll i { animation: none; top: 30%; } }
+
+/* Sharp film: the old scrub + Ken Burns zoom magnified the video up to 1.24×, which no
+   encode survives. The hero now drifts at most 5 %; phones play a native 720×1280
+   portrait crop (hero-m.mp4), so it is centred instead of offset. */
+.hero__media video, .hero__media img { transform: scale(calc(1.02 + (var(--p, 0.5) - 0.5) * 0.04)); animation: heroDrift 22s ease-in-out infinite alternate; }
+@keyframes heroDrift { to { transform: scale(calc(1.05 + (var(--p, 0.5) - 0.5) * 0.04)) translate(-0.6%, -0.4%); } }
+@media (max-width: 767px) { .hero__media video { object-position: 50% 50%; } }
+@media (prefers-reduced-motion: reduce) { .hero__media video, .hero__media img { animation: none; transform: none; } }

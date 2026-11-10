@@ -21,6 +21,9 @@ Siehe README „Vor dem Livegang“: Firmierung/HRB/USt-ID, Öffnungszeiten, MwS
 - Vorschau aktualisieren: `node tools/preview-export.mjs`, dann nur geänderte Dateien veröffentlichen
   (meist `index.html`, `css/site.css`, `js/site.js` – Unterseiten laden CSS/JS über denselben Pfad).
 - Logo-PDF neu: `node tools/logo-pdf.cjs`.
+- Hero-Video neu kodieren (Quelle: Flow-Original 1920×1080):
+  `ffmpeg -i SRC -an -c:v libx264 -preset veryslow -crf 23 -tune film -g 18 -keyint_min 18 -sc_threshold 0 -pix_fmt yuv420p -movflags +faststart static/media/hero.mp4`
+  Handy (Hochformat-Ausschnitt): `... -vf "crop=608:1080:813:0,scale=720:1280:flags=lanczos" -crf 25 -g 24 ... static/media/hero-m.mp4`
 - Neues Foto in `static/media/`: danach `python3 tools/images.py` (erzeugt die 600-px-Handyvariante, `srcset` greift automatisch).
 - CSS: Quelle `static/css/site.css` mit Kommentaren; der Build (`src/css.mjs`) entfernt Kommentare und die Regeln der internen Boards. Die Boards laden `boards.css` (komplett, Originalreihenfolge).
 - Performance (Lighthouse, Handy gedrosselt): Startseite 99, LCP 1,7 s, TBT 0, CLS 0. `serve.mjs` komprimiert wie Vercel, damit lokale Messungen stimmen.
