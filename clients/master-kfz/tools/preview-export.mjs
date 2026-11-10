@@ -7,6 +7,7 @@ await rm(out, { recursive: true, force: true });
 await cp(src, out, { recursive: true });
 /* Preview only: a colour-style switcher so the client can compare the styles on every page.
    The choice survives page changes (sessionStorage) and can be linked with ?theme=gold|blue. */
+const SHOW_THEME_SWITCH = process.argv.includes('--themes'); // node tools/preview-export.mjs --themes
 const THEME_HEAD = `<script>(function(){try{var q=new URLSearchParams(location.search).get('theme');if(q)sessionStorage.setItem('mk-theme',q);var t=sessionStorage.getItem('mk-theme');if(t&&t!=='red')document.documentElement.dataset.theme=t;}catch(e){}})()</script>`;
 const THEME_SWITCH = `<div class="tsw" role="group" aria-label="Farbstil"><span>Stil</span><button data-t="red" style="--c:#e3141c">Rot</button><button data-t="gold" style="--c:#c9a35c">Gold</button><button data-t="blue" style="--c:#2a6df0">Blau</button></div>
 <style>.tsw{position:fixed;z-index:200;left:50%;top:calc(var(--hdr-h) + 10px);translate:-50% 0;display:flex;align-items:center;gap:4px;padding:5px;border-radius:999px;background:rgba(15,15,18,.82);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);font:500 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:#a1a1a6}
@@ -25,7 +26,7 @@ for (const f of html) {
   h = h.replace(/<meta http-equiv="Content-Security-Policy"[^>]*>\n/, '')
     .replace(/(href|src|poster)="(\/(?!\/)[^"]*)"/g, (m, a, p) => `${a}="${fix(p)}"`)
     .replace(/srcset="([^"]*)"/g, (m, list) => `srcset="${list.replace(/(^|,\s*)(\/(?!\/)[^\s,]+)/g, (_, sep, p) => sep + fix(p))}"`);
-  if (!/logo-konzepte|ui-stile/.test(f)) h = h.replace('</head>', THEME_HEAD + '</head>').replace('</body>', THEME_SWITCH + '</body>');
+  if (SHOW_THEME_SWITCH && !/logo-konzepte|ui-stile/.test(f)) h = h.replace('</head>', THEME_HEAD + '</head>').replace('</body>', THEME_SWITCH + '</body>');
   await writeFile(f, h);
 }
 const list = [];

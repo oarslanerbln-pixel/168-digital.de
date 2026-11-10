@@ -277,7 +277,7 @@ html.is-intro .intro {
 @media (min-width: 760px) { .hero__trust { display: flex; justify-content: space-between; font-size: 14px; } }
 
 /* Hero entrance */
-html.js .hero__kicker, html.js .hero__lead, html.js .hero__cta, html.js .hero__trust { opacity: 0; animation: fadeUp 1s var(--ease-out) forwards; }
+html.js .hero__kicker { opacity: 0; animation: fadeUp 1s var(--ease-out) forwards; }
 html.js .hero__kicker { animation-delay: var(--hd); }
 html.js .hero__lead { animation-delay: calc(var(--hd) + 0.35s); }
 html.js .hero__cta { animation-delay: calc(var(--hd) + 0.5s); }
@@ -792,7 +792,7 @@ html.js .rv.is-in .ln > * { transform: none; }
 .hero__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, var(--bg) 3%, rgba(11, 12, 16, 0.2) 40%, rgba(11, 12, 16, 0.55)), linear-gradient(90deg, rgba(11, 12, 16, 0.88), rgba(11, 12, 16, 0.35) 55%, transparent 80%); }
 @media (max-width: 759px) { .hero__media::after { background: linear-gradient(to top, var(--bg) 6%, rgba(11, 12, 16, 0.45) 45%, rgba(11, 12, 16, 0.8)); } }
 .hero--media .hero__car { display: none; }
-.hero--media .hero__trust { margin-top: auto; }
+.hero--media .hero__in { margin-top: auto; padding-bottom: clamp(48px, 9vh, 112px); }
 
 
 .ticker { overflow: hidden; padding-block: clamp(48px, 8vw, 100px); border-top: 1px solid var(--line); }
@@ -1077,7 +1077,6 @@ html.js .duo__col.rv.is-in li { opacity: 1; transform: none; }
 /* While the bottom action bar is shown, the hero ends above it – otherwise the trust row hides behind it. */
 @media (max-width: 959px) { .hero { min-height: calc(100svh - 84px - env(safe-area-inset-bottom)); } }
 /* Tall portrait tablets: anchor the copy low so the film fills the top instead of an empty band below. */
-@media (orientation: portrait) and (min-width: 600px) { .hero--media .hero__in { margin-top: auto; padding-bottom: 40px; } }
 
 /* ---------- Large screens ----------
  * 1240 px of content on a 2560 px display reads as a phone layout floating in black.
@@ -1107,3 +1106,19 @@ html[data-theme="blue"] {
 }
 html[data-theme="gold"] :is(.hero__media video, .hero__media img, .phero__media img, .flow img, .collage img) { filter: hue-rotate(34deg) saturate(0.7) brightness(0.96); }
 html[data-theme="blue"] :is(.hero__media video, .hero__media img, .phero__media img, .flow img, .collage img) { filter: hue-rotate(206deg) saturate(0.85); }
+
+/* ---------- Hero: film and headline only ----------
+ * The client wanted the opening calm: nothing but the film and the line. Kicker, lead,
+ * calls to action and trust points follow directly below in .lede, still above the fold
+ * on most phones' first scroll and repeated in the fixed action bar on mobile.
+ */
+.hero--media .hero__title { font-size: clamp(56px, 11.5vw, 156px); }
+.lede { padding-block: clamp(56px, 8vw, 104px) clamp(8px, 2vw, 24px); }
+.lede__in { display: grid; gap: 22px; }
+.lede__text { max-width: 34ch; font-size: clamp(21px, 2.3vw, 32px); line-height: 1.32; letter-spacing: -0.02em; font-weight: 500; color: var(--text); text-wrap: pretty; }
+.lede .hero__trust { margin-top: clamp(16px, 3vw, 40px); }
+@media (min-width: 960px) {
+  .lede__in { grid-template-columns: minmax(0, 1fr) auto; align-items: end; column-gap: 64px; }
+  .lede__in > .kicker, .lede .hero__trust { grid-column: 1 / -1; }
+  .lede__cta { margin-bottom: 6px; }
+}

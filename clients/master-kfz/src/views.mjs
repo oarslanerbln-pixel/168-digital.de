@@ -302,13 +302,18 @@ function home(c, lang) {
 <section class="hero${heroImg ? ' hero--media' : ''}" data-scroll="pass" data-spot>
 <div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video poster="${heroImg}" autoplay muted loop playsinline preload="auto" data-scrub>${media('hero-m.mp4') ? `<source src="/media/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">` : ''}<source src="${heroVid}" type="video/mp4"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__spot"></div></div>
 <div class="wrap hero__in">
-${kicker(c.home.kicker, 'hero__kicker')}
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
-<p class="hero__lead">${e(c.home.lead)}</p>
-<div class="btns hero__cta">${btn(routes.booking[lang], c.cta.book)}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
 </div>
 <div class="hero__car" aria-hidden="true">${carSvg('car car--hero')}<i class="hero__sweep"></i></div>
-<ul class="hero__trust wrap">${c.home.trust.map((t) => `<li>${icon('check')}${e(t)}</li>`).join('')}</ul>
+</section>
+
+<section class="lede">
+<div class="wrap lede__in">
+${kicker(c.home.kicker, 'rv')}
+<p class="lede__text rv" style="--i:1">${e(c.home.lead)}</p>
+<div class="btns lede__cta rv" style="--i:2">${btn(routes.booking[lang], c.cta.book)}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
+<ul class="hero__trust rv" style="--i:3">${c.home.trust.map((t) => `<li>${icon('check')}${e(t)}</li>`).join('')}</ul>
+</div>
 </section>
 
 <section class="brands" aria-label="${e(c.home.brands)}">
