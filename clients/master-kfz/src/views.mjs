@@ -303,6 +303,7 @@ function home(c, lang) {
 <div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video poster="${heroImg}" autoplay muted loop playsinline preload="auto" data-scrub>${media('hero-m.mp4') ? `<source src="/media/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">` : ''}<source src="${heroVid}" type="video/mp4"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__spot"></div></div>
 <div class="wrap hero__in">
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
+<p class="hero__tag"><i aria-hidden="true"></i>${e(c.home.heroTag)}<span>Berlin-Neukölln</span></p>
 </div>
 <div class="hero__car" aria-hidden="true">${carSvg('car car--hero')}<i class="hero__sweep"></i></div>
 </section>

@@ -24,6 +24,7 @@ export default {
   home: {
     kicker: 'Kfz-Meisterwerkstatt · Berlin-Neukölln',
     h1: ['Meisterhaft.', 'Für jedes Auto.'],
+    heroTag: 'Präzision, die man fährt.',
     lead: 'Inspektion, Ölwechsel, Bremsen, Reifen, Klima – erledigt in einem Meisterbetrieb, zum Festpreis, den Sie vorher kennen.',
     trust: ['Meisterbetrieb', 'Alle Marken', 'Festpreis vor Auftrag', 'Deutsch · Türkçe · English'],
     scroll: 'Scrollen',

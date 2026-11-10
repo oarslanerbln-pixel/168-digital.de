@@ -24,6 +24,7 @@ export default {
   home: {
     kicker: 'Master-certified garage · Berlin-Neukölln',
     h1: ['Masterful.', 'For every car.'],
+    heroTag: 'Precision you can drive.',
     lead: 'Servicing, oil, brakes, tyres, air-con – done by a master-certified workshop, at a fixed price you know before we start.',
     trust: ['Master workshop', 'All makes', 'Fixed price up front', 'Deutsch · Türkçe · English'],
     scroll: 'Scroll',

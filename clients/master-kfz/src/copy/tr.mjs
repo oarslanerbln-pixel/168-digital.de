@@ -24,6 +24,7 @@ export default {
   home: {
     kicker: 'Usta Oto Servis · Berlin-Neukölln',
     h1: ['Ustalıkla.', 'Her araca.'],
+    heroTag: 'Sürüşte hissedilen hassasiyet.',
     lead: 'Bakım, yağ değişimi, fren, lastik, klima – usta onaylı serviste, işe başlamadan bildiğiniz sabit fiyatla.',
     trust: ['Usta (Meister) işletmesi', 'Tüm markalar', 'Önceden sabit fiyat', 'Deutsch · Türkçe · English'],
     scroll: 'Kaydır',

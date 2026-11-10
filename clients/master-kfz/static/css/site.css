@@ -1085,7 +1085,7 @@ html.js .duo__col.rv.is-in li { opacity: 1; transform: none; }
  */
 @media (min-width: 1800px) {
   :root { --max: 1440px; }
-  .hero__media::after { background: linear-gradient(to top, var(--bg) 3%, rgba(11, 12, 16, 0.2) 40%, rgba(11, 12, 16, 0.55)), linear-gradient(90deg, rgba(11, 12, 16, 0.92), rgba(11, 12, 16, 0.78) 42%, rgba(11, 12, 16, 0.3) 64%, transparent 84%); }
+  .hero__media::after { background: linear-gradient(to top, var(--bg) 3%, rgba(11, 12, 16, 0.2) 40%, rgba(11, 12, 16, 0.55)), linear-gradient(90deg, rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.5) 40%, rgba(11, 12, 16, 0.12) 62%, transparent 80%); }
 }
 @media (min-width: 2400px) { :root { --max: 1600px; } }
 
@@ -1125,3 +1125,21 @@ html[data-theme="blue"] :is(.hero__media video, .hero__media img, .phero__media 
 
 /* Art. 13 GDPR notice at the point of collection, under the privacy checkbox. */
 .bk__note { margin-top: 10px; font-size: 13px; line-height: 1.5; color: var(--text-3); max-width: 62ch; }
+
+/* ---------- Hero, second pass ----------
+ * Title-only felt thin: the film gets its colour back (lighter veil, a little more
+ * saturation and contrast) and a small mono line under the headline carries the slogan
+ * and the place – minimal, but enough to read as a signature, not a gap.
+ */
+.hero--media .hero__media img, .hero--media .hero__media video { opacity: 1; filter: saturate(1.18) contrast(1.06) brightness(1.04); }
+.hero--media .hero__media::after { background: linear-gradient(to top, var(--bg) 2%, rgba(11, 12, 16, 0.08) 38%, rgba(11, 12, 16, 0.32)), linear-gradient(90deg, rgba(11, 12, 16, 0.72), rgba(11, 12, 16, 0.18) 48%, transparent 72%); }
+@media (max-width: 759px) { .hero--media .hero__media::after { background: linear-gradient(to top, var(--bg) 4%, rgba(11, 12, 16, 0.25) 42%, rgba(11, 12, 16, 0.45)); } }
+.hero__tag { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: clamp(18px, 2.4vw, 28px); font: 500 clamp(12px, 1.1vw, 14px)/1.4 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text); }
+.hero__tag i { width: 36px; height: 2px; background: var(--red); box-shadow: 0 0 12px var(--red); }
+.hero__tag span { color: var(--text-2); }
+.hero__tag span::before { content: '·'; margin-right: 14px; color: var(--red-2); }
+html.js .hero__tag { opacity: 0; animation: fadeUp 1s var(--ease-out) forwards; animation-delay: calc(var(--hd) + 0.55s); }
+html.js .hero__tag i { transform: scaleX(0); transform-origin: left; animation: lineGrow 0.9s var(--ease-out) forwards; animation-delay: calc(var(--hd) + 0.7s); }
+@keyframes lineGrow { to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { html.js .hero__tag, html.js .hero__tag i { opacity: 1; transform: none; animation: none; } }
+@media (min-width: 1800px) { .hero--media .hero__media::after { background: linear-gradient(to top, var(--bg) 2%, rgba(11, 12, 16, 0.08) 38%, rgba(11, 12, 16, 0.32)), linear-gradient(90deg, rgba(11, 12, 16, 0.85), rgba(11, 12, 16, 0.5) 40%, rgba(11, 12, 16, 0.12) 62%, transparent 80%); } }
