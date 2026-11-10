@@ -483,7 +483,7 @@ ${formCfg.key ? `<input type="hidden" name="access_key" value="${e(formCfg.key)}
 <ol class="bk__progress" aria-hidden="true">${B.steps.map((s, i) => `<li data-progress="${i}"><span>${i + 1}</span>${e(s)}</li>`).join('')}</ol>
 <fieldset class="bk__step" data-step="0">
 <legend class="bk__legend">${e(B.servicesLabel)}</legend>
-<div class="chips">${[...services.map((s) => [s.id, c.services[s.id].name, s.icon]), ['other', B.other, 'plus']].map(([id, label, ic]) => `<label class="chip"><input type="checkbox" name="services" value="${id}">${icon(ic)}<span>${e(label)}</span></label>`).join('')}</div>
+<div class="chips">${[...services.map((s) => [s.id, c.services[s.id].name, s.icon]), ['other', B.other, 'plus']].map(([id, label, ic]) => `<label class="chip"><input type="checkbox" name="services" value="${id}">${icon(ic)}<span>${shy(e(label))}</span></label>`).join('')}</div>
 <p class="bk__err" data-err hidden>${e(B.pickOne)}</p>
 <div class="bk__nav"><button class="btn btn--red" type="button" data-next><span>${e(B.next)}</span>${icon('arrow')}</button></div>
 </fieldset>
@@ -605,7 +605,7 @@ export function buildPages(copy, formCfg, legalHtml) {
     }
     pages.push(std('prices', prices(c, lang)));
     pages.push(std('about', about(c, lang)));
-    pages.push(std('booking', booking(c, lang, formCfg)));
+    pages.push(std('booking', booking(c, lang, formCfg), { bodyClass: 'is-booking' }));
   }
   const de = copy.de;
   for (const key of ['imprint', 'privacy']) {
