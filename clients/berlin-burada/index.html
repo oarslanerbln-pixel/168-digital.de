@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Berlin Burada Partners — Ihre Marke in Berlins türkischer Community</title>
+<meta name="description" content="Berlin Burada verbindet Unternehmen mit der türkisch-deutschen Community Berlins. 134.000 Follower. Story, Reel, Post und Kampagnen – kulturell adaptiert.">
+<meta name="theme-color" content="#000000">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#000;--ink:#1d1d1f;--grey:#86868b;--mist:#f5f5f7;--white:#fff;
+  --red:#e30a17;--gold:#f5a800;
+  --display:"Montserrat",system-ui,sans-serif;
+  --text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --wrap:min(1120px,calc(100% - 48px));
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--text);background:var(--black);color:var(--white);line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+img,svg{display:block}
+.wrap{width:var(--wrap);margin-inline:auto}
+.eyebrow{font-family:var(--display);font-weight:600;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--grey)}
+h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-height:1.05}
+.light{background:var(--white);color:var(--ink)}
+.mist{background:var(--mist);color:var(--ink)}
+
+/* NAV */
+.nav{position:fixed;inset:0 0 auto;z-index:50;height:52px;display:flex;align-items:center;transition:background .4s var(--ease),backdrop-filter .4s}
+.nav.solid{background:rgba(0,0,0,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:13px;letter-spacing:.24em}
+.brand svg{width:26px;height:26px}
+.links{display:flex;gap:32px;font-size:13px;color:#d2d2d7}
+.links a:hover{color:var(--white)}
+.pill{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 24px;border-radius:999px;font-size:15px;font-weight:500;transition:transform .3s var(--ease),background .3s}
+.pill:active{transform:scale(.97)}
+.pill.w{background:var(--white);color:var(--black)}
+.pill.w:hover{background:#e8e8ed}
+.pill.r{background:var(--red);color:var(--white)}
+.pill.r:hover{background:#c90914}
+.pill.sm{height:32px;padding:0 16px;font-size:13px}
+.more{color:#2997ff;font-size:17px}
+.more::after{content:" ›"}
+.light .more,.mist .more{color:#0066cc}
+
+/* HERO */
+.hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:96px 0 64px;position:relative;
+  background:radial-gradient(60% 50% at 50% 38%,#1b1b1d 0%,#000 70%)}
+.hero .mark{width:min(300px,62vw);margin:0 auto 48px}
+.hero h1{font-size:clamp(36px,6.4vw,80px);max-width:14ch;margin:0 auto}
+.hero h1 span{color:var(--grey)}
+.hero p{font-size:clamp(17px,1.6vw,21px);color:#a1a1a6;max-width:36em;margin:24px auto 36px}
+.cta{display:flex;gap:24px;justify-content:center;align-items:center;flex-wrap:wrap}
+.scroll{position:absolute;bottom:28px;left:50%;width:1px;height:48px;background:linear-gradient(#fff0,#fff6);animation:drip 2.4s var(--ease) infinite}
+@keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* LOGO ANIMATION */
+.mark .ring{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 1.6s var(--ease) .2s forwards}
+.mark .top{opacity:0;animation:fade .8s var(--ease) 1s forwards}
+.mark .tower{transform:translateY(130px);animation:rise 1.2s var(--ease) 1.3s forwards}
+.mark .band{transform:scaleX(0);animation:wipe .9s var(--ease) forwards}
+.mark .b1{transform-origin:left;animation-delay:1.9s}
+.mark .b2{transform-origin:right;animation-delay:2.1s}
+.mark .b3{transform-origin:left;animation-delay:2.3s}
+.mark .word tspan,.mark .burada,.mark .flag{opacity:0;animation:fade .6s var(--ease) forwards}
+.mark .word tspan:nth-child(1){animation-delay:2.5s}.mark .word tspan:nth-child(2){animation-delay:2.6s}
+.mark .word tspan:nth-child(3){animation-delay:2.7s}.mark .word tspan:nth-child(4){animation-delay:2.8s}
+.mark .word tspan:nth-child(5){animation-delay:2.9s}.mark .word tspan:nth-child(6){animation-delay:3s}
+.mark .burada{animation-delay:2.6s}.mark .flag{animation-delay:3.1s}
+.mark .glint{opacity:0;animation:glint 1.4s var(--ease) 3.4s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+@keyframes rise{to{transform:none}}
+@keyframes wipe{to{transform:scaleX(1)}}
+@keyframes glint{0%{opacity:0}40%{opacity:.9}100%{opacity:0}}
+.hero .copy{opacity:0;transform:translateY(16px);animation:copy 1s var(--ease) 3.2s forwards}
+@keyframes copy{to{opacity:1;transform:none}}
+
+/* STATEMENT (scroll-lit words) */
+.statement{padding:22vh 0}
+.statement p{font-family:var(--display);font-weight:600;font-size:clamp(28px,4.4vw,56px);line-height:1.15;letter-spacing:-.02em;max-width:22ch}
+.statement .w{color:#fff;opacity:.16;transition:opacity .25s linear}
+.statement .w.on{opacity:1}
+.statement .w.red{color:var(--red)}
+
+/* STATS */
+.stats{padding:120px 0}
+.stats .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:#d2d2d7;border-block:1px solid #d2d2d7}
+.stat{background:var(--white);padding:40px 24px 36px}
+.stat b{display:block;font-family:var(--display);font-weight:600;font-size:clamp(40px,5vw,64px);letter-spacing:-.03em;line-height:1}
+.stat span{display:block;margin-top:12px;color:#6e6e73;font-size:15px}
+.stats h2{font-size:clamp(32px,4.6vw,56px);max-width:18ch;margin:16px 0 64px}
+
+/* FORMATS */
+.formats{padding:120px 0}
+.head{text-align:center;margin-bottom:64px}
+.head h2{font-size:clamp(32px,4.6vw,56px);margin-top:14px}
+.head p{color:#6e6e73;font-size:19px;max-width:34em;margin:16px auto 0}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tile{background:var(--white);border-radius:28px;padding:40px 32px;min-height:340px;display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.tile:hover{transform:translateY(-4px);box-shadow:0 24px 48px -24px rgba(0,0,0,.18)}
+.tile .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--mist);margin-bottom:auto}
+.tile .ic svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.6}
+.tile small{display:block;margin-top:40px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:600}
+.tile h3{font-size:26px;margin:8px 0 10px}
+.tile p{color:#6e6e73;font-size:16px}
+.tile.dark{background:var(--black);color:var(--white)}
+.tile.dark .ic{background:#1d1d1f}.tile.dark .ic svg{stroke:#fff}
+.tile.dark p{color:#a1a1a6}
+
+/* PACKAGES */
+.packs{padding:0 0 140px}
+.packs .row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pack{border:1px solid #d2d2d7;border-radius:28px;padding:40px 32px;background:var(--white)}
+.pack.hi{border:2px solid var(--ink)}
+.pack h3{font-size:24px}
+.pack .sub{color:#6e6e73;margin:6px 0 24px;font-size:15px}
+.pack ul{list-style:none;border-top:1px solid #e8e8ed}
+.pack li{padding:14px 0;border-bottom:1px solid #e8e8ed;font-size:15px}
+.pack .price{margin:28px 0 20px;font-family:var(--display);font-weight:600;font-size:15px;letter-spacing:.04em}
+
+/* INDUSTRIES */
+.ind{padding:140px 0;overflow:hidden}
+.ind h2{font-size:clamp(32px,4.6vw,56px);max-width:16ch;margin-top:14px}
+.marquee{margin-top:72px;display:flex;flex-direction:column;gap:12px}
+.track{display:flex;gap:56px;white-space:nowrap;width:max-content;animation:slide 48s linear infinite;font-family:var(--display);font-weight:300;font-size:clamp(36px,6vw,84px);letter-spacing:-.03em;color:#3a3a3c}
+.track:nth-child(2){animation-direction:reverse;animation-duration:56s}
+.track i{font-style:normal;color:var(--white)}
+.track em{font-style:normal;color:var(--red)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* TRANSCREATION */
+.trans{padding:140px 0}
+.trans .split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.trans h2{font-size:clamp(34px,5vw,64px)}
+.trans h2 span{color:var(--red)}
+.trans p{color:#6e6e73;font-size:19px;margin-top:24px;max-width:28em}
+.card{border-radius:28px;background:var(--mist);padding:40px}
+.lang{display:flex;gap:16px;align-items:baseline;padding:24px 0;border-bottom:1px solid #d2d2d7}
+.lang:last-child{border:0}
+.lang b{font-family:var(--display);font-size:12px;letter-spacing:.2em;color:var(--grey);width:28px;flex:none}
+.lang q{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.02em;quotes:none}
+.lang.tr q{color:var(--red)}
+.card .note{font-size:13px;color:var(--grey);margin-top:16px}
+
+/* WORKFLOW */
+.flow{padding:140px 0}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2a2a2c;border-radius:28px;overflow:hidden;margin-top:64px}
+.step{background:#0b0b0c;padding:40px 32px;min-height:240px;position:relative}
+.step b{font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.2em;color:var(--red)}
+.step h3{font-size:24px;margin:28px 0 10px}
+.step p{color:#a1a1a6;font-size:15px}
+.flow h2{font-size:clamp(32px,4.6vw,56px);max-width:18ch;margin-top:14px}
+
+/* SEAL */
+.seal{padding:140px 0;text-align:center}
+.seal .badge{width:120px;margin:0 auto 32px}
+.seal h2{font-size:clamp(32px,4.6vw,56px);max-width:18ch;margin:14px auto 0}
+.seal p{color:#6e6e73;font-size:19px;max-width:34em;margin:20px auto 32px}
+
+/* CONTACT */
+.contact{padding:140px 0}
+.contact .split{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px}
+.contact h2{font-size:clamp(34px,5vw,64px)}
+.contact .lead{color:#a1a1a6;font-size:19px;margin-top:20px}
+.person{margin-top:48px;padding-top:24px;border-top:1px solid #2a2a2c}
+.person b{display:block;font-family:var(--display);font-weight:600;font-size:18px}
+.person span{color:var(--grey);font-size:14px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.f{position:relative}
+.f.full{grid-column:1/-1}
+.f input,.f select,.f textarea{width:100%;background:#1d1d1f;border:1px solid #1d1d1f;border-radius:14px;color:#fff;font:inherit;font-size:17px;padding:26px 16px 10px;outline:none;transition:border-color .3s;appearance:none}
+.f textarea{min-height:140px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:#fff6}
+.f label{position:absolute;left:17px;top:10px;font-size:12px;color:var(--grey)}
+.f select{cursor:pointer}
+.chips{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.chips label{cursor:pointer}
+.chips input{position:absolute;opacity:0;pointer-events:none}
+.chips span{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid #3a3a3c;font-size:14px;color:#d2d2d7;transition:.25s}
+.chips input:checked+span{background:#fff;color:#000;border-color:#fff}
+.chips input:focus-visible+span{outline:2px solid #2997ff;outline-offset:2px}
+form .pill{grid-column:1/-1;justify-content:center;height:56px;font-size:17px;border:0;cursor:pointer;margin-top:12px}
+.fine{grid-column:1/-1;font-size:12px;color:var(--grey)}
+
+/* FOOTER */
+footer{padding:48px 0 40px;font-size:12px;color:#6e6e73;background:var(--mist)}
+footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;border-top:1px solid #d2d2d7;padding-top:20px}
+footer nav{display:flex;gap:20px}
+footer a:hover{color:var(--ink)}
+.stripe{height:4px;display:grid;grid-template-columns:2fr 2fr 1fr}
+.stripe i:nth-child(1){background:#000}.stripe i:nth-child(2){background:var(--red)}.stripe i:nth-child(3){background:var(--gold)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(32px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}.rv.d2{transition-delay:.16s}.rv.d3{transition-delay:.24s}
+
+@media (max-width:900px){
+  .links{display:none}
+  .stats .grid{grid-template-columns:1fr 1fr}
+  .tiles,.packs .row,.steps{grid-template-columns:1fr}
+  .tile{min-height:0}
+  .trans .split,.contact .split{grid-template-columns:1fr;gap:48px}
+  form{grid-template-columns:1fr}
+  .statement{padding:14vh 0}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
+  .rv{opacity:1;transform:none}
+  .track{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Reusable logo symbol -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <clipPath id="disc"><circle cx="200" cy="200" r="188"/></clipPath>
+    <path id="arc" d="M58 214 A142 142 0 0 1 342 214"/>
+    <mask id="moon"><rect width="400" height="400" fill="#fff"/><circle cx="196" cy="331" r="16" fill="#000"/></mask>
+    <radialGradient id="shine" cx="40%" cy="35%" r="50%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" class="brand" aria-label="Berlin Burada Partners">
+      <svg viewBox="0 0 400 400" aria-hidden="true"><g clip-path="url(#disc)"><rect width="400" height="200" fill="#fff"/><rect y="200" width="400" height="100" fill="#000"/><rect y="300" width="400" height="66" fill="#e30a17"/><rect y="366" width="400" height="34" fill="#f5a800"/></g><circle cx="200" cy="200" r="188" fill="none" stroke="#fff" stroke-width="10"/></svg>
+      BERLIN BURADA
+    </a>
+    <nav class="links">
+      <a href="#formate">Formate</a>
+      <a href="#branchen">Branchen</a>
+      <a href="#ablauf">Ablauf</a>
+      <a href="#siegel">Partner-Siegel</a>
+    </nav>
+    <a href="#kontakt" class="pill w sm">Anfragen</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <svg class="mark" viewBox="0 0 400 400" role="img" aria-label="Berlin Burada Logo">
+      <g clip-path="url(#disc)">
+        <rect class="top" width="400" height="200" fill="#fff"/>
+        <g class="tower" fill="#000">
+          <rect x="198" y="86" width="4" height="38" rx="2"/>
+          <rect x="194" y="118" width="12" height="10" rx="2"/>
+          <circle cx="200" cy="146" r="20"/>
+          <rect x="185" y="168" width="30" height="5" rx="2.5"/>
+          <path d="M193 172h14l4 28h-22z"/>
+        </g>
+        <circle class="glint" cx="193" cy="139" r="9" fill="url(#shine)"/>
+        <rect class="band b1" y="200" width="400" height="100" fill="#000"/>
+        <rect class="band b2" y="300" width="400" height="66" fill="#e30a17"/>
+        <rect class="band b3" y="366" width="400" height="34" fill="#f5a800"/>
+        <text class="burada" x="200" y="268" text-anchor="middle" fill="#fff" font-family="Montserrat,sans-serif" font-weight="500" font-size="46" letter-spacing="9">BURADA</text>
+        <g class="flag" fill="#fff">
+          <circle cx="186" cy="331" r="20" mask="url(#moon)"/>
+          <path d="M215 321l2.6 7.4 7.8.2-6.2 4.8 2.2 7.5-6.4-4.4-6.4 4.4 2.2-7.5-6.2-4.8 7.8-.2z"/>
+        </g>
+      </g>
+      <text class="word" font-family="Montserrat,sans-serif" font-weight="600" font-size="50" fill="#000">
+        <textPath href="#arc" startOffset="50%" text-anchor="middle" letter-spacing="22"><tspan>B</tspan><tspan>E</tspan><tspan>R</tspan><tspan>L</tspan><tspan>I</tspan><tspan>N</tspan></textPath>
+      </text>
+      <circle class="ring" cx="200" cy="200" r="188" fill="none" stroke="#fff" stroke-width="5"/>
+    </svg>
+
+    <div class="copy">
+      <p class="eyebrow">Berlin Burada Partners</p>
+      <h1 style="margin-top:18px">Ihre Marke. <span>Mitten in der Community.</span></h1>
+      <p>134.000 Menschen folgen Berlin Burada – täglich, auf Deutsch und Türkisch. Wir bringen Unternehmen genau dorthin, wo Vertrauen entsteht.</p>
+      <div class="cta">
+        <a href="#kontakt" class="pill w">Kampagne anfragen</a>
+        <a href="#formate" class="more">Formate ansehen</a>
+      </div>
+    </div>
+  </div>
+  <span class="scroll" aria-hidden="true"></span>
+</section>
+
+<!-- STATEMENT -->
+<section class="statement">
+  <div class="wrap">
+    <p id="lit">Millionen Menschen in Deutschland haben türkische Wurzeln. Sie kaufen, gründen, bauen und entscheiden. Für Marken, die sie wirklich ansprechen – nicht nur übersetzen. Berlin Burada ist ihr täglicher Treffpunkt.</p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats light">
+  <div class="wrap">
+    <p class="eyebrow rv">Reichweite</p>
+    <h2 class="rv d1">Eine Community, die zuhört. Jeden Tag.</h2>
+    <div class="grid">
+      <div class="stat rv"><b data-count="134">0</b><span>Tausend Follower auf Instagram</span></div>
+      <div class="stat rv d1"><b>2</b><span>Sprachen. Ein Publikum.</span></div>
+      <div class="stat rv d2"><b>24/7</b><span>News, Stories und Alltag aus Berlin</span></div>
+      <div class="stat rv d3"><b>1</b><span>Stadt als Herz der Community</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FORMATS -->
+<section class="formats mist" id="formate">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow rv">Formate</p>
+      <h2 class="rv d1">Sechs Wege in den Feed.</h2>
+      <p class="rv d2">Vom 24-Stunden-Impuls bis zur Partnerschaft über Monate. Jede Kooperation transparent als Anzeige gekennzeichnet.</p>
+    </div>
+    <div class="tiles">
+      <article class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M10 18h4"/></svg></div><small>Story</small><h3>24 Stunden. Volle Aufmerksamkeit.</h3><p>Story-Placement mit Link-Sticker – direkt auf Ihre Landingpage.</p></article>
+      <article class="tile dark rv d1"><div class="ic"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div><small>Reel</small><h3>Content, der geteilt wird.</h3><p>Konzeption und Produktion durch unser Team – im Ton der Community.</p></article>
+      <article class="tile rv d2"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 15l5-5 4 4 3-3 6 6"/></svg></div><small>Feed</small><h3>Bleibt. Wirkt. Wird gefunden.</h3><p>Post oder Carousel – dauerhaft sichtbar im Profil.</p></article>
+      <article class="tile rv"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 9h3v8a2 2 0 0 1-2 2M8 9h5M8 13h5"/></svg></div><small>News</small><h3>Ihre Botschaft als Nachricht.</h3><p>Integration in unser News-Format – sachlich, glaubwürdig, gekennzeichnet.</p></article>
+      <article class="tile rv d1"><div class="ic"><svg viewBox="0 0 24 24"><path d="M12 2l2.9 6.3 6.9.6-5.2 4.6 1.6 6.8L12 16.8 5.8 20.3l1.6-6.8L2.2 8.9l6.9-.6z"/></svg></div><small>Event</small><h3>Von online zu vor Ort.</h3><p>Store-Openings, Gewinnspiele und Pop-ups mit Community-Mobilisierung.</p></article>
+      <article class="tile dark rv d2"><div class="ic"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div><small>Kampagne</small><h3>Alles. Über Wochen.</h3><p>Mehrstufige Serie über alle Formate – mit Reporting nach jeder Phase.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="packs mist">
+  <div class="wrap">
+    <div class="head"><h2 class="rv">Wählen Sie Ihr Tempo.</h2></div>
+    <div class="row">
+      <div class="pack rv"><h3>Impuls</h3><p class="sub">Für Aktionen und Launches</p><ul><li>3 Story-Placements</li><li>Link-Sticker</li><li>Kulturelle Textadaption</li><li>Kurzreport</li></ul><p class="price">Preis auf Anfrage</p><a href="#kontakt" class="more" data-pack="Impuls">Anfragen</a></div>
+      <div class="pack hi rv d1"><h3>Kampagne</h3><p class="sub">Für Marken, die bleiben wollen</p><ul><li>Reel-Produktion</li><li>Feed-Post + Stories</li><li>DE/TR Transcreation</li><li>Report mit Insights</li></ul><p class="price">Preis auf Anfrage</p><a href="#kontakt" class="more" data-pack="Kampagne">Anfragen</a></div>
+      <div class="pack rv d2"><h3>Partnerschaft</h3><p class="sub">Für langfristige Präsenz</p><ul><li>Monatliches Kontingent</li><li>Event- und News-Integration</li><li>Burada Partner-Siegel</li><li>Fester Ansprechpartner</li></ul><p class="price">Preis auf Anfrage</p><a href="#kontakt" class="more" data-pack="Partnerschaft">Anfragen</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section class="ind" id="branchen">
+  <div class="wrap">
+    <p class="eyebrow rv">Branchen</p>
+    <h2 class="rv d1">Gemacht für Marken, die Nähe ernst meinen.</h2>
+  </div>
+  <div class="marquee" aria-label="Branchen: Telekommunikation, Banken, Versicherungen, Automobil, Handel, Reisen, Immobilien, Arbeitgeber, Gesundheit, Öffentliche Kampagnen">
+    <div class="track" aria-hidden="true"><i>Telekommunikation</i><em>·</em>Banken<em>·</em><i>Versicherungen</i><em>·</em>Automobil<em>·</em><i>Handel</i><em>·</em>Reisen<em>·</em><i>Telekommunikation</i><em>·</em>Banken<em>·</em><i>Versicherungen</i><em>·</em>Automobil<em>·</em><i>Handel</i><em>·</em>Reisen<em>·</em></div>
+    <div class="track" aria-hidden="true">Immobilien<em>·</em><i>Arbeitgeber</i><em>·</em>Gesundheit<em>·</em><i>Öffentliche Kampagnen</i><em>·</em>Gastronomie<em>·</em>Immobilien<em>·</em><i>Arbeitgeber</i><em>·</em>Gesundheit<em>·</em><i>Öffentliche Kampagnen</i><em>·</em>Gastronomie<em>·</em></div>
+  </div>
+</section>
+
+<!-- TRANSCREATION -->
+<section class="trans light">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow rv">Kulturelle Adaption</p>
+      <h2 class="rv d1">Wir übersetzen nicht. <span>Wir übertragen.</span></h2>
+      <p class="rv d2">Jede Botschaft wird von Muttersprachlern adaptiert – Tonalität, Humor, Feiertage wie Ramadan und Bayram, lokale Bezüge. So klingt Ihre Marke nicht nach Werbung, sondern nach Nachbarschaft.</p>
+    </div>
+    <div class="card rv d2">
+      <div class="lang"><b>DE</b><q>Jetzt wechseln und sparen.</q></div>
+      <div class="lang tr"><b>TR</b><q>Şimdi geç, kazançlı çık.</q></div>
+      <p class="note">Beispiel – sinngemäß, nicht wörtlich.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WORKFLOW -->
+<section class="flow" id="ablauf">
+  <div class="wrap">
+    <p class="eyebrow rv">Ablauf</p>
+    <h2 class="rv d1">Von der Anfrage bis zum Report. Sechs klare Schritte.</h2>
+    <div class="steps">
+      <div class="step rv"><b>01</b><h3>Anfrage</h3><p>Formular ausfüllen. Rückmeldung in der Regel innerhalb eines Werktags.</p></div>
+      <div class="step rv d1"><b>02</b><h3>Briefing</h3><p>Ziel, Zielgruppe, Budget und Zeitraum – in einem kurzen Call.</p></div>
+      <div class="step rv d2"><b>03</b><h3>Adaption</h3><p>Konzept und Texte in Deutsch und Türkisch, kulturell geprüft.</p></div>
+      <div class="step rv"><b>04</b><h3>Produktion</h3><p>Story, Reel oder Post – Sie erhalten die Vorschau zur Freigabe.</p></div>
+      <div class="step rv d1"><b>05</b><h3>Live</h3><p>Veröffentlichung zum besten Zeitpunkt, als Anzeige gekennzeichnet.</p></div>
+      <div class="step rv d2"><b>06</b><h3>Report</h3><p>Reichweite, Impressionen und Klicks – transparent aus Instagram Insights.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SEAL -->
+<section class="seal mist" id="siegel">
+  <div class="wrap">
+    <svg class="badge rv" viewBox="0 0 400 400" aria-hidden="true"><g clip-path="url(#disc)"><rect width="400" height="200" fill="#fff"/><rect y="200" width="400" height="100" fill="#000"/><rect y="300" width="400" height="66" fill="#e30a17"/><rect y="366" width="400" height="34" fill="#f5a800"/></g><circle cx="200" cy="200" r="188" fill="none" stroke="#000" stroke-width="8"/><text x="200" y="268" text-anchor="middle" fill="#fff" font-family="Montserrat,sans-serif" font-weight="600" font-size="44" letter-spacing="8">PARTNER</text><path d="M168 120l22 22 44-48" fill="none" stroke="#000" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <p class="eyebrow rv">Burada Partner-Siegel</p>
+    <h2 class="rv d1">Hier wird man verstanden.</h2>
+    <p class="rv d2">Unternehmen mit türkischsprachigem Service erhalten das Burada-Siegel und einen Platz im Partner-Verzeichnis. Für die Community ein Wegweiser. Für Sie ein Vertrauensvorsprung.</p>
+    <a href="#kontakt" class="pill r rv d3" data-pack="Partner-Siegel">Partner werden</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="kontakt">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow rv">Kontakt</p>
+      <h2 class="rv d1">Lassen Sie uns sprechen.</h2>
+      <p class="lead rv d2">Erzählen Sie uns kurz von Ihrem Vorhaben. Wir melden uns mit einem konkreten Vorschlag.</p>
+      <div class="person rv d3"><b>Ahmet Çakıoğlu</b><span>Geschäftsführer · Berlin Burada</span></div>
+    </div>
+    <form id="form" class="rv d2" novalidate>
+      <div class="f"><label for="co">Unternehmen</label><input id="co" name="Unternehmen" required autocomplete="organization"></div>
+      <div class="f"><label for="nm">Name</label><input id="nm" name="Name" required autocomplete="name"></div>
+      <div class="f"><label for="em">E-Mail</label><input id="em" name="E-Mail" type="email" required autocomplete="email"></div>
+      <div class="f"><label for="bd">Budget</label><select id="bd" name="Budget"><option>Noch offen</option><option>bis 1.000 €</option><option>1.000 – 5.000 €</option><option>5.000 – 15.000 €</option><option>über 15.000 €</option></select></div>
+      <div class="chips" role="group" aria-label="Interesse">
+        <label><input type="checkbox" name="Format" value="Story"><span>Story</span></label>
+        <label><input type="checkbox" name="Format" value="Reel"><span>Reel</span></label>
+        <label><input type="checkbox" name="Format" value="Feed-Post"><span>Feed-Post</span></label>
+        <label><input type="checkbox" name="Format" value="News"><span>News</span></label>
+        <label><input type="checkbox" name="Format" value="Event"><span>Event</span></label>
+        <label><input type="checkbox" name="Format" value="Kampagne"><span>Kampagne</span></label>
+        <label><input type="checkbox" name="Format" value="Partnerschaft"><span>Partnerschaft</span></label>
+        <label><input type="checkbox" name="Format" value="Partner-Siegel"><span>Partner-Siegel</span></label>
+      </div>
+      <div class="f full"><label for="ms">Nachricht</label><textarea id="ms" name="Nachricht"></textarea></div>
+      <button class="pill w" type="submit">Anfrage senden</button>
+      <p class="fine">Ihre Angaben werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<div class="stripe" aria-hidden="true"><i></i><i></i><i></i></div>
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr">2026</span> Berlin Burada · Geschäftsführer: Ahmet Çakıoğlu</span>
+    <nav>
+      <a href="https://www.instagram.com/berlinburada/" target="_blank" rel="noopener">Instagram</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const CONTACT_EMAIL = 'kontakt@berlinburada.de'; // TODO: echte Adresse bestätigen
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Nav background after hero
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  // Reveal on scroll + counters
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('[data-count]').forEach(count);
+      io.unobserve(e.target);
+    });
+  }, { threshold: .18 });
+  document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  function count(el) {
+    const end = +el.dataset.count;
+    if (reduce) { el.textContent = end + 'K'; return; }
+    const t0 = performance.now(), dur = 1400;
+    const tick = (t) => {
+      const p = Math.min((t - t0) / dur, 1), k = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(end * k) + 'K';
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }
+
+  // Scroll-lit statement
+  const lit = document.getElementById('lit');
+  const accent = new Set(['Wurzeln.', 'Berlin', 'Burada']);
+  lit.innerHTML = lit.textContent.trim().split(/\s+/)
+    .map(w => `<span class="w${accent.has(w) ? ' red' : ''}">${w}</span>`).join(' ');
+  const words = [...lit.children];
+  let ticking = false;
+  const light = () => {
+    const r = lit.getBoundingClientRect(), vh = innerHeight;
+    const p = Math.min(Math.max((vh * .85 - r.top) / (r.height + vh * .35), 0), 1);
+    const n = Math.round(p * words.length);
+    words.forEach((w, i) => w.classList.toggle('on', reduce || i < n));
+    ticking = false;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(light); } }, { passive: true });
+  light();
+
+  // Preselect format chip from package links
+  document.querySelectorAll('[data-pack]').forEach(a => a.addEventListener('click', () => {
+    const box = document.querySelector(`.chips input[value="${a.dataset.pack}"]`)
+      || document.querySelector('.chips input[value="Kampagne"]');
+    if (box) box.checked = true;
+  }));
+
+  // Form -> mailto (no backend required)
+  document.getElementById('form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = e.target;
+    if (!f.checkValidity()) { f.reportValidity(); return; }
+    const d = new FormData(f);
+    const formats = d.getAll('Format').join(', ') || '–';
+    const body = [
+      `Unternehmen: ${d.get('Unternehmen')}`, `Name: ${d.get('Name')}`, `E-Mail: ${d.get('E-Mail')}`,
+      `Budget: ${d.get('Budget')}`, `Formate: ${formats}`, '', d.get('Nachricht') || ''
+    ].join('\n');
+    location.href = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent('Kampagnenanfrage – ' + d.get('Unternehmen'))}&body=${encodeURIComponent(body)}`;
+  });
+})();
+</script>
+</body>
+</html>
