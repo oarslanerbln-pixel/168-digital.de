@@ -51,7 +51,19 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 /* HERO */
 .hero{min-height:100svh;display:grid;place-items:center;text-align:center;padding:96px 0 64px;position:relative;
   background:radial-gradient(60% 50% at 50% 38%,#1b1b1d 0%,#000 70%)}
-.hero .mark{width:min(300px,62vw);margin:0 auto 48px}
+.halo{position:relative;width:min(300px,62vw);margin:0 auto 48px}
+.halo .mark{position:relative;z-index:1;width:100%}
+/* Neon ring: slow-motion colour orbit after the reveal */
+.halo::before,.halo::after{content:"";position:absolute;border-radius:50%;opacity:0;pointer-events:none;
+  background:conic-gradient(#e30a17,#f5a800 14%,#fff 24%,#fff0 36%,#fff0 52%,#e30a17 66%,#ff4d5a 76%,#f5a800 88%,#e30a17)}
+.halo::before{inset:-7px;z-index:2;transition:opacity 2.4s var(--ease);
+  -webkit-mask:radial-gradient(farthest-side,#0000 calc(100% - 3px),#000 calc(100% - 2.5px));
+          mask:radial-gradient(farthest-side,#0000 calc(100% - 3px),#000 calc(100% - 2.5px))}
+.halo::after{inset:-26px;z-index:0;filter:blur(30px)}
+.halo.lit::before{opacity:1;animation:orbit 16s linear infinite}
+.halo.lit::after{animation:orbit 16s linear infinite,breathe 7s ease-in-out infinite alternate}
+@keyframes orbit{to{transform:rotate(1turn)}}
+@keyframes breathe{0%{opacity:.18;scale:.98}100%{opacity:.62;scale:1.04}}
 .hero h1{font-size:clamp(36px,6.4vw,80px);max-width:14ch;margin:0 auto}
 .hero h1 span{color:var(--grey)}
 .hero p{font-size:clamp(17px,1.6vw,21px);color:#a1a1a6;max-width:36em;margin:24px auto 36px}
@@ -72,12 +84,12 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 .mark .word tspan:nth-child(3){animation-delay:2.7s}.mark .word tspan:nth-child(4){animation-delay:2.8s}
 .mark .word tspan:nth-child(5){animation-delay:2.9s}.mark .word tspan:nth-child(6){animation-delay:3s}
 .mark .burada{animation-delay:2.6s}.mark .flag{animation-delay:3.1s}
-.mark .glint{opacity:0;animation:glint 1.4s var(--ease) 3.4s forwards}
+.mark .glint{opacity:0;animation:glint 8s var(--ease) 3.4s infinite}
 @keyframes draw{to{stroke-dashoffset:0}}
 @keyframes fade{to{opacity:1}}
 @keyframes rise{to{transform:none}}
 @keyframes wipe{to{transform:scaleX(1)}}
-@keyframes glint{0%{opacity:0}40%{opacity:.9}100%{opacity:0}}
+@keyframes glint{0%{opacity:0}8%{opacity:.9}20%,100%{opacity:0}}
 .hero .copy{opacity:0;transform:translateY(16px);animation:copy 1s var(--ease) 3.2s forwards}
 @keyframes copy{to{opacity:1;transform:none}}
 
@@ -250,6 +262,7 @@ footer a:hover{color:var(--ink)}
 <!-- HERO -->
 <section class="hero">
   <div>
+    <div class="halo" id="halo">
     <svg class="mark" viewBox="0 0 400 400" role="img" aria-label="Berlin Burada Logo">
       <g clip-path="url(#disc)">
         <rect class="top" width="400" height="200" fill="#fff"/>
@@ -275,6 +288,7 @@ footer a:hover{color:var(--ink)}
       </text>
       <circle class="ring" cx="200" cy="200" r="188" fill="none" stroke="#fff" stroke-width="5"/>
     </svg>
+    </div>
 
     <div class="copy">
       <p class="eyebrow">Berlin Burada Partners</p>
@@ -445,6 +459,9 @@ footer a:hover{color:var(--ink)}
   const CONTACT_EMAIL = 'kontakt@berlinburada.de'; // TODO: echte Adresse bestätigen
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.getElementById('yr').textContent = new Date().getFullYear();
+
+  // Neon halo starts once the logo has assembled
+  setTimeout(() => document.getElementById('halo').classList.add('lit'), reduce ? 0 : 3600);
 
   // Nav background after hero
   const nav = document.getElementById('nav');
