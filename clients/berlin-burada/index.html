@@ -74,6 +74,16 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 .scroll{position:absolute;bottom:28px;left:50%;width:1px;height:48px;background:linear-gradient(#fff0,#fff6);animation:drip 2.4s var(--ease) infinite}
 @keyframes drip{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
 
+/* INTRO FILM */
+.intro{position:absolute;inset:0;z-index:0;overflow:hidden;background:#000;transition:opacity .9s var(--ease)}
+.intro video{width:100%;height:100%;object-fit:cover;object-position:50% 50%;transition:object-position 1s var(--ease)}
+.intro::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#0000 55%,#000 100%)}
+.hero>div:not(.intro){position:relative;z-index:1}
+.hero.go .intro{opacity:0;pointer-events:none}
+.hero:not(.go) .mark,.hero:not(.go) .mark *,.hero:not(.go) .copy{animation-play-state:paused}
+.hero .halo{transition:opacity .4s}
+.hero:not(.go) .halo,.hero:not(.go) .scroll{opacity:0}
+
 /* LOGO ANIMATION */
 .mark .ring{stroke-dasharray:1200;stroke-dashoffset:1200;animation:draw 1.6s var(--ease) .2s forwards}
 .mark .top{opacity:0;animation:fade .8s var(--ease) 1s forwards}
@@ -290,7 +300,8 @@ footer a:hover{color:var(--ink)}
 <main id="top">
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
+  <div class="intro" aria-hidden="true"><video id="introVid" muted playsinline preload="auto" poster="media/intro-poster.jpg"></video></div>
   <div>
     <div class="halo" id="halo">
     <svg class="mark" viewBox="0 0 400 400" role="img" aria-label="Berlin Burada Logo">
@@ -521,8 +532,34 @@ footer a:hover{color:var(--ink)}
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   document.getElementById('yr').textContent = new Date().getFullYear();
 
-  // Neon halo starts once the logo has assembled
-  setTimeout(() => document.getElementById('halo').classList.add('lit'), reduce ? 0 : 3600);
+  // Intro film -> hands over to the SVG logo at the tower-silhouette frame
+  const hero = document.getElementById('hero'), vid = document.getElementById('introVid');
+  const HANDOVER = 4.15; // seconds: tower stands alone on black
+  let handed = false;
+  const go = () => {
+    if (handed) return;
+    handed = true;
+    hero.classList.add('go');
+    setTimeout(() => document.getElementById('halo').classList.add('lit'), reduce ? 0 : 3600);
+    setTimeout(() => vid.pause(), 1200);
+  };
+  const conn = navigator.connection;
+  const skipFilm = reduce || (conn && (conn.saveData || /2g/.test(conn.effectiveType || '')));
+  if (skipFilm) go();
+  else {
+    const small = matchMedia('(max-width: 700px)').matches;
+    vid.src = small ? 'media/intro-720.mp4' : 'media/intro-1080.mp4';
+    vid.addEventListener('timeupdate', () => {
+      // portrait phones: keep the tower in frame while the camera moves
+      if (small) vid.style.objectPosition = vid.currentTime < 1.25 ? '76% 50%' : '54% 50%';
+      if (vid.currentTime >= HANDOVER) go();
+    });
+    vid.addEventListener('ended', go);
+    vid.addEventListener('error', go);
+    const p = vid.play();
+    if (p) p.catch(go); // autoplay blocked -> straight to the logo
+    setTimeout(go, 9000); // safety net on slow networks
+  }
 
   // Nav background after hero
   const nav = document.getElementById('nav');
