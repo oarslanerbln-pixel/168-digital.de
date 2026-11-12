@@ -6,7 +6,7 @@
 import { business, MEDIA_IS_AI } from './data.mjs';
 
 const todo = (label) => `<mark class="todo">[${label} – bitte ergänzen]</mark>`;
-const addr = `${business.legalName}<br>${business.street}<br>${business.zip} ${business.city}`;
+const addr = `${business.legalName}<br>Kfz-Werkstatt „${business.name}“<br>${business.street}<br>${business.zip} ${business.city}`;
 
 export const legal = {
   imprint: {

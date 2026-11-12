@@ -21,7 +21,8 @@ export const MEDIA_IS_AI = true;
 
 export const business = {
   name: 'Master KFZ Werkstatt',
-  legalName: 'Master KFZ Werkstatt GmbH', // TODO(confirm): exact company name from the register
+  /* Operating company per Handelsregister (North Data, checked 2026-11-12): "Master KFZ Werkstatt" is the trade name. */
+  legalName: 'Master Team 32 GmbH',
   owner: 'Ömer Ates',
   street: 'Treptower Str. 51',
   zip: '12059',
@@ -34,8 +35,8 @@ export const business = {
   whatsapp: '4917621677888',
   email: 'masterteam.kfz@gmail.com',
   instagram: 'https://www.instagram.com/masterkfz/',
-  registerCourt: 'Amtsgericht Charlottenburg', // TODO(confirm)
-  registerNumber: null, // TODO(confirm): HRB … B
+  registerCourt: 'Amtsgericht Charlottenburg (Berlin)',
+  registerNumber: 'HRB 238452 B',
   vatId: null, // TODO(confirm): USt-IdNr.
   // TODO(confirm): opening hours are placeholders.
   hours: [
