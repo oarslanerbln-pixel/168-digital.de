@@ -16,6 +16,7 @@
   --display:"Montserrat",system-ui,sans-serif;
   --text:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;
   --ease:cubic-bezier(.22,.61,.36,1);
+  --spring:cubic-bezier(.34,1.56,.64,1);
   --wrap:min(1120px,calc(100% - 48px));
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -37,15 +38,17 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 .brand svg{width:26px;height:26px}
 .links{display:flex;gap:32px;font-size:13px;color:#d2d2d7}
 .links a:hover{color:var(--white)}
-.pill{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 24px;border-radius:999px;font-size:15px;font-weight:500;transition:transform .3s var(--ease),background .3s}
-.pill:active{transform:scale(.97)}
+.pill{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 24px;border-radius:999px;font-size:15px;font-weight:500;transition:transform .45s var(--spring),background .3s}
+.pill:hover{transform:scale(1.03)}
+.pill:active{transform:scale(.96);transition-duration:.12s}
 .pill.w{background:var(--white);color:var(--black)}
 .pill.w:hover{background:#e8e8ed}
 .pill.r{background:var(--red);color:var(--white)}
 .pill.r:hover{background:#c90914}
 .pill.sm{height:32px;padding:0 16px;font-size:13px}
 .more{color:#2997ff;font-size:17px}
-.more::after{content:" ›"}
+.more::after{content:"›";display:inline-block;margin-left:.3em;transition:transform .4s var(--spring)}
+.more:hover::after{transform:translateX(4px)}
 .light .more,.mist .more{color:#0066cc}
 
 /* HERO */
@@ -114,8 +117,8 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 .head h2{font-size:clamp(32px,4.6vw,56px);margin-top:14px}
 .head p{color:#6e6e73;font-size:19px;max-width:34em;margin:16px auto 0}
 .tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.tile{background:var(--white);border-radius:28px;padding:40px 32px;min-height:340px;display:flex;flex-direction:column;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.tile:hover{transform:translateY(-4px);box-shadow:0 24px 48px -24px rgba(0,0,0,.18)}
+.tile{background:var(--white);border-radius:28px;padding:40px 32px;min-height:340px;display:flex;flex-direction:column;transition:transform .7s var(--spring),box-shadow .6s var(--ease)}
+.tile:hover{transform:translateY(-6px) scale(1.01);box-shadow:0 30px 60px -30px rgba(0,0,0,.25)}
 .tile .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--mist);margin-bottom:auto}
 .tile .ic svg{width:22px;height:22px;stroke:var(--ink);fill:none;stroke-width:1.6}
 .tile small{display:block;margin-top:40px;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--red);font-weight:600}
@@ -126,9 +129,11 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 .tile.dark p{color:#a1a1a6}
 
 /* PACKAGES */
-.packs{padding:0 0 140px}
+.packs{padding:24px 0 140px}
+.packs .head{margin-bottom:48px}
 .packs .row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.pack{border:1px solid #d2d2d7;border-radius:28px;padding:40px 32px;background:var(--white)}
+.pack{border:1px solid #d2d2d7;border-radius:28px;padding:40px 32px;background:var(--white);transition:transform .7s var(--spring),box-shadow .6s var(--ease)}
+.pack:hover{transform:translateY(-6px);box-shadow:0 30px 60px -32px rgba(0,0,0,.22)}
 .pack.hi{border:2px solid var(--ink)}
 .pack h3{font-size:24px}
 .pack .sub{color:#6e6e73;margin:6px 0 24px;font-size:15px}
@@ -153,25 +158,43 @@ h1,h2,h3{font-family:var(--display);font-weight:600;letter-spacing:-.02em;line-h
 .trans h2 span{color:var(--red)}
 .trans p{color:#6e6e73;font-size:19px;margin-top:24px;max-width:28em}
 .card{border-radius:28px;background:var(--mist);padding:40px}
-.lang{display:flex;gap:16px;align-items:baseline;padding:24px 0;border-bottom:1px solid #d2d2d7}
-.lang:last-child{border:0}
-.lang b{font-family:var(--display);font-size:12px;letter-spacing:.2em;color:var(--grey);width:28px;flex:none}
-.lang q{font-family:var(--display);font-weight:600;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.02em;quotes:none}
-.lang.tr q{color:var(--red)}
+.seg{position:relative;display:inline-flex;background:#e8e8ed;border-radius:999px;padding:4px;margin-bottom:12px}
+.seg i{position:absolute;top:4px;bottom:4px;left:4px;width:calc(50% - 4px);border-radius:999px;background:var(--ink);transition:transform .6s var(--spring),background .6s var(--ease)}
+.seg[data-l=tr] i{transform:translateX(100%);background:var(--red)}
+.seg button{position:relative;z-index:1;border:0;background:none;cursor:pointer;font:600 13px var(--display);letter-spacing:.18em;padding:10px 24px;border-radius:999px;color:#6e6e73;transition:color .4s}
+.seg button[aria-pressed=true]{color:#fff}
+.lines q{display:block;quotes:none;padding:22px 0;border-bottom:1px solid #d2d2d7;font-family:var(--display);font-weight:600;font-size:clamp(22px,2.6vw,32px);letter-spacing:-.02em;transition:opacity .45s var(--ease),filter .45s var(--ease),transform .45s var(--ease),color .6s}
+.lines q:last-child{border:0}
+.lines q:nth-child(2){transition-delay:.06s}.lines q:nth-child(3){transition-delay:.12s}
+.lines.tr q{color:var(--red)}
+.lines.swap q{opacity:0;filter:blur(8px);transform:translateY(10px)}
 .card .note{font-size:13px;color:var(--grey);margin-top:16px}
 
 /* WORKFLOW */
-.flow{padding:140px 0}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#2a2a2c;border-radius:28px;overflow:hidden;margin-top:64px}
-.step{background:#0b0b0c;padding:40px 32px;min-height:240px;position:relative}
-.step b{font-family:var(--display);font-weight:500;font-size:13px;letter-spacing:.2em;color:var(--red)}
-.step h3{font-size:24px;margin:28px 0 10px}
-.step p{color:#a1a1a6;font-size:15px}
-.flow h2{font-size:clamp(32px,4.6vw,56px);max-width:18ch;margin-top:14px}
+.flow-track{height:calc(100vh + 6 * 42vh)}
+.flow-pin{position:sticky;top:0;height:100vh;display:flex;align-items:center}
+.flow-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:center}
+.flow h2{font-size:clamp(32px,4.2vw,52px);max-width:12ch;margin-top:14px}
+.flow-count{margin-top:48px;display:flex;align-items:baseline;gap:10px;font-family:var(--display)}
+.flow-count b{font-size:clamp(64px,8vw,120px);font-weight:300;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.flow-count span{color:#6e6e73;font-size:18px}
+.flow-bar{margin-top:24px;max-width:320px;height:2px;border-radius:2px;background:#2a2a2c;overflow:hidden}
+.flow-bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),var(--gold));transform-origin:left;transform:scaleX(0)}
+.flow-steps{list-style:none;border-top:1px solid #2a2a2c}
+.flow-steps li{display:grid;grid-template-columns:48px 1fr;gap:16px;padding:22px 0;border-bottom:1px solid #2a2a2c;opacity:.25;transition:opacity .6s var(--ease)}
+.flow-steps li b{font:500 13px var(--display);letter-spacing:.2em;color:#6e6e73;padding-top:9px;transition:color .6s}
+.flow-steps h3{font-size:26px}
+.flow-steps p{color:#a1a1a6;font-size:15px;max-height:0;opacity:0;overflow:hidden;transition:max-height .6s var(--ease),opacity .6s var(--ease),margin .6s var(--ease)}
+.flow-steps li.on{opacity:1}
+.flow-steps li.done{opacity:.55}
+.flow-steps li.on b{color:var(--red)}
+.flow-steps li.now p{max-height:90px;opacity:1;margin-top:8px}
 
 /* SEAL */
 .seal{padding:140px 0;text-align:center}
-.seal .badge{width:120px;margin:0 auto 32px}
+.seal .badge{width:184px;margin:0 auto 40px}
+.seal .badge svg{position:relative;z-index:1;width:100%}
+.seal .badge .spin{transform-origin:200px 200px;animation:orbit 48s linear infinite reverse}
 .seal h2{font-size:clamp(32px,4.6vw,56px);max-width:18ch;margin:14px auto 0}
 .seal p{color:#6e6e73;font-size:19px;max-width:34em;margin:20px auto 32px}
 
@@ -195,6 +218,7 @@ form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .chips label{cursor:pointer}
 .chips input{position:absolute;opacity:0;pointer-events:none}
 .chips span{display:inline-block;padding:10px 18px;border-radius:999px;border:1px solid #3a3a3c;font-size:14px;color:#d2d2d7;transition:.25s}
+.chips span:active{transform:scale(.95)}
 .chips input:checked+span{background:#fff;color:#000;border-color:#fff}
 .chips input:focus-visible+span{outline:2px solid #2997ff;outline-offset:2px}
 form .pill{grid-column:1/-1;justify-content:center;height:56px;font-size:17px;border:0;cursor:pointer;margin-top:12px}
@@ -216,7 +240,11 @@ footer a:hover{color:var(--ink)}
 @media (max-width:900px){
   .links{display:none}
   .stats .grid{grid-template-columns:1fr 1fr}
-  .tiles,.packs .row,.steps{grid-template-columns:1fr}
+  .tiles,.packs .row{grid-template-columns:1fr}
+  .flow-track{height:auto}
+  .flow-pin{position:static;height:auto;padding:120px 0}
+  .flow-grid{grid-template-columns:1fr;gap:40px}
+  .flow-count,.flow-bar{display:none}
   .tile{min-height:0}
   .trans .split,.contact .split{grid-template-columns:1fr;gap:48px}
   form{grid-template-columns:1fr}
@@ -226,6 +254,8 @@ footer a:hover{color:var(--ink)}
   *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}
   .rv{opacity:1;transform:none}
   .track{animation:none}
+  .flow-track{height:auto}
+  .flow-pin{position:static;height:auto;padding:140px 0}
 }
 </style>
 </head>
@@ -291,8 +321,7 @@ footer a:hover{color:var(--ink)}
     </div>
 
     <div class="copy">
-      <p class="eyebrow">Berlin Burada Partners</p>
-      <h1 style="margin-top:18px">Ihre Marke. <span>Mitten in der Community.</span></h1>
+      <h1>Ihre Marke. <span>Mitten in der Community.</span></h1>
       <p>134.000 Menschen folgen Berlin Burada – täglich, auf Deutsch und Türkisch. Wir bringen Unternehmen genau dorthin, wo Vertrauen entsteht.</p>
       <div class="cta">
         <a href="#kontakt" class="pill w">Kampagne anfragen</a>
@@ -374,26 +403,38 @@ footer a:hover{color:var(--ink)}
       <h2 class="rv d1">Wir übersetzen nicht. <span>Wir übertragen.</span></h2>
       <p class="rv d2">Jede Botschaft wird von Muttersprachlern adaptiert – Tonalität, Humor, Feiertage wie Ramadan und Bayram, lokale Bezüge. So klingt Ihre Marke nicht nach Werbung, sondern nach Nachbarschaft.</p>
     </div>
-    <div class="card rv d2">
-      <div class="lang"><b>DE</b><q>Jetzt wechseln und sparen.</q></div>
-      <div class="lang tr"><b>TR</b><q>Şimdi geç, kazançlı çık.</q></div>
-      <p class="note">Beispiel – sinngemäß, nicht wörtlich.</p>
+    <div class="card rv d2" id="tc">
+      <div class="seg" data-l="de" role="group" aria-label="Sprache wählen"><i></i><button type="button" data-l="de" aria-pressed="true">DE</button><button type="button" data-l="tr" aria-pressed="false">TR</button></div>
+      <div class="lines" aria-live="polite">
+        <q data-de="Jetzt wechseln und sparen." data-tr="Şimdi geç, kazançlı çık.">Jetzt wechseln und sparen.</q>
+        <q data-de="Ihr Konto. In 10 Minuten eröffnet." data-tr="Hesabın 10 dakikada hazır.">Ihr Konto. In 10 Minuten eröffnet.</q>
+        <q data-de="Willkommen in der Nachbarschaft." data-tr="Mahalleye hoş geldin.">Willkommen in der Nachbarschaft.</q>
+      </div>
+      <p class="note">Beispiele – sinngemäß, nicht wörtlich.</p>
     </div>
   </div>
 </section>
 
 <!-- WORKFLOW -->
 <section class="flow" id="ablauf">
-  <div class="wrap">
-    <p class="eyebrow rv">Ablauf</p>
-    <h2 class="rv d1">Von der Anfrage bis zum Report. Sechs klare Schritte.</h2>
-    <div class="steps">
-      <div class="step rv"><b>01</b><h3>Anfrage</h3><p>Formular ausfüllen. Rückmeldung in der Regel innerhalb eines Werktags.</p></div>
-      <div class="step rv d1"><b>02</b><h3>Briefing</h3><p>Ziel, Zielgruppe, Budget und Zeitraum – in einem kurzen Call.</p></div>
-      <div class="step rv d2"><b>03</b><h3>Adaption</h3><p>Konzept und Texte in Deutsch und Türkisch, kulturell geprüft.</p></div>
-      <div class="step rv"><b>04</b><h3>Produktion</h3><p>Story, Reel oder Post – Sie erhalten die Vorschau zur Freigabe.</p></div>
-      <div class="step rv d1"><b>05</b><h3>Live</h3><p>Veröffentlichung zum besten Zeitpunkt, als Anzeige gekennzeichnet.</p></div>
-      <div class="step rv d2"><b>06</b><h3>Report</h3><p>Reichweite, Impressionen und Klicks – transparent aus Instagram Insights.</p></div>
+  <div class="flow-track" id="flowTrack">
+    <div class="flow-pin">
+      <div class="wrap flow-grid">
+        <div>
+          <p class="eyebrow">Ablauf</p>
+          <h2>Von der Anfrage bis zum Report.</h2>
+          <div class="flow-count" aria-hidden="true"><b id="flowNum">01</b><span>/ 06</span></div>
+          <div class="flow-bar" aria-hidden="true"><i id="flowBar"></i></div>
+        </div>
+        <ol class="flow-steps" id="flowSteps">
+          <li><b>01</b><div><h3>Anfrage</h3><p>Formular ausfüllen. Rückmeldung in der Regel innerhalb eines Werktags.</p></div></li>
+          <li><b>02</b><div><h3>Briefing</h3><p>Ziel, Zielgruppe, Budget und Zeitraum – in einem kurzen Call.</p></div></li>
+          <li><b>03</b><div><h3>Adaption</h3><p>Konzept und Texte in Deutsch und Türkisch, kulturell geprüft.</p></div></li>
+          <li><b>04</b><div><h3>Produktion</h3><p>Story, Reel oder Post – Sie erhalten die Vorschau zur Freigabe.</p></div></li>
+          <li><b>05</b><div><h3>Live</h3><p>Veröffentlichung zum besten Zeitpunkt, als Anzeige gekennzeichnet.</p></div></li>
+          <li><b>06</b><div><h3>Report</h3><p>Reichweite, Impressionen und Klicks – transparent aus Instagram Insights.</p></div></li>
+        </ol>
+      </div>
     </div>
   </div>
 </section>
@@ -401,7 +442,27 @@ footer a:hover{color:var(--ink)}
 <!-- SEAL -->
 <section class="seal mist" id="siegel">
   <div class="wrap">
-    <svg class="badge rv" viewBox="0 0 400 400" aria-hidden="true"><g clip-path="url(#disc)"><rect width="400" height="200" fill="#fff"/><rect y="200" width="400" height="100" fill="#000"/><rect y="300" width="400" height="66" fill="#e30a17"/><rect y="366" width="400" height="34" fill="#f5a800"/></g><circle cx="200" cy="200" r="188" fill="none" stroke="#000" stroke-width="8"/><text x="200" y="268" text-anchor="middle" fill="#fff" font-family="Montserrat,sans-serif" font-weight="600" font-size="44" letter-spacing="8">PARTNER</text><path d="M168 120l22 22 44-48" fill="none" stroke="#000" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <div class="halo badge lit rv" aria-hidden="true">
+      <svg viewBox="0 0 400 400">
+        <defs>
+          <clipPath id="disc2"><circle cx="200" cy="200" r="138"/></clipPath>
+          <path id="ringText" d="M200 34a166 166 0 1 1 0 332a166 166 0 1 1 0-332"/>
+          <mask id="moon2"><rect width="400" height="400" fill="#fff"/><circle cx="195" cy="293" r="10.5" fill="#000"/></mask>
+        </defs>
+        <circle cx="200" cy="200" r="196" fill="#0b0b0c"/>
+        <g class="spin"><text font-family="Montserrat,sans-serif" font-weight="600" font-size="23" fill="#f5f5f7"><textPath href="#ringText" textLength="1036" lengthAdjust="spacing">BURADA PARTNER • TÜRKÇE HİZMET • BURADA PARTNER • TÜRKÇE HİZMET •</textPath></text></g>
+        <g clip-path="url(#disc2)">
+          <rect width="400" height="200" fill="#fff"/>
+          <g fill="#000"><rect x="199" y="98" width="2" height="38" rx="1"/><circle cx="200" cy="156" r="13"/><rect x="190" y="170" width="20" height="3" rx="1.5"/><path d="M196 172h8l3 28h-14z"/></g>
+          <rect y="200" width="400" height="68" fill="#000"/>
+          <rect y="268" width="400" height="50" fill="#e30a17"/>
+          <rect y="318" width="400" height="82" fill="#f5a800"/>
+          <text x="200" y="246" text-anchor="middle" fill="#fff" font-family="Montserrat,sans-serif" font-weight="600" font-size="30" letter-spacing="7">PARTNER</text>
+          <g fill="#fff"><circle cx="191" cy="293" r="13" mask="url(#moon2)"/><path transform="translate(211 293) scale(.7) translate(-215 -331)" d="M215 321l2.6 7.4 7.8.2-6.2 4.8 2.2 7.5-6.4-4.4-6.4 4.4 2.2-7.5-6.2-4.8 7.8-.2z"/></g>
+        </g>
+        <circle cx="200" cy="200" r="138" fill="none" stroke="#fff" stroke-width="3"/>
+      </svg>
+    </div>
     <p class="eyebrow rv">Burada Partner-Siegel</p>
     <h2 class="rv d1">Hier wird man verstanden.</h2>
     <p class="rv d2">Unternehmen mit türkischsprachigem Service erhalten das Burada-Siegel und einen Platz im Partner-Verzeichnis. Für die Community ein Wegweiser. Für Sie ein Vertrauensvorsprung.</p>
@@ -507,6 +568,49 @@ footer a:hover{color:var(--ink)}
   };
   addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(light); } }, { passive: true });
   light();
+
+  // DE/TR transcreation toggle (auto-plays while visible until the user picks a language)
+  const tc = document.getElementById('tc'), seg = tc.querySelector('.seg'), lines = tc.querySelector('.lines');
+  let lang = 'de', auto = true, timer;
+  const setLang = (l) => {
+    if (l === lang) return;
+    lang = l; seg.dataset.l = l;
+    seg.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', b.dataset.l === l));
+    lines.classList.add('swap');
+    setTimeout(() => {
+      lines.querySelectorAll('q').forEach(q => { q.textContent = q.dataset[l]; q.lang = l; });
+      lines.classList.toggle('tr', l === 'tr');
+      lines.classList.remove('swap');
+    }, reduce ? 0 : 560);
+  };
+  seg.addEventListener('click', (e) => {
+    const b = e.target.closest('button'); if (!b) return;
+    auto = false; clearInterval(timer); setLang(b.dataset.l);
+  });
+  new IntersectionObserver(([e]) => {
+    clearInterval(timer);
+    if (e.isIntersecting && auto && !reduce) timer = setInterval(() => setLang(lang === 'de' ? 'tr' : 'de'), 3800);
+  }, { threshold: .5 }).observe(tc);
+
+  // Pinned workflow: scroll position drives the active step
+  const track = document.getElementById('flowTrack');
+  const steps = [...document.querySelectorAll('#flowSteps li')];
+  const flowNum = document.getElementById('flowNum'), flowBar = document.getElementById('flowBar');
+  const pinned = matchMedia('(min-width: 901px) and (prefers-reduced-motion: no-preference)');
+  let flowTick = false;
+  const flow = () => {
+    flowTick = false;
+    if (!pinned.matches) { steps.forEach(s => s.classList.add('on', 'now')); return; }
+    const r = track.getBoundingClientRect(), span = r.height - innerHeight;
+    const p = Math.min(Math.max(-r.top / span, 0), 1);
+    const i = Math.min(steps.length - 1, Math.floor(p * steps.length));
+    steps.forEach((s, k) => { s.classList.toggle('on', k <= i); s.classList.toggle('now', k === i); s.classList.toggle('done', k < i); });
+    flowNum.textContent = String(i + 1).padStart(2, '0');
+    flowBar.style.transform = `scaleX(${p})`;
+  };
+  addEventListener('scroll', () => { if (!flowTick) { flowTick = true; requestAnimationFrame(flow); } }, { passive: true });
+  pinned.addEventListener('change', flow);
+  flow();
 
   // Preselect format chip from package links
   document.querySelectorAll('[data-pack]').forEach(a => a.addEventListener('click', () => {
