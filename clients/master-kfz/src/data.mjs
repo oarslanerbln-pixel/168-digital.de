@@ -43,8 +43,8 @@ export const business = {
     { days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '09:00', closes: '18:00' },
     { days: ['Sa'], opens: '09:00', closes: '14:00' },
   ],
-  // TODO(confirm): languages spoken in the workshop.
-  languages: ['de', 'tr', 'en'],
+  /* Languages spoken in the workshop (confirmed by the client 2026-11-18). */
+  languages: ['de', 'tr'],
   areaServed: ['Berlin-Neukölln', 'Berlin-Treptow', 'Berlin-Kreuzberg', 'Berlin-Britz', 'Berlin'],
 };
 
