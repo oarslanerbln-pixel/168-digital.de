@@ -55,7 +55,7 @@ export const mapsUrl =
 /*
  * Services in display order. `hotspot` places the marker on the blueprint car
  * (viewBox 1200 × 400). Prices come from the workshop's Instagram flyers.
- * TODO(confirm): prices incl. VAT, and that diagnostics are offered.
+ * Diagnostics confirmed by the client (2026-11-18). TODO(confirm): prices incl. VAT.
  */
 export const services = [
   { id: 'inspection', slug: { de: 'inspektion', tr: 'bakim', en: 'inspection' }, price: 129, from: true, icon: 'clipboard', hotspot: [480, 236] },

@@ -24,9 +24,9 @@ ${business.vatId ? `<h2>Umsatzsteuer-ID</h2>
 <p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: ${business.vatId}</p>
 ` : ''}<h2>Berufsrechtliche Angaben</h2>
 <p>Zulassungspflichtiges Handwerk: Kraftfahrzeugtechniker (Eintragung in die Handwerksrolle)<br>
+Betriebsleiter (Kfz-Meister): ${business.owner}<br>
 Zuständige Kammer: Handwerkskammer Berlin, Blücherstraße 68, 10961 Berlin<br>
-Berufsrechtliche Regelungen: Gesetz zur Ordnung des Handwerks (Handwerksordnung), einsehbar unter <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank" rel="noopener noreferrer">gesetze-im-internet.de/hwo</a><br>
-${todo('Betriebsleiter/Meister und Handwerksrollen-Nr. prüfen')}</p>
+Berufsrechtliche Regelungen: Gesetz zur Ordnung des Handwerks (Handwerksordnung), einsehbar unter <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank" rel="noopener noreferrer">gesetze-im-internet.de/hwo</a><br></p>
 <h2>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV</h2>
 <p>${business.owner}, Anschrift wie oben</p>
 <h2>Markenhinweis</h2>
