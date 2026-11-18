@@ -38,9 +38,9 @@ export const business = {
   registerCourt: 'Amtsgericht Charlottenburg (Berlin)',
   registerNumber: 'HRB 238452 B',
   vatId: null, // TODO(confirm): USt-IdNr.
-  // TODO(confirm): opening hours are placeholders.
+  /* Opening hours per Google Maps business profile (checked 2026-11-18). */
   hours: [
-    { days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '08:00', closes: '18:00' },
+    { days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '09:00', closes: '18:00' },
     { days: ['Sa'], opens: '09:00', closes: '14:00' },
   ],
   // TODO(confirm): languages spoken in the workshop.
