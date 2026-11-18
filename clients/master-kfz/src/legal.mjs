@@ -20,9 +20,9 @@ export const legal = {
 <p>Telefon: <a href="tel:${business.phoneIntl}">${business.phoneDisplay}</a><br>E-Mail: <a href="mailto:${business.email}">${business.email}</a></p>
 <h2>Registereintrag</h2>
 <p>Registergericht: ${business.registerCourt}<br>Registernummer: ${business.registerNumber ?? todo('HRB-Nummer')}</p>
-<h2>Umsatzsteuer-ID</h2>
-<p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: ${business.vatId ?? todo('USt-IdNr.')}</p>
-<h2>Berufsrechtliche Angaben</h2>
+${business.vatId ? `<h2>Umsatzsteuer-ID</h2>
+<p>Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: ${business.vatId}</p>
+` : ''}<h2>Berufsrechtliche Angaben</h2>
 <p>Zulassungspflichtiges Handwerk: Kraftfahrzeugtechniker (Eintragung in die Handwerksrolle)<br>
 Zuständige Kammer: Handwerkskammer Berlin, Blücherstraße 68, 10961 Berlin<br>
 Berufsrechtliche Regelungen: Gesetz zur Ordnung des Handwerks (Handwerksordnung), einsehbar unter <a href="https://www.gesetze-im-internet.de/hwo/" target="_blank" rel="noopener noreferrer">gesetze-im-internet.de/hwo</a><br>

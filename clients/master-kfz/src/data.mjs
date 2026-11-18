@@ -37,7 +37,7 @@ export const business = {
   instagram: 'https://www.instagram.com/masterkfz/',
   registerCourt: 'Amtsgericht Charlottenburg (Berlin)',
   registerNumber: 'HRB 238452 B',
-  vatId: null, // TODO(confirm): USt-IdNr.
+  vatId: null, // none known (not public, checked 2026-11-18); the imprint omits the line while null
   /* Opening hours per Google Maps business profile (checked 2026-11-18). */
   hours: [
     { days: ['Mo', 'Tu', 'We', 'Th', 'Fr'], opens: '09:00', closes: '18:00' },
