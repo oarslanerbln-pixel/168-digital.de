@@ -91,7 +91,7 @@ export function gearSvg(cls, teeth = 12) {
  * the header, the favicon and the OG image. The wordmark next to it is live
  * text in CSS. Swap LOGO_VARIANT to change the mark site-wide.
  */
-export const LOGO_VARIANT = 'velocity';
+export const LOGO_VARIANT = 'badge';
 const SKEW = Math.tan((12 * Math.PI) / 180);
 const M_SHAPE = [[0, 72], [0, 0], [22, 0], [48, 38], [74, 0], [96, 0], [96, 72], [76, 72], [76, 32], [55, 62], [41, 62], [20, 32], [20, 72]];
 const r2 = (n) => +n.toFixed(2);
