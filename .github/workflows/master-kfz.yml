@@ -1,0 +1,22 @@
+name: Master KFZ site
+on:
+  pull_request:
+    paths: ['clients/master-kfz/**', '.github/workflows/master-kfz.yml']
+  push:
+    branches: [main]
+    paths: ['clients/master-kfz/**']
+jobs:
+  build-and-verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: clients/master-kfz
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # Static generator without dependencies: build, then check SEO head,
+      # hreflang, dead links, foreign resources and language parity.
+      - run: node build.mjs
+      - run: node verify.mjs
