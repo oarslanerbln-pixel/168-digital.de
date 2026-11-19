@@ -113,7 +113,7 @@ function footer(p) {
 <a class="ftr__social" href="${business.instagram}" ${ext}>${icon('insta')}<span>@masterkfz</span></a></div>
 <div><h2 class="ftr__h">${e(c.footer.explore)}</h2><ul class="ftr__list">${['services', 'prices', 'about', 'booking'].map((k) => `<li><a href="${routes[k][lang]}">${e(c.nav[k])}</a></li>`).join('')}</ul></div>
 <div><h2 class="ftr__h">${e(c.footer.contact)}</h2><address class="ftr__list">
-<a href="${mapsUrl}" ${ext}>${e(business.street)}<br>${business.zip} ${e(business.city)}-${e(business.district)}</a>
+<a href="${mapsUrl}" ${ext}>${e(business.street)}<br>${business.zip} ${e(business.city)}</a>
 <a href="${tel}">${business.phoneDisplay}</a>
 <a href="${wa(c)}" ${ext}>WhatsApp</a>
 <a href="mailto:${business.email}">${business.email}</a></address></div>
@@ -162,7 +162,7 @@ ${!p.noindex && p.alternates.de ? `<link rel="alternate" hreflang="x-default" hr
 <meta name="color-scheme" content="dark">
 <meta name="format-detection" content="telephone=no">
 <meta name="geo.region" content="${business.region}">
-<meta name="geo.placename" content="Berlin-Neukölln">
+<meta name="geo.placename" content="Berlin">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="${e(business.name)}">
 <meta property="og:title" content="${e(p.title)}">
@@ -280,7 +280,7 @@ function visit(c, lang, heading = 'h2') {
   return `<section class="section visit">
 <div class="wrap visit__grid">
 <div>${kicker(c.home.visitKicker, 'rv')}
-<${heading} class="visit__addr rv" style="--i:1">${e(business.street).replace(/ (\d+\w*)$/, '\u00A0$1')}<span>${business.zip} Berlin-${e(business.district)}</span></${heading}>
+<${heading} class="visit__addr rv" style="--i:1">${e(business.street).replace(/ (\d+\w*)$/, '\u00A0$1')}<span>${business.zip} Berlin</span></${heading}>
 <p class="lead rv" style="--i:2">${e(c.home.visitText)}</p>
 <div class="btns rv" style="--i:3">${btn(mapsUrl, c.cta.route, 'light', 'pin', ext)}${btn(tel, business.phoneDisplay, 'ghost', 'phone')}</div></div>
 <div class="visit__card rv" style="--i:2">
@@ -310,7 +310,7 @@ function home(c, lang) {
 <div class="hero__bg" aria-hidden="true">${heroImg ? `<div class="hero__media">${heroVid ? `<video poster="${heroImg}" autoplay muted loop playsinline preload="auto" data-scrub>${media('hero-m.mp4') ? `<source src="/media/hero-m.mp4" type="video/mp4" media="(max-width: 767px)">` : ''}<source src="${heroVid}" type="video/mp4"></video>` : `<img src="${heroImg}" alt="" fetchpriority="high" decoding="async">`}</div>` : ''}<div class="hero__glow"></div><div class="hero__spot"></div></div>
 <div class="wrap hero__in">
 <h1 class="hero__title">${twoLine(c.home.h1)}</h1>
-<p class="hero__tag"><i aria-hidden="true"></i>${e(c.home.heroTag)}<span>Berlin-Neukölln</span></p>
+<p class="hero__tag"><i aria-hidden="true"></i>${e(c.home.heroTag)}<span>Berlin</span></p>
 </div>
 <div class="hero__hud" aria-hidden="true"><span class="hero__geo">52.49° N · 13.44° E</span><span class="hero__scroll"><i></i></span>
 </div>
@@ -518,7 +518,7 @@ ${field('name', B.name, 'autocomplete="name" maxlength="80"')}${field('phone', B
 <aside class="bk-aside wipe rv" style="--i:1">
 <h2 class="h3">${e(B.directTitle)}</h2><p>${e(B.directText)}</p>
 <div class="btns btns--stack">${btn(tel, business.phoneDisplay, 'light', 'phone')}${btn(wa(c), c.cta.whatsapp, 'ghost btn--wa', 'chat', ext)}</div>
-<div class="bk-aside__block"><h3 class="visit__h">${icon('pin')}${e(business.street)}</h3><p>${business.zip} Berlin-${e(business.district)}</p><a class="link" href="${mapsUrl}" ${ext}>${e(c.cta.route)}${icon('arrow')}</a></div>
+<div class="bk-aside__block"><h3 class="visit__h">${icon('pin')}${e(business.street)}</h3><p>${business.zip} Berlin</p><a class="link" href="${mapsUrl}" ${ext}>${e(c.cta.route)}${icon('arrow')}</a></div>
 <div class="bk-aside__block"><h3 class="visit__h">${icon('clock')}${e(c.hours.title)}</h3>${hoursList(c)}</div>
 </aside>
 </div>

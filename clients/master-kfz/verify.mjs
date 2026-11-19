@@ -87,11 +87,11 @@ for (const file of files) {
     if (desc && desc.length > 170) warnings.push(`${rel}: description ${desc.length} chars`);
     if (!html.includes('rel="canonical"')) fail(`${rel}: no canonical`);
     /* hreflang must be reciprocal */
-    for (const [, lang, href] of html.matchAll(/hreflang="(de|tr|en)" href="https:\/\/masterteam\.berlin([^"]+)"/g)) {
+    for (const [, lang, href] of html.matchAll(/hreflang="(de|tr|en)" href="https:\/\/www\.kfz-master\.com([^"]+)"/g)) {
       const target = join(dist, href, 'index.html');
       if (!(await exists(target))) { fail(`${rel}: hreflang ${lang} → missing ${href}`); continue; }
-      const canonical = html.match(/rel="canonical" href="https:\/\/masterteam\.berlin([^"]+)"/)[1];
-      if (!(await readFile(target, 'utf8')).includes(`href="https://masterteam.berlin${canonical}"`)) fail(`${rel}: ${href} does not link back`);
+      const canonical = html.match(/rel="canonical" href="https:\/\/www\.kfz-master\.com([^"]+)"/)[1];
+      if (!(await readFile(target, 'utf8')).includes(`href="https://www.kfz-master.com${canonical}"`)) fail(`${rel}: ${href} does not link back`);
     }
   }
 
@@ -116,7 +116,7 @@ for (const file of files) {
 
 /* 3. Sitemap entries exist. */
 const sitemap = await readFile(join(dist, 'sitemap.xml'), 'utf8');
-for (const [, path] of sitemap.matchAll(/<loc>https:\/\/masterteam\.berlin([^<]+)<\/loc>/g)) {
+for (const [, path] of sitemap.matchAll(/<loc>https:\/\/www\.kfz-master\.com([^<]+)<\/loc>/g)) {
   if (!(await exists(join(dist, path, 'index.html')))) fail(`sitemap: ${path} missing`);
 }
 

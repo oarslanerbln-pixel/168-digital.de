@@ -5,7 +5,7 @@
  * markers so nothing unconfirmed goes live by accident.
  */
 
-export const SITE_URL = 'https://masterteam.berlin';
+export const SITE_URL = 'https://www.kfz-master.com';
 export const LANGS = ['de', 'tr', 'en'];
 export const DEFAULT_LANG = 'de';
 /* Button style: 'pill' (current) · 'precision' · 'glass' · 'racing' · 'swipe' · 'carbon' · 'livery' · 'cockpit' – see /ui-stile/. */
@@ -27,7 +27,6 @@ export const business = {
   street: 'Treptower Str. 51',
   zip: '12059',
   city: 'Berlin',
-  district: 'Neukölln',
   region: 'DE-BE',
   country: 'DE',
   phoneDisplay: '0176 216 77 888',
@@ -45,7 +44,7 @@ export const business = {
   ],
   /* Languages spoken in the workshop (confirmed by the client 2026-11-18). */
   languages: ['de', 'tr'],
-  areaServed: ['Berlin-Neukölln', 'Berlin-Treptow', 'Berlin-Kreuzberg', 'Berlin-Britz', 'Berlin'],
+  areaServed: ['Berlin-Treptow', 'Berlin-Kreuzberg', 'Berlin-Britz', 'Berlin'],
 };
 
 export const mapsUrl =
