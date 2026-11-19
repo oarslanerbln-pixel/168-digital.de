@@ -259,7 +259,7 @@ export default {
     whatsappOpened: 'WhatsApp has opened. Please send the message there.',
     directTitle: 'Prefer to talk?',
     directText: 'Call us or message us on WhatsApp. Or simply drop by.',
-    subject: 'New appointment request via kfz-master.com',
+    subject: 'New appointment request via masterteam.berlin',
     greeting: 'Hello Master KFZ, I would like to book an appointment.',
     noscript: 'The form needs JavaScript. Feel free to call us or message us on WhatsApp.',
   },
