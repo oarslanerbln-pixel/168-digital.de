@@ -48,12 +48,13 @@ Datenschutz, 404 und die interne Seite `/logo-konzepte/` (noindex).
 `npm run verify` listet offene Platzhalter; in `src/data.mjs` sind alle
 unsicheren Angaben mit `TODO(confirm)` markiert.
 
-- [ ] Exakte Firmierung (aktuell „Master KFZ Werkstatt GmbH“), HRB-Nummer, USt-IdNr.
-- [ ] Betriebsleiter/Meister und Eintrag in die Handwerksrolle (Impressum)
-- [ ] Öffnungszeiten (Platzhalter: Mo–Fr 8–18, Sa 9–14 Uhr)
-- [ ] Preise inkl. MwSt.? Inhalt der Inspektion ab 129 €? (Quelle: Instagram-Flyer)
-- [ ] Wird Fehlerdiagnose angeboten? Wird Englisch gesprochen?
-- [ ] Logo-Entscheidung: Konzept A/B/C oder Bestandslogo (`/logo-konzepte/`)
+- [x] Firmierung Master Team 32 GmbH, HRB 238452 B; keine USt-IdNr. bekannt – Zeile im Impressum entfällt, bis `vatId` gesetzt ist
+- [x] Betriebsleiter/Meister: Ömer Ates (Handwerksrollen-Nr. optional, liegt nicht vor)
+- [x] Öffnungszeiten laut Google-Profil: Mo–Fr 9–18, Sa 9–14 Uhr
+- [x] Preise inkl. MwSt. (bestätigt) · offen: Inhalt der Inspektion ab 129 €
+- [x] Fehlerdiagnose: ja · Sprachen: Deutsch und Türkisch
+- [x] Logo vorläufig: Konzept C (`badge`, Wappen) – endgültige Wahl noch offen
+- [ ] Web3Forms-Empfänger auf masterteam.kfz@gmail.com umstellen (Adresse muss erst bestätigt werden)
 - [ ] Bilder/Video für Hero und Galerie (optional): Prompts und Dateinamen in `FLOW-PROMPTS.md`
 
 Hinweis: Das mitgeschickte Handelsregister-Schreiben betrifft die
