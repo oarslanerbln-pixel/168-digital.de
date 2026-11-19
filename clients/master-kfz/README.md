@@ -37,7 +37,7 @@ Datenschutz, 404 und die interne Seite `/logo-konzepte/` (noindex).
 
 1. Neues Vercel-Projekt aus diesem Repo, **Root Directory: `clients/master-kfz`**
    (Build-Befehl und Output kommen aus `vercel.json`).
-2. Auf [web3forms.com](https://web3forms.com) mit `masterteam.kfz@gmail.com`
+2. Auf [web3forms.com](https://web3forms.com) mit `masterteam030@gmail.com`
    einen Access Key erzeugen → in Vercel als `WEB3FORMS_KEY` setzen.
    Ohne Key bricht der Production-Build ab. Bewusster Ausweg:
    `LEAD_FALLBACK_ONLY=true` – das Formular sendet dann per WhatsApp.
@@ -54,7 +54,7 @@ unsicheren Angaben mit `TODO(confirm)` markiert.
 - [x] Preise inkl. MwSt. (bestätigt) · offen: Inhalt der Inspektion ab 129 €
 - [x] Fehlerdiagnose: ja · Sprachen: Deutsch und Türkisch
 - [x] Logo vorläufig: Konzept C (`badge`, Wappen) – endgültige Wahl noch offen
-- [ ] Web3Forms-Empfänger auf masterteam.kfz@gmail.com umstellen (Adresse muss erst bestätigt werden)
+- [ ] Web3Forms-Empfänger auf masterteam030@gmail.com umstellen (Adresse muss erst bestätigt werden)
 - [ ] Bilder/Video für Hero und Galerie (optional): Prompts und Dateinamen in `FLOW-PROMPTS.md`
 
 Hinweis: Das mitgeschickte Handelsregister-Schreiben betrifft die

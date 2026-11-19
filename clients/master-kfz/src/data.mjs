@@ -33,7 +33,7 @@ export const business = {
   phoneDisplay: '0176 216 77 888',
   phoneIntl: '+4917621677888',
   whatsapp: '4917621677888',
-  email: 'masterteam.kfz@gmail.com',
+  email: 'masterteam030@gmail.com',
   instagram: 'https://www.instagram.com/masterkfz/',
   registerCourt: 'Amtsgericht Charlottenburg (Berlin)',
   registerNumber: 'HRB 238452 B',
