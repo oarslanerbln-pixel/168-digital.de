@@ -32,7 +32,7 @@ export const LOGO_STYLES = [
     svg: () => `<defs><path id="v3t" d="M34 100A66 66 0 0 1 166 100"/><path id="v3b" d="M24 100A76 76 0 0 0 176 100"/></defs>
 <circle cx="100" cy="100" r="88" fill="none" stroke="#efe4cc" stroke-width="3"/><circle cx="100" cy="100" r="80" fill="none" stroke="#efe4cc" stroke-width="1.2"/>
 <text font-size="15" font-weight="800" letter-spacing="3" fill="#efe4cc" font-family="${SANS}"><textPath href="#v3t" startOffset="50%" text-anchor="middle">MASTER KFZ</textPath></text>
-<text font-size="9.5" font-weight="700" letter-spacing="2.5" fill="#efe4cc" font-family="${SANS}"><textPath href="#v3b" startOffset="50%" text-anchor="middle">BERLIN · NEUKÖLLN</textPath></text>
+<text font-size="9.5" font-weight="700" letter-spacing="2.5" fill="#efe4cc" font-family="${SANS}"><textPath href="#v3b" startOffset="50%" text-anchor="middle">BERLIN</textPath></text>
 <circle cx="31" cy="100" r="3" fill="#d4302b"/><circle cx="169" cy="100" r="3" fill="#d4302b"/>
 <path d="${poly(mPoints(70, 76, 60, 44))}" fill="#d4302b"/><rect x="70" y="128" width="60" height="3" fill="#efe4cc"/>`,
   },
@@ -66,7 +66,7 @@ ${T('MASTER KFZ', 100, 186, 16, '#6b3a1e', ' font-weight="900" letter-spacing="2
   {
     name: 'Brutalismus', bg: '#d9d9d6', note: 'Schweres Block-M und harter Balken – laut, industriell, ehrlich.',
     svg: () => `<rect x="160" y="22" width="16" height="16" fill="#e3141c"/><path d="M24 148V42H64L100 92L136 42H176V148H140V98L100 148L60 98V148Z" fill="#111"/>
-<rect x="24" y="156" width="152" height="24" fill="#111"/>${T('KFZ — NEUKÖLLN', 100, 173, 12, '#fff', ' font-weight="800" letter-spacing="3"')}`,
+<rect x="24" y="156" width="152" height="24" fill="#111"/>${T('KFZ — BERLIN', 100, 173, 12, '#fff', ' font-weight="800" letter-spacing="3"')}`,
   },
   {
     name: 'Neon', bg: '#0a0614', note: 'Leuchtröhren-M wie ein Werkstattschild bei Nacht – stark für Social Media und Fassade.',

@@ -70,9 +70,9 @@ await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nDisallow: /l
 const hours = business.hours.map((h) => `${h.days.join(', ')}: ${h.opens}–${h.closes}`).join('; ');
 const llms = `# ${business.name}
 
-> Kfz-Meisterwerkstatt (master-certified car repair garage) in Berlin-Neukölln, Germany. All makes. Fixed price agreed before any work starts. Service in German and Turkish.
+> Kfz-Meisterwerkstatt (master-certified car repair garage) in Berlin, Germany. All makes. Fixed price agreed before any work starts. Service in German and Turkish.
 
-- Address: ${business.street}, ${business.zip} ${business.city} (Neukölln), Germany
+- Address: ${business.street}, ${business.zip} ${business.city}, Germany
 - Phone / WhatsApp: ${business.phoneDisplay} (${business.phoneIntl})
 - E-mail: ${business.email}
 - Opening hours: ${hours}; Sunday closed
