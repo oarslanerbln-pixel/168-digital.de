@@ -259,7 +259,7 @@ export default {
     whatsappOpened: 'WhatsApp wurde geöffnet. Bitte senden Sie die Nachricht dort ab.',
     directTitle: 'Lieber direkt?',
     directText: 'Rufen Sie an oder schreiben Sie uns auf WhatsApp. Oder kommen Sie vorbei.',
-    subject: 'Neue Terminanfrage über kfz-master.com',
+    subject: 'Neue Terminanfrage über masterteam.berlin',
     greeting: 'Hallo Master KFZ, ich möchte einen Termin anfragen.',
     noscript: 'Für das Formular wird JavaScript benötigt. Rufen Sie uns gern an oder schreiben Sie auf WhatsApp.',
   },
