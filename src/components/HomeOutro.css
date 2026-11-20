@@ -3,7 +3,9 @@
   z-index: 10;
   max-width: 1240px;
   margin: 0 auto;
-  padding: 0 32px 120px;
+  /* Top padding: the contact finale above is a dark band now, and the
+     doors need air before their first hairline. */
+  padding: 80px 32px 120px;
 }
 
 .home-outro-inner {

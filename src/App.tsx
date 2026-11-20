@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { AnimatePresence } from 'framer-motion';
 import AmbientBackground from './components/AmbientBackground';
+import ScrollProgress from './components/ScrollProgress';
 import Preloader from './components/Preloader';
 import LanguageToggle from './components/LanguageToggle';
 import HomeLogo from './components/HomeLogo';
@@ -250,6 +251,7 @@ function App() {
 
       {/* Ambient particle backdrop — fixed background */}
       {isLoaded && <AmbientBackground />}
+      {isLoaded && <ScrollProgress />}
 
       {/*
         No opacity gating here: the Preloader's own overlay is fully opaque

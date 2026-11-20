@@ -21,8 +21,8 @@ import './Hero.css';
    answers both on the first screen:
 
    - the headline names the result (customers won, hours saved), with
-     the blue-to-gold shimmer kept on exactly those two words — still the
-     only colour gradient on the site (CLAUDE.md rule 7);
+     the gold-to-ember aurora kept on exactly those two words — still the
+     only text gradient on the site (CLAUDE.md rule 7);
    - a product photo on the right shows the kind of system we build —
      a dashboard and a guest-facing menu in a real café — kept in the
      page's monochrome with the one blue accent, so it supports the
@@ -98,13 +98,18 @@ export default function Hero() {
     return () => window.removeEventListener(INTRO_DONE_EVENT, onIntroDone);
   }, []);
 
-  // A soft light that follows the mouse across the hero (CSS reads the
-  // two custom properties). Set directly on the element: no re-render.
+  // A soft light that follows the mouse across the hero, and a gentle
+  // tilt of the product photo towards it (--tx/--ty, -1…1). CSS reads the
+  // custom properties; they are set directly on the element, so moving
+  // the mouse never re-renders React.
   const trackPointer = (e: PointerEvent<HTMLElement>) => {
     if (e.pointerType !== 'mouse' || !sectionRef.current) return;
-    const r = sectionRef.current.getBoundingClientRect();
-    sectionRef.current.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    sectionRef.current.style.setProperty('--my', `${e.clientY - r.top}px`);
+    const el = sectionRef.current;
+    const r = el.getBoundingClientRect();
+    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+    el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    el.style.setProperty('--tx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
+    el.style.setProperty('--ty', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
   };
 
   const scrollToContact = () => {
@@ -127,17 +132,12 @@ export default function Hero() {
       className={`hero-section${play ? ' hero-play' : ''}`}
       onPointerMove={trackPointer}
     >
-      {/* Backdrop: a perspective grid with light pulses running along
-          it and two slow glow orbs — the "screen at night" the dark
-          theme is built around. Pure CSS, decorative, frozen for
-          reduced motion. */}
+      {/* Backdrop: three slow aurora lights (gold, ember, violet) drifting
+          behind the page. Pure CSS, decorative, frozen for reduced motion. */}
       <div className="hero-backdrop" aria-hidden="true">
-        <span className="hero-grid" />
-        <span className="hero-beam hero-beam-1" />
-        <span className="hero-beam hero-beam-2" />
-        <span className="hero-beam hero-beam-3" />
         <span className="hero-orb hero-orb-a" />
         <span className="hero-orb hero-orb-b" />
+        <span className="hero-orb hero-orb-c" />
       </div>
       <div className="hero-inner" key={replay}>
         <div className="hero-main">
@@ -221,6 +221,9 @@ export default function Hero() {
             <Check size={14} strokeWidth={2.4} />
             {t('hero_chip_2')}
           </span>
+          {/* A slowly turning aurora behind the frame: the screen is lit
+              from behind instead of pasted onto the page. */}
+          <span className="hero-aura" aria-hidden="true" />
           {/* The likely LCP element: eager, high priority, and sized by
               srcset so a phone takes the 640 px file (about 24 kB). The
               copy beside it says what it shows, hence the empty alt. */}

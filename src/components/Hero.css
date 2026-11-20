@@ -17,11 +17,11 @@
   gap: 96px;
 }
 
-/* ─── Backdrop: one warm light ───
-   The grid and travelling beams of the dark-tech era read as "software
-   dashboard"; on gallery white they were noise. What stays is a single
-   soft gold light behind the mockup, drifting on a slow 24s loop —
-   transform/opacity only, so it stays on the compositor. */
+/* ─── Backdrop: three aurora lights ───
+   Gold top right behind the mockup, ember below it, violet low on the
+   left behind the headline. Each drifts on its own slow loop (24–34s,
+   alternate) so they never move in step — the page breathes instead of
+   pulsing. transform/opacity only, so it stays on the compositor. */
 .hero-backdrop {
   position: absolute;
   top: 0;
@@ -34,11 +34,6 @@
   pointer-events: none;
 }
 
-.hero-grid,
-.hero-beam {
-  display: none;
-}
-
 .hero-orb {
   position: absolute;
   width: 52vw;
@@ -46,23 +41,36 @@
   aspect-ratio: 1;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.5;
+  opacity: 0.55;
   animation: hero-orb 24s ease-in-out infinite alternate;
 }
 
 .hero-orb-a {
   top: -18%;
   right: 2%;
-  background: radial-gradient(circle, rgba(var(--accent-cyan-rgb), 0.28), transparent 65%);
+  background: radial-gradient(circle, rgba(var(--aurora-gold-rgb), 0.5), transparent 65%);
 }
 
 .hero-orb-b {
-  display: none;
+  top: 30%;
+  right: 18%;
+  width: 36vw;
+  background: radial-gradient(circle, rgba(var(--aurora-ember-rgb), 0.4), transparent 65%);
+  animation-duration: 29s;
+  animation-direction: alternate-reverse;
+}
+
+.hero-orb-c {
+  bottom: -30%;
+  left: -12%;
+  width: 46vw;
+  background: radial-gradient(circle, rgba(var(--aurora-violet-rgb), 0.34), transparent 65%);
+  animation-duration: 34s;
 }
 
 @keyframes hero-orb {
   from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(-5%, 6%, 0) scale(1.08); }
+  to   { transform: translate3d(-6%, 7%, 0) scale(1.1); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -124,13 +132,12 @@
   overflow-wrap: break-word;
 }
 
-/* ─── The one piece of colour on the page.
+/* ─── The one text gradient on the site.
 
-   The two key words switch voice: Playfair italic in gold, set against
-   the upright ink sans. The contrast of type does the work a glow used
-   to do; a slow light still passes through the gold (8s, alternate, so
-   it eases and reverses instead of snapping). Everything else on the
-   site stays ink, so this reads as the accent. ─── */
+   The two key words switch voice: Playfair italic, set against the
+   upright ink sans, running from bronze gold into a deep ember. A
+   brighter gold light passes through them (8s, alternate, so it eases
+   and reverses instead of snapping). Both ends hold 4.5:1 on the ground. ─── */
 .hero-title-word {
   display: inline-block;
   white-space: nowrap;
@@ -154,9 +161,9 @@
 .hero-title-word-gold {
   background-image: linear-gradient(
     100deg,
-    var(--shimmer-blue) 0%, var(--shimmer-blue) 40%,
+    var(--shimmer-blue) 0%, var(--aurora-ember-deep) 38%,
     var(--shimmer-gold-lit) 50%,
-    var(--shimmer-blue) 60%, var(--shimmer-blue) 100%
+    var(--aurora-ember-deep) 62%, var(--shimmer-blue) 100%
   );
 }
 
@@ -226,18 +233,29 @@
   padding-top: 8px;
 }
 
-/* A soft accent halo behind the photo: the screen glows into the dark
-   page instead of sitting on it like a pasted rectangle. Static light,
-   no ring, no spin — it should feel lit, not "gaming". */
-.hero-visual::before {
-  content: '';
+/* The aurora behind the photo: a blurred conic of the three lights,
+   turning once every 18s. It sits behind the frame, so only its glow
+   reaches past the edges — lit, not "gaming". */
+.hero-aura {
   position: absolute;
-  inset: 10% 6% -4%;
+  inset: 4% 2% -2%;
   z-index: var(--z-backdrop);
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(var(--accent-cyan-rgb), 0.32), transparent);
-  filter: blur(40px);
+  border-radius: 40%;
+  background: conic-gradient(
+    from 0deg,
+    rgba(var(--aurora-gold-rgb), 0.7),
+    rgba(var(--aurora-ember-rgb), 0.55),
+    rgba(var(--aurora-violet-rgb), 0.5),
+    rgba(var(--aurora-gold-rgb), 0.7)
+  );
+  filter: blur(48px);
+  opacity: 0.55;
   pointer-events: none;
+  animation: hero-aura-turn 18s linear infinite;
+}
+
+@keyframes hero-aura-turn {
+  to { transform: rotate(360deg); }
 }
 
 .hero-photo {
@@ -248,6 +266,20 @@
   border-radius: var(--radius-card);
   border: 1px solid var(--line-strong);
   box-shadow: var(--shadow-float), 0 0 0 1px rgba(var(--accent-cyan-rgb), 0.08);
+  /* Tilts towards the pointer (--tx/--ty from Hero.tsx), and the chips
+     drift the other way below: two depths, so the photo reads as an
+     object in space. Rests flat on touch screens. */
+  transform: perspective(1400px) rotateY(calc(var(--tx, 0) * 5deg)) rotateX(calc(var(--ty, 0) * -4deg));
+  transition: transform 0.9s var(--ease-premium);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-aura {
+    animation: none;
+  }
+  .hero-photo {
+    transform: none;
+  }
 }
 
 /* Floating status cards (see Hero.tsx). Glass, one accent, small type. */
@@ -279,11 +311,15 @@
 .hero-chip-a {
   top: 14%;
   left: -28px;
+  translate: calc(var(--tx, 0) * -10px) calc(var(--ty, 0) * -8px);
+  transition: translate 0.9s var(--ease-premium);
 }
 
 .hero-chip-b {
   bottom: 10%;
   right: -22px;
+  translate: calc(var(--tx, 0) * -14px) calc(var(--ty, 0) * -10px);
+  transition: translate 0.9s var(--ease-premium);
 }
 
 .hero-chip-dot {
@@ -292,6 +328,27 @@
   border-radius: 50%;
   background: var(--accent-cyan);
   box-shadow: 0 0 0 4px rgba(var(--accent-cyan-rgb), 0.18);
+  position: relative;
+}
+
+/* "New inquiry received" — a ring ripples out of the dot like a live
+   notification (transform/opacity on a pseudo-element). */
+.hero-chip-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--accent-cyan);
+  animation: hero-live 2.4s ease-out infinite;
+}
+
+@keyframes hero-live {
+  from { transform: scale(1); opacity: 0.8; }
+  to   { transform: scale(3); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-chip-dot::after { animation: none; opacity: 0; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
