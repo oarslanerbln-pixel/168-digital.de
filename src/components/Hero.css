@@ -41,21 +41,21 @@
   aspect-ratio: 1;
   border-radius: 50%;
   filter: blur(90px);
-  opacity: 0.55;
+  opacity: 0.85;
   animation: hero-orb 24s ease-in-out infinite alternate;
 }
 
 .hero-orb-a {
   top: -18%;
   right: 2%;
-  background: radial-gradient(circle, rgba(var(--aurora-gold-rgb), 0.5), transparent 65%);
+  background: radial-gradient(circle, rgba(var(--aurora-gold-rgb), 0.6), transparent 65%);
 }
 
 .hero-orb-b {
   top: 30%;
   right: 18%;
   width: 36vw;
-  background: radial-gradient(circle, rgba(var(--aurora-ember-rgb), 0.4), transparent 65%);
+  background: radial-gradient(circle, rgba(var(--aurora-ember-rgb), 0.5), transparent 65%);
   animation-duration: 29s;
   animation-direction: alternate-reverse;
 }
@@ -64,7 +64,7 @@
   bottom: -30%;
   left: -12%;
   width: 46vw;
-  background: radial-gradient(circle, rgba(var(--aurora-violet-rgb), 0.34), transparent 65%);
+  background: radial-gradient(circle, rgba(var(--aurora-violet-rgb), 0.45), transparent 65%);
   animation-duration: 34s;
 }
 
@@ -132,7 +132,8 @@
   overflow-wrap: break-word;
 }
 
-/* ─── The one text gradient on the site.
+/* ─── The hero's text gradient (the big numerals further down share
+   the deep aurora; nothing else on the site carries one).
 
    The two key words switch voice: Playfair italic, set against the
    upright ink sans, running from bronze gold into a deep ember. A
@@ -208,7 +209,7 @@
   position: absolute;
   inset: -1px;
   border-radius: inherit;
-  box-shadow: 0 0 28px 2px rgba(var(--accent-cyan-rgb), 0.55);
+  box-shadow: 0 0 30px 2px rgba(var(--aurora-ember-rgb), 0.5), 0 10px 40px -6px rgba(var(--aurora-violet-rgb), 0.45);
   opacity: 0;
   pointer-events: none;
 }
@@ -248,8 +249,8 @@
     rgba(var(--aurora-violet-rgb), 0.5),
     rgba(var(--aurora-gold-rgb), 0.7)
   );
-  filter: blur(48px);
-  opacity: 0.55;
+  filter: blur(44px);
+  opacity: 0.85;
   pointer-events: none;
   animation: hero-aura-turn 18s linear infinite;
 }
@@ -487,6 +488,10 @@
 }
 
 @media (max-width: 600px) {
+  /* 52vw lights are pinpricks on a phone: scale them to the screen. */
+  .hero-orb-a { width: 120vw; top: -10%; right: -40%; }
+  .hero-orb-b { width: 90vw; top: 45%; right: -30%; }
+  .hero-orb-c { width: 110vw; bottom: -10%; left: -50%; }
   .hero-chip { font-size: 0.72rem; padding: 8px 11px; gap: 7px; }
   .hero-section {
     padding: 112px 20px 64px;

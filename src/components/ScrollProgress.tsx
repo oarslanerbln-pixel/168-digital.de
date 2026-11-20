@@ -2,7 +2,7 @@ import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import './ScrollProgress.css';
 
 /**
- * ScrollProgress — a 2px aurora line across the top of the screen that
+ * ScrollProgress — a 3px aurora line across the top of the screen that
  * fills as the visitor reads down the page.
  *
  * Long pages (home, service pages) give no sense of "how much is left";

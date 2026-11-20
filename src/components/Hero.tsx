@@ -21,8 +21,8 @@ import './Hero.css';
    answers both on the first screen:
 
    - the headline names the result (customers won, hours saved), with
-     the gold-to-ember aurora kept on exactly those two words — still the
-     only text gradient on the site (CLAUDE.md rule 7);
+     the gold-to-ember aurora kept on exactly those two words — the only
+     words on the site with a text gradient (CLAUDE.md rule 7);
    - a product photo on the right shows the kind of system we build —
      a dashboard and a guest-facing menu in a real café — kept in the
      page's monochrome with the one blue accent, so it supports the

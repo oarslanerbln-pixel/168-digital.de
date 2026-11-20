@@ -353,7 +353,7 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 3px;
+  height: 4px;
   background: var(--gradient-aurora);
   transform: scaleX(0);
   transform-origin: left;
@@ -381,11 +381,16 @@
 
 .process-num {
   display: block;
+  width: fit-content;
   font-size: 2.2rem;
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.04em;
   color: var(--accent-cyan);
+  background: var(--gradient-aurora-ink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .process-time {
@@ -473,9 +478,9 @@
   padding: 44px 48px;
   border-radius: var(--radius-card);
   background:
-    radial-gradient(70% 140% at 0% 0%, rgba(var(--aurora-gold-rgb), 0.3), transparent 60%),
-    radial-gradient(60% 120% at 100% 100%, rgba(var(--aurora-violet-rgb), 0.32), transparent 65%),
-    radial-gradient(40% 90% at 70% 0%, rgba(var(--aurora-ember-rgb), 0.18), transparent 70%),
+    radial-gradient(70% 140% at 0% 0%, rgba(var(--aurora-gold-rgb), 0.45), transparent 60%),
+    radial-gradient(60% 130% at 100% 100%, rgba(var(--aurora-violet-rgb), 0.55), transparent 65%),
+    radial-gradient(45% 100% at 70% 0%, rgba(var(--aurora-ember-rgb), 0.35), transparent 70%),
     var(--surface-dark);
   border: 1px solid rgba(var(--on-dark-rgb), 0.08);
   box-shadow: var(--shadow-float);

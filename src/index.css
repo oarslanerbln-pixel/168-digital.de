@@ -71,6 +71,16 @@
   --aurora-ember-rgb: 255, 122, 77;
   --aurora-violet-rgb: 124, 108, 255;
   --aurora-ember-deep: #b8532e;   /* hero gradient end: 4.6:1 on the ground */
+  --aurora-violet-deep: #5a48d0;  /* 6:1 on the ground */
+  /* The same three lights, deepened so they hold contrast as text on the
+     light ground: the hero key words and the big numerals (facts,
+     process steps) — the only text that carries a gradient. */
+  --gradient-aurora-ink: linear-gradient(
+    110deg,
+    var(--accent-cyan) 0%,
+    var(--aurora-ember-deep) 50%,
+    var(--aurora-violet-deep) 100%
+  );
   --gradient-aurora: linear-gradient(
     110deg,
     rgb(var(--aurora-gold-rgb)) 0%,
@@ -1071,9 +1081,9 @@ html, body {
   transform: translateX(-50%);
   z-index: -1;
   background:
-    radial-gradient(45% 50% at 12% 20%, rgba(var(--aurora-gold-rgb), 0.22), transparent 70%),
-    radial-gradient(40% 45% at 90% 85%, rgba(var(--aurora-violet-rgb), 0.24), transparent 70%),
-    radial-gradient(30% 35% at 70% 10%, rgba(var(--aurora-ember-rgb), 0.14), transparent 70%),
+    radial-gradient(45% 55% at 10% 20%, rgba(var(--aurora-gold-rgb), 0.38), transparent 70%),
+    radial-gradient(45% 50% at 92% 85%, rgba(var(--aurora-violet-rgb), 0.45), transparent 70%),
+    radial-gradient(35% 40% at 68% 8%, rgba(var(--aurora-ember-rgb), 0.3), transparent 70%),
     var(--surface-dark);
 }
 

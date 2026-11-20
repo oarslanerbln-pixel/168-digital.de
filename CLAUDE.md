@@ -151,13 +151,14 @@ Name historisch), Tinten-Typografie (`--text-main`) und **ein** Gold-Akzent
 Schnitt). Gold nur als Akzent (Schlüsselwörter, aktive Zustände, Punkte,
 Overlines), nie als große Fläche. Primärbuttons sind Tinte auf Hell.
 Überschriften Outfit 500–600 mit enger Laufweite; die zwei Schlüsselwörter
-der Hero-Headline in Playfair Italic (Gold → Glut) bleiben der einzige
-Text-Farbverlauf. Flächen, die immer dunkel bleiben (Film, Reel,
+der Hero-Headline in Playfair Italic (Gold → Glut) und die großen Ziffern
+(Fakten-Streifen, Ablauf-Schritte, `--gradient-aurora-ink`) sind die
+einzigen Text-Farbverläufe. Flächen, die immer dunkel bleiben (Film, Reel,
 Leistungs-Band, CTA-Band, Kontakt-Finale), nutzen das Mitternachtsblau
 `--surface-dark`/`--on-dark`. **Aurora** (seit Nov 2026, Wunsch nach mehr
 Lebendigkeit): drei Lichter `--aurora-gold/-ember/-violet-rgb` und
 `--gradient-aurora` – nur als unscharfe Glows, Hover-Ränder,
-Scroll-Fortschrittslinie und der Hero-Verlauf; nie als Textfarbe, nie als
+Scroll-Fortschrittslinie und die genannten Text-Verläufe; nie als Textfarbe, nie als
 große Vollfläche, nie dauerhaft leuchtende Karten. Farben kommen aus den Tokens in `:root`,
 nicht aus Hex-Werten im Komponenten-CSS. Für Linien und Tönungen mit
 Transparenz `rgba(var(--ink-rgb), α)` bzw. `rgba(var(--accent-cyan-rgb), α)`
