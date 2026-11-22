@@ -4,8 +4,8 @@
   left: 0;
   right: 0;
   z-index: var(--z-chrome);
-  height: 2px;
-  background: var(--gradient-aurora);
+  height: 3px;
+  background: var(--accent-gold-soft);
   transform-origin: 0 50%;
   pointer-events: none;
 }

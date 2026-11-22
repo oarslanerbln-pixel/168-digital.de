@@ -1,91 +1,75 @@
 @import './styles/premium-hud.css';
 
 /* ═══════════════════════════════════════════════════════════════
-   DESIGN TOKENS — gallery white, ink type, one gold accent.
+   DESIGN TOKENS — "Phi": paper, ink, saffron, one golden ratio.
 
-   1618 is the golden ratio, so the one colour on the page is gold. The
-   ground is a warm gallery white and the type is near-black ink: the
-   work (photos, films, live demos) brings the colour, the frame stays
-   quiet. Gold appears only where it carries meaning — the hero's key
-   words, the active state, a single dot or rule — never as a fill on
-   large areas, or it stops reading as an accent.
+   1618 is the golden ratio, and since Nov 2026 the whole visual language
+   is built from it (the owner picked concept A of three directions; the
+   earlier gallery-white + aurora look read as too standard). The page is
+   warm paper with near-black ink, set in an editorial serif over a calm
+   sans; colour comes from geometry, not from glows: squares and quarter
+   circles in ink, saffron and terracotta, drawn in the proportions
+   377 : 233 : 144 : 89 : 55 : 34. Surfaces are flat and edged with ink
+   hairlines; nothing is blurred, nothing glows.
    ═══════════════════════════════════════════════════════════════ */
 :root {
-  /* ── GALLERY BASE (Nov 2026) ───────────────────────────────────
-     Replaces the Oct 2026 "dark tech" ground. Visitors arrive from
-     Instagram on a phone in daylight; a light, calm page reads as
-     premium and lets client work carry the colour. Token names are kept
-     (--bg-dark has 79 call sites) so the switch happens here, in one
-     place. --ink-rgb is the foreground as an RGB triple for the hairlines
-     and tints that need an alpha: rgba(var(--ink-rgb), 0.1). */
-  --bg-dark: #f6f5f1;          /* page ground (name kept: 79 call sites) */
-  --bg-raised: #ffffff;        /* cards / raised surfaces */
-  --bg-sunken: #eeece6;        /* alternating band behind sections */
-  --text-main: #131312;        /* ink */
-  --text-muted: #57554f;       /* secondary text — AA (7:1) on the ground */
-  --text-faint: #6a675f;       /* overlines, meta — AA on every ground: 5.2:1 page, 4.8:1 sunken band
-                                  (was #75726a, 4.4:1: failed AA, flagged by Lighthouse) */
-  --ink-rgb: 19, 19, 18;
+  /* ── Paper & ink. Token names are historical (--bg-dark has ~80 call
+     sites) so the switch happens here, in one place. --ink-rgb is the
+     foreground as an RGB triple for hairlines and tints with an alpha:
+     rgba(var(--ink-rgb), 0.1). Contrast is measured on the ground. */
+  --bg-dark: #eee8dc;          /* paper — the page ground */
+  --bg-raised: #f8f4ec;        /* cards / form surfaces */
+  --bg-sunken: #e4dccb;        /* alternating band behind sections */
+  --text-main: #16140f;        /* ink */
+  --text-muted: #4a453c;       /* secondary text — 7.8:1 on paper */
+  --text-faint: #625b4f;       /* overlines, meta — 5.5:1 paper, 4.9:1 sunken */
+  --ink-rgb: 22, 20, 15;
 
-  /* Surfaces that must stay dark whatever the theme: film frames, the
-     showreel, the services band, the contact finale. Text on them uses
-     --on-dark. A midnight ink-blue rather than neutral black (Nov 2026):
-     next to warm gold it reads as "evening in a gallery", not as a
-     switched-off screen. */
-  --surface-dark: #0c0e1a;
-  --surface-dark-rgb: 12, 14, 26;
-  --on-dark: #f6f5f1;
-  --on-dark-rgb: 246, 245, 241;
+  /* Surfaces that stay dark: film frames, the showreel, the services
+     band, the CTA band and the contact finale — all solid ink. Text on
+     them uses --on-dark; the saffron reads at 7.5:1 there. */
+  --surface-dark: #16140f;
+  --surface-dark-rgb: 22, 20, 15;
+  --on-dark: #eee8dc;
+  --on-dark-rgb: 238, 232, 220;
 
-  /* ── Hairlines — one rule, used everywhere, so edges read as a system ── */
-  --line: rgba(var(--ink-rgb), 0.1);
-  --line-strong: rgba(var(--ink-rgb), 0.22);
+  /* ── Type. Display: Instrument Serif (one weight, upright + italic — so
+     every display rule sets font-weight: 400, never a faux bold).
+     Body: Manrope. Both self-hosted by download-fonts.mjs. */
+  --font-display: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --glass-bg: rgba(246, 245, 241, 0.82);
+  /* ── Hairlines — ink rules carry the layout ── */
+  --line: rgba(var(--ink-rgb), 0.14);
+  --line-strong: rgba(var(--ink-rgb), 0.3);
+  --rule: 1.5px solid var(--text-main);
+
+  --glass-bg: rgba(238, 232, 220, 0.88);
   --glass-border: var(--line);
 
-  /* ── The hero shimmer: ink into gold, the site's only text gradient ── */
-  --shimmer-blue: #8a6a32;     /* name kept; now the deep bronze half */
-  --shimmer-blue-lit: #c9a35f;
-  --shimmer-gold: #a8823f;
-  --shimmer-gold-lit: #e2c48a;
+  /* ── Accents. Saffron is the gold of the ratio; it fills shapes and
+     marks things on ink, but is too light (2:1) for text on paper — there
+     the deep gold --accent-cyan (name historical) carries small text and
+     --accent-display the large italic key words. Terracotta is the second
+     geometric colour, used in shapes only. */
+  --accent-cyan: #7e5306;      /* deep gold — small text on paper, 5.6:1 */
+  --accent-cyan-rgb: 126, 83, 6;
+  --accent-display: #a86e09;   /* large italic key words — 3.5:1 (large-text AA) */
+  --accent-gold-soft: #d99a1e; /* saffron — shapes, rules, text on ink only */
+  --saffron-rgb: 217, 154, 30;
+  --terracotta: #b6542c;       /* shapes only */
+  --accent-purple: #4a453c;    /* secondary / muted neutral */
+  --accent-silver: #16140f;    /* .text-silver headings read as ink */
+  --accent-platinum: #16140f;
 
-  /* ── Accent. One gold; deep enough (4.9:1) to carry small text. ──
-     --accent-cyan keeps its name for its many call sites; it IS the gold. */
-  --accent-cyan: #8a6a32;
-  --accent-cyan-rgb: 138, 106, 50;
-  --accent-gold-soft: #c9a35f; /* decorative only: dots, rules, never text */
-  --accent-purple: #57554f;    /* secondary / muted neutral */
-  --accent-silver: #131312;    /* .text-silver headings read as ink */
-  --accent-platinum: #131312;
-
-  /* ── Aurora: light, not paint (Nov 2026) ─────────────────────────
-     The gallery page felt too classical; it needed warmth and motion
-     without turning into a toy. Three lights — the gold, an ember coral
-     and a cool violet — appear only as blurred glows, hover rims and
-     the one text gradient in the hero. Never as a text colour, never as
-     a flat fill: they light surfaces, the way a lamp lights a wall.
-     The gold stays the only accent that carries meaning (links, active
-     states, overlines). */
-  --aurora-gold-rgb: 233, 182, 90;
-  --aurora-ember-rgb: 255, 122, 77;
-  --aurora-violet-rgb: 124, 108, 255;
-  --aurora-ember-deep: #b8532e;   /* hero gradient end: 4.6:1 on the ground */
-  --gradient-aurora: linear-gradient(
-    110deg,
-    rgb(var(--aurora-gold-rgb)) 0%,
-    rgb(var(--aurora-ember-rgb)) 50%,
-    rgb(var(--aurora-violet-rgb)) 100%
-  );
-
-  --accent-soft: rgba(var(--accent-cyan-rgb), 0.08);
-  --accent-line: rgba(var(--accent-cyan-rgb), 0.35);
-  /* No glow on a light ground: "glow" is now a fine gold ring + soft lift. */
-  --accent-glow: 0 0 0 1px rgba(var(--accent-cyan-rgb), 0.3), 0 14px 34px -18px rgba(var(--accent-cyan-rgb), 0.45);
+  --accent-soft: rgba(var(--accent-cyan-rgb), 0.1);
+  --accent-line: rgba(var(--accent-cyan-rgb), 0.4);
+  --accent-glow: 0 0 0 1.5px var(--text-main);
   --shadow-soft: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -16px rgba(0, 0, 0, 0.14);
   --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04), 0 18px 40px -26px rgba(0, 0, 0, 0.22);
   --shadow-float: 0 40px 80px -36px rgba(0, 0, 0, 0.28);
-  --radius-card: 18px;
+  /* Phi is drawn in squares: corners stay nearly sharp. */
+  --radius-card: 4px;
 
   /* ── Stacking order ──────────────────────────────────────────────
      Every element that escapes the document flow (position: fixed) takes
@@ -135,7 +119,7 @@
 }
 
 body {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -192,7 +176,7 @@ html, body {
 }
 
 .font-serif {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
 }
 
 /* Section Layout */
@@ -615,7 +599,7 @@ html, body {
 .stat-number {
   font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 .stat-suffix {
@@ -638,7 +622,7 @@ html, body {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 .stat-highlight-sublabel {
@@ -697,7 +681,7 @@ html, body {
   border: 1px solid rgba(var(--ink-rgb), 0.14);
   background: rgba(var(--ink-rgb), 0.03);
   color: var(--text-main);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.82rem;
   font-weight: 500;
   letter-spacing: 0.4px;
@@ -794,7 +778,7 @@ html, body {
 }
 
 .project-card-monogram {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-size: clamp(2.6rem, 5vw, 3.6rem);
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -817,7 +801,7 @@ html, body {
 }
 
 .project-card-number {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -1045,9 +1029,10 @@ html, body {
    The steps column turns the form from a cold box into the visible
    first step of a short, known process.
 
-   It is also the page's finale: a full-bleed midnight band lit by the
-   aurora, with the white form card floating on it, so the last screen
-   feels like an arrival rather than another light section. The band is
+   It is also the page's finale: a full-bleed ink band with the paper
+   form card standing on it and a saffron quarter circle rising behind
+   the steps (the hero's spiral, once more), so the last screen feels
+   like an arrival rather than another light section. The band is
    a pseudo-element reaching to the viewport edges (html clips overflow-x,
    rule 2), which keeps the grid itself at its 1180px column. */
 .contact-section.contact-section-split {
@@ -1071,9 +1056,7 @@ html, body {
   transform: translateX(-50%);
   z-index: -1;
   background:
-    radial-gradient(45% 50% at 12% 20%, rgba(var(--aurora-gold-rgb), 0.22), transparent 70%),
-    radial-gradient(40% 45% at 90% 85%, rgba(var(--aurora-violet-rgb), 0.24), transparent 70%),
-    radial-gradient(30% 35% at 70% 10%, rgba(var(--aurora-ember-rgb), 0.14), transparent 70%),
+    radial-gradient(circle at 0% 100%, rgba(var(--saffron-rgb), 0.14) 0 340px, transparent 341px),
     var(--surface-dark);
 }
 
@@ -1082,8 +1065,8 @@ html, body {
 }
 
 .contact-section-split .contact-steps li span {
-  background: rgba(var(--aurora-gold-rgb), 0.14);
-  color: rgb(var(--aurora-gold-rgb));
+  background: var(--accent-gold-soft);
+  color: var(--surface-dark);
 }
 
 .contact-section-split .contact-direct {
@@ -1099,13 +1082,13 @@ html, body {
 }
 
 .contact-section-split .contact-direct a:hover {
-  color: rgb(var(--aurora-gold-rgb));
+  color: var(--accent-gold-soft);
 }
 
 .contact-section-split .contact-card {
   color: var(--text-main);
-  box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.6),
-    0 0 0 1px rgba(var(--aurora-gold-rgb), 0.18);
+  border: 0;
+  box-shadow: 10px 10px 0 var(--accent-gold-soft);
 }
 
 .contact-aside {
@@ -1541,4 +1524,31 @@ html, body {
   .contact-title {
     font-size: 1.6rem;
   }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   DISPLAY TYPE — every large heading speaks in the display serif.
+
+   Instrument Serif ships one weight, so each rule here also resets the
+   weight to 400: a heading left at 600 would render as a smeared faux
+   bold. Listed in one place (rather than in each component file) so a
+   heading that should change voice is found and changed here. The body
+   prefix wins over the component files, which load after this sheet.
+   ═══════════════════════════════════════════════════════════════ */
+body .about-headline,
+body .works-headline,
+body .modal-title,
+body .contact-aside-title,
+body .contact-title,
+body .service-h1,
+body .service-feature-title,
+body .service-process-title,
+body .solution-title,
+body .showroom-title,
+body .blog-list-title,
+body .legal-page-title,
+body .project-card-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }

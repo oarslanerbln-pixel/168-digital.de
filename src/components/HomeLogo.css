@@ -25,7 +25,7 @@
 }
 
 .home-logo-mark {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.98rem;
   letter-spacing: 0.02em;
@@ -34,7 +34,7 @@
 }
 
 .home-logo-label {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-weight: 600;
   font-size: 0.58rem;
   letter-spacing: 0.18em;

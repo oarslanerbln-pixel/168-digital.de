@@ -50,7 +50,7 @@ lassen.**
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
 | Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
-| Leistungen als Bento-Grid mit Pointer-Licht / Zähler-Streifen | `src/components/Services.tsx`, `FactsStrip.tsx` |
+| Leistungen als liniertes Raster mit geometrischen Zeichen / Zähler-Streifen | `src/components/Services.tsx`, `ServiceGlyph.tsx`, `FactsStrip.tsx` |
 | Intro (Phi-Raster, Öffnung am Goldenen Schnitt) / Statement mit Scroll-Tinte | `src/components/Preloader.tsx`, `Statement.tsx` |
 | Gemeinsame CTA-Buttons + Vertrauenszeilen (Hero, Service-Seiten, Statement) | `src/styles/cta.css` |
 | Startseiten-Inhalte: Lösungen, Ablauf, FAQ (DE/EN/TR) + Produktfotos | `src/data/homeContent.ts` |
@@ -145,23 +145,27 @@ Bug, kein Platzhalter. Türkisch braucht `latin-ext` – deshalb hat die
 Font-Pipeline beide Subsets.
 
 ### 7. Design-System statt Einzelfallentscheidung
-Seit November 2026 **Galerie-Weiß**: warmer heller Grund (`--bg-dark`,
-Name historisch), Tinten-Typografie (`--text-main`) und **ein** Gold-Akzent
-(`--accent-cyan`, Name historisch – er *ist* das Gold; 1618 = Goldener
-Schnitt). Gold nur als Akzent (Schlüsselwörter, aktive Zustände, Punkte,
-Overlines), nie als große Fläche. Primärbuttons sind Tinte auf Hell.
-Überschriften Outfit 500–600 mit enger Laufweite; die zwei Schlüsselwörter
-der Hero-Headline in Playfair Italic (Gold → Glut) bleiben der einzige
-Text-Farbverlauf. Flächen, die immer dunkel bleiben (Film, Reel,
-Leistungs-Band, CTA-Band, Kontakt-Finale), nutzen das Mitternachtsblau
-`--surface-dark`/`--on-dark`. **Aurora** (seit Nov 2026, Wunsch nach mehr
-Lebendigkeit): drei Lichter `--aurora-gold/-ember/-violet-rgb` und
-`--gradient-aurora` – nur als unscharfe Glows, Hover-Ränder,
-Scroll-Fortschrittslinie und der Hero-Verlauf; nie als Textfarbe, nie als
-große Vollfläche, nie dauerhaft leuchtende Karten. Farben kommen aus den Tokens in `:root`,
-nicht aus Hex-Werten im Komponenten-CSS. Für Linien und Tönungen mit
-Transparenz `rgba(var(--ink-rgb), α)` bzw. `rgba(var(--accent-cyan-rgb), α)`
-nutzen; Schatten über `--shadow-soft/-card/-float`. Animation: nur `transform`/`opacity`, immer mit
+Seit 22. Nov 2026 **„Phi"** (Konzept A von drei Richtungen; Galerie-Weiß
+und danach die Aurora-Glows wirkten zu standardmäßig): warmes Papier
+(`--bg-dark`, Name historisch), Tinte (`--text-main`), dazu **Safran**
+(`--accent-gold-soft`) und **Terrakotta** (`--terracotta`) – beide nur als
+Flächen in der Geometrie (Quadrate, Viertelkreise in den Fibonacci-Maßen
+377 : 233 : 144 : 89 : 55 : 34), Safran auf Tinte auch als Text. Auf Papier
+tragen kleinen Text nur `--accent-cyan` (tiefes Gold, Name historisch, 5,6:1)
+und große Kursiv-Schlüsselwörter `--accent-display` (3,5:1, nur Großtext).
+**Typo:** Überschriften in `--font-display` (Instrument Serif – hat nur
+*eine* Stärke, also immer `font-weight: 400`, nie Faux-Bold; Sammelregel
+„DISPLAY TYPE" am Ende von `src/index.css`), Fließtext `--font-body`
+(Manrope). Kein Farbverlauf in Text, keine Glows/Blur-Flächen, keine
+Schatten-Wolken: Flächen sind flach, Kanten sind Tinten-Linien
+(`--rule`), Ecken fast scharf (`--radius-card: 4px`), Hover = Invertieren
+auf Tinte oder harter Versatz-Schatten. Dunkle Flächen (Marquee, Reel,
+CTA-Band, Kontakt-Finale) sind Tinte `--surface-dark`/`--on-dark`.
+Jede Leistung hat ein geometrisches Zeichen (`ServiceGlyph.tsx`).
+Farben kommen aus den Tokens in `:root`, nicht aus Hex-Werten im
+Komponenten-CSS; Linien/Tönungen über `rgba(var(--ink-rgb), α)`.
+Animation: `transform`/`opacity` (Ausnahme: das einmalige Zeichnen der
+Hero-Spirale per `stroke-dashoffset`), immer mit
 `prefers-reduced-motion`-Ausweg, keine Endlosschleifen in JS.
 
 ## Arbeitsweise

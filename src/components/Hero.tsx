@@ -1,8 +1,7 @@
-import { useEffect, useRef, useState, type CSSProperties, type PointerEvent } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { useTranslation } from 'react-i18next';
 import { playClick, playTick } from '../utils/audio';
 import { ArrowRight, Check } from 'lucide-react';
-import { heroImage, srcSet } from '../data/homeContent';
 import { useMagnetic } from '../hooks/useMagnetic';
 import { useInlineWhatsApp } from '../utils/inlineWhatsApp';
 import { LEAD_WHATSAPP_NUMBER } from '../utils/leads';
@@ -12,52 +11,47 @@ import '../styles/cta.css';
 import './Hero.css';
 
 /* ════════════════════════════════════════════════════════════════
-   HERO — outcome first, product visible, one obvious next step.
+   HERO — outcome first, the ratio visible, one obvious next step.
 
-   The previous hero led with a manifesto ("where image and code become
-   one") and a full-width showreel. Beautiful, but a restaurant owner or
-   a Mittelstand manager arriving from Instagram could not tell within
-   five seconds what they would get or what to do next. This version
-   answers both on the first screen:
+   A restaurant owner or a Mittelstand manager arriving from Instagram
+   must know within five seconds what they get and what to do next:
 
-   - the headline names the result (customers won, hours saved), with
-     the gold-to-ember aurora kept on exactly those two words — still the
-     only text gradient on the site (CLAUDE.md rule 7);
-   - a product photo on the right shows the kind of system we build —
-     a dashboard and a guest-facing menu in a real café — kept in the
-     page's monochrome with the one blue accent, so it supports the
-     shimmer instead of competing with it;
+   - the headline names the result (customers won, hours saved), set in
+     the display serif with exactly those two words in deep-gold italic;
    - one solid CTA goes straight to the inquiry form, WhatsApp sits next
-     to it for people who would rather message, and three short trust
-     lines answer the usual "but…" before it is asked.
+     to it, and three short trust lines answer the usual "but…";
+   - on the right, the studio's name drawn as a picture: a golden
+     rectangle divided into its squares (377 : 233 : 144 : 89 : 55 : 34),
+     the spiral drawing itself across them and a point travelling along
+     it. "Phi" visual language, Nov 2026 — it replaced a product photo:
+     the services band right below shows what we build, while this says
+     who we are, and it paints instantly (inline SVG, no image request).
 
-   The showreel moved down next to the film services, where it proves
-   the film half of the business instead of competing with the software
-   half for the first impression.
-
-   MOTION. The headline rises word by word out of a mask, then the
-   shimmer starts; copy, buttons and photo follow in one short cascade.
-   It is all CSS keyed on `.hero-play`, and that class is only set when
-   the reveal can actually be seen:
+   MOTION. The headline rises word by word out of a mask; copy, buttons
+   and the composition follow in one short cascade — the squares settle
+   in from largest to smallest, then the spiral is drawn. It is all CSS
+   keyed on `.hero-play`, and that class is only set when the reveal can
+   actually be seen:
    - never in the prerendered HTML, so crawlers, no-JS visitors and the
-     first paint get the finished hero (it used to ship at opacity 0
-     until JavaScript ran);
+     first paint get the finished hero;
    - not on the first mount over that prerendered hero either — React
      replaces identical markup, and replaying the intro there would make
      visible text vanish and come back;
    - yes when the intro overlay lifts (the "1618:intro-done" event from
      App) and when a visitor navigates to the homepage in the app.
+   The travelling point and the slowly turning dotted orbit run in every
+   case (they never hide content) and stop for reduced motion.
    ════════════════════════════════════════════════════════════════ */
 
 /** See MOTION above: play unless this mount replaces the prerendered hero. */
 const shouldPlayOnMount = entranceGate('.hero-section');
 
-type Segment = { text: string; shimmer?: 'blue' | 'gold' };
+type Segment = { text: string; key?: boolean };
 
 /**
  * Splits the headline into masked words for the reveal. Punctuation glued
  * to a word ("getiren," in Turkish) stays in that word's mask, so it can
- * never wrap onto a line of its own; the shimmer words keep their class.
+ * never wrap onto a line of its own; the key words keep their class.
  */
 function headlineWords(parts: Segment[]): Segment[][] {
   const words: Segment[][] = [];
@@ -69,7 +63,7 @@ function headlineWords(parts: Segment[]): Segment[][] {
         glue = false;
         continue;
       }
-      const segment = { text: token, shimmer: part.shimmer };
+      const segment = { text: token, key: part.key };
       if (glue && words.length) words[words.length - 1].push(segment);
       else words.push([segment]);
       glue = true;
@@ -84,7 +78,6 @@ export default function Hero() {
   const { t } = useTranslation();
   const [play, setPlay] = useState(shouldPlayOnMount);
   const [replay, setReplay] = useState(0);
-  const sectionRef = useRef<HTMLElement>(null);
   const ctaRef = useMagnetic<HTMLButtonElement>();
   const whatsappRef = useMagnetic<HTMLAnchorElement>();
   const actionsRef = useInlineWhatsApp<HTMLDivElement>();
@@ -98,20 +91,6 @@ export default function Hero() {
     return () => window.removeEventListener(INTRO_DONE_EVENT, onIntroDone);
   }, []);
 
-  // A soft light that follows the mouse across the hero, and a gentle
-  // tilt of the product photo towards it (--tx/--ty, -1…1). CSS reads the
-  // custom properties; they are set directly on the element, so moving
-  // the mouse never re-renders React.
-  const trackPointer = (e: PointerEvent<HTMLElement>) => {
-    if (e.pointerType !== 'mouse' || !sectionRef.current) return;
-    const el = sectionRef.current;
-    const r = el.getBoundingClientRect();
-    el.style.setProperty('--mx', `${e.clientX - r.left}px`);
-    el.style.setProperty('--my', `${e.clientY - r.top}px`);
-    el.style.setProperty('--tx', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
-    el.style.setProperty('--ty', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
-  };
-
   const scrollToContact = () => {
     playClick();
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
@@ -119,26 +98,17 @@ export default function Hero() {
 
   const words = headlineWords([
     { text: t('hero_title_pre') },
-    { text: t('hero_title_word1'), shimmer: 'blue' },
+    { text: t('hero_title_word1'), key: true },
     { text: t('hero_title_mid') },
-    { text: t('hero_title_word2'), shimmer: 'gold' },
+    { text: t('hero_title_word2'), key: true },
     { text: t('hero_title_post') },
   ]);
 
   return (
     <section
       id="hero"
-      ref={sectionRef}
       className={`hero-section${play ? ' hero-play' : ''}`}
-      onPointerMove={trackPointer}
     >
-      {/* Backdrop: three slow aurora lights (gold, ember, violet) drifting
-          behind the page. Pure CSS, decorative, frozen for reduced motion. */}
-      <div className="hero-backdrop" aria-hidden="true">
-        <span className="hero-orb hero-orb-a" />
-        <span className="hero-orb hero-orb-b" />
-        <span className="hero-orb hero-orb-c" />
-      </div>
       <div className="hero-inner" key={replay}>
         <div className="hero-main">
           <span className="hero-eyebrow hero-rise" style={{ '--d': '0s' } as CSSProperties}>
@@ -153,8 +123,8 @@ export default function Hero() {
                 <span className="hero-word-mask">
                   <span className="hero-word" style={{ '--d': `${0.1 + i * 0.045}s` } as CSSProperties}>
                     {word.map((seg, j) =>
-                      seg.shimmer ? (
-                        <span key={j} className={`hero-title-word hero-title-word-${seg.shimmer}`}>
+                      seg.key ? (
+                        <span key={j} className="hero-key">
                           {seg.text}
                         </span>
                       ) : (
@@ -208,40 +178,51 @@ export default function Hero() {
           </ul>
         </div>
 
-        <div className="hero-visual hero-unveil" style={{ '--d': '0.3s' } as CSSProperties}>
-          {/* Two small status cards float over the photo — the kind of
-              message the systems we build send to an owner. They make the
-              still photo read as a live product; decorative, so hidden
-              from assistive tech (the copy beside it says the same). */}
-          <span className="hero-chip hero-chip-a" aria-hidden="true">
-            <span className="hero-chip-dot" />
-            {t('hero_chip_1')}
-          </span>
-          <span className="hero-chip hero-chip-b" aria-hidden="true">
-            <Check size={14} strokeWidth={2.4} />
-            {t('hero_chip_2')}
-          </span>
-          {/* A slowly turning aurora behind the frame: the screen is lit
-              from behind instead of pasted onto the page. */}
-          <span className="hero-aura" aria-hidden="true" />
-          {/* The likely LCP element: eager, high priority, and sized by
-              srcset so a phone takes the 640 px file (about 24 kB). The
-              copy beside it says what it shows, hence the empty alt. */}
-          <img
-            className="hero-photo"
-            src={`${heroImage.stem}-1080.webp`}
-            srcSet={srcSet(heroImage)}
-            sizes="(max-width: 900px) 92vw, 540px"
-            width={heroImage.width}
-            height={heroImage.height}
-            alt=""
-            // Lower-case on purpose: React 18 does not know the
-            // camel-cased prop yet and would warn instead of passing it.
-            {...{ fetchpriority: 'high' }}
-            decoding="async"
-          />
-        </div>
+        <figure className="hero-visual">
+          <PhiComposition />
+          <figcaption className="hero-phi-caption hero-rise" style={{ '--d': '1.9s' } as CSSProperties}>
+            {t('hero_phi_caption')}
+          </figcaption>
+        </figure>
       </div>
     </section>
+  );
+}
+
+/* The golden rectangle, 610 × 377, cut into its squares; each square
+   carries a quarter of the spiral. Coordinates are the Fibonacci sizes
+   themselves, so the drawing IS the ratio rather than an illustration
+   of it. Decorative (the caption says what it is), hence aria-hidden. */
+const SPIRAL =
+  'M0,377 A377,377 0 0 1 377,0 A233,233 0 0 1 610,233 A144,144 0 0 1 466,377 ' +
+  'A89,89 0 0 1 377,288 A55,55 0 0 1 432,233 A34,34 0 0 1 466,267';
+
+const SQUARES = [
+  { x: 0, y: 0, s: 377, tone: 'ink' },
+  { x: 377, y: 0, s: 233, tone: 'saffron' },
+  { x: 466, y: 233, s: 144, tone: 'paper' },
+  { x: 377, y: 288, s: 89, tone: 'terracotta' },
+  { x: 377, y: 233, s: 55, tone: 'ink' },
+  { x: 432, y: 233, s: 34, tone: 'saffron' },
+] as const;
+
+function PhiComposition() {
+  return (
+    <svg className="phi" viewBox="-40 -60 690 497" aria-hidden="true" focusable="false">
+      <circle className="phi-orbit" cx="305" cy="188" r="250" />
+      {SQUARES.map((q, i) => (
+        <rect
+          key={q.s}
+          className={`phi-sq phi-sq-${q.tone}`}
+          x={q.x}
+          y={q.y}
+          width={q.s}
+          height={q.s}
+          style={{ '--d': `${0.35 + i * 0.22}s` } as CSSProperties}
+        />
+      ))}
+      <path className="phi-spiral" d={SPIRAL} pathLength={1} />
+      <circle className="phi-point" r="9" />
+    </svg>
   );
 }

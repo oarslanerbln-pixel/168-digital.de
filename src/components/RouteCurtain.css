@@ -15,7 +15,7 @@
 }
 
 .route-curtain-mark {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.32em;

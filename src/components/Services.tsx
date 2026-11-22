@@ -1,8 +1,8 @@
-import type { PointerEvent } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import ServiceGlyph from './ServiceGlyph';
 import { playClick, playTick } from '../utils/audio';
 import { requestContactTopic } from '../utils/contactTopic';
 import { services, type ServiceMeta } from '../data/services';
@@ -12,46 +12,27 @@ import './Services.css';
 /* ════════════════════════════════════════════════════════════════
    SERVICES — the six things the studio sells, as the page's anchor.
 
-   The section is a dark band on the light page (Nov 2026): the one
-   place the gallery-white site drops into night, so the offer reads as
-   the page's anchor instead of six interchangeable white boxes. Every
-   tile leads with a real photo — product shots for the software, frames
-   from the studio's own showreel for film — because "what will I get"
-   is answered faster by a picture than by an icon.
-
-   Services used to sit two-thirds down the page as quiet light cards;
-   a visitor had to read hero, solutions, work and process before
-   learning what the studio actually offers. They now come straight
-   after the client marquee, as a bento grid of large dark tiles: the
-   two software services wide on the first row (the business the site
-   leads with), the four film services below.
+   They come straight after the client marquee and the facts, so "what
+   do you do?" is answered before anything else. "Phi" language (Nov
+   2026): a ruled grid of tiles on paper, each led by its own geometric
+   sign (ServiceGlyph) instead of a photo, its title in the display serif.
+   The photos live on the service pages, where there is room to read them.
 
    Motion, in order of what it tells the visitor:
    - tiles rise in one after another as the grid enters the screen;
-   - on hover the tile lifts, an aurora rim (gold → ember → violet)
-     lights up around its edge and a warm light follows the pointer —
-     "this is clickable" without a label (Nov 2026: the band used to be
-     strictly monochrome and read as classical; the owner asked for more
-     life, so the aurora lights it, but only where the visitor points).
-   Everything is CSS-driven from two custom properties (--mx/--my) set
-   on pointer move, so there is no animation loop and nothing runs while
-   the visitor is not touching a tile. Reduced motion keeps the colour
-   change and drops the movement.
+   - on hover (or keyboard focus) the tile inverts to ink and its sign
+     turns a quarter — the spiral's own move — "this is clickable"
+     without a label. Colour and a transform only; reduced motion keeps
+     the inversion and drops the turn.
 
-   Two ways out of every tile: the whole card opens the service page
-   (a stretched link on the title), and a separate "Request a quote"
-   button jumps straight to the form with the service's topic chosen —
-   a visitor who already knows what they want skips a page.
+   Two ways out of every tile: the whole tile opens the service page (a
+   stretched link on the title), and a separate "Request a quote" button
+   jumps straight to the form with the service's topic chosen — a visitor
+   who already knows what they want skips a page.
 
-   Cards come straight from src/data/services.ts, so a service is added
+   Tiles come straight from src/data/services.ts, so a service is added
    in one place and lands here, in the nav and on its own page.
    ════════════════════════════════════════════════════════════════ */
-
-function trackPointer(e: PointerEvent<HTMLElement>) {
-  const r = e.currentTarget.getBoundingClientRect();
-  e.currentTarget.style.setProperty('--mx', `${e.clientX - r.left}px`);
-  e.currentTarget.style.setProperty('--my', `${e.clientY - r.top}px`);
-}
 
 function ServiceTile({ service, index }: { service: ServiceMeta; index: number }) {
   const { t } = useTranslation();
@@ -62,23 +43,17 @@ function ServiceTile({ service, index }: { service: ServiceMeta; index: number }
   return (
     <motion.li
       className={`svc-cell svc-cell-${service.group}`}
-      initial={{ opacity: 0, y: 36, scale: 0.97 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      initial={{ opacity: 0, y: 28 }}
+      whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
-      <article className="svc-tile" onPointerMove={trackPointer} onMouseEnter={playTick}>
-        <span className={`svc-media${service.imageFrame === 'phone' ? ' svc-media-phone' : ''}`}>
-          <img
-            src={service.image}
-            alt=""
-            loading="lazy"
-            decoding="async"
-            className="svc-img"
-          />
-        </span>
-        <span className="svc-body">
+      <article className="svc-tile" onMouseEnter={playTick}>
+        <div className="svc-head">
+          <ServiceGlyph slug={service.slug} />
           <span className="svc-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+        </div>
+        <div className="svc-body">
           <h3 className="svc-title">
             {/* Stretched over the whole tile by .svc-link::after. */}
             <Link to={localize(`/${service.slug}`)} className="svc-link">
@@ -86,12 +61,12 @@ function ServiceTile({ service, index }: { service: ServiceMeta; index: number }
             </Link>
           </h3>
           <p className="svc-desc">{t(service.descKey)}</p>
-          <span className="svc-tags">
+          <div className="svc-tags">
             {service.tags.map((tag) => (
               <span key={tag} className="svc-tag">{tag}</span>
             ))}
-          </span>
-          <span className="svc-actions">
+          </div>
+          <div className="svc-actions">
             <span className="svc-cta" aria-hidden="true">
               {t('svc_view_details')} <ArrowUpRight size={16} />
             </span>
@@ -107,8 +82,8 @@ function ServiceTile({ service, index }: { service: ServiceMeta; index: number }
               <MessageCircle size={15} strokeWidth={2} aria-hidden="true" />
               {t('svc_request')}
             </button>
-          </span>
-        </span>
+          </div>
+        </div>
       </article>
     </motion.li>
   );

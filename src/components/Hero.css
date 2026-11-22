@@ -1,82 +1,17 @@
 /* ═══════════════════════════════════════════════════════════════
-   HERO — editorial, left-aligned, one accent.
+   HERO — "Phi": an editorial headline beside the golden rectangle.
 
-   Layout: a two-column grid (statement | product mockup) that
-   collapses to a single column below 900px. Nothing here has a fixed
-   minimum width, so the section can never widen the viewport.
+   Layout: a two-column grid (statement | composition) that collapses to
+   a single column below 900px. Nothing here has a fixed minimum width,
+   so the section can never widen the viewport (CLAUDE.md rule 2).
    ═══════════════════════════════════════════════════════════════ */
 
 .hero-section {
   position: relative;
   z-index: 1;
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 152px 32px 88px;
-  display: flex;
-  flex-direction: column;
-  gap: 96px;
-}
-
-/* ─── Backdrop: three aurora lights ───
-   Gold top right behind the mockup, ember below it, violet low on the
-   left behind the headline. Each drifts on its own slow loop (24–34s,
-   alternate) so they never move in step — the page breathes instead of
-   pulsing. transform/opacity only, so it stays on the compositor. */
-.hero-backdrop {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 100vw;
-  transform: translateX(-50%);
-  z-index: -1;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.hero-orb {
-  position: absolute;
-  width: 52vw;
-  max-width: 720px;
-  aspect-ratio: 1;
-  border-radius: 50%;
-  filter: blur(90px);
-  opacity: 0.55;
-  animation: hero-orb 24s ease-in-out infinite alternate;
-}
-
-.hero-orb-a {
-  top: -18%;
-  right: 2%;
-  background: radial-gradient(circle, rgba(var(--aurora-gold-rgb), 0.5), transparent 65%);
-}
-
-.hero-orb-b {
-  top: 30%;
-  right: 18%;
-  width: 36vw;
-  background: radial-gradient(circle, rgba(var(--aurora-ember-rgb), 0.4), transparent 65%);
-  animation-duration: 29s;
-  animation-direction: alternate-reverse;
-}
-
-.hero-orb-c {
-  bottom: -30%;
-  left: -12%;
-  width: 46vw;
-  background: radial-gradient(circle, rgba(var(--aurora-violet-rgb), 0.34), transparent 65%);
-  animation-duration: 34s;
-}
-
-@keyframes hero-orb {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to   { transform: translate3d(-6%, 7%, 0) scale(1.1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-orb {
-    animation: none;
-  }
+  padding: 148px 40px 96px;
 }
 
 .hero-inner {
@@ -84,7 +19,7 @@
   /* minmax(0, …) on both tracks: without the 0 floor, a long unbroken
      word in a translation would set a min-content width and push the
      grid — and with it the whole page — wider than the screen. */
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   gap: 64px;
   align-items: center;
 }
@@ -93,107 +28,57 @@
   min-width: 0;
 }
 
-/* ─── Eyebrow ─── */
+/* ─── Eyebrow: a plain overline, no pill ─── */
 .hero-eyebrow {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 26px;
-  padding: 7px 14px 7px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: var(--bg-raised);
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  margin-bottom: 28px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--text-muted);
+  color: var(--text-faint);
 }
 
-/* A small live-dot: "we're taking projects" without saying it twice. */
+/* A small saffron square — the smallest of the composition's squares. */
 .hero-eyebrow-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 0 4px var(--accent-soft);
+  width: 8px;
+  height: 8px;
+  background: var(--accent-gold-soft);
 }
 
-/* ─── Headline ─── */
+/* ─── Headline: the display serif, large and tight ─── */
 .hero-headline {
-  font-family: 'Outfit', sans-serif;
-  font-size: clamp(2.4rem, 4.6vw, 4.25rem);
-  font-weight: 500;
-  line-height: 1.04;
-  letter-spacing: -0.045em;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6.6rem);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.02em;
   color: var(--text-main);
-  margin: 0 0 28px;
+  margin: 0 0 32px;
   text-wrap: balance;
   overflow-wrap: break-word;
 }
 
-/* ─── The one text gradient on the site.
-
-   The two key words switch voice: Playfair italic, set against the
-   upright ink sans, running from bronze gold into a deep ember. A
-   brighter gold light passes through them (8s, alternate, so it eases
-   and reverses instead of snapping). Both ends hold 4.5:1 on the ground. ─── */
-.hero-title-word {
-  display: inline-block;
-  white-space: nowrap;
-  font-family: 'Playfair Display', serif;
+/* The two key words switch to italic in deep gold. Solid colour, no
+   gradient: the contrast of upright and italic does the work. */
+.hero-key {
   font-style: italic;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  /* Italic overhang would be clipped by background-clip: pad it, then
-     pull the following punctuation back so "sparen." stays one word. */
-  padding-right: 0.08em;
-  margin-right: -0.08em;
-  background-repeat: no-repeat;
-  background-size: 250% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  animation: hero-word-sweep 8s ease-in-out infinite alternate;
-}
-
-.hero-title-word-blue,
-.hero-title-word-gold {
-  background-image: linear-gradient(
-    100deg,
-    var(--shimmer-blue) 0%, var(--aurora-ember-deep) 38%,
-    var(--shimmer-gold-lit) 50%,
-    var(--aurora-ember-deep) 62%, var(--shimmer-blue) 100%
-  );
-}
-
-.hero-title-word-gold {
-  animation-delay: 2s;
-}
-
-@keyframes hero-word-sweep {
-  0%   { background-position: 100% 0; }
-  100% { background-position: 0% 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-title-word {
-    animation: none;
-    background-position: 50% 0;
-  }
+  color: var(--accent-display);
+  white-space: nowrap;
 }
 
 /* ─── Subtitle ─── */
 .hero-subtitle {
-  font-size: clamp(1.02rem, 1.5vw, 1.2rem);
-  font-weight: 400;
-  line-height: 1.6;
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+  line-height: 1.65;
   color: var(--text-muted);
-  max-width: 48ch;
-  margin: 0 0 36px;
+  max-width: 46ch;
+  margin: 0 0 40px;
 }
 
-/* ─── Actions — one solid button, one quiet link ─── */
+/* ─── Actions — one solid button, one outlined ─── */
 .hero-actions {
   display: flex;
   align-items: center;
@@ -201,158 +86,79 @@
   flex-wrap: wrap;
 }
 
-/* A soft accent glow that breathes three times after the hero lands,
-   then rests — enough to find the button, not enough to nag. */
-.hero-cta::after {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  box-shadow: 0 0 28px 2px rgba(var(--accent-cyan-rgb), 0.55);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.hero-play .hero-cta::after {
-  animation: hero-cta-breathe 2.6s ease-in-out 1.8s 3;
-}
-
-.hero-cta:hover::after {
-  opacity: 0.8;
-  transition: opacity 0.4s var(--ease-premium);
-}
-
-@keyframes hero-cta-breathe {
-  50% { opacity: 1; }
-}
-
-/* ─── Right column: product mockup ─── */
+/* ─── Right column: the golden rectangle ─── */
 .hero-visual {
   position: relative;
   min-width: 0;
-  padding-top: 8px;
+  margin: 0;
 }
 
-/* The aurora behind the photo: a blurred conic of the three lights,
-   turning once every 18s. It sits behind the frame, so only its glow
-   reaches past the edges — lit, not "gaming". */
-.hero-aura {
-  position: absolute;
-  inset: 4% 2% -2%;
-  z-index: var(--z-backdrop);
-  border-radius: 40%;
-  background: conic-gradient(
-    from 0deg,
-    rgba(var(--aurora-gold-rgb), 0.7),
-    rgba(var(--aurora-ember-rgb), 0.55),
-    rgba(var(--aurora-violet-rgb), 0.5),
-    rgba(var(--aurora-gold-rgb), 0.7)
-  );
-  filter: blur(48px);
-  opacity: 0.55;
-  pointer-events: none;
-  animation: hero-aura-turn 18s linear infinite;
-}
-
-@keyframes hero-aura-turn {
-  to { transform: rotate(360deg); }
-}
-
-.hero-photo {
-  position: relative;
+.phi {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: var(--radius-card);
-  border: 1px solid var(--line-strong);
-  box-shadow: var(--shadow-float), 0 0 0 1px rgba(var(--accent-cyan-rgb), 0.08);
-  /* Tilts towards the pointer (--tx/--ty from Hero.tsx), and the chips
-     drift the other way below: two depths, so the photo reads as an
-     object in space. Rests flat on touch screens. */
-  transform: perspective(1400px) rotateY(calc(var(--tx, 0) * 5deg)) rotateX(calc(var(--ty, 0) * -4deg));
-  transition: transform 0.9s var(--ease-premium);
+  overflow: visible;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-aura {
-    animation: none;
-  }
-  .hero-photo {
-    transform: none;
-  }
+.phi-sq-ink { fill: var(--text-main); }
+.phi-sq-saffron { fill: var(--accent-gold-soft); }
+.phi-sq-terracotta { fill: var(--terracotta); }
+.phi-sq-paper {
+  fill: var(--bg-sunken);
+  stroke: var(--text-main);
+  stroke-width: 1.5;
 }
 
-/* Floating status cards (see Hero.tsx). Glass, one accent, small type. */
-.hero-chip {
-  position: absolute;
-  z-index: 1;
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid var(--line-strong);
-  background: var(--glass-bg);
-  -webkit-backdrop-filter: blur(14px);
-  backdrop-filter: blur(14px);
-  box-shadow: var(--shadow-float);
-  font-size: 0.8rem;
+/* pathLength="1" on the path, so the draw-in needs no measured length. */
+.phi-spiral {
+  fill: none;
+  stroke: var(--bg-dark);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;
+}
+
+/* A dotted orbit turning once a minute around the whole figure. */
+.phi-orbit {
+  fill: none;
+  stroke: rgba(var(--ink-rgb), 0.16);
+  stroke-dasharray: 2 8;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: phi-turn 60s linear infinite;
+}
+
+/* A point travels the spiral and back, slowing into each end. Placed by
+   offset-path, so the motion is a transform on the compositor. */
+.phi-point {
+  fill: var(--bg-dark);
+  stroke: var(--text-main);
+  stroke-width: 2;
+  offset-path: path('M0,377 A377,377 0 0 1 377,0 A233,233 0 0 1 610,233 A144,144 0 0 1 466,377 A89,89 0 0 1 377,288 A55,55 0 0 1 432,233 A34,34 0 0 1 466,267');
+  offset-rotate: 0deg;
+  animation: phi-travel 9s cubic-bezier(0.65, 0, 0.35, 1) 2.4s infinite alternate;
+}
+
+.hero-phi-caption {
+  margin-top: 18px;
+  font-size: 0.78rem;
   font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--text-main);
-  white-space: nowrap;
-  pointer-events: none;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
 }
 
-.hero-chip svg {
-  color: var(--accent-cyan);
+@keyframes phi-turn {
+  to { transform: rotate(360deg); }
 }
 
-.hero-chip-a {
-  top: 14%;
-  left: -28px;
-  translate: calc(var(--tx, 0) * -10px) calc(var(--ty, 0) * -8px);
-  transition: translate 0.9s var(--ease-premium);
-}
-
-.hero-chip-b {
-  bottom: 10%;
-  right: -22px;
-  translate: calc(var(--tx, 0) * -14px) calc(var(--ty, 0) * -10px);
-  transition: translate 0.9s var(--ease-premium);
-}
-
-.hero-chip-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent-cyan);
-  box-shadow: 0 0 0 4px rgba(var(--accent-cyan-rgb), 0.18);
-  position: relative;
-}
-
-/* "New inquiry received" — a ring ripples out of the dot like a live
-   notification (transform/opacity on a pseudo-element). */
-.hero-chip-dot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1px solid var(--accent-cyan);
-  animation: hero-live 2.4s ease-out infinite;
-}
-
-@keyframes hero-live {
-  from { transform: scale(1); opacity: 0.8; }
-  to   { transform: scale(3); opacity: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-chip-dot::after { animation: none; opacity: 0; }
+@keyframes phi-travel {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MOTION — only under .hero-play (see Hero.tsx for when that is set).
+   ENTRANCE — only under .hero-play (see Hero.tsx for when that is set).
    Without the class every element is simply in its final place, which
    is what the prerendered HTML and reduced-motion visitors get.
    ═══════════════════════════════════════════════════════════════ */
@@ -364,8 +170,8 @@
   display: inline-block;
   overflow: hidden;
   vertical-align: top;
-  padding-bottom: 0.12em;
-  margin-bottom: -0.12em;
+  padding-bottom: 0.14em;
+  margin-bottom: -0.14em;
 }
 
 .hero-word {
@@ -380,35 +186,16 @@
   animation: hero-rise 0.9s var(--ease-premium) var(--d, 0s) both;
 }
 
-/* The photo unveils top-down, like a print coming out of a tray. */
-.hero-play .hero-unveil {
-  animation: hero-unveil 1.3s var(--ease-premium) var(--d, 0s) both;
+/* Squares settle in from the largest to the smallest… */
+.hero-play .phi-sq {
+  animation: phi-sq-in 0.9s var(--ease-premium) var(--d, 0s) both;
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-/* The shimmer waits until the words have landed. */
-.hero-play .hero-title-word {
-  animation-delay: 1s;
-}
-
-.hero-play .hero-title-word-gold {
-  animation-delay: 2.4s;
-}
-
-.hero-play .hero-chip {
-  animation:
-    hero-chip-in 0.9s var(--ease-premium) both,
-    hero-chip-float 6s ease-in-out 2.4s infinite alternate;
-}
-
-.hero-play .hero-chip-a { animation-delay: 1.3s, 2.2s; }
-.hero-play .hero-chip-b { animation-delay: 1.6s, 3.4s; }
-
-@keyframes hero-chip-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.96); }
-}
-
-@keyframes hero-chip-float {
-  to { transform: translateY(-8px); }
+/* …then the spiral is drawn across them. */
+.hero-play .phi-spiral {
+  animation: phi-draw 2.6s cubic-bezier(0.65, 0, 0.35, 1) 1.5s both;
 }
 
 @keyframes hero-word-up {
@@ -419,46 +206,21 @@
   from { opacity: 0; transform: translateY(16px); }
 }
 
-@keyframes hero-unveil {
-  /* The side and bottom insets are negative so the floating chips and
-     the halo, which reach past the photo, are not cut off at the end. */
-  from { opacity: 0; clip-path: inset(-20% -20% 100% -20%); transform: translateY(24px); }
-  to { opacity: 1; clip-path: inset(-20% -20% -20% -20%); transform: none; }
+@keyframes phi-sq-in {
+  from { opacity: 0; transform: scale(0.92); }
 }
 
-/* A soft light that follows the mouse (position from Hero.tsx). Only
-   for a real pointer; it is a tint of the one accent, faint enough to
-   sit behind the shimmer rather than compete with it. The mask fades
-   its edges so the section's box never shows. */
-@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .hero-section::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: var(--z-backdrop);
-    pointer-events: none;
-    background: radial-gradient(
-      520px circle at var(--mx, 70%) var(--my, 30%),
-      var(--accent-soft),
-      transparent 70%
-    );
-    opacity: 0;
-    transition: opacity 0.6s var(--ease-premium);
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  }
-
-  .hero-section:hover::before {
-    opacity: 1;
-  }
+@keyframes phi-draw {
+  from { stroke-dashoffset: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-play .hero-word,
   .hero-play .hero-rise,
-  .hero-play .hero-unveil,
-  .hero-play .hero-chip,
-  .hero-play .hero-cta::after {
+  .hero-play .phi-sq,
+  .hero-play .phi-spiral,
+  .phi-orbit,
+  .phi-point {
     animation: none;
   }
 }
@@ -468,9 +230,6 @@
    ═══════════════════════════════════════════════════════════════ */
 
 @media (max-width: 900px) {
-  .hero-chip-a { left: 12px; top: 10%; }
-  .hero-chip-b { right: 12px; bottom: 8%; }
-
   .hero-inner {
     grid-template-columns: minmax(0, 1fr);
     gap: 56px;
@@ -478,7 +237,6 @@
 
   .hero-section {
     padding: 132px 24px 80px;
-    gap: 72px;
   }
 
   .hero-visual {
@@ -487,19 +245,12 @@
 }
 
 @media (max-width: 600px) {
-  .hero-chip { font-size: 0.72rem; padding: 8px 11px; gap: 7px; }
   .hero-section {
     padding: 112px 20px 64px;
-    gap: 56px;
   }
 
   .hero-headline {
-    font-size: clamp(2.15rem, 10.5vw, 3.4rem);
-    letter-spacing: -0.03em;
-  }
-
-  .hero-subtitle {
-    margin-bottom: 32px;
+    font-size: clamp(2.6rem, 12.5vw, 3.6rem);
   }
 
   /* Full-width stacked buttons read better than two half-width ones

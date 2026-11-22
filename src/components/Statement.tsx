@@ -16,7 +16,7 @@ import './Statement.css';
    saving time. The sentence is set large and starts as a faint
    imprint; each word inks in as the visitor scrolls past it, so the
    sentence is read word by word instead of skimmed. The two key words
-   switch to the hero's voice (Playfair italic, gold), so the page's
+   switch to the hero's voice (display-serif italic, gold), so the page's
    promise and its first screen rhyme. A golden spiral turns slowly
    behind it with the scroll — the studio's name drawn once more, as a
    watermark.

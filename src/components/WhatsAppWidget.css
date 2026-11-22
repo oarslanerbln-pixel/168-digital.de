@@ -7,7 +7,7 @@
   bottom: 40px;
   left: 40px;
   z-index: var(--z-fab);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   pointer-events: auto;
 }
 
@@ -229,7 +229,7 @@
 }
 
 .wa-action-btn {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 1px;

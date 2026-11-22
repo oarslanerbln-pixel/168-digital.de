@@ -108,7 +108,7 @@ body.nav-menu-open .home-logo-wrap {
   border-bottom: 1px solid var(--line);
   background: transparent;
   color: var(--text-main);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   text-align: left;
   cursor: pointer;
   transition: padding-left 0.35s var(--ease-premium), border-color 0.35s var(--ease-premium);

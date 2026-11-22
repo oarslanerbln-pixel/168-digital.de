@@ -42,7 +42,7 @@
 }
 
 .stmt-key {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.015em;
