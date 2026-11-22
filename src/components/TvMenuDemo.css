@@ -44,7 +44,7 @@
     var(--surface-dark);
   color: var(--on-dark);
   box-shadow: var(--shadow-float);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
 }
 
 /* The stand under the TV — two lines are enough to read as "screen". */
@@ -63,7 +63,7 @@
   display: flex;
   align-items: center;
   gap: 0.9cqw;
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-style: italic;
   font-size: 2.1cqw;
   color: rgba(var(--on-dark-rgb), 0.75);
@@ -115,7 +115,7 @@
 }
 
 .tvdemo-title em {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-weight: 400;
   font-size: 2.6cqw;
   color: var(--accent-gold-soft);
@@ -238,7 +238,7 @@
 }
 
 .tvdemo-feature-name {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
   font-size: 6cqw;

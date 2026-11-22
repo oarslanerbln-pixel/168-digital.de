@@ -207,8 +207,6 @@ export interface ResponsiveImage {
   height: number;
 }
 
-export const heroImage: ResponsiveImage = { stem: '/solutions/hero', width: 1080, height: 1080 };
-
 export const solutionImages: Record<SolutionId, ResponsiveImage> = {
   booking: { stem: '/solutions/booking', width: 1080, height: 675 },
   ordering: { stem: '/solutions/ordering', width: 1080, height: 675 },

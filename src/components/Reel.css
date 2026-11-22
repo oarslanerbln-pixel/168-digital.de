@@ -199,7 +199,7 @@
 }
 
 .reel-text {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: clamp(1.4rem, 4vw, 3.2rem);
   font-weight: 600;
   letter-spacing: clamp(4px, 1.5vw, 12px);

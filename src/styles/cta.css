@@ -13,18 +13,18 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 16px 26px;
-  border: 1px solid var(--text-main);
+  min-height: 52px;
+  padding: 0 28px;
+  border: 1.5px solid var(--text-main);
   border-radius: 999px;
   background: var(--text-main);
   color: var(--bg-dark);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.01em;
   cursor: pointer;
   position: relative;
-  box-shadow: var(--shadow-card);
   transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium),
     transform 0.45s var(--ease-premium);
 }
@@ -45,21 +45,22 @@
 .hero-cta-ghost {
   display: inline-flex;
   align-items: center;
-  padding: 16px 24px;
-  border: 1px solid var(--line-strong);
+  min-height: 52px;
+  padding: 0 26px;
+  border: 1.5px solid var(--text-main);
   border-radius: 999px;
-  background: var(--bg-raised);
+  background: transparent;
   color: var(--text-main);
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
-  transition: border-color 0.35s var(--ease-premium), color 0.35s var(--ease-premium),
+  transition: background 0.35s var(--ease-premium), color 0.35s var(--ease-premium),
     transform 0.45s var(--ease-premium);
 }
 
 .hero-cta-ghost:hover {
-  border-color: var(--line-strong);
-  color: var(--text-main);
+  background: var(--text-main);
+  color: var(--bg-dark);
 }
 
 /* ─── Trust lines — the three "but…" questions, answered in advance ─── */

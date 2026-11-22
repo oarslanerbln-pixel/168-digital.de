@@ -165,7 +165,7 @@
 
 .pl-digits {
   display: inline-flex;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-weight: 500;
   letter-spacing: -0.045em;
   font-variant-numeric: tabular-nums;
@@ -192,7 +192,7 @@
 }
 
 .pl-word {
-  font-family: 'Playfair Display', serif;
+  font-family: var(--font-display);
   font-style: italic;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -202,7 +202,7 @@
 .pl-tagline {
   margin-top: 26px;
   margin-right: -0.42em; /* optically re-centre the tracked caps */
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: clamp(0.6rem, 1.7vw, 0.72rem);
   font-weight: 500;
   letter-spacing: 0.42em;
@@ -222,7 +222,7 @@
   border: 1px solid var(--line);
   border-radius: 999px;
   color: var(--text-muted);
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 500;
   letter-spacing: 0.18em;

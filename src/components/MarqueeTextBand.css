@@ -1,24 +1,18 @@
 .marquee-band {
   overflow: hidden;
-  padding: 22px 0;
+  padding: 20px 0;
   position: relative;
   z-index: 10;
-  /* These were white-on-white (a leftover from the old dark theme) and so
-     never rendered; the band had no edges at all. */
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-
-.marquee-mask {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: linear-gradient(90deg, var(--bg-dark) 0%, transparent 8%, transparent 92%, var(--bg-dark) 100%);
+  background: var(--surface-dark);
+  color: var(--on-dark);
 }
 
 .marquee-inner {
+  /* max-content + four identical repeats: moving by -25% is exactly one
+     set, so the loop is seamless at any font size (it used to jump at a
+     fixed -2400px). */
   display: flex;
+  width: max-content;
   white-space: nowrap;
   will-change: transform;
 }
@@ -36,13 +30,13 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(-2400px);
+    transform: translateX(-25%);
   }
 }
 
 @keyframes scroll-right {
   0% {
-    transform: translateX(-2400px);
+    transform: translateX(-25%);
   }
   100% {
     transform: translateX(0);
@@ -50,13 +44,23 @@
 }
 
 .marquee-text {
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  font-weight: 600;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  font-family: 'Outfit', sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  padding-right: 40px;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
+  line-height: 1.2;
+}
 
-  /* Muted rather than pure black: this is supporting social proof, it
-     should not out-shout the headline sitting right above it. */
-  color: var(--text-muted);
+.marquee-sep {
+  font-size: 0.6em;
+  color: var(--accent-gold-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-inner.direction-left,
+  .marquee-inner.direction-right {
+    animation: none;
+  }
 }

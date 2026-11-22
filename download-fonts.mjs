@@ -24,7 +24,7 @@
    it downloads the .woff2 files into public/fonts/ AND rewrites the
    @font-face block in index.html between the FONT-FACE markers.
 
-   Variable fonts: Outfit, Plus Jakarta Sans and Playfair Display are
+   Variable fonts: Manrope and Plus Jakarta Sans are
    variable, so the API answers every requested weight with the SAME file
    URL. Saved per weight, that became up to four byte-identical files —
    and four separate downloads, because a browser caches by URL. Faces
@@ -46,24 +46,24 @@ const KEEP_SUBSETS = new Set(['latin', 'latin-ext']);
 
 /** Short file-name prefixes, kept identical to the previous filenames. */
 const FAMILY_SLUG = {
-  'Outfit': 'outfit',
-  'Playfair Display': 'playfair',
+  'Manrope': 'manrope',
+  'Instrument Serif': 'instrument',
   'Plus Jakarta Sans': 'jakarta',
 };
 
 const CSS_URL =
   'https://fonts.googleapis.com/css2' +
-  '?family=Outfit:wght@300;400;600;800' +
-  '&family=Playfair+Display:ital,wght@0,400;0,700;1,400' +
+  '?family=Manrope:wght@400;500;600;700;800' +
+  '&family=Instrument+Serif:ital@0;1' +
   '&family=Plus+Jakarta+Sans:wght@500;600;700;800' +
   '&display=swap';
 
 /**
- * The two faces the hero paints with. They are preloaded so the headline
+ * The faces the hero paints with (body sans, display serif upright + italic). They are preloaded so the headline
  * does not sit in fallback type while the browser discovers the CSS —
  * everything else may swap in late without anyone noticing.
  */
-const PRELOAD = ['outfit-latin.woff2', 'playfair-latin.woff2'];
+const PRELOAD = ['manrope-latin.woff2', 'instrument-400-latin.woff2', 'instrument-400-italic-latin.woff2'];
 
 const fontsDir = path.join('public', 'fonts');
 if (!existsSync(fontsDir)) mkdirSync(fontsDir, { recursive: true });

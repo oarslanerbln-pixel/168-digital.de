@@ -166,7 +166,7 @@ export const legalContent: Record<'impressum' | 'datenschutz', LegalSection> = {
         <p>Sofern innerhalb dieser Datenschutzerklärung keine speziellere Speicherdauer genannt wurde, verbleiben Ihre personenbezogenen Daten bei uns, bis der Zweck für die Datenverarbeitung entfällt. Gesetzliche Aufbewahrungspflichten bleiben unberührt.</p>
 
         <p><strong>16. Schriftarten (Self-Hosted)</strong></p>
-        <p>Diese Website verwendet die Schriftart „Outfit". Die Schriftarten sind lokal auf unserem Server gehostet. Es werden keine Verbindungen zu externen Servern (z.B. Google) hergestellt. Somit werden keine personenbezogenen Daten (z.B. Ihre IP-Adresse) an Dritte übertragen.</p>
+        <p>Diese Website verwendet die Schriftarten „Manrope" und „Instrument Serif". Die Schriftarten sind lokal auf unserem Server gehostet. Es werden keine Verbindungen zu externen Servern (z.B. Google) hergestellt. Somit werden keine personenbezogenen Daten (z.B. Ihre IP-Adresse) an Dritte übertragen.</p>
       </>
     ),
   },

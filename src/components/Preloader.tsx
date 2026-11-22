@@ -17,7 +17,7 @@ interface PreloaderProps {
       screen, the composition grid photographers frame with, which is
       the film half of the business in one gesture;
    2. the four digits 1·6·1·8 rise out of their masks one after another,
-      "Digital" follows in Playfair italic gold — the same voice the
+      "Digital" follows in the display serif's italic, gold — the same voice the
       hero's key words use, so the intro and the first screen read as
       one piece;
    3. the lower hairline turns gold from the grid point outward, and the

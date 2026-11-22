@@ -3,18 +3,17 @@
 .facts-strip {
   position: relative;
   z-index: var(--z-content);
-  max-width: 1240px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 56px 32px 0;
+  padding: 72px 40px 0;
 }
 
 .facts-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  border: 1px solid var(--line);
-  border-radius: 22px;
-  background: linear-gradient(180deg, rgba(var(--ink-rgb), 0.04), rgba(var(--ink-rgb), 0.01));
-  overflow: hidden;
+  /* Ruled like the services grid below: ink lines, no box, no radius. */
+  border-top: var(--rule);
+  border-bottom: var(--rule);
 }
 
 .fact {
@@ -31,12 +30,11 @@
 }
 
 .fact-value {
-  font-size: clamp(2.2rem, 4.4vw, 3.4rem);
-  font-weight: 600;
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 5.6vw, 4.6rem);
+  font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
-  /* Solid on purpose: the hero shimmer stays the only text gradient. */
   color: var(--text-main);
 }
 
