@@ -50,7 +50,7 @@ lassen.**
 | --- | --- |
 | Routen, globale Overlays, Preloader-Logik | `src/App.tsx` |
 | Startseite (Reihenfolge + Begründung im Kopfkommentar) | `src/pages/Home.tsx` |
-| Leistungen als liniertes Raster mit geometrischen Zeichen / Zähler-Streifen | `src/components/Services.tsx`, `ServiceGlyph.tsx`, `FactsStrip.tsx` |
+| Leistungen als liniertes Raster: Foto + geometrisches Zeichen als Stempel / Zähler-Streifen | `src/components/Services.tsx`, `ServiceGlyph.tsx`, `FactsStrip.tsx` |
 | Intro (Phi-Raster, Öffnung am Goldenen Schnitt) / Statement mit Scroll-Tinte | `src/components/Preloader.tsx`, `Statement.tsx` |
 | Gemeinsame CTA-Buttons + Vertrauenszeilen (Hero, Service-Seiten, Statement) | `src/styles/cta.css` |
 | Startseiten-Inhalte: Lösungen, Ablauf, FAQ (DE/EN/TR) + Produktfotos | `src/data/homeContent.ts` |
