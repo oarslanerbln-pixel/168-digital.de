@@ -14,16 +14,19 @@ import './Services.css';
 
    They come straight after the client marquee and the facts, so "what
    do you do?" is answered before anything else. "Phi" language (Nov
-   2026): a ruled grid of tiles on paper, each led by its own geometric
-   sign (ServiceGlyph) instead of a photo, its title in the display serif.
-   The photos live on the service pages, where there is room to read them.
+   2026): a ruled grid of tiles on paper. Each tile opens with a real
+   photo — product shots for the software, frames from the studio's own
+   showreel for film, because "what will I get" is answered fastest by a
+   picture — and the service's geometric sign (ServiceGlyph) sits on the
+   photo's corner like a stamp, tying the picture back to the page's
+   language. Titles are in the display serif.
 
    Motion, in order of what it tells the visitor:
    - tiles rise in one after another as the grid enters the screen;
-   - on hover (or keyboard focus) the tile inverts to ink and its sign
-     turns a quarter — the spiral's own move — "this is clickable"
-     without a label. Colour and a transform only; reduced motion keeps
-     the inversion and drops the turn.
+   - on hover (or keyboard focus) the tile inverts to ink, the photo
+     moves in slightly and the sign turns a quarter — the spiral's own
+     move — "this is clickable" without a label. Colour and transforms
+     only; reduced motion keeps the inversion and drops the movement.
 
    Two ways out of every tile: the whole tile opens the service page (a
    stretched link on the title), and a separate "Request a quote" button
@@ -49,8 +52,12 @@ function ServiceTile({ service, index }: { service: ServiceMeta; index: number }
       transition={{ duration: 0.7, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
     >
       <article className="svc-tile" onMouseEnter={playTick}>
-        <div className="svc-head">
-          <ServiceGlyph slug={service.slug} />
+        <div className={`svc-media${service.imageFrame === 'phone' ? ' svc-media-phone' : ''}`}>
+          {/* The title beside it names the service, hence alt="". */}
+          <img src={service.image} alt="" loading="lazy" decoding="async" className="svc-img" />
+          <span className="svc-stamp">
+            <ServiceGlyph slug={service.slug} size={40} />
+          </span>
           <span className="svc-num" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
         </div>
         <div className="svc-body">

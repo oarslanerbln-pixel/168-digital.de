@@ -43,9 +43,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 28px;
   height: 100%;
-  padding: 32px;
   border-right: var(--rule);
   border-bottom: var(--rule);
   background: var(--bg-dark);
@@ -61,11 +59,73 @@
   color: var(--on-dark);
 }
 
-/* ─── Sign + number ─── */
-.svc-head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+/* ─── Photo, with the sign stamped on its corner ───
+   The photo is ruled off from the text by one ink line, like a plate in
+   a printed catalogue. Its box is fixed by aspect-ratio, so lazy loading
+   never shifts the layout. */
+.svc-media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-bottom: var(--rule);
+  background: var(--bg-sunken);
+}
+
+.svc-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.01);
+  transition: transform 1.1s var(--ease-premium);
+}
+
+.svc-tile:hover .svc-img,
+.svc-tile:focus-within .svc-img {
+  transform: scale(1.06);
+}
+
+/* Social: the portrait frame stands upright in a phone on paper. */
+.svc-media-phone {
+  display: grid;
+  place-items: center;
+}
+
+.svc-media-phone .svc-img {
+  /* Sized by width: a percentage height does not resolve inside the
+     aspect-ratio box. */
+  width: 30%;
+  height: auto;
+  aspect-ratio: 9 / 16;
+  object-position: 50% 70%;
+  border: 4px solid var(--text-main);
+  border-radius: 12px;
+}
+
+.svc-tile:hover .svc-media-phone .svc-img,
+.svc-tile:focus-within .svc-media-phone .svc-img {
+  transform: scale(1.04) rotate(-3deg);
+}
+
+/* The stamp: the service's sign on a paper square, sitting on the
+   photo's lower-left corner. It inverts with the tile. */
+.svc-stamp {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  background: var(--g-paper);
+  border-top: var(--rule);
+  border-right: var(--rule);
+  transition: background 0.45s var(--ease-premium);
+}
+
+.svc-tile:hover .svc-stamp,
+.svc-tile:focus-within .svc-stamp {
+  border-color: var(--on-dark);
 }
 
 .svc-glyph {
@@ -90,7 +150,12 @@
 .svc-glyph .g-line-saffron { stroke: var(--accent-gold-soft); }
 
 .svc-num {
-  font-size: 0.78rem;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 5px 9px;
+  background: var(--g-paper);
+  font-size: 0.74rem;
   font-weight: 700;
   letter-spacing: 0.2em;
   font-variant-numeric: tabular-nums;
@@ -101,6 +166,7 @@
   display: flex;
   flex-direction: column;
   flex: 1;
+  padding: 28px 32px 32px;
 }
 
 .svc-title {
@@ -216,11 +282,14 @@
 
 @media (prefers-reduced-motion: reduce) {
   .svc-tile,
-  .svc-glyph {
+  .svc-glyph,
+  .svc-img {
     transition: none;
   }
   .svc-tile:hover .svc-glyph,
-  .svc-tile:focus-within .svc-glyph {
+  .svc-tile:focus-within .svc-glyph,
+  .svc-tile:hover .svc-img,
+  .svc-tile:focus-within .svc-img {
     transform: none;
   }
 }
@@ -238,7 +307,7 @@
   .svc-grid {
     grid-template-columns: minmax(0, 1fr);
   }
-  .svc-tile {
-    padding: 26px 22px;
+  .svc-body {
+    padding: 22px 22px 26px;
   }
 }
