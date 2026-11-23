@@ -1,7 +1,7 @@
 # Master KFZ Werkstatt – Website
 
 Kundenprojekt von 1618 Digital für die Kfz-Meisterwerkstatt **Master KFZ**,
-Treptower Str. 51, 12059 Berlin-Neukölln. Zieldomain: `www.kfz-master.com`.
+Treptower Str. 51, 12059 Berlin-Neukölln. Domain: `masterteam.berlin` (Strato-DNS → Vercel). `kfz-master.com` leitet per 308 darauf um.
 
 Statisch generierte Website in **Deutsch, Türkisch und Englisch** – ohne
 Framework, ohne npm-Abhängigkeiten, ohne Cookies, ohne Tracking. Jede Seite
@@ -41,7 +41,7 @@ Datenschutz, 404 und die interne Seite `/logo-konzepte/` (noindex).
    einen Access Key erzeugen → in Vercel als `WEB3FORMS_KEY` setzen.
    Ohne Key bricht der Production-Build ab. Bewusster Ausweg:
    `LEAD_FALLBACK_ONLY=true` – das Formular sendet dann per WhatsApp.
-3. Domain `www.kfz-master.com` verbinden, `kfz-master.com` → `www` umleiten.
+3. Domain `masterteam.berlin` verbinden (`www` → Apex). Alte Domain `kfz-master.com` leitet `vercel.json` hostbasiert auf `masterteam.berlin` um.
 
 ## Vor dem Livegang bestätigen
 
@@ -68,4 +68,4 @@ Das Geburtsdatum des Inhabers gehört nicht ins Impressum und steht nirgends auf
 2. Google Search Console + Bing Webmaster Tools: `sitemap.xml` einreichen.
 3. Apple Business Connect, Bing Places, gelbeseiten.de, 11880 – überall gleiche NAP-Daten.
 4. Nach jedem Auftrag um eine Google-Bewertung bitten (QR-Code am Tresen).
-5. Instagram-Bio auf `https://www.kfz-master.com` verlinken.
+5. Instagram-Bio auf `https://masterteam.berlin` verlinken.
