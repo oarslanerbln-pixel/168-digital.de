@@ -259,7 +259,7 @@ export default {
     whatsappOpened: 'WhatsApp açıldı. Lütfen mesajı oradan gönderin.',
     directTitle: 'Doğrudan mı tercih edersiniz?',
     directText: 'Bizi arayın ya da WhatsApp’tan yazın. Veya uğrayın.',
-    subject: 'kfz-master.com üzerinden yeni randevu talebi',
+    subject: 'masterteam.berlin üzerinden yeni randevu talebi',
     greeting: 'Merhaba Master KFZ, randevu almak istiyorum.',
     noscript: 'Form için JavaScript gerekiyor. Bizi arayabilir ya da WhatsApp’tan yazabilirsiniz.',
   },
