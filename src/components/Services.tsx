@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowUpRight, MessageCircle } from 'lucide-react';
+import { ArrowUpRight, Heart, MessageCircle, Send } from 'lucide-react';
 import ServiceGlyph from './ServiceGlyph';
 import { playClick, playTick } from '../utils/audio';
 import { requestContactTopic } from '../utils/contactTopic';
@@ -37,6 +37,43 @@ import './Services.css';
    in one place and lands here, in the nav and on its own page.
    ════════════════════════════════════════════════════════════════ */
 
+/**
+ * The social tile's picture: three phones fanned out like a feed, the
+ * front one wearing a reel's chrome (progress, actions, account). One
+ * lone phone on a plain ground read as "a video", not as "your channel,
+ * every month" — which is what the service sells. All decoration: the
+ * tile's title names the service, so screen readers skip it.
+ */
+function SocialFeed({ service }: { service: ServiceMeta }) {
+  const feed = service.feed;
+  return (
+    <span className="svc-feed" aria-hidden="true">
+      {feed?.images.map((src, i) => (
+        <span key={src} className={`svc-phone svc-phone-${i === 0 ? 'left' : 'right'}`}>
+          <img src={src} alt="" loading="lazy" decoding="async" className="svc-img" />
+        </span>
+      ))}
+      <span className="svc-phone svc-phone-main">
+        <img src={service.image} alt="" loading="lazy" decoding="async" className="svc-img" />
+        <span className="svc-reel">
+          <span className="svc-reel-progress"><i /><i /><i /></span>
+          <span className="svc-reel-actions">
+            <Heart size={12} strokeWidth={0} fill="currentColor" className="svc-reel-liked" />
+            <MessageCircle size={12} strokeWidth={2.2} />
+            <Send size={12} strokeWidth={2.2} />
+          </span>
+          {feed && (
+            <span className="svc-reel-meta">
+              <span className="svc-reel-account"><i />{feed.handle}</span>
+              <span className="svc-reel-caption" />
+            </span>
+          )}
+        </span>
+      </span>
+    </span>
+  );
+}
+
 function ServiceTile({ service, index }: { service: ServiceMeta; index: number }) {
   const { t } = useTranslation();
   // Without localize() a visitor on /de/ landed on the English service page.
@@ -53,8 +90,12 @@ function ServiceTile({ service, index }: { service: ServiceMeta; index: number }
     >
       <article className="svc-tile" onMouseEnter={playTick}>
         <div className={`svc-media${service.imageFrame === 'phone' ? ' svc-media-phone' : ''}`}>
-          {/* The title beside it names the service, hence alt="". */}
-          <img src={service.image} alt="" loading="lazy" decoding="async" className="svc-img" />
+          {service.imageFrame === 'phone' ? (
+            <SocialFeed service={service} />
+          ) : (
+            /* The title beside it names the service, hence alt="". */
+            <img src={service.image} alt="" loading="lazy" decoding="async" className="svc-img" />
+          )}
           <span className="svc-stamp">
             <ServiceGlyph slug={service.slug} size={40} />
           </span>
