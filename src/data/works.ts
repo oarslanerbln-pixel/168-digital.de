@@ -15,6 +15,28 @@ export interface WorkProject {
 }
 
 export const projects: WorkProject[] = [
+  // Newest finished work first: both are local Berlin businesses, the
+  // same kind of client the homepage is written for.
+  {
+    id: 'nuraluxe',
+    url: 'https://nuraluxebeauty.de/',
+    titleKey: 'works_nuraluxe_title',
+    descKey: 'works_nuraluxe_desc',
+    tags: ['Local SEO', 'Online Booking', 'UI/UX'],
+    color: '#b8763c',
+    image: '/works/nuraluxe.webp',
+    imageHi: '/works/nuraluxe-1440.webp',
+  },
+  {
+    id: 'masterkfz',
+    url: 'https://masterteam.berlin/',
+    titleKey: 'works_masterkfz_title',
+    descKey: 'works_masterkfz_desc',
+    tags: ['Static HTML', 'DE · TR · EN', 'Local SEO'],
+    color: '#e3121b',
+    image: '/works/masterkfz.webp',
+    imageHi: '/works/masterkfz-1440.webp',
+  },
   {
     id: 'taka',
     url: 'https://taka-fishhouse.de/',

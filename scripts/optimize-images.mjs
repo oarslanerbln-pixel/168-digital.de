@@ -25,6 +25,8 @@ const SOURCES = [
 // actually reads as "a website" — in frame) and shipped small since they
 // only ever render inside a ~300-500px grid card.
 const WORKS_SOURCES = [
+  { in: 'works_nuraluxe.png', out: 'works/nuraluxe.webp', quality: 76 },
+  { in: 'works_masterkfz.png', out: 'works/masterkfz.webp', quality: 76 },
   { in: 'works_taka.png', out: 'works/taka.webp', quality: 76 },
   { in: 'works_sera.png', out: 'works/sera.webp', quality: 76 },
   { in: 'works_boxx36.png', out: 'works/boxx36.webp', quality: 76 },

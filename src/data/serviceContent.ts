@@ -52,7 +52,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       ctaTitle: 'Have a web or software project in mind?',
       ctaText: 'Tell us about your goals and we\'ll map out the fastest path to a live, working product.',
-      relatedWorkIds: ['donerbros', 'sera'],
+      relatedWorkIds: ['nuraluxe', 'masterkfz', 'donerbros', 'sera'],
     },
     de: {
       metaTitle: '1618 Digital | Webdesign & SaaS-Entwicklung Berlin',
@@ -84,7 +84,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       ctaTitle: 'Haben Sie ein Web- oder Software-Projekt im Kopf?',
       ctaText: 'Erzählen Sie uns von Ihren Zielen — wir zeigen den schnellsten Weg zu einem funktionierenden, live geschalteten Produkt.',
-      relatedWorkIds: ['donerbros', 'sera'],
+      relatedWorkIds: ['nuraluxe', 'masterkfz', 'donerbros', 'sera'],
     },
     tr: {
       metaTitle: '1618 Digital | Web Tasarım & SaaS Geliştirme Berlin',
@@ -116,7 +116,7 @@ export const serviceContent: Record<string, Record<Lang, ServicePageContent>> = 
       ],
       ctaTitle: 'Aklınızda bir web veya yazılım projesi mi var?',
       ctaText: 'Hedeflerinizi bize anlatın, canlıya alınmış çalışan bir ürüne en hızlı yolu birlikte planlayalım.',
-      relatedWorkIds: ['donerbros', 'sera'],
+      relatedWorkIds: ['nuraluxe', 'masterkfz', 'donerbros', 'sera'],
     },
   },
 
