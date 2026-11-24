@@ -43,6 +43,7 @@ function businessNode(c, lang) {
       addressRegion: 'Berlin',
       addressCountry: business.country,
     },
+    geo: { '@type': 'GeoCoordinates', latitude: business.geo.latitude, longitude: business.geo.longitude },
     hasMap: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${business.street}, ${business.zip} ${business.city}`)}`,
     areaServed: business.areaServed.map((name) => ({ '@type': 'Place', name })),
     knowsLanguage: business.languages,
