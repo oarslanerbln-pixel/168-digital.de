@@ -72,7 +72,8 @@ const llms = `# ${business.name}
 
 > Kfz-Meisterwerkstatt (master-certified car repair garage) in Berlin, Germany. All makes. Fixed price agreed before any work starts. Service in German and Turkish.
 
-- Address: ${business.street}, ${business.zip} ${business.city}, Germany
+- Address: ${business.street}, ${business.zip} ${business.city}-${business.district}, Germany
+- Coordinates: ${business.geo.latitude}, ${business.geo.longitude}
 - Phone / WhatsApp: ${business.phoneDisplay} (${business.phoneIntl})
 - E-mail: ${business.email}
 - Opening hours: ${hours}; Sunday closed

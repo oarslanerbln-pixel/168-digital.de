@@ -44,7 +44,13 @@ export const business = {
   ],
   /* Languages spoken in the workshop (confirmed by the client 2026-11-18). */
   languages: ['de', 'tr'],
-  areaServed: ['Berlin-Treptow', 'Berlin-Kreuzberg', 'Berlin-Britz', 'Berlin'],
+  /* Machine-readable only (JSON-LD, llms.txt): the owner does not want the district named in
+     visible copy, but the workshop sits in Neukölln and local searches use that name. */
+  areaServed: ['Berlin-Neukölln', 'Berlin-Treptow', 'Berlin-Kreuzberg', 'Berlin-Britz', 'Berlin'],
+  district: 'Neukölln',
+  /* OpenStreetMap/Nominatim, Treptower Straße segment at no. 51 (checked 2026-11-24).
+     Street-level precision; replace with the Google Maps pin if it differs noticeably. */
+  geo: { latitude: 52.48134, longitude: 13.45240 },
 };
 
 export const mapsUrl =
