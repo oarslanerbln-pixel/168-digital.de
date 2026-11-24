@@ -26,7 +26,8 @@ npm run verify     # bauen + prüfen: Sprachparität, Meta/hreflang, tote Links,
 | Seiten-Templates | `src/views.mjs` |
 | JSON-LD (AutoRepair, Service, FAQ, Breadcrumbs) | `src/schema.mjs` |
 | Impressum, Datenschutz (nur DE) | `src/legal.mjs` |
-| Logo-Konzepte, Blueprint-Auto, Icons | `src/svg.mjs` |
+| Logo-Konzepte, Blueprint-Auto, Icons, Intro-Drehzahlmesser, Maskottchen | `src/svg.mjs` |
+| Maskottchen „Der Meister“ für Social Media (SVG, PNG 1080², 4:5, transparent) | `docs/brand/mascot/` |
 | Design-System / Motion | `static/css/site.css`, `static/js/site.js` |
 
 Seiten: Start, Leistungen + 8 Leistungsseiten, Preise, Über uns, Termin – je

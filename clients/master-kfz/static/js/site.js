@@ -18,7 +18,7 @@
     if (!html.classList.contains('is-intro')) intro.remove();
     else {
       const done = () => { intro.remove(); d.removeEventListener('keydown', skip); };
-      const timer = setTimeout(done, 2700);
+      const timer = setTimeout(done, 3000);
       const skip = () => { clearTimeout(timer); intro.classList.add('is-skip'); setTimeout(done, 380); };
       intro.addEventListener('click', skip, { once: true });
       d.addEventListener('keydown', skip, { once: true });
