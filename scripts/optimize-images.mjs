@@ -45,13 +45,16 @@ const SHOWROOM_SOURCES = ['gischt', 'solenne', 'kivilcim', 'elara', 'arca', 'ori
 
 // Service tiles on the homepage. Frames pulled from the studio's own
 // showreel (public/reel-960.mp4) with ffmpeg, so every film tile shows
-// real footage rather than stock. `social` is cropped portrait because
-// the tile frames it in a phone.
+// real footage rather than stock. The `social` frames are portrait because
+// the tile frames them in phones; social and social-2 are shots the reel
+// rolls through 90°, turned upright, so they are full-height, not crops.
 const SERVICE_SOURCES = [
   { in: 'services/event.jpg', out: 'services/event.webp', w: 800, h: 520 },
   { in: 'services/drone.jpg', out: 'services/drone.webp', w: 800, h: 520 },
   { in: 'services/travel.jpg', out: 'services/travel.webp', w: 800, h: 520 },
   { in: 'services/social.jpg', out: 'services/social.webp', w: 300, h: 540 },
+  { in: 'services/social-2.jpg', out: 'services/social-2.webp', w: 300, h: 540 },
+  { in: 'services/social-3.jpg', out: 'services/social-3.webp', w: 300, h: 540 },
 ];
 
 const kb = (p) => (statSync(p).size / 1024).toFixed(0);

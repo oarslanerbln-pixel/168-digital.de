@@ -24,6 +24,10 @@ export interface ServiceMeta {
   image: string;
   /** 'phone': the photo is portrait and the tile frames it in a phone. */
   imageFrame?: 'phone';
+  /** Phone tiles only: two more portrait frames fanned out beside the
+   *  main one, and the account the reel UI shows. A social service sells
+   *  a running series of posts, so the tile shows a feed, not one frame. */
+  feed?: { images: [string, string]; handle: string };
   /** i18n key for the photo's alt text. The tiles show the photo beside
    *  their own title (alt=""), but the service page leads with it, so
    *  there it has to say what it shows — for screen readers and for
@@ -99,6 +103,7 @@ export const services: ServiceMeta[] = [
     group: 'film',
     image: '/services/social.webp',
     imageFrame: 'phone',
+    feed: { images: ['/services/social-2.webp', '/services/social-3.webp'], handle: '@1618cinema' },
     imageAltKey: 'service_social_img_alt',
     contactTopic: 'other',
   },
