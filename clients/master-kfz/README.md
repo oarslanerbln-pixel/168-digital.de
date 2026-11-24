@@ -1,7 +1,7 @@
 # Master KFZ Werkstatt – Website
 
 Kundenprojekt von 1618 Digital für die Kfz-Meisterwerkstatt **Master KFZ**,
-Treptower Str. 51, 12059 Berlin-Neukölln. Domain: `masterteam.berlin` (Strato-DNS → Vercel). `kfz-master.com` leitet per 308 darauf um.
+Treptower Str. 51, 12059 Berlin-Neukölln. Domain: `masterteam.berlin` (Strato-DNS → Vercel).
 
 Statisch generierte Website in **Deutsch, Türkisch und Englisch** – ohne
 Framework, ohne npm-Abhängigkeiten, ohne Cookies, ohne Tracking. Jede Seite
@@ -41,7 +41,7 @@ Datenschutz, 404 und die interne Seite `/logo-konzepte/` (noindex).
    einen Access Key erzeugen → in Vercel als `WEB3FORMS_KEY` setzen.
    Ohne Key bricht der Production-Build ab. Bewusster Ausweg:
    `LEAD_FALLBACK_ONLY=true` – das Formular sendet dann per WhatsApp.
-3. Domain `masterteam.berlin` verbinden (`www` → Apex). Alte Domain `kfz-master.com` leitet `vercel.json` hostbasiert auf `masterteam.berlin` um.
+3. Domain `masterteam.berlin` verbinden (`www` → Apex).
 
 ## Vor dem Livegang bestätigen
 

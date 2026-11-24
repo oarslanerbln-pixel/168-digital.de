@@ -82,28 +82,6 @@
   ],
   "redirects": [
     {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "kfz-master.com"
-        }
-      ],
-      "destination": "https://masterteam.berlin/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        {
-          "type": "host",
-          "value": "www.kfz-master.com"
-        }
-      ],
-      "destination": "https://masterteam.berlin/:path*",
-      "permanent": true
-    },
-    {
       "source": "/kontakt",
       "destination": "/termin/",
       "permanent": true
