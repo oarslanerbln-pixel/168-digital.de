@@ -6,7 +6,8 @@
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { business, services, priceGroups, featuredPrices, brands, routes, servicePath, SITE_URL, LANGS, mapsUrl, UI_STYLE, MEDIA_IS_AI, THEME } from './data.mjs';
-import { icon, iconPro, carSvg, carPremium, gearSvg, logoMark } from './svg.mjs';
+import { icon, iconPro, carSvg, carPremium, gearSvg, logoMark, tachoSvg } from './svg.mjs';
+import { badgeSvg } from './mascot.mjs';
 import { schemaGraph } from './schema.mjs';
 import { LOGO_SET, LOGO_PALETTES, logoSetSvg, wordmark } from './logos.mjs';
 import { LOGO_STYLES, styleSvg } from './logos-r3.mjs';
@@ -136,10 +137,9 @@ ${langSwitch(p, 'lang lang--footer')}
 
 function intro() {
   return `<div class="intro" aria-hidden="true">
-<div class="intro__stage">${logoMark('logo intro__mark')}
+<div class="intro__stage"><div class="intro__dial">${tachoSvg('tacho intro__tacho')}${logoMark('logo intro__mark')}</div>
 <p class="intro__word"><span>MASTER</span><em>KFZ</em></p>
 <p class="intro__sub">Kfz-Meisterwerkstatt · Berlin</p></div>
-<i class="intro__bar"></i>
 </div>`;
 }
 
@@ -381,7 +381,7 @@ ${steps(c)}
 <div class="wrap stance__grid">
 <div>${kicker(c.home.meisterKicker, 'rv')}<h2 class="h2 rv" style="--i:1">${e(c.home.meisterTitle)}</h2><p class="lead rv" style="--i:2">${e(c.home.meisterText)}</p>
 <ul class="values">${c.home.values.map((v, i) => `<li class="rv" style="--i:${i + 2}"><h3>${e(v.title)}</h3><p>${e(v.text)}</p></li>`).join('')}</ul></div>
-<div class="stance__visual" aria-hidden="true">${gearSvg('gear stance__gear')}${logoMark('logo stance__mark')}</div>
+<div class="stance__visual" aria-hidden="true">${gearSvg('gear stance__gear')}${badgeSvg('badge stance__badge', '')}</div>
 </div>
 </section>
 

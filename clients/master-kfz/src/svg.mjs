@@ -216,3 +216,30 @@ export function iconPro(name, cls = 'ico') {
   const body = PRO[name].replace(/<(path|circle|rect)\b/g, '<$1 pathLength="100"');
   return `<svg class="${cls}" viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${body}</svg>`;
 }
+
+/*
+ * Intro tachometer: the ignition "needle sweep" of a premium dashboard.
+ * Geometry is computed (0–8 ×1000 rpm over 270°) so ticks, numerals and the
+ * red zone always line up; CSS animates only transforms, opacity and the
+ * one-off stroke draw of the dial arc.
+ */
+export function tachoSvg(cls = 'tacho') {
+  const cx = 120, cy = 124, r = 96;
+  const ang = (v) => (-135 + v * 33.75) * Math.PI / 180;
+  const pt = (v, rad) => [cx + rad * Math.sin(ang(v)), cy - rad * Math.cos(ang(v))].map((n) => n.toFixed(2));
+  const arc = (a, b, rad) => { const [x1, y1] = pt(a, rad), [x2, y2] = pt(b, rad); return `M${x1} ${y1}A${rad} ${rad} 0 ${(b - a) * 33.75 > 180 ? 1 : 0} 1 ${x2} ${y2}`; };
+  let ticks = '', nums = '';
+  for (let i = 0; i <= 16; i++) {
+    const v = i / 2, major = i % 2 === 0, [x1, y1] = pt(v, r - 3), [x2, y2] = pt(v, r - (major ? 15 : 9));
+    ticks += `<path class="tacho__tick${v >= 6.5 ? ' is-red' : ''}" style="--i:${i}" d="M${x1} ${y1}L${x2} ${y2}"/>`;
+    if (major) { const [tx, ty] = pt(v, r - 29); nums += `<text class="tacho__num${v >= 7 ? ' is-red' : ''}" style="--i:${i}" x="${tx}" y="${ty}">${v}</text>`; }
+  }
+  return `<svg class="${cls}" viewBox="0 0 240 232" aria-hidden="true" focusable="false">
+<path class="tacho__arc" pathLength="1" d="${arc(0, 8, r)}"/>
+<path class="tacho__red" pathLength="1" d="${arc(6.5, 8, r)}"/>
+${ticks}${nums}
+<text class="tacho__unit" x="${cx}" y="${cy + 44}">×1000/min</text>
+<g class="tacho__needle"><path d="M${cx} ${cy + 14}L${cx} ${cy - r + 10}"/></g>
+<circle class="tacho__hub" cx="${cx}" cy="${cy}" r="7"/>
+</svg>`;
+}

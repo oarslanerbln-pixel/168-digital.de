@@ -64,7 +64,7 @@
   --z-grain: 105;
   --z-skip: 110;
 }
-html.is-intro { --hd: 2.45s; }
+html.is-intro { --hd: 2.6s; }
 @supports (transition-timing-function: linear(0, 1)) {
   :root { --spring: linear(0, 0.023, 0.083, 0.166, 0.261, 0.36, 0.459, 0.552, 0.637, 0.713, 0.78, 0.836, 0.883, 0.921, 0.952, 0.975, 0.993, 1.005, 1.014, 1.02, 1.023, 1.024, 1.024, 1.022, 1.02, 1.018, 1.016, 1.013, 1.011, 1.009, 1.007, 1.006, 1.004, 1.003, 1.002, 1.001, 1.001, 1, 1, 1, 1); }
 }
@@ -228,28 +228,41 @@ code { font-family: var(--mono); font-size: 0.9em; background: var(--bg-3); padd
 .lang--menu { margin-left: auto; }
 html.menu-open { overflow: hidden; }
 
-/* ---------- Intro (first visit per session, home only) ---------- */
+/* ---------- Intro (first visit per session, home only) ----------
+   Ignition needle sweep: the dial draws in, the needle swings to the red
+   zone and settles at idle like a premium dashboard on start-up, then the
+   dial dims and the badge takes its place. ~2.1 s, skippable, never shown
+   with reduced motion (BOOT in views.mjs). */
 .intro { display: none; }
 html.is-intro .intro {
   position: fixed; inset: 0; z-index: var(--z-intro);
   display: grid; place-items: center;
-  background: var(--bg);
-  animation: introOut 0.85s var(--ease) 1.75s forwards;
+  background: radial-gradient(60% 50% at 50% 45%, #15161b, var(--bg));
+  animation: introOut 0.75s var(--ease) 2.15s forwards;
 }
 .intro.is-skip { animation: introSkip 0.35s ease forwards !important; }
-.intro__stage { display: grid; justify-items: center; gap: 22px; }
-.intro__mark { width: min(46vw, 220px); height: auto; overflow: visible; }
-.intro__mark .logo__m { clip-path: inset(0 100% 0 0); animation: wipeIn 0.75s var(--ease-out) 0.15s forwards; }
-.intro__mark .logo__bar { opacity: 0; transform: translateX(-30px); animation: barIn 0.6s var(--ease-out) forwards; }
-.intro__mark .logo__bar:nth-of-type(2) { animation-delay: 0.45s; }
-.intro__mark .logo__bar:nth-of-type(3) { animation-delay: 0.55s; }
-.intro__mark .logo__bar:nth-of-type(4) { animation-delay: 0.65s; }
-.intro__word { display: flex; gap: 0.3em; overflow: hidden; font-size: clamp(28px, 7vw, 46px); font-weight: 800; font-style: italic; letter-spacing: 0.02em; line-height: 1.1; }
-.intro__word > * { display: inline-block; transform: translateY(110%); animation: lineUp 0.8s var(--ease-out) 0.7s forwards; }
-.intro__word em { animation-delay: 0.8s; }
-.intro__sub { font: 500 11px var(--mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-2); opacity: 0; animation: fadeIn 0.6s ease 1.05s forwards; }
-.intro__bar { position: absolute; left: 50%; bottom: max(48px, 12vh); width: 120px; height: 2px; translate: -50% 0; background: var(--line); overflow: hidden; }
-.intro__bar::after { content: ''; position: absolute; inset: 0; background: var(--red); transform-origin: left; transform: scaleX(0); animation: grow 1.7s var(--ease) forwards; box-shadow: 0 0 12px var(--red); }
+.intro__stage { display: grid; justify-items: center; gap: 18px; }
+.intro__dial { position: relative; width: min(64vw, 300px); aspect-ratio: 240 / 232; }
+.intro__tacho { width: 100%; height: 100%; overflow: visible; animation: dialDim 0.5s var(--ease) 1.5s forwards; }
+.tacho__arc { fill: none; stroke: rgba(255, 255, 255, 0.28); stroke-width: 1.5; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 0.55s var(--ease-out) forwards; }
+.tacho__red { fill: none; stroke: var(--red); stroke-width: 4; stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 0.3s var(--ease-out) 0.4s forwards; }
+.tacho__tick { stroke: rgba(255, 255, 255, 0.55); stroke-width: 1.5; stroke-linecap: round; opacity: 0; animation: fadeIn 0.2s ease calc(0.1s + var(--i) * 0.022s) forwards; }
+.tacho__tick.is-red { stroke: var(--red); }
+.tacho__num { fill: var(--text-2); font: 500 12px var(--mono); text-anchor: middle; dominant-baseline: central; opacity: 0; animation: fadeIn 0.3s ease calc(0.2s + var(--i) * 0.02s) forwards; }
+.tacho__num.is-red { fill: var(--red); }
+.tacho__unit { fill: var(--text-3); font: 500 8px var(--mono); letter-spacing: 0.12em; text-anchor: middle; opacity: 0; animation: fadeIn 0.4s ease 0.45s forwards; }
+.tacho__needle { transform-box: view-box; transform-origin: 120px 124px; transform: rotate(-135deg); animation: needleSweep 1.05s cubic-bezier(0.5, 0, 0.2, 1) 0.4s forwards; }
+.tacho__needle path { stroke: var(--red); stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 0 6px rgba(var(--accent-rgb), 0.8)); }
+.tacho__hub { fill: var(--bg); stroke: var(--red); stroke-width: 2; }
+.intro__mark { position: absolute; left: 32%; top: 30%; width: 36%; height: auto; opacity: 0; transform: scale(0.86); animation: markIn 0.6s var(--ease-out) 1.62s forwards; filter: drop-shadow(0 12px 40px rgba(var(--accent-rgb), 0.45)); }
+.intro__word { display: flex; gap: 0.3em; overflow: hidden; font-size: clamp(26px, 6vw, 40px); font-weight: 800; font-style: italic; letter-spacing: 0.02em; line-height: 1.1; }
+.intro__word > * { display: inline-block; transform: translateY(110%); animation: lineUp 0.7s var(--ease-out) 1.6s forwards; }
+.intro__word em { color: var(--red); animation-delay: 1.68s; }
+.intro__sub { font: 500 11px var(--mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-2); opacity: 0; animation: fadeIn 0.5s ease 1.8s forwards; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes needleSweep { 0% { transform: rotate(-135deg); } 55% { transform: rotate(104deg); } 66% { transform: rotate(98deg); } 100% { transform: rotate(-101deg); } }
+@keyframes dialDim { to { opacity: 0.16; transform: scale(0.94); } }
+@keyframes markIn { to { opacity: 1; transform: none; } }
 
 /* ---------- Hero ---------- */
 .hero { position: relative; min-height: 100svh; display: flex; flex-direction: column; padding-top: calc(var(--hdr-h) + env(safe-area-inset-top) + clamp(28px, 7vh, 88px)); overflow: hidden; isolation: isolate; }
@@ -443,6 +456,7 @@ html.js .steps__rail i { transform: scaleX(calc(var(--p, 0) * 1.7 - 0.25)); }
 .gear .d { stroke: currentColor; stroke-width: 1; fill: none; }
 .gear .gear__accent { stroke: var(--red); stroke-width: 1.6; stroke-dasharray: 0.28 0.72; filter: drop-shadow(0 0 4px var(--red)); }
 .stance__gear, .story__gear { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 70s linear infinite; }
+.stance__badge { position: absolute; left: 20%; top: 20%; width: 60%; height: auto; filter: drop-shadow(0 24px 50px rgba(var(--accent-rgb), 0.3)); }
 .stance__mark, .story__mark { position: absolute; left: 27%; top: 33%; width: 46%; height: auto; filter: drop-shadow(0 20px 60px rgba(var(--accent-rgb), 0.35)); }
 
 /* ---------- FAQ ---------- */
@@ -625,12 +639,13 @@ html.no-js .bk__nav [data-next], html.no-js .bk__nav [data-back] { display: none
 .ftr__social { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--text-2); transition: color 0.2s; }
 .ftr__social:hover { color: var(--text); }
 .ftr__h { font: 500 12px var(--mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px; }
-.ftr__list { display: grid; gap: 10px; font-style: normal; }
-.ftr__list a { color: var(--text-2); transition: color 0.2s; overflow-wrap: anywhere; }
+.ftr__list { display: grid; gap: 2px; font-style: normal; }
+.ftr__list a { padding-block: 4px; color: var(--text-2); transition: color 0.2s; overflow-wrap: anywhere; }
 .ftr__list a:hover { color: var(--text); }
 .ftr .hours div { padding: 6px 0; border: 0; font-size: 15px; }
 .ftr__bottom { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 28px; margin-top: 56px; padding-block: 24px; border-top: 1px solid var(--line); font-size: 13px; color: var(--text-3); }
 .ftr__bottom nav { display: flex; gap: 20px; }
+.ftr__bottom nav a { display: inline-block; padding-block: 4px; } /* ≥ 24 px tap target (WCAG 2.2) */
 .ftr__bottom a:hover { color: var(--text); }
 .ftr__credit { margin-left: auto; }
 .ftr__giant { margin: 10px 0 -0.16em; text-align: center; white-space: nowrap; font-size: 15.5vw; font-weight: 800; font-style: italic; letter-spacing: -0.04em; line-height: 0.85; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1); user-select: none; }
@@ -1268,7 +1283,7 @@ html.js .hero__tag i { transform: scaleX(0); transform-origin: left; animation: 
 .card__media--art { display: grid; place-items: center; }
 .card__art { width: 46%; height: auto; max-height: 72%; color: var(--text-2); opacity: 0.85; }
 .card--visual .card__icon { position: relative; z-index: 1; margin-top: -26px; background: rgba(19, 20, 26, 0.78); border: 1px solid rgba(var(--accent-rgb), 0.35); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
-.cards__ai { margin-top: 12px; text-align: right; font: 500 10px/1.4 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
+.cards__ai { margin-top: 12px; text-align: right; font: 500 11px/1.4 var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-3); }
 @media (max-width: 639px) {
   .cards--compact .card { --cpx: 16px; }
   .cards--compact .card--visual { padding-top: 0; }
