@@ -1,0 +1,9 @@
+<!-- Master KFZ mark: geometric redraw of the original circle/wrench + M logo. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="34 34 504 360"><defs><mask id="jaw" maskUnits="userSpaceOnUse" x="0" y="0" width="600" height="420"><rect width="600" height="420" fill="#fff"/>
+<g transform="rotate(-22 488 350)"><rect x="488" y="338" width="70" height="24" fill="#000"/><circle cx="488" cy="350" r="12" fill="#000"/></g></mask></defs>
+<g fill="#e3141c">
+<path d="M256.19 60.92A150 150 0 1 0 200 350" fill="none" stroke="#e3141c" stroke-width="18" stroke-linecap="round"/>
+<path d="M200 341L250 339H430Q448 339 462 329V371Q448 361 430 361H250L200 359Z"/>
+<g mask="url(#jaw)"><circle cx="488" cy="350" r="34"/></g>
+<g transform="translate(170 140) skewX(-12)"><path d="M0 176L0 0H62L125 92L188 0H250V176H194V84L139 152H111L56 84V176Z" stroke="#e3141c" stroke-width="14" stroke-linejoin="round"/></g>
+</g></svg>
